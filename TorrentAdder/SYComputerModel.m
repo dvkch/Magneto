@@ -28,9 +28,6 @@
         self.ip4s = ip4s;
         self.port = [NSNumber numberWithInt:9091];
         self.sessionID = @"";
-        self->_connections = [[NSMutableArray alloc] init];
-        self->_connectionsData = [[NSMutableDictionary alloc] init];
-        self->_connectionsResponses = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -49,9 +46,6 @@
                                                                   withString:@""];
         self.port = [NSNumber numberWithInt:9091];
         self.sessionID = @"";
-        self->_connections = [[NSMutableArray alloc] init];
-        self->_connectionsData = [[NSMutableDictionary alloc] init];
-        self->_connectionsResponses = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -98,7 +92,7 @@
 }
 
 // https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
--(NSURLRequest*)urlRequestForAddingTorrentFromMagnet:(NSURL *)magnet {
+-(NSURLRequest*)requestForAddingMagnet:(NSURL *)magnet {
     
     if(!magnet)
         return nil;
@@ -120,101 +114,6 @@
     return request;
 }
 
--(void)addTorrent {
-    SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    
-    if(!appDelegate.url)
-        return;
-    
-    NSURLRequest *request = [self urlRequestForAddingTorrentFromMagnet:appDelegate.url];
-    [self->_connections addObject:[[NSURLConnection alloc] initWithRequest:request
-                                                                  delegate:self
-                                                          startImmediately:YES]];
-}
-
-#pragma mark - NSURLConnectionDelegates methods
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [[[UIAlertView alloc] initWithTitle:@"Error while adding torrent"
-                                message:[error localizedDescription]
-                               delegate:nil
-                      cancelButtonTitle:nil
-                      otherButtonTitles:@"Close", nil] show];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    NSString *k = [[[connection originalRequest] URL] absoluteString];
-    [self->_connectionsResponses setObject:response forKey:k];
-    
-    int code = [(NSHTTPURLResponse*)response statusCode];
-    if(code == 409) {
-        self.sessionID = [[(NSHTTPURLResponse*)response allHeaderFields]
-                          objectForKey:@"X-Transmission-Session-Id"];
-        [self addTorrent];
-    }
-    
-    [self->_connections removeObject:connection];
-}
-
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSString *k = [[[connection originalRequest] URL] absoluteString];
-    NSMutableData *d = [self->_connectionsData objectForKey:k];
-    if(!d) d = [[NSMutableData alloc] init];
-    
-    [d appendData:data];
-    
-    [self->_connectionsData setObject:data forKey:k];
-}
-
--(void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    // it is guaranteed to have a response before did finish loading
-    // http://stackoverflow.com/questions/7360526/is-didreceiveresponse-guaranteed-to-preceed-connectiondidfinishloading
-    
-    NSString *k = [[[connection originalRequest] URL] absoluteString];
-    NSURLResponse *r = [self->_connectionsResponses objectForKey:k];
-    int code = [(NSHTTPURLResponse*)r statusCode];
-    
-    if(code == 409)
-        return;
-    
-    NSMutableData *d = [self->_connectionsData objectForKey:k];
-    NSString     *bodyString = [d stringWithUTF8Encoding];
-    NSDictionary *bodyJSON   = [d json];
-    
-    if(code == 200) {
-        NSString *message = @"";
-        
-        if(bodyJSON)
-            message = [NSString stringWithFormat:@"Message from %@: %@",
-                       self.name,
-                       bodyJSON[@"result"]];
-        
-        [[[UIAlertView alloc] initWithTitle:@"Torrent added successfully"
-                                    message:message
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:@"Close", nil] show];
-
-        SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-        if(appDelegate.appUrlIsFromParsed != SYAppUnknown) {
-            [appDelegate openAppThatOpenedMe];
-        }
-
-    }
-    else {
-        NSString *message = [NSString stringWithFormat:@"Message from %@: \n%@",
-                             self.name,
-                             bodyString];
-        
-        [[[UIAlertView alloc] initWithTitle:@"Unknown response"
-                                    message:message
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:@"Close", nil] show];
-    }
-}
 
 -(BOOL)hasHostnameAndIP
 {

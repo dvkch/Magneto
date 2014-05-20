@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SYAdder.h"
 
 @class SYLabelTag;
 
@@ -14,7 +15,9 @@
 <UITableViewDataSource,
 UITableViewDelegate,
 NSNetServiceBrowserDelegate,
-NSNetServiceDelegate>
+NSNetServiceDelegate,
+SYAdderDelegate,
+UIAlertViewDelegate>
 {
     NSMutableArray *devices;
     NSArray *allowedServicesNames;

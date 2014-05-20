@@ -11,8 +11,13 @@
 #import "SYComputerModel.h"
 #import "SYComputerCell.h"
 #import "NSData+IPAddress.h"
+#import "NSArray+JSON.h"
 #import "SYLabelTag.h"
 #import "SYAppDelegate.h"
+#import "SYAdder.h"
+
+
+#define ALERT_VIEW_TAG_OPEN_SOURCE_APP (4)
 
 @interface SYMainVC ()
 
@@ -91,7 +96,7 @@
 
 -(IBAction)helpButtonClick:(id)sender {
     [[[UIAlertView alloc] initWithTitle:@"Help"
-                                message:@"Run with app"
+                                message:@"To add a torrent you need to open this app with a magnet. Go to Safari, open a page with a magnet link in it, click the magnet to open this app, and then select a computer to start downloading the torrent."
                                delegate:nil
                       cancelButtonTitle:nil
                       otherButtonTitles:@"Close", nil] show];
@@ -141,12 +146,12 @@
     if(indexPath.section == 1)
         return;
     
-    SYComputerModel *c = [self->devices objectAtIndex:indexPath.row];
+    SYComputerModel *computer = [self->devices objectAtIndex:indexPath.row];
     
     if(!appDelegate.url) {
         NSString *message = [NSString stringWithFormat:@"To add a torrent to %@ you need to open this app with a magnet. Go to Safari, open a page with a magnet link in it, click the magnet to open this app, and then select %@ to start downloading the torrent.",
-                             c.name,
-                             c.name];
+                             computer.name,
+                             computer.name];
         
         [[[UIAlertView alloc] initWithTitle:@"No torrent provided"
                                     message:message
@@ -156,7 +161,9 @@
         return;
     }
     
-    [c addTorrent];
+    [[SYAdder shared] setDelegate:self];
+    [[SYAdder shared] startRequest:[computer requestForAddingMagnet:appDelegate.url]
+                       forComputer:computer];
 }
 
 #pragma mark - NSNetServiceBrowserDelegate methods
@@ -213,5 +220,87 @@
     frameHeader.origin.y = headerViewOffset + parallaxOffest;
     [self.headerView setFrame:frameHeader];
 }
+
+#pragma mark - UIAlertViewDelegate methods
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if(buttonIndex == alertView.cancelButtonIndex)
+        return;
+    
+    if(alertView.tag == ALERT_VIEW_TAG_OPEN_SOURCE_APP) {
+        SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        [appDelegate openAppThatOpenedMe];
+    }
+}
+
+#pragma mark - SYAdderDelegate methods
+
+-(void)request:(NSURLRequest *)request
+   forComputer:(SYComputerModel *)computer
+finishedWithResponse:(NSURLResponse *)response
+andContentData:(NSData *)contentData
+{
+    int code = [(NSHTTPURLResponse*)response statusCode];
+    
+    NSString        *bodyString = [contentData stringWithUTF8Encoding];
+    NSDictionary    *bodyJSON   = [contentData json];
+    
+    if(code == 200) {
+        SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        
+        NSMutableString *message = [NSMutableString string];
+        NSString *cancelButton = nil;
+        NSString     *okButton = nil;
+        
+        if(bodyJSON) {
+            [message appendFormat:@"Message from %@: %@", computer.name, bodyJSON[@"result"]];
+            cancelButton = nil;
+            okButton = @"Close";
+        }
+        
+        if(appDelegate.appUrlIsFromParsed != SYAppUnknown) {
+            if([message length] > 0)
+                [message appendString:@"\n\n"];
+            
+            [message appendString:@"Do you want to open the app you came from?"];
+            cancelButton = @"No";
+            okButton = @"Yes";
+        }
+        
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Torrent added successfully"
+                                                     message:message
+                                                    delegate:self
+                                           cancelButtonTitle:cancelButton
+                                           otherButtonTitles:okButton, nil];
+        
+        [av setTag:ALERT_VIEW_TAG_OPEN_SOURCE_APP];
+        [av show];
+    }
+    else {
+        NSString *message = [NSString stringWithFormat:@"Message from %@: \n%@",
+                             computer.name,
+                             bodyString];
+        
+        [[[UIAlertView alloc] initWithTitle:@"Unknown response"
+                                    message:message
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"Close", nil] show];
+    }
+}
+
+- (void)request:(NSURLRequest*)request
+    forComputer:(SYComputerModel*)computer
+failedWithError:(NSError*)error
+{
+    [[[UIAlertView alloc] initWithTitle:@"Error while adding torrent"
+                                message:error.localizedDescription
+                               delegate:nil
+                      cancelButtonTitle:nil
+                      otherButtonTitles:@"Close", nil] show];
+}
+
+
 
 @end

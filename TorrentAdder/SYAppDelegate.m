@@ -54,27 +54,27 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
     
     [[NSNotificationCenter defaultCenter] postNotificationName:UIAppDidOpenURL object:nil];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.appUrlIsFromParsed = SYAppSafari;
-        [self openAppThatOpenedMe];
-    });
-    
     return YES;
 }
 
 -(void)openAppThatOpenedMe
 {
+    NSString *selfClosingWebpage = @"rawgit.com/dvkch/TorrentAdder/master/self_closing_page.html";
     NSString *urlToOpen = nil;
     switch (self.appUrlIsFromParsed) {
-        case SYAppSafari:   urlToOpen = @"http:";         break; // opens new page
+        case SYAppSafari:   urlToOpen = @"https://";      break; // opens new page
         case SYAppMail:     urlToOpen = @"mailto:";       break; // opens empty composer
         case SYAppSMS:      urlToOpen = @"sms:";          break; // opens empty composer
         case SYAppChrome:   urlToOpen = @"googlechrome:"; break; // OK
         case SYAppDolphin:  urlToOpen = @"dolphin:";      break; // OK
-        case SYAppOpera:    urlToOpen = @"ohttp:";        break; // opens new page
+        case SYAppOpera:    urlToOpen = @"ohttps://";     break; // opens new page
         case SYAppMailbox:  urlToOpen = @"dbx-mailbox:";  break; // OK
         default: break;
     }
+    
+    if(self.appUrlIsFromParsed == SYAppSafari ||
+       self.appUrlIsFromParsed == SYAppOpera)
+        urlToOpen = [urlToOpen stringByAppendingString:selfClosingWebpage];
     
     NSURL *url = [NSURL URLWithString:urlToOpen];
     [[UIApplication sharedApplication] openURL:url];

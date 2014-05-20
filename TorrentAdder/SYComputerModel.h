@@ -8,11 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SYComputerModel : NSObject <NSURLConnectionDataDelegate, NSURLConnectionDelegate> {
-    NSMutableArray *_connections;
-    NSMutableDictionary *_connectionsData;
-    NSMutableDictionary *_connectionsResponses;
-}
+@interface SYComputerModel : NSObject
 
 @property (strong, atomic) NSString *name;
 @property (strong, atomic) NSArray  *ip4s;
@@ -27,9 +23,7 @@
 
 -(NSURL*)rpcURL;
 
--(NSURLRequest*)urlRequestForAddingTorrentFromMagnet:(NSURL*)magnet;
-
--(void)addTorrent;
+-(NSURLRequest*)requestForAddingMagnet:(NSURL*)magnet;
 
 -(BOOL)hasHostnameAndIP;
 

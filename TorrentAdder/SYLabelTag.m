@@ -20,7 +20,12 @@
     [self.layer setCornerRadius:4.f];
     [self.layer setMasksToBounds:YES];
     
-    CGFloat w = [self.text sizeWithFont:self.font].width + 6.f;
+    CGFloat w = 10.f;
+    if(IOS_VER_GREATER_OR_EQUAL(@"7.0"))
+        w += [self.text sizeWithAttributes:@{NSFontAttributeName:self.font}].width;
+    else
+        w += [self.text sizeWithFont:self.font].width;
+    
     
     CGFloat mLeft  = self.frame.origin.x;
     CGFloat mRight = self.superview.frame.size.width - self.frame.origin.x - self.frame.size.width;

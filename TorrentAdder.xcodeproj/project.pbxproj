@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F83FFA3F192BE7440034A95B /* SYAdder.m in Sources */ = {isa = PBXBuildFile; fileRef = F83FFA3E192BE7440034A95B /* SYAdder.m */; };
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
 		F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675C192A317C00735175 /* CoreGraphics.framework */; };
 		F898675F192A317C00735175 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675E192A317C00735175 /* UIKit.framework */; };
@@ -50,6 +51,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F83FFA3D192BE7440034A95B /* SYAdder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYAdder.h; sourceTree = "<group>"; };
+		F83FFA3E192BE7440034A95B /* SYAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAdder.m; sourceTree = "<group>"; };
+		F83FFA41192BE8860034A95B /* SYMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMacros.h; sourceTree = "<group>"; };
 		F8986757192A317C00735175 /* TorrentAdder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TorrentAdder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F898675A192A317C00735175 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F898675C192A317C00735175 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -119,6 +123,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F83FFA40192BE74E0034A95B /* API */ = {
+			isa = PBXGroup;
+			children = (
+				F83FFA3D192BE7440034A95B /* SYAdder.h */,
+				F83FFA3E192BE7440034A95B /* SYAdder.m */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
 		F898674E192A317C00735175 = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +164,7 @@
 		F8986760192A317C00735175 /* TorrentAdder */ = {
 			isa = PBXGroup;
 			children = (
+				F83FFA40192BE74E0034A95B /* API */,
 				F89867BE192BA8D500735175 /* Categories */,
 				F89867BF192BA8DC00735175 /* Models */,
 				F89867C0192BA8E800735175 /* Views */,
@@ -159,6 +173,7 @@
 				F898676C192A317C00735175 /* Main.storyboard */,
 				F8986775192A317C00735175 /* Images.xcassets */,
 				F8986761192A317C00735175 /* Supporting Files */,
+				F83FFA41192BE8860034A95B /* SYMacros.h */,
 			);
 			path = TorrentAdder;
 			sourceTree = "<group>";
@@ -374,6 +389,7 @@
 				F89867B7192B859600735175 /* SYLabelTag.m in Sources */,
 				F898679A192A34E600735175 /* UIView+Glow.m in Sources */,
 				F89867BD192BA51800735175 /* NSArray+JSON.m in Sources */,
+				F83FFA3F192BE7440034A95B /* SYAdder.m in Sources */,
 				F89867AE192A4E4C00735175 /* SYComputerModel.m in Sources */,
 				F89867B1192AA9CB00735175 /* NSData+IPAddress.m in Sources */,
 			);
@@ -522,6 +538,7 @@
 				F898678E192A317D00735175 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
