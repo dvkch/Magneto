@@ -15,6 +15,7 @@
 #import "SYLabelTag.h"
 #import "SYAppDelegate.h"
 #import "SYAdder.h"
+#import "SYWebVC.h"
 
 
 #define ALERT_VIEW_TAG_OPEN_SOURCE_APP (4)
@@ -34,7 +35,8 @@
                                                object:nil];
     
     self.navigationController.navigationBarHidden = YES;
-    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    
     [self.titleLabel addGlow:[UIColor lightGrayColor] size:4.f];
     
     [self.helpButton addGlow:self.helpButton.titleLabel.textColor size:8.f];
@@ -42,15 +44,21 @@
     [self.headerTorrentLabel setText:@"NO TORRENT PROVIDED"];
     [self.headerTorrentName  setText:@""];
     
+    [self.headerView setBackgroundColor:[UIColor clearColor]];
+    [self.tableView setBackgroundColor:[UIColor clearColor]];
+    
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
+    
+    if(!IOS_VER_GREATER_OR_EQUAL(@"7.0"))
+        [self.tableView setBackgroundColor:[UIColor whiteColor]];
     
     self->devices  = [[NSMutableArray alloc] init];
     self->services = [[NSMutableArray alloc] init];
     self->serviceBrowsers = [[NSMutableArray alloc] init];
     self->connections = [[NSMutableArray alloc] init];
     
-    self->allowedServicesNames = @[@"_afpovertcp._tcp."];
+    self->allowedServicesNames = @[@"_afpovertcp._tcp.", @"_smb._tcp."];
     for(NSString *serviceName in self->allowedServicesNames) {
         NSNetServiceBrowser *serviceBrowser = [[NSNetServiceBrowser alloc] init];
         [serviceBrowser setDelegate:self];
@@ -134,21 +142,25 @@
     
     cell = [tableView dequeueReusableCellWithIdentifier:@"cellComputer"];
     
+    [(SYComputerCell*)cell setTapShort:^(SYComputerModel *computer) {
+        [self tappedOnComputer:computer longTap:NO];
+    }];
+    
+    [(SYComputerCell*)cell setTapLong:^(SYComputerModel *computer) {
+        [self tappedOnComputer:computer longTap:YES];
+    }];
+    
     SYComputerModel *computer = [self->devices objectAtIndex:indexPath.row];
     [(SYComputerCell*)cell setComputer:computer];
     
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)tappedOnComputer:(SYComputerModel*)computer longTap:(BOOL)longTap
+{
     SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     
-    if(indexPath.section == 1)
-        return;
-    
-    SYComputerModel *computer = [self->devices objectAtIndex:indexPath.row];
-    
-    if(!appDelegate.url) {
+    if(!longTap && !appDelegate.url) {
         NSString *message = [NSString stringWithFormat:@"To add a torrent to %@ you need to open this app with a magnet. Go to Safari, open a page with a magnet link in it, click the magnet to open this app, and then select %@ to start downloading the torrent.",
                              computer.name,
                              computer.name];
@@ -158,12 +170,36 @@
                                    delegate:nil
                           cancelButtonTitle:nil
                           otherButtonTitles:@"Close", nil] show];
-        return;
     }
     
-    [[SYAdder shared] setDelegate:self];
-    [[SYAdder shared] startRequest:[computer requestForAddingMagnet:appDelegate.url]
-                       forComputer:computer];
+    if(!longTap && appDelegate.url) {
+        [[SYAdder shared] setDelegate:self];
+        [[SYAdder shared] startRequest:[computer requestForAddingMagnetTransmission:appDelegate.url]
+                           forComputer:computer];
+    }
+    
+    if(longTap) {
+        self.lastTappedComputer = computer;
+        NSLog(@"%d", [self.navigationController.viewControllers count]);
+        [self performSegueWithIdentifier:@"segueToWeb" sender:self];
+    }
+}
+
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView
+          editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 1)
+        return UITableViewCellEditingStyleNone;
+    return UITableViewCellEditingStyleNone;
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"segueToWeb"]) {
+        SYWebVC *vc = segue.destinationViewController;
+        [vc setComputer:self.lastTappedComputer];
+    }
 }
 
 #pragma mark - NSNetServiceBrowserDelegate methods
@@ -241,7 +277,7 @@
 finishedWithResponse:(NSURLResponse *)response
 andContentData:(NSData *)contentData
 {
-    int code = [(NSHTTPURLResponse*)response statusCode];
+    NSInteger code = [(NSHTTPURLResponse*)response statusCode];
     
     NSString        *bodyString = [contentData stringWithUTF8Encoding];
     NSDictionary    *bodyJSON   = [contentData json];

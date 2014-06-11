@@ -17,5 +17,7 @@
 @property (weak,   nonatomic) IBOutlet UIView  *onlineView;
 @property (weak,   nonatomic) IBOutlet UIView  *selectedBackgroundCustomView;
 @property (strong, nonatomic) SYComputerModel  *computer;
+@property (strong, atomic) void(^tapShort)(SYComputerModel* computer);
+@property (strong, atomic) void(^tapLong )(SYComputerModel* computer);
 
 @end

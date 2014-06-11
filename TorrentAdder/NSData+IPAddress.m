@@ -16,7 +16,7 @@
 -(NSString *)ipAddressStringFromData:(BOOL)onlyIPv4 {
     
     NSString *addressString = nil;
-    int port = -1;
+    //int port = -1;
     
     char addressBuffer[INET6_ADDRSTRLEN];
     
@@ -44,11 +44,11 @@
                                            sizeof(addressBuffer));
         
         addressString = [NSString stringWithCString:addressStr encoding:NSASCIIStringEncoding];
-        
+        /*
         port = ntohs(socketAddress->sa.sa_family == AF_INET ?
                      socketAddress->ipv4.sin_port :
                      socketAddress->ipv6.sin6_port);
-        
+        */
     }
     
     return addressString;

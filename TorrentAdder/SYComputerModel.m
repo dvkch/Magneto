@@ -17,23 +17,28 @@
 @implementation SYComputerModel
 
 -(id)init {
-    self = [self initWithName:@"Unknown" andIPs:nil];
-    return self;
-}
-
--(id)initWithName:(NSString *)name andIPs:(NSArray *)ip4s {
     self = [super init];
     if(self) {
-        self.name = name;
-        self.ip4s = ip4s;
-        self.port = [NSNumber numberWithInt:9091];
+        self.name = @"Unknown";
+        self.ip4s = @[];
+        self.portTransmission = @(9091);
+        self.portuTorrent = @(18764);
         self.sessionID = @"";
     }
     return self;
 }
 
+-(id)initWithName:(NSString *)name andIPs:(NSArray *)ip4s {
+    self = [self init];
+    if(self) {
+        self.name = name;
+        self.ip4s = ip4s;
+    }
+    return self;
+}
+
 -(id)initWithService:(NSNetService *)service {
-    self = [super init];
+    self = [self init];
     if(self) {
         NSMutableArray *arr = [@[] mutableCopy];
         for(NSData *ipData in [service addresses]) {
@@ -44,8 +49,6 @@
         self.ip4s = [NSArray arrayWithArray:arr];
         self.name = [[service hostName] stringByReplacingOccurrencesOfString:@".local."
                                                                   withString:@""];
-        self.port = [NSNumber numberWithInt:9091];
-        self.sessionID = @"";
     }
     return self;
 }
@@ -63,7 +66,7 @@
     return [[(SYComputerModel*)object name] isEqualToString:self.name];
 }
 
--(BOOL)isPortOpened {
+-(BOOL)isPortOpened:(NSNumber*)port {
     if(!self.firstIP4address)
         return NO;
     
@@ -72,7 +75,7 @@
     struct sockaddr_in ipAddress;
     ipAddress.sin_len = sizeof(ipAddress);
     ipAddress.sin_family = AF_INET;
-    ipAddress.sin_port = htons(self.port.intValue);
+    ipAddress.sin_port = htons(port.intValue);
     inet_pton(AF_INET,
               [self.firstIP4address cStringUsingEncoding:NSASCIIStringEncoding],
               &ipAddress.sin_addr);
@@ -83,21 +86,49 @@
     return (c == 0);
 }
 
--(NSURL *)rpcURL {
+-(BOOL)transmissionPortOpened {
+    return [self isPortOpened:self.portTransmission];
+}
+
+-(BOOL)uTorrentPortOpened {
+    return [self isPortOpened:self.portuTorrent];
+}
+
+-(NSURL *)transmissionApiURL {
     NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/transmission/rpc",
                            self.firstIP4address,
-                           self.port.intValue];
+                           self.portTransmission.intValue];
+    
+    return [NSURL URLWithString:urlString];
+}
+
+-(NSURL *)transmissionGuiURL {
+    NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/transmission/web/",
+                           self.firstIP4address,
+                           self.portTransmission.intValue];
+    
+    return [NSURL URLWithString:urlString];
+}
+
+-(NSURL *)uTorrentApiURL {
+    return nil;
+}
+
+-(NSURL *)uTorrentGuiURL {
+    NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/gui",
+                           self.firstIP4address,
+                           self.portuTorrent.intValue];
     
     return [NSURL URLWithString:urlString];
 }
 
 // https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
--(NSURLRequest*)requestForAddingMagnet:(NSURL *)magnet {
+-(NSURLRequest*)requestForAddingMagnetTransmission:(NSURL *)magnet {
     
     if(!magnet)
         return nil;
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.rpcURL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.transmissionApiURL];
     [request setHTTPMethod:@"POST"];
     
     NSDictionary *d = @{@"method"    : @"torrent-add",
@@ -106,7 +137,7 @@
     NSString *post = [d bv_jsonStringWithPrettyPrint:NO];
     
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSString *postLength = [NSString stringWithFormat:@"%d",[postData length]];
+    NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postData length]];
     [request addValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request addValue:self.sessionID forHTTPHeaderField:@"X-Transmission-Session-Id"];
     [request setHTTPBody:postData];
@@ -114,6 +145,10 @@
     return request;
 }
 
+-(NSURLRequest*)requestForAddingMagnetUTorrent:(NSURL*)magnet {
+    NSLog(@"NOT IMPLEMENTED");
+    return nil;
+}
 
 -(BOOL)hasHostnameAndIP
 {

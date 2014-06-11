@@ -12,18 +12,25 @@
 
 @property (strong, atomic) NSString *name;
 @property (strong, atomic) NSArray  *ip4s;
-@property (strong, atomic) NSNumber *port;
+@property (strong, atomic) NSNumber *portuTorrent;
+@property (strong, atomic) NSNumber *portTransmission;
 @property (strong, atomic) NSString *sessionID;
 
 -(id)initWithName:(NSString*)name andIPs:(NSArray*)ip4s;
 -(id)initWithService:(NSNetService*)service;
 
 -(NSString*)firstIP4address;
--(BOOL)isPortOpened;
+-(BOOL)transmissionPortOpened;
+-(BOOL)uTorrentPortOpened;
 
--(NSURL*)rpcURL;
+-(NSURL*)transmissionApiURL;
+-(NSURL*)transmissionGuiURL;
 
--(NSURLRequest*)requestForAddingMagnet:(NSURL*)magnet;
+-(NSURL*)uTorrentApiURL;
+-(NSURL*)uTorrentGuiURL;
+
+-(NSURLRequest*)requestForAddingMagnetTransmission:(NSURL*)magnet;
+-(NSURLRequest*)requestForAddingMagnetUTorrent:(NSURL*)magnet;
 
 -(BOOL)hasHostnameAndIP;
 

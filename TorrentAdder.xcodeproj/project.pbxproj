@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F83FFA3F192BE7440034A95B /* SYAdder.m in Sources */ = {isa = PBXBuildFile; fileRef = F83FFA3E192BE7440034A95B /* SYAdder.m */; };
+		F88EEC0B1948FF1800D98F4F /* SYWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F88EEC0A1948FF1800D98F4F /* SYWebVC.m */; };
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
 		F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675C192A317C00735175 /* CoreGraphics.framework */; };
 		F898675F192A317C00735175 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675E192A317C00735175 /* UIKit.framework */; };
@@ -54,6 +55,8 @@
 		F83FFA3D192BE7440034A95B /* SYAdder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYAdder.h; sourceTree = "<group>"; };
 		F83FFA3E192BE7440034A95B /* SYAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAdder.m; sourceTree = "<group>"; };
 		F83FFA41192BE8860034A95B /* SYMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMacros.h; sourceTree = "<group>"; };
+		F88EEC091948FF1800D98F4F /* SYWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYWebVC.h; sourceTree = "<group>"; };
+		F88EEC0A1948FF1800D98F4F /* SYWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYWebVC.m; sourceTree = "<group>"; };
 		F8986757192A317C00735175 /* TorrentAdder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TorrentAdder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F898675A192A317C00735175 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F898675C192A317C00735175 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -107,6 +110,7 @@
 		F898681B192BC06700735175 /* iconion5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconion5.png; sourceTree = "<group>"; };
 		F8986834192BC9B600735175 /* NSString+Equal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Equal.h"; sourceTree = "<group>"; };
 		F8986835192BC9B600735175 /* NSString+Equal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Equal.m"; sourceTree = "<group>"; };
+		F8F840EA192DF65B00BD9EA3 /* TorrentAdder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TorrentAdder.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +168,7 @@
 		F8986760192A317C00735175 /* TorrentAdder */ = {
 			isa = PBXGroup;
 			children = (
+				F8F840EA192DF65B00BD9EA3 /* TorrentAdder.entitlements */,
 				F83FFA40192BE74E0034A95B /* API */,
 				F89867BE192BA8D500735175 /* Categories */,
 				F89867BF192BA8DC00735175 /* Models */,
@@ -222,6 +227,8 @@
 				F89867B3192B7B1100735175 /* SYComputerCell.m */,
 				F89867B5192B859600735175 /* SYLabelTag.h */,
 				F89867B6192B859600735175 /* SYLabelTag.m */,
+				F88EEC091948FF1800D98F4F /* SYWebVC.h */,
+				F88EEC0A1948FF1800D98F4F /* SYWebVC.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -314,6 +321,12 @@
 					F8986756192A317C00735175 = {
 						DevelopmentTeam = 79RY8264V4;
 						SystemCapabilities = {
+							com.apple.DataProtection = {
+								enabled = 0;
+							};
+							com.apple.Keychain = {
+								enabled = 0;
+							};
 							com.apple.iCloud = {
 								enabled = 0;
 							};
@@ -384,6 +397,7 @@
 				F8986836192BC9B600735175 /* NSString+Equal.m in Sources */,
 				F89867B4192B7B1100735175 /* SYComputerCell.m in Sources */,
 				F898676B192A317C00735175 /* SYAppDelegate.m in Sources */,
+				F88EEC0B1948FF1800D98F4F /* SYWebVC.m in Sources */,
 				F8986794192A324800735175 /* SYMainVC.m in Sources */,
 				F8986767192A317C00735175 /* main.m in Sources */,
 				F89867B7192B859600735175 /* SYLabelTag.m in Sources */,
@@ -449,7 +463,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -482,7 +496,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

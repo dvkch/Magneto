@@ -127,7 +127,7 @@
 {
     [self setResponse:response forConnection:connection];
     
-    int code = [(NSHTTPURLResponse*)response statusCode];
+    NSInteger code = [(NSHTTPURLResponse*)response statusCode];
     if(code == 409) {
         NSMutableURLRequest *newRequest = [[connection originalRequest] mutableCopy];
         NSString *sessionID = [[(NSHTTPURLResponse*)response allHeaderFields]
