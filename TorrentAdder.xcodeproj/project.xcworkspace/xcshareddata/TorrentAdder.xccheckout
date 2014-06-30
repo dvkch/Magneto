@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>96A5FD34-3557-4CD4-A694-2CFCC68E7EF0</string>
+	<key>IDESourceControlProjectName</key>
+	<string>TorrentAdder</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>9DF21735-A113-45A4-A4F3-717253E5449D</key>
+		<string>https://github.com/dvkch/TorrentAdder.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>TorrentAdder.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9DF21735-A113-45A4-A4F3-717253E5449D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/dvkch/TorrentAdder.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9DF21735-A113-45A4-A4F3-717253E5449D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9DF21735-A113-45A4-A4F3-717253E5449D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>TorrentAdder</string>
+		</dict>
+	</array>
+</dict>
+</plist>
