@@ -16,6 +16,8 @@
 @property (weak,   nonatomic) IBOutlet UILabel *ipLabel;
 @property (weak,   nonatomic) IBOutlet UIView  *onlineView;
 @property (weak,   nonatomic) IBOutlet UIView  *selectedBackgroundCustomView;
+@property (weak,   nonatomic) IBOutlet UIActivityIndicatorView  *activityIndicator;
+
 @property (strong, nonatomic) SYComputerModel  *computer;
 @property (strong, atomic) void(^tapShort)(SYComputerModel* computer);
 @property (strong, atomic) void(^tapLong )(SYComputerModel* computer);

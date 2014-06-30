@@ -23,7 +23,10 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
 #ifdef DEBUG
     int64_t t = (int64_t)(2.0 * NSEC_PER_SEC);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, t), dispatch_get_main_queue(), ^{
-        self.url = [NSURL URLWithString:@"magnet:?xt=urn:btih:02013439B6C963D3108785C2372DD25C671678D4&dn=The+100+S01E12+HDTV+x264-KILLERS%5Bettv%5D&tr=http%3A%2F%2Ftracker.ex.ua%3A80%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=http%3A%2F%2F94.228.192.98%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.prq.to%2Fannounce&tr=udp%3A%2F%2F9.rarbg.com%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.token.ro%3A80%2Fannounce&tr=udp%3A%2F%2F10.rarbg.com%2Fannounce&tr=udp%3A%2F%2F11.rarbg.me%2Fannounce&tr=udp%3A%2F%2Fpow7.com%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80%2Fannounce&tr=udp%3A%2F%2Fipv4.tracker.harry.lu%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.istole.it%3A80%2Fannounce"];
+        if(self.url)
+            return;
+        
+        self.url = [NSURL URLWithString:@"magnet:?xt=urn:btih:4D753474429D817B80FF9E0C441CA660EC5D2450&dn=ubuntu+14+04+lts+desktop+64bit+iso&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.com%3A1337"];
         [[NSNotificationCenter defaultCenter] postNotificationName:UIAppDidOpenURL object:nil];
     });
 #endif

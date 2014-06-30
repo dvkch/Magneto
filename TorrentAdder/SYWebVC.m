@@ -29,9 +29,9 @@
     [super viewWillAppear:animated];
     
     NSURL *url;
-    if([self->_computer transmissionPortOpened])
+    if(self->_computer.transmissionPortOpened == PortResult_Opened)
         url = self->_computer.transmissionGuiURL;
-    else if([self->_computer uTorrentPortOpened])
+    else if(self->_computer.uTorrentPortOpened == PortResult_Opened)
         url = self->_computer.uTorrentGuiURL;
     
     self.titleBar.topItem.title = self->_computer.name;

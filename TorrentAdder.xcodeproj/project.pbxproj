@@ -110,7 +110,6 @@
 		F898681B192BC06700735175 /* iconion5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconion5.png; sourceTree = "<group>"; };
 		F8986834192BC9B600735175 /* NSString+Equal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Equal.h"; sourceTree = "<group>"; };
 		F8986835192BC9B600735175 /* NSString+Equal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Equal.m"; sourceTree = "<group>"; };
-		F8F840EA192DF65B00BD9EA3 /* TorrentAdder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TorrentAdder.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,7 +167,6 @@
 		F8986760192A317C00735175 /* TorrentAdder */ = {
 			isa = PBXGroup;
 			children = (
-				F8F840EA192DF65B00BD9EA3 /* TorrentAdder.entitlements */,
 				F83FFA40192BE74E0034A95B /* API */,
 				F89867BE192BA8D500735175 /* Categories */,
 				F89867BF192BA8DC00735175 /* Models */,

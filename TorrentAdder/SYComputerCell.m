@@ -58,11 +58,16 @@
     [self.nameLabel setText:computer.name];
     [self.ipLabel   setText:computer.firstIP4address];
     
-    [self.onlineView setBackgroundColor:COLOR_NO];
-    if(self.computer.transmissionPortOpened || self.computer.uTorrentPortOpened)
-        [self.onlineView setBackgroundColor:COLOR_YES];
-    
+    [self.activityIndicator setHidesWhenStopped:YES];
     [self.onlineView.layer setCornerRadius:self.onlineView.frame.size.height / 2.f];
+    
+    [self.activityIndicator startAnimating];
+    [self.onlineView setBackgroundColor:[UIColor clearColor]];
+    
+    [self.computer atLeastOnePortOpened:^(BOOL opened) {
+        [self.activityIndicator stopAnimating];
+        [self.onlineView setBackgroundColor:(opened ? COLOR_YES : COLOR_NO)];
+    }];
 }
 
 -(void)setSelected:(BOOL)selected animated:(BOOL)animated {

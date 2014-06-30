@@ -158,6 +158,10 @@
 
 -(void)tappedOnComputer:(SYComputerModel*)computer longTap:(BOOL)longTap
 {
+    if(computer.transmissionPortOpened != PortResult_Opened &&
+       computer.uTorrentPortOpened     != PortResult_Opened)
+        return;
+    
     SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     
     if(!longTap && !appDelegate.url) {
