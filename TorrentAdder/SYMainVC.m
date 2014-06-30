@@ -184,7 +184,6 @@
     
     if(longTap) {
         self.lastTappedComputer = computer;
-        NSLog(@"%d", [self.navigationController.viewControllers count]);
         [self performSegueWithIdentifier:@"segueToWeb" sender:self];
     }
 }
