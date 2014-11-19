@@ -17,7 +17,6 @@
 #import "SYAdder.h"
 #import "SYWebVC.h"
 
-
 #define ALERT_VIEW_TAG_OPEN_SOURCE_APP (4)
 
 @interface SYMainVC ()
@@ -36,6 +35,8 @@
     
     self.navigationController.navigationBarHidden = YES;
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    
+    [self.whiteBackgroundView setBackgroundColor:[UIColor whiteColor]];
     
     [self.titleLabel addGlow:[UIColor lightGrayColor] size:4.f];
     
@@ -114,33 +115,22 @@
 #pragma mark - UITableView methods
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2; // transmission clients + empty cells (for parallax)
+    return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(section == 0) {
-        return [self->devices count];
-    }
-    return ([self->devices count] > 7 ? 0 : (7 - [self->devices count]));
+    return [self->devices count];
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if(section == 0)
-        return @"Available computers";
-    return nil;
+    return @"Available computers";
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView
         cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = nil;
-    if(indexPath.section == 1) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"cellEmpty"];
-        return cell;
-    }
-    
-    cell = [tableView dequeueReusableCellWithIdentifier:@"cellComputer"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellComputer"];
     
     [(SYComputerCell*)cell setTapShort:^(SYComputerModel *computer) {
         [self tappedOnComputer:computer longTap:NO];
@@ -191,8 +181,6 @@
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView
           editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 1)
-        return UITableViewCellEditingStyleNone;
     return UITableViewCellEditingStyleNone;
 }
 
@@ -258,6 +246,13 @@
     CGRect frameHeader = self.headerView.frame;
     frameHeader.origin.y = headerViewOffset + parallaxOffest;
     [self.headerView setFrame:frameHeader];
+    
+    CGFloat offset = self.tableView.tableHeaderView.frame.size.height - scrollOffset;
+    offset = offset < 0 ? 0 : offset;
+    
+    CGFloat backgroundViewTop = self.tableView.frame.origin.y + offset;
+    CGRect backgroundViewFrame = CGRectMake(0, backgroundViewTop, self.tableView.frame.size.width, self.view.frame.size.height - backgroundViewTop);
+    [self.whiteBackgroundView setFrame:backgroundViewFrame];
 }
 
 #pragma mark - UIAlertViewDelegate methods

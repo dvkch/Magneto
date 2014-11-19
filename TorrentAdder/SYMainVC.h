@@ -32,6 +32,7 @@ UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet SYLabelTag  *headerTorrentLabel;
 @property (weak, nonatomic) IBOutlet UILabel     *headerTorrentName;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView      *whiteBackgroundView;
 
 @property (strong, nonatomic) SYComputerModel *lastTappedComputer;
 
