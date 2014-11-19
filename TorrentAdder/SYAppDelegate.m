@@ -19,7 +19,7 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
     self.url = nil;
     self.appUrlIsFromParsed = SYAppUnknown;
     self.appUrlIsFrom = nil;
-        
+    
 #ifdef DEBUG
     int64_t t = (int64_t)(2.0 * NSEC_PER_SEC);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, t), dispatch_get_main_queue(), ^{

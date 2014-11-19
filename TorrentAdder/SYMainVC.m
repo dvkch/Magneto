@@ -35,7 +35,7 @@
                                                object:nil];
     
     self.navigationController.navigationBarHidden = YES;
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     
     [self.titleLabel addGlow:[UIColor lightGrayColor] size:4.f];
     
