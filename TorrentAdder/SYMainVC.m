@@ -38,21 +38,20 @@
     
     [self.whiteBackgroundView setBackgroundColor:[UIColor whiteColor]];
     
-    [self.titleLabel addGlow:[UIColor lightGrayColor] size:4.f];
+    if(!IOS_VER_GREATER_OR_EQUAL(@"7.0"))
+        [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:38.f]];
     
+    [self.titleLabel addGlow:[UIColor lightGrayColor] size:4.f];
     [self.helpButton addGlow:self.helpButton.titleLabel.textColor size:8.f];
     
     [self.headerTorrentLabel setText:@"NO TORRENT PROVIDED"];
     [self.headerTorrentName  setText:@""];
     
     [self.headerView setBackgroundColor:[UIColor clearColor]];
-    [self.tableView setBackgroundColor:[UIColor clearColor]];
+    [self.tableView  setBackgroundColor:[UIColor clearColor]];
     
     [self.tableView setDataSource:self];
     [self.tableView setDelegate:self];
-    
-    if(!IOS_VER_GREATER_OR_EQUAL(@"7.0"))
-        [self.tableView setBackgroundColor:[UIColor whiteColor]];
     
     self->devices  = [[NSMutableArray alloc] init];
     self->services = [[NSMutableArray alloc] init];
@@ -98,6 +97,14 @@
                 }
             }
         }
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"segueToWeb"]) {
+        SYWebVC *vc = segue.destinationViewController;
+        [vc setComputer:self.lastTappedComputer];
     }
 }
 
@@ -185,11 +192,14 @@
 }
 
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
-    if([segue.identifier isEqualToString:@"segueToWeb"]) {
-        SYWebVC *vc = segue.destinationViewController;
-        [vc setComputer:self.lastTappedComputer];
+    if([view isKindOfClass:[UITableViewHeaderFooterView class]]) {
+        UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView*)view;
+        [header.contentView setBackgroundColor:[UIColor colorWithWhite:0.95f alpha:1.]];
+        [header.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:14]];
+        [header.textLabel setTextColor:[UIColor blackColor]];
+        [header.textLabel setShadowColor:nil];
     }
 }
 

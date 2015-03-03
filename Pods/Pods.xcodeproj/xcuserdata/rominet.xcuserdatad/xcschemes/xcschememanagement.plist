@@ -4,30 +4,25 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>SafariExt.xcscheme</key>
+		<key>Pods-SparkInspector.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>TorrentAdder.xcscheme</key>
+		<key>Pods.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>0</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>F88A0B211A80F7220089DE9A</key>
+		<key>0F0BA556F8DC00F130112E88</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F8986756192A317C00735175</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F898677A192A317D00735175</key>
+		<key>77F58210DC4C3A74417572E8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

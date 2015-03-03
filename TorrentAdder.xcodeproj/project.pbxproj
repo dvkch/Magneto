@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4661C372E047D67DB9CEFEF0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62147C4BE52FF9B1488713EA /* libPods.a */; };
 		F83FFA3F192BE7440034A95B /* SYAdder.m in Sources */ = {isa = PBXBuildFile; fileRef = F83FFA3E192BE7440034A95B /* SYAdder.m */; };
+		F86BA6C41AA5B9E60034833B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F86BA6C31AA5B9E60034833B /* Main.storyboard */; };
+		F88A0B281A80F7220089DE9A /* ActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F88A0B271A80F7220089DE9A /* ActionViewController.m */; };
+		F88A0B2A1A80F7220089DE9A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F88A0B291A80F7220089DE9A /* MainInterface.storyboard */; };
+		F88A0B2D1A80F7220089DE9A /* SafariExt.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F88A0B221A80F7220089DE9A /* SafariExt.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F88EEC0B1948FF1800D98F4F /* SYWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F88EEC0A1948FF1800D98F4F /* SYWebVC.m */; };
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
 		F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675C192A317C00735175 /* CoreGraphics.framework */; };
@@ -15,7 +20,6 @@
 		F8986765192A317C00735175 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F8986763192A317C00735175 /* InfoPlist.strings */; };
 		F8986767192A317C00735175 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8986766192A317C00735175 /* main.m */; };
 		F898676B192A317C00735175 /* SYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F898676A192A317C00735175 /* SYAppDelegate.m */; };
-		F898676E192A317C00735175 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F898676C192A317C00735175 /* Main.storyboard */; };
 		F8986776192A317C00735175 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8986775192A317C00735175 /* Images.xcassets */; };
 		F8986794192A324800735175 /* SYMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F8986793192A324800735175 /* SYMainVC.m */; };
 		F898679A192A34E600735175 /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = F8986799192A34E600735175 /* UIView+Glow.m */; };
@@ -51,10 +55,43 @@
 		F8986836192BC9B600735175 /* NSString+Equal.m in Sources */ = {isa = PBXBuildFile; fileRef = F8986835192BC9B600735175 /* NSString+Equal.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F88A0B2B1A80F7220089DE9A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F898674F192A317C00735175 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F88A0B211A80F7220089DE9A;
+			remoteInfo = SafariExt;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F88A0B311A80F7220089DE9A /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F88A0B2D1A80F7220089DE9A /* SafariExt.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		55345FDB45AB4D9C72ECFAAD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		62147C4BE52FF9B1488713EA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A30D2A07BE705893426CB12E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F83FFA3D192BE7440034A95B /* SYAdder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYAdder.h; sourceTree = "<group>"; };
 		F83FFA3E192BE7440034A95B /* SYAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAdder.m; sourceTree = "<group>"; };
 		F83FFA41192BE8860034A95B /* SYMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMacros.h; sourceTree = "<group>"; };
+		F86BA6C31AA5B9E60034833B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		F88A0B221A80F7220089DE9A /* SafariExt.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SafariExt.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F88A0B251A80F7220089DE9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F88A0B261A80F7220089DE9A /* ActionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActionViewController.h; sourceTree = "<group>"; };
+		F88A0B271A80F7220089DE9A /* ActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActionViewController.m; sourceTree = "<group>"; };
+		F88A0B291A80F7220089DE9A /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		F88EEC091948FF1800D98F4F /* SYWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYWebVC.h; sourceTree = "<group>"; };
 		F88EEC0A1948FF1800D98F4F /* SYWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYWebVC.m; sourceTree = "<group>"; };
 		F8986757192A317C00735175 /* TorrentAdder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TorrentAdder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,7 +104,6 @@
 		F8986768192A317C00735175 /* TorrentAdder-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TorrentAdder-Prefix.pch"; sourceTree = "<group>"; };
 		F8986769192A317C00735175 /* SYAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYAppDelegate.h; sourceTree = "<group>"; };
 		F898676A192A317C00735175 /* SYAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYAppDelegate.m; sourceTree = "<group>"; };
-		F898676D192A317C00735175 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F8986775192A317C00735175 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F898677C192A317D00735175 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		F8986792192A324800735175 /* SYMainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYMainVC.h; sourceTree = "<group>"; };
@@ -113,6 +149,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F88A0B1F1A80F7220089DE9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8986754192A317C00735175 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -120,12 +163,22 @@
 				F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */,
 				F898675F192A317C00735175 /* UIKit.framework in Frameworks */,
 				F898675B192A317C00735175 /* Foundation.framework in Frameworks */,
+				4661C372E047D67DB9CEFEF0 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7D46273E7AD94D8AF4126FFD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A30D2A07BE705893426CB12E /* Pods.debug.xcconfig */,
+				55345FDB45AB4D9C72ECFAAD /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		F83FFA40192BE74E0034A95B /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,13 +188,34 @@
 			name = API;
 			sourceTree = "<group>";
 		};
+		F88A0B231A80F7220089DE9A /* SafariExt */ = {
+			isa = PBXGroup;
+			children = (
+				F88A0B261A80F7220089DE9A /* ActionViewController.h */,
+				F88A0B271A80F7220089DE9A /* ActionViewController.m */,
+				F88A0B291A80F7220089DE9A /* MainInterface.storyboard */,
+				F88A0B241A80F7220089DE9A /* Supporting Files */,
+			);
+			path = SafariExt;
+			sourceTree = "<group>";
+		};
+		F88A0B241A80F7220089DE9A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F88A0B251A80F7220089DE9A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		F898674E192A317C00735175 = {
 			isa = PBXGroup;
 			children = (
 				F8986760192A317C00735175 /* TorrentAdder */,
+				F88A0B231A80F7220089DE9A /* SafariExt */,
 				F8986759192A317C00735175 /* Frameworks */,
 				F8986758192A317C00735175 /* Products */,
 				F8986800192BC06700735175 /* Resources */,
+				7D46273E7AD94D8AF4126FFD /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				F8986757192A317C00735175 /* TorrentAdder.app */,
+				F88A0B221A80F7220089DE9A /* SafariExt.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -160,6 +235,7 @@
 				F898675C192A317C00735175 /* CoreGraphics.framework */,
 				F898675E192A317C00735175 /* UIKit.framework */,
 				F898677C192A317D00735175 /* XCTest.framework */,
+				62147C4BE52FF9B1488713EA /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -173,7 +249,7 @@
 				F89867C0192BA8E800735175 /* Views */,
 				F8986769192A317C00735175 /* SYAppDelegate.h */,
 				F898676A192A317C00735175 /* SYAppDelegate.m */,
-				F898676C192A317C00735175 /* Main.storyboard */,
+				F86BA6C31AA5B9E60034833B /* Main.storyboard */,
 				F8986775192A317C00735175 /* Images.xcassets */,
 				F8986761192A317C00735175 /* Supporting Files */,
 				F83FFA41192BE8860034A95B /* SYMacros.h */,
@@ -289,17 +365,38 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F8986756192A317C00735175 /* TorrentAdder */ = {
+		F88A0B211A80F7220089DE9A /* SafariExt */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F898678C192A317D00735175 /* Build configuration list for PBXNativeTarget "TorrentAdder" */;
+			buildConfigurationList = F88A0B301A80F7220089DE9A /* Build configuration list for PBXNativeTarget "SafariExt" */;
 			buildPhases = (
-				F8986753192A317C00735175 /* Sources */,
-				F8986754192A317C00735175 /* Frameworks */,
-				F8986755192A317C00735175 /* Resources */,
+				F88A0B1E1A80F7220089DE9A /* Sources */,
+				F88A0B1F1A80F7220089DE9A /* Frameworks */,
+				F88A0B201A80F7220089DE9A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+			);
+			name = SafariExt;
+			productName = SafariExt;
+			productReference = F88A0B221A80F7220089DE9A /* SafariExt.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		F8986756192A317C00735175 /* TorrentAdder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F898678C192A317D00735175 /* Build configuration list for PBXNativeTarget "TorrentAdder" */;
+			buildPhases = (
+				5EB10D0D3D04A6B3A9DCBC15 /* Check Pods Manifest.lock */,
+				F8986753192A317C00735175 /* Sources */,
+				F8986754192A317C00735175 /* Frameworks */,
+				F8986755192A317C00735175 /* Resources */,
+				F88A0B311A80F7220089DE9A /* Embed App Extensions */,
+				B61D74F239314D74C17BB08E /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F88A0B2C1A80F7220089DE9A /* PBXTargetDependency */,
 			);
 			name = TorrentAdder;
 			productName = TorrentAdder;
@@ -316,6 +413,10 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
+					F88A0B211A80F7220089DE9A = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 79RY8264V4;
+					};
 					F8986756192A317C00735175 = {
 						DevelopmentTeam = 79RY8264V4;
 						SystemCapabilities = {
@@ -346,11 +447,20 @@
 			projectRoot = "";
 			targets = (
 				F8986756192A317C00735175 /* TorrentAdder */,
+				F88A0B211A80F7220089DE9A /* SafariExt */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F88A0B201A80F7220089DE9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F88A0B2A1A80F7220089DE9A /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8986755192A317C00735175 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -362,9 +472,9 @@
 				F8986826192BC06700735175 /* Icon-76@2x.png in Resources */,
 				F898681D192BC06700735175 /* back_gradient.png in Resources */,
 				F8986823192BC06700735175 /* Icon-60.png in Resources */,
+				F86BA6C41AA5B9E60034833B /* Main.storyboard in Resources */,
 				F8986820192BC06700735175 /* Icon-29@2x.png in Resources */,
 				F8986830192BC06700735175 /* iconion2.png in Resources */,
-				F898676E192A317C00735175 /* Main.storyboard in Resources */,
 				F898681E192BC06700735175 /* back_leaves.jpg in Resources */,
 				F898682E192BC06700735175 /* old_icon-76@2x.png in Resources */,
 				F8986832192BC06700735175 /* iconion4.png in Resources */,
@@ -387,7 +497,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5EB10D0D3D04A6B3A9DCBC15 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B61D74F239314D74C17BB08E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		F88A0B1E1A80F7220089DE9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F88A0B281A80F7220089DE9A /* ActionViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8986753192A317C00735175 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -409,6 +560,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F88A0B2C1A80F7220089DE9A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F88A0B211A80F7220089DE9A /* SafariExt */;
+			targetProxy = F88A0B2B1A80F7220089DE9A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		F8986763192A317C00735175 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -418,17 +577,45 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		F898676C192A317C00735175 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F898676D192A317C00735175 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		F88A0B2E1A80F7220089DE9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SafariExt/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		F88A0B2F1A80F7220089DE9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				INFOPLIST_FILE = SafariExt/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		F898678A192A317D00735175 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -503,6 +690,7 @@
 		};
 		F898678D192A317D00735175 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A30D2A07BE705893426CB12E /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -510,6 +698,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TorrentAdder/TorrentAdder-Prefix.pch";
 				INFOPLIST_FILE = "TorrentAdder/TorrentAdder-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -518,6 +707,7 @@
 		};
 		F898678E192A317D00735175 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55345FDB45AB4D9C72ECFAAD /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -525,6 +715,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TorrentAdder/TorrentAdder-Prefix.pch";
 				INFOPLIST_FILE = "TorrentAdder/TorrentAdder-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -534,6 +725,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F88A0B301A80F7220089DE9A /* Build configuration list for PBXNativeTarget "SafariExt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F88A0B2E1A80F7220089DE9A /* Debug */,
+				F88A0B2F1A80F7220089DE9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F8986752192A317C00735175 /* Build configuration list for PBXProject "TorrentAdder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
