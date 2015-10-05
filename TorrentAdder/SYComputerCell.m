@@ -8,74 +8,76 @@
 
 #import "SYComputerCell.h"
 #import "SYComputerModel.h"
+#import "SYNetworkManager.h"
 
 #define COLOR_YES ([UIColor greenColor])
 #define COLOR_NO  ([UIColor   redColor])
 
+@interface SYComputerCell ()
+@property (weak,   nonatomic) IBOutlet UILabel      *nameLabel;
+@property (weak,   nonatomic) IBOutlet UILabel      *hostLabel;
+@property (weak,   nonatomic) IBOutlet UIImageView  *statusImageView;
+@property (weak,   nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) SYComputerModel *computer;
+@end
+
 @implementation SYComputerCell
 
--(id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        
-        UILongPressGestureRecognizer *tapLong = [[UILongPressGestureRecognizer alloc] init];
-        [tapLong addTarget:self action:@selector(tapLong:)];
-        [tapLong setMinimumPressDuration:0.5];
-        
-        UITapGestureRecognizer *tapShort = [[UITapGestureRecognizer alloc] init];
-        [tapShort addTarget:self action:@selector(tapShort:)];
-        [tapShort requireGestureRecognizerToFail:tapLong];
-        
-        [self.contentView addGestureRecognizer:tapShort];
-        [self.contentView addGestureRecognizer:tapLong];
-    }
-    return self;
-}
-
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)setComputer:(SYComputerModel *)computer forAvailableComputersList:(BOOL)forAvailableComputersList
 {
-    [super touchesBegan:touches withEvent:event];
-    [self setSelected:YES animated:YES];
-}
-
--(void)tapShort:(id)sender {
-    [self setSelected:NO animated:YES];
-    if(self.tapShort) self.tapShort(self.computer);
-}
-
--(void)tapLong:(id)sender {
-    if([(UIGestureRecognizer*)sender state] != UIGestureRecognizerStateBegan)
-        return;
     
-    [self setSelected:NO animated:YES];
-    if(self.tapLong)  self.tapLong(self.computer);
-}
-
--(void)setComputer:(SYComputerModel *)computer {
-    [self setSelected:NO];
+    [self setAccessoryType:(forAvailableComputersList ?
+                            UITableViewCellAccessoryDisclosureIndicator :
+                            UITableViewCellAccessoryDetailDisclosureButton)];
+    
+    [self setComputer:computer];
     
     self->_computer = computer;
-    [self.nameLabel setText:computer.name];
-    [self.ipLabel   setText:computer.firstIP4address];
-    
-    [self.activityIndicator setHidesWhenStopped:YES];
-    [self.onlineView.layer setCornerRadius:self.onlineView.frame.size.height / 2.f];
-    
-    [self.activityIndicator startAnimating];
-    [self.onlineView setBackgroundColor:[UIColor clearColor]];
-    
-    [self.computer atLeastOnePortOpened:^(BOOL opened) {
-        [self.activityIndicator stopAnimating];
-        [self.onlineView setBackgroundColor:(opened ? COLOR_YES : COLOR_NO)];
-    }];
-}
 
--(void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+    if (self.computer)
+    {
+        [self.nameLabel setText:computer.name];
+        if (forAvailableComputersList)
+        {
+            [self.hostLabel setText:computer.host];
+        }
+        else
+        {
+            [self.hostLabel setText:[NSString stringWithFormat:@"%@:%d",
+                                     computer.host, computer.port]];
+        }
+    }
+    else
+    {
+        [self.nameLabel setText:@"Add a custom computer"];
+        [self.hostLabel setText:@"in case yours wasn't detected"];
+    }
     
-    [UIView animateWithDuration:0.1 animations:^{
-        [self.selectedBackgroundCustomView setAlpha:(selected ? 0.25 : 0)];
-    }];
+    SYComputerStatus status = [[SYNetworkManager shared] statusForComputer:computer];
+    if (forAvailableComputersList &&  computer)
+        status = SYComputerStatus_Opened;
+    if (forAvailableComputersList && !computer)
+        status = SYComputerStatus_Waiting;
+    
+    switch (status)
+    {
+        case SYComputerStatus_Unknown:
+            [self.statusImageView setImage:nil];
+            [self.activityIndicator stopAnimating];
+            break;
+        case SYComputerStatus_Waiting:
+            [self.statusImageView setImage:nil];
+            [self.activityIndicator startAnimating];
+            break;
+        case SYComputerStatus_Closed:
+            [self.statusImageView setImage:[UIImage imageNamed:@"traffic_grey"]];
+            [self.activityIndicator stopAnimating];
+            break;
+        case SYComputerStatus_Opened:
+            [self.statusImageView setImage:[UIImage imageNamed:@"traffic_green"]];
+            [self.activityIndicator stopAnimating];
+            break;
+    }
 }
 
 @end

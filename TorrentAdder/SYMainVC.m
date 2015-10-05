@@ -10,16 +10,37 @@
 #import "UIView+Glow.h"
 #import "SYComputerModel.h"
 #import "SYComputerCell.h"
+#import "SYComputersCell.h"
 #import "NSData+IPAddress.h"
-#import "NSArray+JSON.h"
 #import "SYLabelTag.h"
 #import "SYAppDelegate.h"
-#import "SYAdder.h"
+#import "SYClientAPI.h"
 #import "SYWebVC.h"
+#import "SYButton.h"
+#import "SYListComputersVC.h"
+#import "SYResultCell.h"
+#import "SYKickAPI.h"
+#import "SYAlertManager.h"
+#import "SYDatabase.h"
+#import "SYEditComputerVC.h"
+#import "UIColor+SY.h"
 
 #define ALERT_VIEW_TAG_OPEN_SOURCE_APP (4)
 
-@interface SYMainVC ()
+@interface SYMainVC () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+
+@property (weak, nonatomic) IBOutlet UILabel     *titleLabel;
+@property (weak, nonatomic) IBOutlet UIView      *headerView;
+@property (weak, nonatomic) IBOutlet SYLabelTag  *headerTorrentLabel;
+@property (weak, nonatomic) IBOutlet UILabel     *headerTorrentName;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintBlueHeaderHeight;
+@property (weak, nonatomic) IBOutlet UITextField *searchField;
+
+@property (strong, nonatomic) NSArray *computers;
+@property (strong, nonatomic) NSArray *searchResults;
+@property (strong, nonatomic) NSString *searchQuery;
+@property (assign, nonatomic) CGFloat constraintBlueHeaderHeightOriginalValue;
 
 @end
 
@@ -33,47 +54,41 @@
                                                  name:UIAppDidOpenURL
                                                object:nil];
     
-    self.navigationController.navigationBarHidden = YES;
-    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
-    
-    [self.whiteBackgroundView setBackgroundColor:[UIColor whiteColor]];
-    
-    if(!IOS_VER_GREATER_OR_EQUAL(@"7.0"))
-        [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:38.f]];
-    
     [self.titleLabel addGlow:[UIColor lightGrayColor] size:4.f];
-    [self.helpButton addGlow:self.helpButton.titleLabel.textColor size:8.f];
     
     [self.headerTorrentLabel setText:@"NO TORRENT PROVIDED"];
     [self.headerTorrentName  setText:@""];
     
-    [self.headerView setBackgroundColor:[UIColor clearColor]];
-    [self.tableView  setBackgroundColor:[UIColor clearColor]];
+    [self.tableView registerNib:[UINib nibWithNibName:[SYComputersCell className] bundle:nil]
+         forCellReuseIdentifier:[SYComputersCell className]];
+    [self.tableView registerNib:[UINib nibWithNibName:[SYComputerCell className] bundle:nil]
+         forCellReuseIdentifier:[SYComputerCell className]];
+    [self.tableView registerNib:[UINib nibWithNibName:[SYResultCell className] bundle:nil]
+         forCellReuseIdentifier:[SYResultCell className]];
+    [self.tableView setDelaysContentTouches:NO];
+    [self.tableView setTableFooterView:[[UIView alloc] init]];
     
-    [self.tableView setDataSource:self];
-    [self.tableView setDelegate:self];
-    
-    self->devices  = [[NSMutableArray alloc] init];
-    self->services = [[NSMutableArray alloc] init];
-    self->serviceBrowsers = [[NSMutableArray alloc] init];
-    self->connections = [[NSMutableArray alloc] init];
-    
-    self->allowedServicesNames = @[@"_afpovertcp._tcp.", @"_smb._tcp."];
-    for(NSString *serviceName in self->allowedServicesNames) {
-        NSNetServiceBrowser *serviceBrowser = [[NSNetServiceBrowser alloc] init];
-        [serviceBrowser setDelegate:self];
-        [serviceBrowser searchForServicesOfType:serviceName inDomain:@"local."];
-        [self->serviceBrowsers addObject:serviceBrowser];
-    }
+    self.constraintBlueHeaderHeightOriginalValue = self.constraintBlueHeaderHeight.constant;
 }
 
--(void)dealloc {
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
+    self.computers = [[SYDatabase shared] computers];
+    [self.tableView reloadData];
+}
+
+- (void)dealloc
+{
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIAppDidOpenURL
                                                   object:nil];
 }
 
--(void)appDidOpenURL:(id)notification {
+- (void)appDidOpenURL:(id)notification
+{
     SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     
     NSString *urlString = [appDelegate.url description];
@@ -100,17 +115,10 @@
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if([segue.identifier isEqualToString:@"segueToWeb"]) {
-        SYWebVC *vc = segue.destinationViewController;
-        [vc setComputer:self.lastTappedComputer];
-    }
-}
-
 #pragma mark - IBActions
 
--(IBAction)helpButtonClick:(id)sender {
+- (IBAction)helpButtonClick:(id)sender
+{
     [[[UIAlertView alloc] initWithTitle:@"Help"
                                 message:@"To add a torrent you need to open this app with a magnet. Go to Safari, open a page with a magnet link in it, click the magnet to open this app, and then select a computer to start downloading the torrent."
                                delegate:nil
@@ -118,233 +126,211 @@
                       otherButtonTitles:@"Close", nil] show];
 }
 
-
 #pragma mark - UITableView methods
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self->devices count];
-}
-
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Available computers";
-}
-
-
--(UITableViewCell *)tableView:(UITableView *)tableView
-        cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellComputer"];
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0)
+        return self.searchQuery ? 0 : 1;
+    if (section == 1)
+        return self.searchQuery ? 0 : self.computers.count;
+    return self.searchResults.count;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0)
+        return @"Available computers";
+    if (section == 1)
+        return nil;
+    return @"Results";
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0)
+    {
+        SYComputersCell *cell = [tableView dequeueReusableCellWithIdentifier:[SYComputersCell className]];
+        [cell setNumberOfComputers:self.computers.count];
+        [cell setTappedAddComputerBlock:^{
+            SYListComputersVC *vc = [[SYListComputersVC alloc] init];
+            SYNavigationController *nc = [[SYNavigationController alloc] initWithRootViewController:vc];
+            [self.navigationController presentViewController:nc animated:YES completion:nil];
+        }];
+        return cell;
+    }
+    if (indexPath.section == 1)
+    {
+        SYComputerCell *cell = [tableView dequeueReusableCellWithIdentifier:[SYComputerCell className]];
+        [cell setComputer:self.computers[indexPath.row] forAvailableComputersList:NO];
+        return cell;
+    }
     
-    [(SYComputerCell*)cell setTapShort:^(SYComputerModel *computer) {
-        [self tappedOnComputer:computer longTap:NO];
-    }];
-    
-    [(SYComputerCell*)cell setTapLong:^(SYComputerModel *computer) {
-        [self tappedOnComputer:computer longTap:YES];
-    }];
-    
-    SYComputerModel *computer = [self->devices objectAtIndex:indexPath.row];
-    [(SYComputerCell*)cell setComputer:computer];
-    
+    SYResultCell *cell = [tableView dequeueReusableCellWithIdentifier:[SYResultCell className]];
+    [cell setResult:self.searchResults[indexPath.row]];
     return cell;
 }
 
--(void)tappedOnComputer:(SYComputerModel*)computer longTap:(BOOL)longTap
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(computer.transmissionPortOpened != PortResult_Opened &&
-       computer.uTorrentPortOpened     != PortResult_Opened)
-        return;
-    
-    SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    
-    if(!longTap && !appDelegate.url) {
-        NSString *message = [NSString stringWithFormat:@"To add a torrent to %@ you need to open this app with a magnet. Go to Safari, open a page with a magnet link in it, click the magnet to open this app, and then select %@ to start downloading the torrent.",
-                             computer.name,
-                             computer.name];
-        
-        [[[UIAlertView alloc] initWithTitle:@"No torrent provided"
-                                    message:message
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:@"Close", nil] show];
-    }
-    
-    if(!longTap && appDelegate.url) {
-        [[SYAdder shared] setDelegate:self];
-        [[SYAdder shared] startRequest:[computer requestForAddingMagnetTransmission:appDelegate.url]
-                           forComputer:computer];
-    }
-    
-    if(longTap) {
-        self.lastTappedComputer = computer;
-        [self performSegueWithIdentifier:@"segueToWeb" sender:self];
-    }
+    if (indexPath.section == 0 || indexPath.section == 1)
+        return 60;
+    return [SYResultCell cellHeightForResult:self.searchResults[indexPath.row] width:tableView.frame.size.width];
 }
 
--(UITableViewCellEditingStyle)tableView:(UITableView *)tableView
-          editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView
+           editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 1)
+        return UITableViewCellEditingStyleDelete;
     return UITableViewCellEditingStyleNone;
 }
 
-
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([view isKindOfClass:[UITableViewHeaderFooterView class]]) {
-        UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView*)view;
-        [header.contentView setBackgroundColor:[UIColor colorWithWhite:0.95f alpha:1.]];
-        [header.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:14]];
-        [header.textLabel setTextColor:[UIColor blackColor]];
-        [header.textLabel setShadowColor:nil];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0)
+    {
+        SYListComputersVC *vc = [[SYListComputersVC alloc] init];
+        SYNavigationController *nc = [[SYNavigationController alloc] initWithRootViewController:vc];
+        [self.navigationController presentViewController:nc animated:YES completion:nil];
+    }
+    if (indexPath.section == 1)
+    {
+        SYEditComputerVC *vc = [[SYEditComputerVC alloc] init];
+        [vc setComputer:self.computers[indexPath.row]];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if (indexPath.section == 2)
+    {
+        NSLog(@"wants to download %@", self.searchResults[indexPath.row]);
     }
 }
 
-#pragma mark - NSNetServiceBrowserDelegate methods
-
--(void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser
-          didFindService:(NSNetService *)aNetService
-              moreComing:(BOOL)moreComing
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    [self->services addObject:aNetService];
-    [aNetService setDelegate:self];
-    [aNetService resolveWithTimeout:0];
+    if (indexPath.section == 1)
+    {
+        SYWebVC *vc = [[SYWebVC alloc] init];
+        [vc setComputer:self.computers[indexPath.row]];
+        SYNavigationController *nc = [[SYNavigationController alloc] initWithRootViewController:vc];
+        [self.navigationController presentViewController:nc animated:YES completion:nil];
+    }
 }
 
--(void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser
-        didRemoveService:(NSNetService *)aNetService
-              moreComing:(BOOL)moreComing
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self->services removeObject:aNetService];
+    if (indexPath.section == 1 && editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [[SYDatabase shared] removeComputer:self.computers[indexPath.row]];
+        
+        NSMutableArray *computers = [self.computers mutableCopy];
+        [computers removeObjectAtIndex:indexPath.row];
+        self.computers = [computers copy];
+        
+        [tableView beginUpdates];
+        [tableView deleteRowsAtIndexPaths:@[indexPath]
+                         withRowAnimation:UITableViewRowAnimationAutomatic];
+        [tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
+                         withRowAnimation:UITableViewRowAnimationFade];
+        [tableView endUpdates];
+    }
 }
 
-#pragma mark - NSNetServiceDelegate methods
-
--(void)netServiceDidResolveAddress:(NSNetService *)sender
+/*
+- (void)tappedOnComputer:(SYComputerModel*)computer
 {
-    SYComputerModel *c = [[SYComputerModel alloc] initWithService:sender];
-    NSUInteger idx = [self->devices indexOfObject:c];
-    if(idx != NSNotFound) {
-        SYComputerModel *duplicateC = [self->devices objectAtIndex:idx];
-        if(![duplicateC hasHostnameAndIP]) {
-            [self->devices removeObjectAtIndex:idx];
-            [self->devices addObject:c];
-        }
-    }
-    else {
-        [self->devices addObject:c];
-    }
+    SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     
-    [self.tableView reloadData];
-}
-
-#pragma mark - UIScrollViewDelegate methods (Parallax)
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    if(scrollView != self.tableView)
+    if (appDelegate.url)
+    {
+        [[SYClientAPI shared] addMagnet:appDelegate.url toComputer:computer completion:^(NSString *message, NSError *error) {
+            [SYAlertManager showMagnetAddedToComputer:computer
+                                          withMessage:message
+                                                error:error
+                                            backToApp:(appDelegate.appUrlIsFromParsed != SYAppUnknown)
+                                                block:^(BOOL backToApp)
+             {
+                 if (backToApp)
+                 {
+                     [appDelegate openAppThatOpenedMe];
+                 }
+             }];
+        }];
         return;
+    }
     
-    CGFloat headerViewOffset = -100;
-    CGFloat scrollOffset = scrollView.contentOffset.y;
-    
-    CGFloat parallaxOffest = - (scrollOffset / (scrollOffset < 0 ? 4.f : 8.f));
-    
-    CGRect frameHeader = self.headerView.frame;
-    frameHeader.origin.y = headerViewOffset + parallaxOffest;
-    [self.headerView setFrame:frameHeader];
-    
-    CGFloat offset = self.tableView.tableHeaderView.frame.size.height - scrollOffset;
-    offset = offset < 0 ? 0 : offset;
-    
-    CGFloat backgroundViewTop = self.tableView.frame.origin.y + offset;
-    CGRect backgroundViewFrame = CGRectMake(0, backgroundViewTop, self.tableView.frame.size.width, self.view.frame.size.height - backgroundViewTop);
-    [self.whiteBackgroundView setFrame:backgroundViewFrame];
+    [SYAlertManager showHelpMagnetAlertForComputer:computer];
 }
+*/
 
-#pragma mark - UIAlertViewDelegate methods
+#pragma mark - Search
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+- (void)setSearchQuery:(NSString *)searchQuery
+{
+    self->_searchQuery = searchQuery;
     
-    if(buttonIndex == alertView.cancelButtonIndex)
+    if (!self.searchQuery.length)
+    {
+        self.searchResults = nil;
+        [self.tableView reloadData];
         return;
-    
-    if(alertView.tag == ALERT_VIEW_TAG_OPEN_SOURCE_APP) {
-        SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-        [appDelegate openAppThatOpenedMe];
     }
-}
-
-#pragma mark - SYAdderDelegate methods
-
--(void)request:(NSURLRequest *)request
-   forComputer:(SYComputerModel *)computer
-finishedWithResponse:(NSURLResponse *)response
-andContentData:(NSData *)contentData
-{
-    NSInteger code = [(NSHTTPURLResponse*)response statusCode];
     
-    NSString        *bodyString = [contentData stringWithUTF8Encoding];
-    NSDictionary    *bodyJSON   = [contentData json];
-    
-    if(code == 200) {
-        SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    [[SYKickAPI shared] lookFor:self.searchQuery
+            withCompletionBlock:^(NSArray *items, NSError *error)
+    {
+        self.searchResults = [items copy];
+        [self.tableView reloadData];
         
-        NSMutableString *message = [NSMutableString string];
-        NSString *cancelButton = nil;
-        NSString     *okButton = nil;
-        
-        if(bodyJSON) {
-            [message appendFormat:@"Message from %@: %@", computer.name, bodyJSON[@"result"]];
-            cancelButton = nil;
-            okButton = @"Close";
+        if (error)
+        {
+            [[[UIAlertView alloc] initWithTitle:@"Cannot load results"
+                                        message:error.localizedDescription
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"Close", nil] show];
         }
-        
-        if(appDelegate.appUrlIsFromParsed != SYAppUnknown) {
-            if([message length] > 0)
-                [message appendString:@"\n\n"];
-            
-            [message appendString:@"Do you want to open the app you came from?"];
-            cancelButton = @"No";
-            okButton = @"Yes";
+        else
+        {
+            NSLog(@"Results: %@", items);
         }
-        
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Torrent added successfully"
-                                                     message:message
-                                                    delegate:self
-                                           cancelButtonTitle:cancelButton
-                                           otherButtonTitles:okButton, nil];
-        
-        [av setTag:ALERT_VIEW_TAG_OPEN_SOURCE_APP];
-        [av show];
-    }
-    else {
-        NSString *message = [NSString stringWithFormat:@"Message from %@: \n%@",
-                             computer.name,
-                             bodyString];
-        
-        [[[UIAlertView alloc] initWithTitle:@"Unknown response"
-                                    message:message
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:@"Close", nil] show];
-    }
+    }];
 }
 
-- (void)request:(NSURLRequest*)request
-    forComputer:(SYComputerModel*)computer
-failedWithError:(NSError*)error
+#pragma mark - TextField
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [[[UIAlertView alloc] initWithTitle:@"Error while adding torrent"
-                                message:error.localizedDescription
-                               delegate:nil
-                      cancelButtonTitle:nil
-                      otherButtonTitles:@"Close", nil] show];
+    [textField resignFirstResponder];
+    self.searchQuery = textField.text;
+    return NO;
 }
 
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [textField resignFirstResponder];
+    });
+    self.searchQuery = textField.text;
+    return YES;
+}
 
+#pragma mark - Parallax
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y < 0)
+        self.constraintBlueHeaderHeight.constant =
+        self.constraintBlueHeaderHeightOriginalValue - scrollView.contentOffset.y;
+    else
+        self.constraintBlueHeaderHeight.constant =
+        self.constraintBlueHeaderHeightOriginalValue;
+}
 
 @end

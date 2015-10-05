@@ -9,8 +9,10 @@
 #import "SYWebVC.h"
 #import "SYComputerModel.h"
 
-@interface SYWebVC ()
-
+@interface SYWebVC () <UIWebViewDelegate>
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) UIActivityIndicatorView *spinView;
+@property (strong, nonatomic) UIBarButtonItem *buttonClose;
 @end
 
 @implementation SYWebVC
@@ -18,8 +20,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden = YES;
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    
+    self.buttonClose = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(buttonCloseTap:)];
+    
+    self.spinView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    UIBarButtonItem *buttonSpin = [[UIBarButtonItem alloc] initWithCustomView:self.spinView];
+    
+    [self.navigationItem setLeftBarButtonItem:self.buttonClose];
+    [self.navigationItem setRightBarButtonItem:buttonSpin];
     
     [self.webView setDelegate:self];
     [self.spinView setHidesWhenStopped:YES];
@@ -28,18 +36,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    NSURL *url;
-    if(self->_computer.transmissionPortOpened == PortResult_Opened)
-        url = self->_computer.transmissionGuiURL;
-    else if(self->_computer.uTorrentPortOpened == PortResult_Opened)
-        url = self->_computer.uTorrentGuiURL;
-    
-    self.titleBar.topItem.title = self->_computer.name;
-    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+    [self setTitle:self.computer.name];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:self.computer.webURL]];
 }
 
-- (IBAction)closeButtonTap:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)buttonCloseTap:(id)sender {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UIWebViewDelegate methods
@@ -47,13 +49,10 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSURL *url;
-    if([self->_computer transmissionPortOpened])
-        url = self->_computer.transmissionGuiURL;
-    else if([self->_computer uTorrentPortOpened])
-        url = self->_computer.uTorrentGuiURL;
+    if ([request.URL.absoluteString hasPrefix:self.computer.webURL.absoluteString])
+        return YES;
     
-    if([request.URL.description hasPrefix:url.description])
+    if ([request.URL.absoluteString isEqualToString:@"about:blank"])
         return YES;
     
     return NO;
@@ -71,11 +70,9 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    [[[UIAlertView alloc] initWithTitle:@"Error"
-                                message:error.localizedDescription
-                               delegate:nil
-                      cancelButtonTitle:nil
-                      otherButtonTitles:@"Close", nil] show];
+    NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"error" ofType:@"html"];
+    NSString *html = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:NULL];
+    html = [html stringByReplacingOccurrencesOfString:@"{ERROR}" withString:error.localizedDescription];
 }
 
 @end

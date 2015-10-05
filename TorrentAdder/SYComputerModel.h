@@ -9,38 +9,33 @@
 #import <Foundation/Foundation.h>
 
 typedef enum : NSUInteger {
-    PortResult_Waiting,
-    PortResult_Opened,
-    PortResult_Closed,
-} PortResult;
+    SYComputerStatus_Unknown,
+    SYComputerStatus_Waiting,
+    SYComputerStatus_Opened,
+    SYComputerStatus_Closed,
+} SYComputerStatus;
 
-@interface SYComputerModel : NSObject
+typedef enum : NSUInteger {
+    SYClientSoftware_Transmission,
+    SYClientSoftware_uTorrent,
+} SYClientSoftware;
 
-@property (strong, atomic) NSString *name;
-@property (strong, atomic) NSArray  *ip4s;
-@property (strong, atomic) NSNumber *uTorrentPort;
-@property (strong, atomic) NSNumber *transmissionPort;
-@property (strong, atomic) NSString *sessionID;
-@property (readonly) PortResult transmissionPortOpened;
-@property (readonly) PortResult uTorrentPortOpened;
+@interface SYComputerModel : NSObject <NSCoding>
 
--(id)initWithName:(NSString*)name andIPs:(NSArray*)ip4s;
--(id)initWithService:(NSNetService*)service;
+@property (readonly, strong, atomic) NSString *identifier;
+@property (strong, atomic) NSString         *name;
+@property (strong, atomic) NSString         *host;
+@property (assign, atomic) NSUInteger       port;
+@property (strong, atomic) NSString         *sessionID;
+@property (assign, atomic) SYClientSoftware client;
 
--(NSString*)firstIP4address;
--(void)transmissionPortOpened:(void(^)(BOOL opened))successBlock;
--(void)uTorrentPortOpened:(void(^)(BOOL opened))successBlock;
--(void)atLeastOnePortOpened:(void(^)(BOOL opened))successBlock;
+- (instancetype)initWithName:(NSString*)name andHost:(NSString *)host;
 
--(NSURL*)transmissionApiURL;
--(NSURL*)transmissionGuiURL;
+- (NSURL *)webURL;
+- (NSURL *)apiURL;
 
--(NSURL*)uTorrentApiURL;
--(NSURL*)uTorrentGuiURL;
+- (BOOL)isValid;
 
--(NSURLRequest*)requestForAddingMagnetTransmission:(NSURL*)magnet;
--(NSURLRequest*)requestForAddingMagnetUTorrent:(NSURL*)magnet;
-
--(BOOL)hasHostnameAndIP;
++ (NSUInteger)defaultPortForClient:(SYClientSoftware)client;
 
 @end

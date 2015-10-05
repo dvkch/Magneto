@@ -7,7 +7,11 @@
 //
 
 #import "SYAppDelegate.h"
-#import "NSString+Equal.h"
+#import "NSString+SY.h"
+#import "SYKickAPI.h"
+#import "SYMainVC.h"
+#import "SYWindow.h"
+#import "SYBonjourClient.h"
 
 NSString *const UIAppDidOpenURL = @"kUIAppDidOpenURL";
 NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
@@ -16,9 +20,11 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.url = nil;
-    self.appUrlIsFromParsed = SYAppUnknown;
-    self.appUrlIsFrom = nil;
+    [[SYBonjourClient shared] start];
+    
+    SYMainVC *mainVC = [[SYMainVC alloc] init];
+    SYNavigationController *nc = [[SYNavigationController alloc] initWithRootViewController:mainVC];
+    self.window = [SYWindow mainWindowWithRootViewController:nc];
     
 #ifdef DEBUG
     int64_t t = (int64_t)(2.0 * NSEC_PER_SEC);
@@ -41,27 +47,29 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
 {
     self.url = url;
     self.appUrlIsFromParsed = SYAppUnknown;
-    self.appUrlIsFrom = sourceApplication;
     
-    if([sourceApplication isEqualToStringNoCase:@"com.apple.mobilesafari"])
-        self.appUrlIsFromParsed = SYAppSafari;
-    if([sourceApplication isEqualToStringNoCase:@"com.apple.mobilemail"])
-        self.appUrlIsFromParsed = SYAppMail;
-    if([sourceApplication isEqualToStringNoCase:@"com.apple.mobilesms"])
-        self.appUrlIsFromParsed = SYAppSMS;
-    if([sourceApplication isEqualToStringNoCase:@"com.google.chrome.ios"])
-        self.appUrlIsFromParsed = SYAppChrome;
-    if([sourceApplication isEqualToStringNoCase:@"com.dolphin.browser.iphone"])
-        self.appUrlIsFromParsed = SYAppDolphin;
-    if([sourceApplication isEqualToStringNoCase:@"com.opera.OperaMini"])
-        self.appUrlIsFromParsed = SYAppOpera;
-    if([sourceApplication isEqualToStringNoCase:@"com.orchestra.v2"])
-        self.appUrlIsFromParsed = SYAppMailbox;
-    
-    
-    
-    if(self.appUrlIsFromParsed == SYAppUnknown) {
-        NSLog(@"Launched from unknown app: %@",sourceApplication);
+    if (!IOS_VER_GREATER_OR_EQUAL(@"9.0"))
+    {
+        self.appUrlIsFrom = sourceApplication;
+        
+        if ([sourceApplication isEqualToStringNoCase:@"com.apple.mobilesafari"])
+            self.appUrlIsFromParsed = SYAppSafari;
+        if ([sourceApplication isEqualToStringNoCase:@"com.apple.mobilemail"])
+            self.appUrlIsFromParsed = SYAppMail;
+        if ([sourceApplication isEqualToStringNoCase:@"com.apple.mobilesms"])
+            self.appUrlIsFromParsed = SYAppSMS;
+        if ([sourceApplication isEqualToStringNoCase:@"com.google.chrome.ios"])
+            self.appUrlIsFromParsed = SYAppChrome;
+        if ([sourceApplication isEqualToStringNoCase:@"com.dolphin.browser.iphone"])
+            self.appUrlIsFromParsed = SYAppDolphin;
+        if ([sourceApplication isEqualToStringNoCase:@"com.opera.OperaMini"])
+            self.appUrlIsFromParsed = SYAppOpera;
+        if ([sourceApplication isEqualToStringNoCase:@"com.orchestra.v2"])
+            self.appUrlIsFromParsed = SYAppMailbox;
+        
+        if (self.appUrlIsFromParsed == SYAppUnknown) {
+            NSLog(@"Launched from unknown app: %@", sourceApplication);
+        }
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:UIAppDidOpenURL object:nil];
@@ -69,11 +77,16 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
     return YES;
 }
 
--(void)openAppThatOpenedMe
+- (void)openAppThatOpenedMe
 {
+    self.url = nil;
+    self.appUrlIsFrom = nil;
+    self.appUrlIsFromParsed = SYAppUnknown;
+    
     NSString *selfClosingWebpage = @"rawgit.com/dvkch/TorrentAdder/master/self_closing_page.html";
     NSString *urlToOpen = nil;
-    switch (self.appUrlIsFromParsed) {
+    switch (self.appUrlIsFromParsed)
+    {
         case SYAppSafari:   urlToOpen = @"https://";      break; // opens new page
         case SYAppMail:     urlToOpen = @"mailto:";       break; // opens empty composer
         case SYAppSMS:      urlToOpen = @"sms:";          break; // opens empty composer

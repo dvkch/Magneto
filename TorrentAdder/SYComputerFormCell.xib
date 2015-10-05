@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9052" systemVersion="15B22c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="KGk-i7-Jjw" customClass="SYComputerFormCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="information" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l35-SY-mm1">
+                        <rect key="frame" x="46" y="0.0" width="266" height="43"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <connections>
+                            <action selector="textFieldTextUpdated:" destination="KGk-i7-Jjw" eventType="editingChanged" id="BLk-Ra-gOw"/>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="7hu-2j-PTb"/>
+                        </connections>
+                    </textField>
+                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FFZ-hf-NzI">
+                        <rect key="frame" x="191" y="7" width="121" height="29"/>
+                        <animations/>
+                        <segments>
+                            <segment title="First"/>
+                            <segment title="Second"/>
+                        </segments>
+                        <connections>
+                            <action selector="segmentedControlUpdated:" destination="KGk-i7-Jjw" eventType="valueChanged" id="LWS-8r-4nu"/>
+                        </connections>
+                    </segmentedControl>
+                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oqo-Jv-I0U">
+                        <rect key="frame" x="2" y="2" width="40" height="40"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="6T7-o6-EQY"/>
+                            <constraint firstAttribute="width" constant="40" id="7Pm-fH-ehy"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstItem="l35-SY-mm1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="46" id="K2R-lU-gOj"/>
+                    <constraint firstAttribute="trailing" secondItem="l35-SY-mm1" secondAttribute="trailing" constant="8" id="Mv9-Db-65A"/>
+                    <constraint firstItem="FFZ-hf-NzI" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="SNs-Lh-I4l"/>
+                    <constraint firstItem="FFZ-hf-NzI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Wqw-d7-Dpn"/>
+                    <constraint firstItem="l35-SY-mm1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="apR-CA-C94"/>
+                    <constraint firstItem="l35-SY-mm1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hYg-Ln-Hl5"/>
+                    <constraint firstItem="oqo-Jv-I0U" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rTA-lX-Zlq"/>
+                    <constraint firstItem="oqo-Jv-I0U" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="2" id="xde-kG-8hG"/>
+                    <constraint firstAttribute="bottom" secondItem="l35-SY-mm1" secondAttribute="bottom" id="zzR-RY-qDZ"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="hYg-Ln-Hl5"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <animations/>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="iconView" destination="oqo-Jv-I0U" id="K7C-tf-wjn"/>
+                <outlet property="segmentedControl" destination="FFZ-hf-NzI" id="dIb-Em-vWo"/>
+                <outlet property="textField" destination="l35-SY-mm1" id="Cfq-ff-3ox"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

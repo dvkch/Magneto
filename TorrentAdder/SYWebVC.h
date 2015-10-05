@@ -10,12 +10,7 @@
 
 @class SYComputerModel;
 
-@interface SYWebVC : UIViewController <UIWebViewDelegate>
-
-@property (strong, nonatomic) IBOutlet UIWebView *webView;
-@property (strong, nonatomic) IBOutlet UINavigationBar *titleBar;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinView;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *closeButton;
+@interface SYWebVC : UIViewController
 
 @property (strong, nonatomic) SYComputerModel* computer;
 

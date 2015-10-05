@@ -19,30 +19,13 @@
     [self setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.4]];
     [self.layer setCornerRadius:4.f];
     [self.layer setMasksToBounds:YES];
-    
-    CGFloat w = 10.f;
-    if(IOS_VER_GREATER_OR_EQUAL(@"7.0"))
-        w += [self.text sizeWithAttributes:@{NSFontAttributeName:self.font}].width;
-    else
-        w += [self.text sizeWithFont:self.font].width;
-    
-    
-    CGFloat mLeft  = self.frame.origin.x;
-    CGFloat mRight = self.superview.frame.size.width - self.frame.origin.x - self.frame.size.width;
-    
-    CGRect newFrame = self.frame;
-    
-    BOOL keepMarginLeft = ((self.autoresizingMask & UIViewAutoresizingFlexibleLeftMargin) == 0);
-    if(keepMarginLeft) {
-        newFrame.size.width = w;
-        newFrame.origin.x = mLeft;
-    }
-    else {
-        newFrame.size.width = w;
-        newFrame.origin.x = self.superview.frame.size.width - mRight - newFrame.size.width;
-    }
-    
-    [self setFrame:newFrame];
+}
+
+- (CGSize)intrinsicContentSize
+{
+    CGSize s = [super intrinsicContentSize];
+    s.width += 14;
+    return s;
 }
 
 @end

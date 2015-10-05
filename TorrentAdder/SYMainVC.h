@@ -7,33 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SYAdder.h"
-
-@class SYLabelTag;
 
 @interface SYMainVC : UIViewController
-<UITableViewDataSource,
-UITableViewDelegate,
-NSNetServiceBrowserDelegate,
-NSNetServiceDelegate,
-SYAdderDelegate,
-UIAlertViewDelegate>
-{
-    NSMutableArray *devices;
-    NSArray *allowedServicesNames;
-    NSMutableArray *services;
-    NSMutableArray *serviceBrowsers;
-    NSMutableArray *connections;
-}
-
-@property (weak, nonatomic) IBOutlet UILabel     *titleLabel;
-@property (weak, nonatomic) IBOutlet UIButton    *helpButton;
-@property (weak, nonatomic) IBOutlet UIView      *headerView;
-@property (weak, nonatomic) IBOutlet SYLabelTag  *headerTorrentLabel;
-@property (weak, nonatomic) IBOutlet UILabel     *headerTorrentName;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIView      *whiteBackgroundView;
-
-@property (strong, nonatomic) SYComputerModel *lastTappedComputer;
 
 @end

@@ -10,6 +10,6 @@
 
 @interface UIView (Glow)
 
--(void)addGlow:(UIColor*)color size:(CGFloat)size;
+- (void)addGlow:(UIColor*)color size:(CGFloat)size;
 
 @end

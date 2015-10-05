@@ -8,224 +8,130 @@
 
 #import "SYComputerModel.h"
 #import "NSData+IPAddress.h"
-#import "NSArray+JSON.h"
 #import "SYAppDelegate.h"
+#import "SYNetworkManager.h"
+#import <CocoaAsyncSocket.h>
+#import "SYBonjourClient.h"
 
-#include <arpa/inet.h>
-#include <sys/socket.h>
-
-@interface SYComputerModel (Private)
--(void)isPortOpened:(NSNumber*)port success:(void(^)(BOOL))successBlock;
--(void)refreshPortOpened;
+@interface SYComputerModel ()
+@property (readwrite, strong, atomic) NSString *identifier;
 @end
 
 @implementation SYComputerModel
 
--(id)init {
+- (instancetype)init
+{
     self = [super init];
-    if(self) {
-        self.name = @"Unknown";
-        self.ip4s = @[];
-        self.transmissionPort = @(9091);
-        self.uTorrentPort = @(18764);
+    if (self)
+    {
+        self.identifier = [[NSUUID UUID] UUIDString];
         self.sessionID = @"";
-        self->_transmissionPortOpened = PortResult_Waiting;
-        self->_uTorrentPortOpened = PortResult_Waiting;
     }
     return self;
 }
 
--(id)initWithName:(NSString *)name andIPs:(NSArray *)ip4s {
+- (instancetype)initWithName:(NSString *)name andHost:(NSString *)host
+{
     self = [self init];
-    if(self) {
+    if (self)
+    {
         self.name = name;
-        self.ip4s = ip4s;
-        [self refreshPortOpened];
+        self.host = host;
+        
+        if (!self.name)
+            self.name = [SYNetworkManager hostnameForIP:self.host];
+        
+        if (!self.name)
+            self.name = [[SYBonjourClient shared] hostnameForIP:self.host];
+        
+        if (!self.name)
+            self.name = host;
     }
     return self;
 }
 
--(id)initWithService:(NSNetService *)service {
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
     self = [self init];
-    if(self) {
-        NSMutableArray *arr = [@[] mutableCopy];
-        for(NSData *ipData in [service addresses]) {
-            NSString *ip = [ipData ipAddressStringFromData:YES];
-            if(ip)
-                [arr addObject:ip];
-        }
-        self.ip4s = [NSArray arrayWithArray:arr];
-        self.name = [[service hostName] stringByReplacingOccurrencesOfString:@".local."
-                                                                  withString:@""];
-        [self refreshPortOpened];
+    if (self)
+    {
+        self.identifier = [aDecoder decodeObjectForKey:@"identifier"];
+        self.name       = [aDecoder decodeObjectForKey:@"name"];
+        self.host       = [aDecoder decodeObjectForKey:@"host"];
+        self.port       = [aDecoder decodeIntegerForKey:@"port"];
+        self.client     = [aDecoder decodeIntegerForKey:@"client"];
     }
     return self;
 }
 
--(void)refreshPortOpened {
-    self->_uTorrentPortOpened = PortResult_Waiting;
-    [self uTorrentPortOpened:^(BOOL opened) {
-        self->_uTorrentPortOpened = opened ? PortResult_Opened : PortResult_Closed;
-    }];
-    
-    self->_transmissionPortOpened = PortResult_Waiting;
-    [self transmissionPortOpened:^(BOOL opened) {
-        self->_transmissionPortOpened = opened ? PortResult_Opened : PortResult_Closed;
-    }];
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.identifier    forKey:@"identifier"];
+    [aCoder encodeObject:self.name          forKey:@"name"];
+    [aCoder encodeObject:self.host          forKey:@"host"];
+    [aCoder encodeInteger:self.port         forKey:@"port"];
+    [aCoder encodeInteger:self.client       forKey:@"client"];
 }
 
--(NSString*)firstIP4address {
-    if([self.ip4s count] == 0)
-        return nil;
-    return [self.ip4s objectAtIndex:0];
-}
-
--(BOOL)isEqual:(id)object {
+- (BOOL)isEqual:(id)object
+{
     if(![object isKindOfClass:[self class]])
         return NO;
     
-    return [[(SYComputerModel*)object name] isEqualToString:self.name];
+    return [[(SYComputerModel*)object identifier] isEqualToString:self.identifier];
 }
 
--(void)isPortOpened:(NSNumber*)port success:(void(^)(BOOL))successBlock
+- (NSURL *)webURL
 {
-    if(!self.firstIP4address) {
-        if(successBlock)
-            successBlock(NO);
-        return;
+    NSString *format;
+    switch (self.client) {
+        case SYClientSoftware_Transmission:
+            format = @"http://%@:%d/transmission/web/";
+            break;
+        case SYClientSoftware_uTorrent:
+            format = @"http://%@:%d/gui";
+            break;
+        default:
+            return nil;
     }
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        int s = socket(PF_INET, SOCK_STREAM, 0); // 0 = IP
-        
-        struct sockaddr_in ipAddress;
-        ipAddress.sin_len = sizeof(ipAddress);
-        ipAddress.sin_family = AF_INET;
-        ipAddress.sin_port = htons(port.intValue);
-        inet_pton(AF_INET,
-                  [self.firstIP4address cStringUsingEncoding:NSASCIIStringEncoding],
-                  &ipAddress.sin_addr);
-        
-        int c = connect(s, (struct sockaddr *)&ipAddress, ipAddress.sin_len);
-        if(c == 0) close(s);
-        
-        dispatch_async(dispatch_get_main_queue(), ^(void) {
-            if(successBlock)
-                successBlock(c == 0);
-        });
-    });
-}
-
--(void)transmissionPortOpened:(void (^)(BOOL opened))successBlock {
-    self->_transmissionPortOpened = PortResult_Waiting;
-    
-    [self isPortOpened:self.transmissionPort success:^(BOOL opened) {
-        self->_transmissionPortOpened = opened ? PortResult_Opened : PortResult_Closed;
-        if(successBlock)
-            successBlock(opened);
-    }];
-}
-
--(void)uTorrentPortOpened:(void (^)(BOOL opened))successBlock {
-    self->_uTorrentPortOpened = PortResult_Waiting;
-    
-    [self isPortOpened:self.uTorrentPort success:^(BOOL opened) {
-        self->_uTorrentPortOpened = opened ? PortResult_Opened : PortResult_Closed;
-        if(successBlock)
-            successBlock(opened);
-    }];
-}
-
--(void)atLeastOnePortOpened:(void (^)(BOOL opened))successBlock {
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-        
-        __block PortResult transmission = PortResult_Closed;
-        __block PortResult utorrent     = PortResult_Closed;
-        
-        [self uTorrentPortOpened:^(BOOL opened) {
-            utorrent = (opened ? PortResult_Opened : PortResult_Closed);
-            dispatch_semaphore_signal(sema);
-        }];
-        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-        
-        [self transmissionPortOpened:^(BOOL opened) {
-            transmission = (opened ? PortResult_Opened : PortResult_Closed);
-            dispatch_semaphore_signal(sema);
-        }];
-        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-        
-        dispatch_async(dispatch_get_main_queue(), ^(void) {
-            if(successBlock)
-                successBlock(transmission == PortResult_Opened || transmission == PortResult_Opened);
-        });
-    });
-}
-
--(NSURL *)transmissionApiURL {
-    NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/transmission/rpc",
-                           self.firstIP4address,
-                           self.transmissionPort.intValue];
+    NSString *urlString = [NSString stringWithFormat:format,
+                           self.host,
+                           self.port];
     
     return [NSURL URLWithString:urlString];
 }
 
--(NSURL *)transmissionGuiURL {
-    NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/transmission/web/",
-                           self.firstIP4address,
-                           self.transmissionPort.intValue];
-    
-    return [NSURL URLWithString:urlString];
-}
-
--(NSURL *)uTorrentApiURL {
-    return nil;
-}
-
--(NSURL *)uTorrentGuiURL {
-    NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/gui",
-                           self.firstIP4address,
-                           self.uTorrentPort.intValue];
-    
-    return [NSURL URLWithString:urlString];
-}
-
-// https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
--(NSURLRequest*)requestForAddingMagnetTransmission:(NSURL *)magnet {
-    
-    if(!magnet)
-        return nil;
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.transmissionApiURL];
-    [request setHTTPMethod:@"POST"];
-    
-    NSDictionary *d = @{@"method"    : @"torrent-add",
-                        @"arguments" : @{@"filename":[magnet absoluteString]}};
-    
-    NSString *post = [d bv_jsonStringWithPrettyPrint:NO];
-    
-    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postData length]];
-    [request addValue:postLength forHTTPHeaderField:@"Content-Length"];
-    [request addValue:self.sessionID forHTTPHeaderField:@"X-Transmission-Session-Id"];
-    [request setHTTPBody:postData];
-    
-    return request;
-}
-
--(NSURLRequest*)requestForAddingMagnetUTorrent:(NSURL*)magnet {
-    NSLog(@"NOT IMPLEMENTED");
-    return nil;
-}
-
--(BOOL)hasHostnameAndIP
+- (NSURL *)apiURL
 {
-    return  self.name &&
-            [self.name length] &&
-            self.firstIP4address &&
-            [self.firstIP4address length];
+    NSString *format;
+    switch (self.client) {
+        case SYClientSoftware_Transmission:
+            format = @"http://%@:%d/transmission/rpc/";
+            break;
+        default:
+            return nil;
+    }
+    NSString *urlString = [NSString stringWithFormat:format,
+                           self.host,
+                           self.port];
+    
+    return [NSURL URLWithString:urlString];
 }
 
+- (BOOL)isValid
+{
+    return (self.name.length && self.host.length && self.port != 0);
+}
+
++ (NSUInteger)defaultPortForClient:(SYClientSoftware)client
+{
+    switch (client) {
+        case SYClientSoftware_Transmission:
+            return 9091;
+        case SYClientSoftware_uTorrent:
+            return 18764;
+    }
+    return 0;
+}
 
 @end
