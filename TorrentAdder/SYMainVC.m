@@ -7,14 +7,10 @@
 //
 
 #import "SYMainVC.h"
-#import "UIView+Glow.h"
 #import "SYComputerModel.h"
 #import "SYComputerCell.h"
 #import "SYComputersCell.h"
-#import "NSData+IPAddress.h"
-#import "SYLabelTag.h"
 #import "SYAppDelegate.h"
-#import "SYClientAPI.h"
 #import "SYWebVC.h"
 #import "SYButton.h"
 #import "SYListComputersVC.h"
@@ -24,18 +20,19 @@
 #import "SYDatabase.h"
 #import "SYEditComputerVC.h"
 #import "UIColor+SY.h"
+#import "SYNetworkManager.h"
+#import "UIView+Glow.h"
+#import "SYSearchField.h"
 
 #define ALERT_VIEW_TAG_OPEN_SOURCE_APP (4)
 
-@interface SYMainVC () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface SYMainVC () <UITableViewDataSource, UITableViewDelegate, SYNetworkManagerDelegate, SYSearchFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel     *titleLabel;
-@property (weak, nonatomic) IBOutlet UIView      *headerView;
-@property (weak, nonatomic) IBOutlet SYLabelTag  *headerTorrentLabel;
-@property (weak, nonatomic) IBOutlet UILabel     *headerTorrentName;
+@property (weak, nonatomic) IBOutlet UILabel        *titleLabel;
+@property (weak, nonatomic) IBOutlet UIView         *headerView;
+@property (weak, nonatomic) IBOutlet SYSearchField  *searchField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintBlueHeaderHeight;
-@property (weak, nonatomic) IBOutlet UITextField *searchField;
 
 @property (strong, nonatomic) NSArray *computers;
 @property (strong, nonatomic) NSArray *searchResults;
@@ -49,6 +46,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[SYNetworkManager shared] setDelegate:self];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appDidOpenURL:)
                                                  name:UIAppDidOpenURL
@@ -56,8 +54,10 @@
     
     [self.titleLabel addGlow:[UIColor lightGrayColor] size:4.f];
     
-    [self.headerTorrentLabel setText:@"NO TORRENT PROVIDED"];
-    [self.headerTorrentName  setText:@""];
+    [self.searchField setBackgroundColor:[UIColor colorWithWhite:1. alpha:0.3]];
+    [self.searchField.activityIndicatorView setColor:[UIColor blackColor]];
+    [self.searchField.textField setKeyboardType:UIKeyboardTypeDefault];
+    [self.searchField.textField setPlaceholder:@"Search"];
     
     [self.tableView registerNib:[UINib nibWithNibName:[SYComputersCell className] bundle:nil]
          forCellReuseIdentifier:[SYComputersCell className]];
@@ -89,6 +89,7 @@
 
 - (void)appDidOpenURL:(id)notification
 {
+    /*
     SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     
     NSString *urlString = [appDelegate.url description];
@@ -113,6 +114,7 @@
             }
         }
     }
+     */
 }
 
 #pragma mark - IBActions
@@ -130,29 +132,30 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0)
-        return self.searchQuery ? 0 : 1;
+        return self.searchResults ? 0 : 1;
     if (section == 1)
-        return self.searchQuery ? 0 : self.computers.count;
+        return self.searchResults ? 0 : self.computers.count;
     return self.searchResults.count;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == 0)
-        return @"Available computers";
+        return self.searchResults ? nil : @"Available computers";
     if (section == 1)
         return nil;
-    return @"Results";
+    return self.searchResults ? @"Results" : nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    __weak SYMainVC *wSelf = self;
     if (indexPath.section == 0)
     {
         SYComputersCell *cell = [tableView dequeueReusableCellWithIdentifier:[SYComputersCell className]];
@@ -160,7 +163,7 @@
         [cell setTappedAddComputerBlock:^{
             SYListComputersVC *vc = [[SYListComputersVC alloc] init];
             SYNavigationController *nc = [[SYNavigationController alloc] initWithRootViewController:vc];
-            [self.navigationController presentViewController:nc animated:YES completion:nil];
+            [wSelf.navigationController presentViewController:nc animated:YES completion:nil];
         }];
         return cell;
     }
@@ -271,6 +274,11 @@
 
 #pragma mark - Search
 
+- (void)searchFieldDidReturn:(SYSearchField *)searchField withText:(NSString *)text
+{
+    [self setSearchQuery:text];
+}
+
 - (void)setSearchQuery:(NSString *)searchQuery
 {
     self->_searchQuery = searchQuery;
@@ -282,9 +290,16 @@
         return;
     }
     
+    [self.searchField setTitleText:searchQuery];
+    [self.searchField showLoadingIndicator:YES];
+    
     [[SYKickAPI shared] lookFor:self.searchQuery
             withCompletionBlock:^(NSArray *items, NSError *error)
     {
+        if (![self.searchQuery isEqualToString:searchQuery])
+            return;
+        
+        [self.searchField showLoadingIndicator:NO];
         self.searchResults = [items copy];
         [self.tableView reloadData];
         
@@ -331,6 +346,20 @@
     else
         self.constraintBlueHeaderHeight.constant =
         self.constraintBlueHeaderHeightOriginalValue;
+    
+    [self.searchField.textField resignFirstResponder];
+}
+
+#pragma mark - SYNetworkManager delegate
+
+- (void)networkManager:(SYNetworkManager *)networkManager changedStatusForComputer:(SYComputerModel *)computer
+{
+    NSUInteger idx = [self.computers indexOfObject:computer];
+    if (idx == NSNotFound)
+        return;
+    
+    SYComputerCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:idx inSection:1]];
+    [cell setComputer:cell.computer forAvailableComputersList:NO];
 }
 
 @end

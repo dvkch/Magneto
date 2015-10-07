@@ -19,7 +19,9 @@
 - (void)setNumberOfComputers:(NSUInteger)numberOfComputers
 {
     self->_numberOfComputers = numberOfComputers;
-    [self.labelCount setText:[NSString stringWithFormat:@"%d computers", (int)numberOfComputers]];
+    [self.labelCount setText:[NSString stringWithFormat:@"%d computer%@",
+                              (int)numberOfComputers,
+                              numberOfComputers > 1 ? @"s" : @""]];
 }
 
 - (IBAction)buttonAddTap:(id)sender

@@ -9,7 +9,7 @@
 
 #import "SYListComputersVC.h"
 #import "SYComputerCell.h"
-#import <GBPing.h>
+#import "GBPing.h"
 #import "SYComputerModel.h"
 #import "SYNetworkManager.h"
 #import "SYNetworkModel.h"

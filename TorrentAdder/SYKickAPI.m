@@ -7,8 +7,8 @@
 //
 
 #import "SYKickAPI.h"
-#import <AFNetworking.h>
-#import <UIWebView+BlocksKit.h>
+#import "AFNetworking.h"
+#import "UIWebView+BlocksKit.h"
 #import "SYResultModel.h"
 
 @interface SYKickAPI ()
@@ -47,7 +47,9 @@
 
 - (void)lookFor:(NSString *)term withCompletionBlock:(void(^)(NSArray *items, NSError *error))block
 {
-    [self.manager GET:[@"usearch/" stringByAppendingString:term]
+    NSString *query = [term stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    
+    [self.manager GET:[@"usearch/" stringByAppendingString:query]
            parameters:nil
               success:^(AFHTTPRequestOperation *operation, NSData *responseObject)
     {
@@ -61,7 +63,10 @@
         }];
         [self.webView loadHTMLString:string baseURL:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        block(nil, error);
+        if (operation.response.statusCode == 404)
+            block(nil, nil);
+        else
+            block(nil, error);
     }];
 }
 

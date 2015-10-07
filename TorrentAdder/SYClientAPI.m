@@ -8,7 +8,7 @@
 
 #import "SYClientAPI.h"
 #import "SYComputerModel.h"
-#import <AFNetworking.h>
+#import "AFNetworking.h"
 
 @interface SYClientAPI ()
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;

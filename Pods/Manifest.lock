@@ -1,23 +1,23 @@
 PODS:
-  - AFNetworking (2.5.4):
-    - AFNetworking/NSURLConnection (= 2.5.4)
-    - AFNetworking/NSURLSession (= 2.5.4)
-    - AFNetworking/Reachability (= 2.5.4)
-    - AFNetworking/Security (= 2.5.4)
-    - AFNetworking/Serialization (= 2.5.4)
-    - AFNetworking/UIKit (= 2.5.4)
-  - AFNetworking/NSURLConnection (2.5.4):
+  - AFNetworking (2.6.0):
+    - AFNetworking/NSURLConnection (= 2.6.0)
+    - AFNetworking/NSURLSession (= 2.6.0)
+    - AFNetworking/Reachability (= 2.6.0)
+    - AFNetworking/Security (= 2.6.0)
+    - AFNetworking/Serialization (= 2.6.0)
+    - AFNetworking/UIKit (= 2.6.0)
+  - AFNetworking/NSURLConnection (2.6.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.5.4):
+  - AFNetworking/NSURLSession (2.6.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.5.4)
-  - AFNetworking/Security (2.5.4)
-  - AFNetworking/Serialization (2.5.4)
-  - AFNetworking/UIKit (2.5.4):
+  - AFNetworking/Reachability (2.6.0)
+  - AFNetworking/Security (2.6.0)
+  - AFNetworking/Serialization (2.6.0)
+  - AFNetworking/UIKit (2.6.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - BlocksKit (2.2.5):
@@ -35,7 +35,6 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - CocoaAsyncSocket (7.4.2)
   - CocoaLumberjack (2.0.1):
     - CocoaLumberjack/Default (= 2.0.1)
     - CocoaLumberjack/Extensions (= 2.0.1)
@@ -46,6 +45,7 @@ PODS:
     - CocoaLumberjack/Default
   - GBPing (1.1.2)
   - SparkInspector (1.3.4)
+  - SYKit (0.0.4)
   - YapDatabase (2.7.2):
     - YapDatabase/standard (= 2.7.2)
   - YapDatabase/standard (2.7.2):
@@ -54,9 +54,9 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - BlocksKit
-  - CocoaAsyncSocket
   - GBPing
   - SparkInspector (from `https://raw.githubusercontent.com/Foundry376/SparkInspectorFramework/master/SparkInspector.podspec`)
+  - SYKit
   - YapDatabase
 
 EXTERNAL SOURCES:
@@ -64,12 +64,12 @@ EXTERNAL SOURCES:
     :podspec: https://raw.githubusercontent.com/Foundry376/SparkInspectorFramework/master/SparkInspector.podspec
 
 SPEC CHECKSUMS:
-  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
-  CocoaAsyncSocket: f5783bdedd232d91b89769bc4b5a1580aed518ad
   CocoaLumberjack: 019d1361244274a6138c788c6cb80baabc13fb8f
   GBPing: 8af6bd791df3f464fb020bc4532a6fe9a3a1c412
   SparkInspector: 0c34a98a39bfabb0a45fdf2658d091a7958fc0b0
+  SYKit: dbb84435e8b85b8adea1c76465b80b2cb3d38b4c
   YapDatabase: bcf13bd764ab4961fb48bef937becf964e50063d
 
 COCOAPODS: 0.38.2

@@ -14,11 +14,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>CocoaAsyncSocket.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>CocoaLumberjack.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -34,6 +29,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SYKit-SYSearchField.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SYKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>YapDatabase.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,37 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0DFE3340124BC5A1F9ED981A978AB753</key>
+		<key>08A2C519ED4F5D9312A4C42658D3504F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>67BD9AA90ED0DC7D7709DD742CB5C5DE</key>
+		<key>1A6F8923B8994F1AC6BA3B5C7B5700B2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7428A13A313256919DD597085AE708D9</key>
+		<key>63B031AD3FDED9FCF3B2F757F0FE7369</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9477027EED3138A02DF21C00DC4CA42E</key>
+		<key>6ED036F242E15D218C591AFE7CC242D2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A45F3BB2440386964AE93A1DFC324B06</key>
+		<key>806691550CBA0EEFE70D56922FCF0D66</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DE224B5C90B567957B22CFFFD484E268</key>
+		<key>AF3639175FECE4C04CCC50C3989BD71C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EE5E0A49863500FC2A4902800870C889</key>
+		<key>CF42FA9C45104570A97E06D696BB90DE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E49A89F6711B3F87583C4F48AA1FF668</key>
 		<dict>
 			<key>primary</key>
 			<true/>

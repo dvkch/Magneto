@@ -10,7 +10,6 @@
 #import "NSData+IPAddress.h"
 #import "SYAppDelegate.h"
 #import "SYNetworkManager.h"
-#import <CocoaAsyncSocket.h>
 #import "SYBonjourClient.h"
 
 @interface SYComputerModel ()
@@ -58,8 +57,8 @@
         self.identifier = [aDecoder decodeObjectForKey:@"identifier"];
         self.name       = [aDecoder decodeObjectForKey:@"name"];
         self.host       = [aDecoder decodeObjectForKey:@"host"];
-        self.port       = [aDecoder decodeIntegerForKey:@"port"];
-        self.client     = [aDecoder decodeIntegerForKey:@"client"];
+        self.port       = [aDecoder decodeIntForKey:@"port"];
+        self.client     = [aDecoder decodeIntForKey:@"client"];
     }
     return self;
 }
@@ -69,8 +68,8 @@
     [aCoder encodeObject:self.identifier    forKey:@"identifier"];
     [aCoder encodeObject:self.name          forKey:@"name"];
     [aCoder encodeObject:self.host          forKey:@"host"];
-    [aCoder encodeInteger:self.port         forKey:@"port"];
-    [aCoder encodeInteger:self.client       forKey:@"client"];
+    [aCoder encodeInt:self.port             forKey:@"port"];
+    [aCoder encodeInt:self.client           forKey:@"client"];
 }
 
 - (BOOL)isEqual:(id)object
@@ -123,7 +122,7 @@
     return (self.name.length && self.host.length && self.port != 0);
 }
 
-+ (NSUInteger)defaultPortForClient:(SYClientSoftware)client
++ (int)defaultPortForClient:(SYClientSoftware)client
 {
     switch (client) {
         case SYClientSoftware_Transmission:

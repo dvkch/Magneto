@@ -15,7 +15,7 @@ typedef enum : NSUInteger {
     SYComputerStatus_Closed,
 } SYComputerStatus;
 
-typedef enum : NSUInteger {
+typedef enum : int {
     SYClientSoftware_Transmission,
     SYClientSoftware_uTorrent,
 } SYClientSoftware;
@@ -25,7 +25,7 @@ typedef enum : NSUInteger {
 @property (readonly, strong, atomic) NSString *identifier;
 @property (strong, atomic) NSString         *name;
 @property (strong, atomic) NSString         *host;
-@property (assign, atomic) NSUInteger       port;
+@property (assign, atomic) int              port;
 @property (strong, atomic) NSString         *sessionID;
 @property (assign, atomic) SYClientSoftware client;
 
@@ -36,6 +36,6 @@ typedef enum : NSUInteger {
 
 - (BOOL)isValid;
 
-+ (NSUInteger)defaultPortForClient:(SYClientSoftware)client;
++ (int)defaultPortForClient:(SYClientSoftware)client;
 
 @end

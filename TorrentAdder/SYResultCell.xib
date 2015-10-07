@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -16,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Name" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vux-0f-ADS">
-                        <rect key="frame" x="15" y="10" width="282" height="20"/>
+                        <rect key="frame" x="15" y="10" width="290" height="20"/>
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -28,7 +27,7 @@
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="Vux-0f-ADS" firstAttribute="leading" secondItem="ePk-Gh-AUT" secondAttribute="leading" constant="15" id="GDa-PC-0ku"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Vux-0f-ADS" secondAttribute="trailing" constant="15" id="mGG-dh-S1i"/>
+                    <constraint firstAttribute="trailing" secondItem="Vux-0f-ADS" secondAttribute="trailing" constant="15" id="O4a-Mj-7WX"/>
                     <constraint firstItem="Vux-0f-ADS" firstAttribute="centerY" secondItem="ePk-Gh-AUT" secondAttribute="centerY" id="yUX-eK-e6v"/>
                 </constraints>
             </tableViewCellContentView>

@@ -13,7 +13,7 @@
 + (instancetype)lightBlueColor
 {
     //return [self colorWithRed:0 green:122./255. blue:1. alpha:1];
-    return [self colorWithRed:0 green:100./255. blue:1. alpha:1];
+    return [self colorWithRed:6./255. green:130./255. blue:1. alpha:1];
 }
 
 @end

@@ -8,46 +8,8 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIcons</key>
-	<dict>
-		<key>CFBundlePrimaryIcon</key>
-		<dict>
-			<key>CFBundleIconFiles</key>
-			<array>
-				<string>Icon-29</string>
-				<string>Icon-29@2x</string>
-				<string>Icon-40</string>
-				<string>Icon-40@2x</string>
-				<string>Icon-60</string>
-				<string>Icon-60@2x</string>
-				<string>Icon-76</string>
-				<string>Icon-76@2x</string>
-			</array>
-			<key>UIPrerenderedIcon</key>
-			<false/>
-		</dict>
-	</dict>
-	<key>CFBundleIcons~ipad</key>
-	<dict>
-		<key>CFBundlePrimaryIcon</key>
-		<dict>
-			<key>CFBundleIconFiles</key>
-			<array>
-				<string>Icon-29</string>
-				<string>Icon-29@2x</string>
-				<string>Icon-40</string>
-				<string>Icon-40@2x</string>
-				<string>Icon-60</string>
-				<string>Icon-60@2x</string>
-				<string>Icon-76</string>
-				<string>Icon-76@2x</string>
-			</array>
-			<key>UIPrerenderedIcon</key>
-			<false/>
-		</dict>
-	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>me.syan.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

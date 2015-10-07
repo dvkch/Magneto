@@ -7,18 +7,8 @@
 //
 
 #import "SYNetworkManager.h"
-#import <CocoaAsyncSocket.h>
-#import <CFNetwork/CFNetwork.h>
-#import <netinet/in.h>
-#import <netdb.h>
 #import <ifaddrs.h>
 #import <arpa/inet.h>
-#import <net/ethernet.h>
-#import <net/if_dl.h>
-#import <netdb.h>
-#import <err.h>
-#import <sys/types.h>
-#import <sys/socket.h>
 #import "SYNetworkModel.h"
 
 @interface NSHost : NSObject
@@ -33,11 +23,9 @@
 - (id)name;
 @end
 
-@interface SYNetworkManager () <GCDAsyncSocketDelegate>
-@property (nonatomic, strong) GCDAsyncSocket *asyncSocket;
-@property (nonatomic, strong) NSMutableArray *waitingComputers;
-@property (nonatomic, strong) NSMutableArray *openedComputers;
-@property (nonatomic, strong) NSMutableArray *closedComputers;
+@interface SYNetworkManager ()
+@property (nonatomic, strong) NSMutableDictionary *statuses;
+@property (nonatomic, strong) NSMutableDictionary *times;
 @end
 
 @implementation SYNetworkManager
@@ -54,26 +42,70 @@
     self = [super init];
     if (self)
     {
-        self.asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+        self.statuses = [NSMutableDictionary dictionary];
+        self.times    = [NSMutableDictionary dictionary];
     }
     return self;
 }
 
 - (void)startStatusUpdateForComputer:(SYComputerModel *)computer
 {
-    // refresh!
+    [self setStatus:SYComputerStatus_Waiting forComputer:computer];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURLResponse *response;
+        NSError *error;
+        NSURLRequest *request = [NSURLRequest requestWithURL:computer.apiURL];
+        [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error)
+                [self setStatus:SYComputerStatus_Closed forComputer:computer];
+            else
+                [self setStatus:SYComputerStatus_Opened forComputer:computer];
+        });
+    });
+}
+
+- (void)setStatus:(SYComputerStatus)status forComputer:(SYComputerModel *)computer
+{
+    if (![[NSThread currentThread] isMainThread])
+    {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self setStatus:status forComputer:computer];
+        });
+        return;
+    }
+    
+    [self.times setObject:[NSDate date] forKey:computer.identifier];
+    
+    if (status == [self statusForComputer:computer])
+        return;
+    
+    [self.statuses setObject:@(status) forKey:computer.identifier];
+    
+    if ([self.delegate respondsToSelector:@selector(networkManager:changedStatusForComputer:)])
+        [self.delegate networkManager:self changedStatusForComputer:computer];
 }
 
 - (SYComputerStatus)statusForComputer:(SYComputerModel *)computer
 {
-    if ([self.waitingComputers containsObject:computer])
-        return SYComputerStatus_Waiting;
-    if ([self.openedComputers containsObject:computer])
-        return SYComputerStatus_Opened;
-    if ([self.closedComputers containsObject:computer])
-        return SYComputerStatus_Closed;
-    [self startStatusUpdateForComputer:computer];
-    return SYComputerStatus_Unknown;
+    if (![[NSThread currentThread] isMainThread])
+    {
+        __block SYComputerStatus status;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            status = [self statusForComputer:computer];
+        });
+        return status;
+    }
+    
+    SYComputerStatus status = [[self.statuses objectForKey:computer.identifier] unsignedIntegerValue];
+    
+    NSDate *lastUpdateDate = self.times[computer.identifier];
+    BOOL startUpdate = !lastUpdateDate || [lastUpdateDate timeIntervalSinceNow] < -10;
+    
+    if (startUpdate && status != SYComputerStatus_Waiting)
+        [self startStatusUpdateForComputer:computer];
+    
+    return status;
 }
 
 + (NSArray<SYNetworkModel *> *)myNetworks:(BOOL)onlyEnXinterfaces

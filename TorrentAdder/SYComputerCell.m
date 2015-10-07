@@ -18,7 +18,7 @@
 @property (weak,   nonatomic) IBOutlet UILabel      *hostLabel;
 @property (weak,   nonatomic) IBOutlet UIImageView  *statusImageView;
 @property (weak,   nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (strong, nonatomic) SYComputerModel *computer;
+@property (strong, nonatomic, readwrite) SYComputerModel *computer;
 @end
 
 @implementation SYComputerCell
@@ -53,7 +53,9 @@
         [self.hostLabel setText:@"in case yours wasn't detected"];
     }
     
-    SYComputerStatus status = [[SYNetworkManager shared] statusForComputer:computer];
+    SYComputerStatus status = SYComputerStatus_Unknown;
+    if (!forAvailableComputersList)
+        status = [[SYNetworkManager shared] statusForComputer:computer];
     if (forAvailableComputersList &&  computer)
         status = SYComputerStatus_Opened;
     if (forAvailableComputersList && !computer)
@@ -63,7 +65,7 @@
     {
         case SYComputerStatus_Unknown:
             [self.statusImageView setImage:nil];
-            [self.activityIndicator stopAnimating];
+            //[self.activityIndicator stopAnimating];
             break;
         case SYComputerStatus_Waiting:
             [self.statusImageView setImage:nil];
@@ -71,11 +73,11 @@
             break;
         case SYComputerStatus_Closed:
             [self.statusImageView setImage:[UIImage imageNamed:@"traffic_grey"]];
-            [self.activityIndicator stopAnimating];
+            //[self.activityIndicator stopAnimating];
             break;
         case SYComputerStatus_Opened:
             [self.statusImageView setImage:[UIImage imageNamed:@"traffic_green"]];
-            [self.activityIndicator stopAnimating];
+            //[self.activityIndicator stopAnimating];
             break;
     }
 }

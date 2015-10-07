@@ -8,7 +8,7 @@
 
 #import "SYDatabase.h"
 #import "SYComputerModel.h"
-#import <YapDatabase.h>
+#import "YapDatabase.h"
 
 NSString * const SYDatabaseTableComputers = @"computers";
 

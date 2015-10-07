@@ -8,7 +8,7 @@
 
 #import "SYPinger.h"
 #import "SYNetworkModel.h"
-#import <GBPing.h>
+#import "GBPing.h"
 
 @interface SYPing : GBPing
 @property (nonatomic, assign) NSUInteger countFailed;

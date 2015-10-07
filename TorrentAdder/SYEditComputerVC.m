@@ -54,6 +54,13 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (!self.isCreation)
+        [[SYDatabase shared] addComputer:self.computer];
+}
+
 - (void)setComputer:(SYComputerModel *)computer
 {
     self->_computer = computer;

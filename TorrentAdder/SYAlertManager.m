@@ -9,7 +9,7 @@
 #import "SYAlertManager.h"
 #import "SYAppDelegate.h"
 #import "SYComputerModel.h"
-#import <BlocksKit+UIKit.h>
+#import "BlocksKit+UIKit.h"
 
 @implementation SYAlertManager
 
