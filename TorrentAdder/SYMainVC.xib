@@ -68,6 +68,15 @@
                         <constraint firstAttribute="trailing" secondItem="PoE-uH-CVm" secondAttribute="trailing" constant="8" id="u55-my-W9E"/>
                     </constraints>
                 </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="o4O-Tf-fV3">
+                    <rect key="frame" x="0.0" y="120" width="320" height="448"/>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="tPr-6t-tMz"/>
+                        <outlet property="delegate" destination="-1" id="RE3-ku-lkf"/>
+                    </connections>
+                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8B6-pO-siO" customClass="SYButton">
                     <rect key="frame" x="260" y="508" width="50" height="50"/>
                     <animations/>
@@ -92,15 +101,6 @@
                         <action selector="helpButtonClick:" destination="-1" eventType="touchUpInside" id="rTY-hX-5pv"/>
                     </connections>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="o4O-Tf-fV3">
-                    <rect key="frame" x="0.0" y="120" width="320" height="448"/>
-                    <animations/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="tPr-6t-tMz"/>
-                        <outlet property="delegate" destination="-1" id="RE3-ku-lkf"/>
-                    </connections>
-                </tableView>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

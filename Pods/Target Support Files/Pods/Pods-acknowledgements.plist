@@ -304,6 +304,16 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Use it as you like in every project you want, redistribute with mentions of my name and don't blame me if it breaks :)
+
+-- dvkch</string>
+			<key>Title</key>
+			<string>SYPopover</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string></string>
 			<key>Title</key>
 			<string>SparkInspector</string>

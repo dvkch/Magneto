@@ -302,6 +302,7 @@
         [self.searchField showLoadingIndicator:NO];
         self.searchResults = [items copy];
         [self.tableView reloadData];
+        [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
         
         if (error)
         {

@@ -57,6 +57,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Pods/CocoaLumberjack.framework'
   install_framework 'Pods/GBPing.framework'
   install_framework 'Pods/SYKit.framework'
+  install_framework 'Pods/SYPopover.framework'
   install_framework 'Pods/YapDatabase.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -65,5 +66,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Pods/CocoaLumberjack.framework'
   install_framework 'Pods/GBPing.framework'
   install_framework 'Pods/SYKit.framework'
+  install_framework 'Pods/SYPopover.framework'
   install_framework 'Pods/YapDatabase.framework'
 fi

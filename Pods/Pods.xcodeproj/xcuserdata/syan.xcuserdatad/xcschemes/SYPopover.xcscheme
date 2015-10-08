@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6DA84941BAE04705718D75E3"
-               BuildableName = "SYKit.framework"
-               BlueprintName = "SYKit"
+               BlueprintIdentifier = "B73CD39B4408705300C6FE33"
+               BuildableName = "SYPopover.framework"
+               BlueprintName = "SYPopover"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
