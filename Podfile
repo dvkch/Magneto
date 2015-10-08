@@ -12,6 +12,7 @@ pod 'YapDatabase'
 pod 'SYKit'
 pod 'BlocksKit'
 pod 'SYPopover'
+pod 'SPLPing'
 pod 'SparkInspector', :podspec => 'https://raw.githubusercontent.com/Foundry376/SparkInspectorFramework/master/SparkInspector.podspec', :configurations => ['Debug']
 
 post_install do |installer|

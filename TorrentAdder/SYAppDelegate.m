@@ -18,6 +18,11 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
 
 @implementation SYAppDelegate
 
++ (SYAppDelegate *)obtain
+{
+    return (SYAppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[SYBonjourClient shared] start];
@@ -77,15 +82,11 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
     return YES;
 }
 
-- (void)openAppThatOpenedMe
+- (void)openApp:(SYApp)app
 {
-    self.url = nil;
-    self.appUrlIsFrom = nil;
-    self.appUrlIsFromParsed = SYAppUnknown;
-    
     NSString *selfClosingWebpage = @"rawgit.com/dvkch/TorrentAdder/master/self_closing_page.html";
     NSString *urlToOpen = nil;
-    switch (self.appUrlIsFromParsed)
+    switch (app)
     {
         case SYAppSafari:   urlToOpen = @"https://";      break; // opens new page
         case SYAppMail:     urlToOpen = @"mailto:";       break; // opens empty composer
@@ -97,12 +98,19 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
         default: break;
     }
     
-    if(self.appUrlIsFromParsed == SYAppSafari ||
-       self.appUrlIsFromParsed == SYAppOpera)
+    if(app == SYAppSafari || app == SYAppOpera)
         urlToOpen = [urlToOpen stringByAppendingString:selfClosingWebpage];
     
     NSURL *url = [NSURL URLWithString:urlToOpen];
     [[UIApplication sharedApplication] openURL:url];
+}
+
+- (void)openAppThatOpenedMe
+{
+    [self openApp:self.appUrlIsFromParsed];
+    self.url = nil;
+    self.appUrlIsFrom = nil;
+    self.appUrlIsFromParsed = SYAppUnknown;
 }
 
 

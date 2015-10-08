@@ -17,6 +17,7 @@
 		973AFF861BB46CD600BA4B8B /* SYButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 973AFF851BB46CD600BA4B8B /* SYButton.m */; };
 		973F6D381BBB12B700A8BDC9 /* SYNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 973F6D371BBB12B700A8BDC9 /* SYNetworkManager.m */; };
 		976B76DE1BBB03B200641AD5 /* SYComputersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 976B76DD1BBB03B200641AD5 /* SYComputersCell.m */; };
+		9772B3CA1BC68BC60022E370 /* SYAddMagnetPopupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9772B3C91BC68BC60022E370 /* SYAddMagnetPopupVC.m */; };
 		9786BAD91BB3122100786363 /* SYKickAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9786BAD81BB3122100786363 /* SYKickAPI.m */; };
 		9794DA141BB409ED0066CFFE /* extract.js in Resources */ = {isa = PBXBuildFile; fileRef = 9794DA131BB409ED0066CFFE /* extract.js */; };
 		9797FBB61BC0305700CA3BEF /* SYBonjourClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB51BC0305700CA3BEF /* SYBonjourClient.m */; };
@@ -42,6 +43,7 @@
 		97A18E161BBC018100F33AF5 /* SYWebVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E151BBC018100F33AF5 /* SYWebVC.xib */; };
 		97BA94181BB9D8C0000B03FD /* SYResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BA94171BB9D8C0000B03FD /* SYResultCell.m */; };
 		97BA941B1BB9E1C6000B03FD /* NSObject+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BA941A1BB9E1C6000B03FD /* NSObject+SY.m */; };
+		97C0F50C1BC6F28C0058E0FB /* NSURL+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C0F50B1BC6F28C0058E0FB /* NSURL+SY.m */; };
 		97EF7B311BC3128000B9D33A /* UIImage+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EF7B301BC3128000B9D33A /* UIImage+SY.m */; };
 		97F911471BC2C45C00BF1848 /* SYEditComputerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F911451BC2C45C00BF1848 /* SYEditComputerVC.m */; };
 		97F911481BC2C45C00BF1848 /* SYEditComputerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* SYEditComputerVC.xib */; };
@@ -100,6 +102,8 @@
 		973F6D371BBB12B700A8BDC9 /* SYNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYNetworkManager.m; sourceTree = "<group>"; };
 		976B76DC1BBB03B200641AD5 /* SYComputersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYComputersCell.h; sourceTree = "<group>"; };
 		976B76DD1BBB03B200641AD5 /* SYComputersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYComputersCell.m; sourceTree = "<group>"; };
+		9772B3C81BC68BC60022E370 /* SYAddMagnetPopupVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYAddMagnetPopupVC.h; sourceTree = "<group>"; };
+		9772B3C91BC68BC60022E370 /* SYAddMagnetPopupVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAddMagnetPopupVC.m; sourceTree = "<group>"; };
 		9786BAD71BB3122100786363 /* SYKickAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYKickAPI.h; sourceTree = "<group>"; };
 		9786BAD81BB3122100786363 /* SYKickAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYKickAPI.m; sourceTree = "<group>"; };
 		9794DA131BB409ED0066CFFE /* extract.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = extract.js; sourceTree = "<group>"; };
@@ -134,6 +138,8 @@
 		97BA94171BB9D8C0000B03FD /* SYResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYResultCell.m; sourceTree = "<group>"; };
 		97BA94191BB9E1C6000B03FD /* NSObject+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SY.h"; sourceTree = "<group>"; };
 		97BA941A1BB9E1C6000B03FD /* NSObject+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SY.m"; sourceTree = "<group>"; };
+		97C0F50A1BC6F28C0058E0FB /* NSURL+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SY.h"; sourceTree = "<group>"; };
+		97C0F50B1BC6F28C0058E0FB /* NSURL+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SY.m"; sourceTree = "<group>"; };
 		97EF7B2F1BC3128000B9D33A /* UIImage+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SY.h"; sourceTree = "<group>"; };
 		97EF7B301BC3128000B9D33A /* UIImage+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SY.m"; sourceTree = "<group>"; };
 		97F911441BC2C45C00BF1848 /* SYEditComputerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYEditComputerVC.h; sourceTree = "<group>"; };
@@ -219,6 +225,8 @@
 				97F911441BC2C45C00BF1848 /* SYEditComputerVC.h */,
 				97F911451BC2C45C00BF1848 /* SYEditComputerVC.m */,
 				97F911461BC2C45C00BF1848 /* SYEditComputerVC.xib */,
+				9772B3C81BC68BC60022E370 /* SYAddMagnetPopupVC.h */,
+				9772B3C91BC68BC60022E370 /* SYAddMagnetPopupVC.m */,
 			);
 			name = VCs;
 			sourceTree = "<group>";
@@ -377,6 +385,8 @@
 				9797FBB81BC0322A00CA3BEF /* NSNetService+SY.m */,
 				97A0C54D1BC31BA100DC4EEC /* UIColor+SY.h */,
 				97A0C54E1BC31BA100DC4EEC /* UIColor+SY.m */,
+				97C0F50A1BC6F28C0058E0FB /* NSURL+SY.h */,
+				97C0F50B1BC6F28C0058E0FB /* NSURL+SY.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -580,6 +590,7 @@
 				F89867B4192B7B1100735175 /* SYComputerCell.m in Sources */,
 				97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */,
 				9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */,
+				9772B3CA1BC68BC60022E370 /* SYAddMagnetPopupVC.m in Sources */,
 				973AFF771BB418D000BA4B8B /* SYResultModel.m in Sources */,
 				F898676B192A317C00735175 /* SYAppDelegate.m in Sources */,
 				976B76DE1BBB03B200641AD5 /* SYComputersCell.m in Sources */,
@@ -588,6 +599,7 @@
 				F8986794192A324800735175 /* SYMainVC.m in Sources */,
 				973AFF801BB41CE800BA4B8B /* SYListComputersVC.m in Sources */,
 				F8986767192A317C00735175 /* main.m in Sources */,
+				97C0F50C1BC6F28C0058E0FB /* NSURL+SY.m in Sources */,
 				979B6D1D1BBC63F6003B49F9 /* SYAlertManager.m in Sources */,
 				97F911471BC2C45C00BF1848 /* SYEditComputerVC.m in Sources */,
 				97F9114C1BC2C73D00BF1848 /* SYComputerFormCell.m in Sources */,

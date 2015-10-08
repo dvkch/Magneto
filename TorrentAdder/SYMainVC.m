@@ -23,6 +23,8 @@
 #import "SYNetworkManager.h"
 #import "UIView+Glow.h"
 #import "SYSearchField.h"
+#import "SYAddMagnetPopupVC.h"
+#import "SYResultModel.h"
 
 #define ALERT_VIEW_TAG_OPEN_SOURCE_APP (4)
 
@@ -89,32 +91,9 @@
 
 - (void)appDidOpenURL:(id)notification
 {
-    /*
-    SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    
-    NSString *urlString = [appDelegate.url description];
-    
-    if(!appDelegate.url) {
-        [self.headerTorrentLabel setText:@"NO TORRENT PROVIDED"];
-        [self.headerTorrentName  setText:@""];
-    }
-    else if([urlString rangeOfString:@"magnet:"].location == 0) {
-        [self.headerTorrentLabel setText:@"MAGNET"];
-        [self.headerTorrentName  setText:urlString];
-        
-        NSArray *urlComps = [urlString componentsSeparatedByString:@"&"];
-        for(NSString *comp in urlComps) {
-            if([comp rangeOfString:@"dn="].location == 0) {
-                NSArray *urlComps2 = [comp componentsSeparatedByString:@"="];
-                if([urlComps2 count] == 2) {
-                    NSString *dn = [urlComps2 objectAtIndex:1];
-                    dn = [dn stringByReplacingOccurrencesOfString:@"+" withString:@" "];
-                    [self.headerTorrentName setText:dn];
-                }
-            }
-        }
-    }
-     */
+    [SYAddMagnetPopupVC showInViewController:self
+                                  withMagnet:[[SYAppDelegate obtain] url]
+                               appToGoBackTo:[[SYAppDelegate obtain] appUrlIsFromParsed]];
 }
 
 #pragma mark - IBActions
@@ -205,72 +184,59 @@
     }
     if (indexPath.section == 1)
     {
-        SYEditComputerVC *vc = [[SYEditComputerVC alloc] init];
-        [vc setComputer:self.computers[indexPath.row]];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    if (indexPath.section == 2)
-    {
-        NSLog(@"wants to download %@", self.searchResults[indexPath.row]);
-    }
-}
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section == 1)
-    {
         SYWebVC *vc = [[SYWebVC alloc] init];
         [vc setComputer:self.computers[indexPath.row]];
         SYNavigationController *nc = [[SYNavigationController alloc] initWithRootViewController:vc];
         [self.navigationController presentViewController:nc animated:YES completion:nil];
     }
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section == 1 && editingStyle == UITableViewCellEditingStyleDelete)
+    if (indexPath.section == 2)
     {
-        [[SYDatabase shared] removeComputer:self.computers[indexPath.row]];
+        if (!self.computers.count)
+        {
+            [SYAlertManager showNoComputerAlert];
+            return;
+        }
         
-        NSMutableArray *computers = [self.computers mutableCopy];
-        [computers removeObjectAtIndex:indexPath.row];
-        self.computers = [computers copy];
-        
-        [tableView beginUpdates];
-        [tableView deleteRowsAtIndexPaths:@[indexPath]
-                         withRowAnimation:UITableViewRowAnimationAutomatic];
-        [tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
-                         withRowAnimation:UITableViewRowAnimationFade];
-        [tableView endUpdates];
+        SYResultModel *result = self.searchResults[indexPath.row];
+        [SYAddMagnetPopupVC showInViewController:self withMagnet:[NSURL URLWithString:result.magnet] appToGoBackTo:SYAppUnknown];
     }
 }
 
-/*
-- (void)tappedOnComputer:(SYComputerModel*)computer
+- (NSArray<UITableViewRowAction *> * _Nullable)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    SYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    
-    if (appDelegate.url)
+    __weak SYMainVC *wSelf = self;
+    if (indexPath.section == 1)
     {
-        [[SYClientAPI shared] addMagnet:appDelegate.url toComputer:computer completion:^(NSString *message, NSError *error) {
-            [SYAlertManager showMagnetAddedToComputer:computer
-                                          withMessage:message
-                                                error:error
-                                            backToApp:(appDelegate.appUrlIsFromParsed != SYAppUnknown)
-                                                block:^(BOOL backToApp)
-             {
-                 if (backToApp)
-                 {
-                     [appDelegate openAppThatOpenedMe];
-                 }
-             }];
-        }];
-        return;
+        UITableViewRowAction *editAction =
+        [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Edit" handler:
+         ^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath)
+         {
+             SYEditComputerVC *vc = [[SYEditComputerVC alloc] init];
+             [vc setComputer:wSelf.computers[indexPath.row]];
+             [wSelf.navigationController pushViewController:vc animated:YES];
+         }];
+        
+        UITableViewRowAction *deleteAction =
+        [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Delete" handler:
+         ^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath)
+         {
+             [[SYDatabase shared] removeComputer:self.computers[indexPath.row]];
+             
+             NSMutableArray *computers = [self.computers mutableCopy];
+             [computers removeObjectAtIndex:indexPath.row];
+             self.computers = [computers copy];
+             
+             [tableView beginUpdates];
+             [tableView deleteRowsAtIndexPaths:@[indexPath]
+                              withRowAnimation:UITableViewRowAnimationAutomatic];
+             [tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
+                              withRowAnimation:UITableViewRowAnimationFade];
+             [tableView endUpdates];
+         }];
+        return @[editAction, deleteAction];
     }
-    
-    [SYAlertManager showHelpMagnetAlertForComputer:computer];
+    return nil;
 }
-*/
 
 #pragma mark - Search
 

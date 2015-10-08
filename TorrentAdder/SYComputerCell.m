@@ -28,7 +28,7 @@
     
     [self setAccessoryType:(forAvailableComputersList ?
                             UITableViewCellAccessoryDisclosureIndicator :
-                            UITableViewCellAccessoryDetailDisclosureButton)];
+                            UITableViewCellAccessoryNone)];
     
     [self setComputer:computer];
     
@@ -65,7 +65,7 @@
     {
         case SYComputerStatus_Unknown:
             [self.statusImageView setImage:nil];
-            //[self.activityIndicator stopAnimating];
+            [self.activityIndicator stopAnimating];
             break;
         case SYComputerStatus_Waiting:
             [self.statusImageView setImage:nil];
@@ -73,11 +73,11 @@
             break;
         case SYComputerStatus_Closed:
             [self.statusImageView setImage:[UIImage imageNamed:@"traffic_grey"]];
-            //[self.activityIndicator stopAnimating];
+            [self.activityIndicator stopAnimating];
             break;
         case SYComputerStatus_Opened:
             [self.statusImageView setImage:[UIImage imageNamed:@"traffic_green"]];
-            //[self.activityIndicator stopAnimating];
+            [self.activityIndicator stopAnimating];
             break;
     }
 }

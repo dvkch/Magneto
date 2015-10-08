@@ -30,7 +30,10 @@ extern NSString *const NSTorrentAddedSuccessfully;
 @property (atomic) SYApp appUrlIsFromParsed;
 @property (atomic) NSString * appUrlIsFrom;
 
--(void)openAppThatOpenedMe;
++ (SYAppDelegate *)obtain;
+
+- (void)openAppThatOpenedMe;
+- (void)openApp:(SYApp)app;
 
 @end
 

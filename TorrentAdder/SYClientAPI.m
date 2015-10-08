@@ -29,6 +29,8 @@
     if(self)
     {
         self.manager = [[AFHTTPRequestOperationManager alloc] init];
+        [self.manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
+        [self.manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     }
     return self;
 }
@@ -68,6 +70,11 @@
                                             URLString:computer.apiURL.absoluteString
                                            parameters:parameters
                                                 error:nil];
+    
+    [request setTimeoutInterval:2];
+    
+    for (NSString *key in headers.allKeys)
+        [request setValue:headers[key] forHTTPHeaderField:key];
     
     AFHTTPRequestOperation *operation =
     [self.manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {

@@ -1,0 +1,1 @@
+SPLPING_OTHER_LDFLAGS = -framework "CFNetwork" -framework "Foundation"

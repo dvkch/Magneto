@@ -19,4 +19,6 @@
                         backToApp:(BOOL)backToApp
                             block:(void(^)(BOOL backToApp))block;
 
++ (void)showNoComputerAlert;
+
 @end

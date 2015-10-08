@@ -29,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SPLPing.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SYKit-SYSearchField.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -51,6 +56,57 @@
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict/>
+	<dict>
+		<key>1A6F8923B8994F1AC6BA3B5C7B5700B2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4C9FBA7A9085064D56E43BB5B436D148</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5944D589448CFB6A181B89B7C3723811</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>59DB3894275F1D9166953B1A9E2DE637</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>612060648BDF2CAE5369751686D6A7F1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>81D7D20D07FA82A3821AE905C90D9829</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8323712179F7E820211C4D6D9870C23C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8D9411B436F1EEE3888F3443F24C8F4F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D526FFC596EDFEE1BEEA14E6287FB9BD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EA888FC6A4E7EBA230A3AC32058923C4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
 </dict>
 </plist>

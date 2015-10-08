@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A74AC5342607B913C7DEDA29"
+               BlueprintIdentifier = "6FCE764A1AE3DF2745C37EDC"
                BuildableName = "GBPing.framework"
                BlueprintName = "GBPing"
                ReferencedContainer = "container:Pods.xcodeproj">

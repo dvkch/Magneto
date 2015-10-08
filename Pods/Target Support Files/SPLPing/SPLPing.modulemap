@@ -1,0 +1,8 @@
+framework module SPLPing {
+  umbrella header "SPLPing-umbrella.h"
+
+  export *
+  module * { export * }
+
+  private header "ICMPHeader.h"
+}

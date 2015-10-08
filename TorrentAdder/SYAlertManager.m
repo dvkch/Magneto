@@ -75,4 +75,13 @@
     [av show];
 }
 
++ (void)showNoComputerAlert
+{
+    [[[UIAlertView alloc] initWithTitle:@"Cannot add torent"
+                                message:@"No computer saved in your settings, please add one before trying to download this item"
+                               delegate:nil
+                      cancelButtonTitle:nil
+                      otherButtonTitles:@"Close", nil] show];
+}
+
 @end
