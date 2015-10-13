@@ -7,32 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NSString+SYApp.h"
 
-typedef enum : NSUInteger {
-    SYAppSafari,
-    SYAppMail,
-    SYAppSMS,
-    SYAppChrome,
-    SYAppOpera,
-    SYAppDolphin,
-    SYAppMailbox,
-    SYAppUnknown
-} SYApp;
+extern NSString *const UIAppDidOpenURLNotification;
+extern NSString *const UIAppDidOpenURLNotification_AppIDKey;
+extern NSString *const UIAppDidOpenURLNotification_MagnetURLKey;
 
-extern NSString *const UIAppDidOpenURL;
 extern NSString *const NSTorrentAddedSuccessfully;
 
 @interface SYAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, atomic) NSURL *url;
-@property (atomic) SYApp appUrlIsFromParsed;
-@property (atomic) NSString * appUrlIsFrom;
-
 + (SYAppDelegate *)obtain;
 
-- (void)openAppThatOpenedMe;
 - (void)openApp:(SYApp)app;
 
 @end

@@ -64,7 +64,7 @@
         [self.webView loadHTMLString:string baseURL:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (operation.response.statusCode == 404)
-            block(nil, nil);
+            block(@[], nil);
         else
             block(nil, error);
     }];

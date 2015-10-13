@@ -71,11 +71,11 @@
 
 - (void)buttonSaveTap:(id)sender
 {
-    if (![self.computer isValid])
-        return;
-    
     if (self.computer.port == 0)
         [self.computer setPort:[SYComputerModel defaultPortForClient:self.computer.client]];
+    
+    if (![self.computer isValid])
+        return;
     
     [[SYDatabase shared] addComputer:self.computer];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];

@@ -28,6 +28,8 @@ typedef enum : int {
 @property (assign, atomic) int              port;
 @property (strong, atomic) NSString         *sessionID;
 @property (assign, atomic) SYClientSoftware client;
+@property (strong, atomic) NSString         *username;
+@property (strong, atomic) NSString         *password;
 
 - (instancetype)initWithName:(NSString*)name andHost:(NSString *)host;
 

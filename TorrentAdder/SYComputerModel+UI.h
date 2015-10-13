@@ -10,9 +10,11 @@
 
 typedef enum : NSUInteger {
     SYComputerModelField_Name,
+    SYComputerModelField_ClientSoftware,
     SYComputerModelField_Host,
     SYComputerModelField_Port,
-    SYComputerModelField_ClientSoftware
+    SYComputerModelField_Username,
+    SYComputerModelField_Password,
 } SYComputerModelField;
 
 @interface SYComputerModel (UI)

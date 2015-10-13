@@ -9,7 +9,7 @@
 #import "SYSearchField.h"
 #import "UIImage+SYKit.h"
 
-@interface SYSearchField () <UITextFieldDelegate>
+@interface SYSearchField ()
 @property (nonatomic, strong, readwrite) UITextField *textField;
 @property (nonatomic, strong, readwrite) UIImageView *imageViewIcon;
 @property (nonatomic, strong, readwrite) UIActivityIndicatorView *activityIndicatorView;
@@ -153,6 +153,7 @@
         
         if (self.textField.leftView)
             w += self.activityIndicatorView.bounds.size.width + 10;
+        w += [self.textField clearButtonRectForBounds:self.bounds].size.width;
         
         CGFloat maxWidth = CGRectGetWidth(self.bounds);
         w = MIN(maxWidth, w);
@@ -240,6 +241,16 @@
 {
     [self setIsTyping:NO animated:YES];
     return YES;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    [textField setText:nil];
+    self.lastText = nil;
+    if(self.delegate)
+        [self.delegate searchFieldDidReturn:self withText:textField.text];
+    [self.textField resignFirstResponder];
+    return NO;
 }
 
 #pragma mark - UIGestureRecognizer

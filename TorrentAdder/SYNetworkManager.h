@@ -13,6 +13,8 @@
 @class SYComputerModel;
 @class SYNetworkModel;
 
+extern NSString * const SYNetworkManagerComputerStatusChangedNotification;
+
 @protocol SYNetworkManagerDelegate <NSObject>
 - (void)networkManager:(SYNetworkManager *)networkManager changedStatusForComputer:(SYComputerModel *)computer;
 @end

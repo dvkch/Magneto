@@ -25,10 +25,11 @@
 #import "SYSearchField.h"
 #import "SYAddMagnetPopupVC.h"
 #import "SYResultModel.h"
+#import "NSString+SYApp.h"
 
 #define ALERT_VIEW_TAG_OPEN_SOURCE_APP (4)
 
-@interface SYMainVC () <UITableViewDataSource, UITableViewDelegate, SYNetworkManagerDelegate, SYSearchFieldDelegate>
+@interface SYMainVC () <UITableViewDataSource, UITableViewDelegate, SYSearchFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel        *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView         *headerView;
@@ -48,10 +49,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[SYNetworkManager shared] setDelegate:self];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appDidOpenURL:)
-                                                 name:UIAppDidOpenURL
+                                                 name:UIAppDidOpenURLNotification
                                                object:nil];
     
     [self.titleLabel addGlow:[UIColor lightGrayColor] size:4.f];
@@ -60,6 +60,8 @@
     [self.searchField.activityIndicatorView setColor:[UIColor blackColor]];
     [self.searchField.textField setKeyboardType:UIKeyboardTypeDefault];
     [self.searchField.textField setPlaceholder:@"Search"];
+    [self.searchField.textField setRightViewMode:UITextFieldViewModeAlways];
+    [self.searchField.textField setClearButtonMode:UITextFieldViewModeAlways];
     
     [self.tableView registerNib:[UINib nibWithNibName:[SYComputersCell className] bundle:nil]
          forCellReuseIdentifier:[SYComputersCell className]];
@@ -85,15 +87,18 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIAppDidOpenURL
+                                                    name:UIAppDidOpenURLNotification
                                                   object:nil];
 }
 
-- (void)appDidOpenURL:(id)notification
+- (void)appDidOpenURL:(NSNotification *)notification
 {
+    NSString *appID = notification.userInfo[UIAppDidOpenURLNotification_AppIDKey];
+    NSURL *magnetURL = notification.userInfo[UIAppDidOpenURLNotification_MagnetURLKey];
+    
     [SYAddMagnetPopupVC showInViewController:self
-                                  withMagnet:[[SYAppDelegate obtain] url]
-                               appToGoBackTo:[[SYAppDelegate obtain] appUrlIsFromParsed]];
+                                  withMagnet:magnetURL
+                               appToGoBackTo:[appID parsedSYApp]];
 }
 
 #pragma mark - IBActions
@@ -129,7 +134,13 @@
         return self.searchResults ? nil : @"Available computers";
     if (section == 1)
         return nil;
-    return self.searchResults ? @"Results" : nil;
+    
+    // section 2
+    if (self.searchResults.count)
+        return @"Results";
+    if (self.searchResults)
+        return @"No results";
+    return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -233,7 +244,7 @@
                               withRowAnimation:UITableViewRowAnimationFade];
              [tableView endUpdates];
          }];
-        return @[editAction, deleteAction];
+        return @[deleteAction, editAction];
     }
     return nil;
 }
@@ -248,6 +259,7 @@
 - (void)setSearchQuery:(NSString *)searchQuery
 {
     self->_searchQuery = searchQuery;
+    [self.searchField setTitleText:searchQuery];
     
     if (!self.searchQuery.length)
     {
@@ -256,7 +268,6 @@
         return;
     }
     
-    [self.searchField setTitleText:searchQuery];
     [self.searchField showLoadingIndicator:YES];
     
     [[SYKickAPI shared] lookFor:self.searchQuery
@@ -277,10 +288,6 @@
                                        delegate:nil
                               cancelButtonTitle:nil
                               otherButtonTitles:@"Close", nil] show];
-        }
-        else
-        {
-            NSLog(@"Results: %@", items);
         }
     }];
 }
@@ -315,18 +322,6 @@
         self.constraintBlueHeaderHeightOriginalValue;
     
     [self.searchField.textField resignFirstResponder];
-}
-
-#pragma mark - SYNetworkManager delegate
-
-- (void)networkManager:(SYNetworkManager *)networkManager changedStatusForComputer:(SYComputerModel *)computer
-{
-    NSUInteger idx = [self.computers indexOfObject:computer];
-    if (idx == NSNotFound)
-        return;
-    
-    SYComputerCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:idx inSection:1]];
-    [cell setComputer:cell.computer forAvailableComputersList:NO];
 }
 
 @end

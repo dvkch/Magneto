@@ -23,6 +23,8 @@
 - (id)name;
 @end
 
+NSString * const SYNetworkManagerComputerStatusChangedNotification = @"SYNetworkManagerComputerStatusChangedNotification";
+
 @interface SYNetworkManager ()
 @property (nonatomic, strong) NSMutableDictionary *statuses;
 @property (nonatomic, strong) NSMutableDictionary *times;
@@ -51,17 +53,18 @@
 - (void)startStatusUpdateForComputer:(SYComputerModel *)computer
 {
     [self setStatus:SYComputerStatus_Waiting forComputer:computer];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURLResponse *response;
-        NSError *error;
-        NSURLRequest *request = [NSURLRequest requestWithURL:computer.apiURL];
-        [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (error)
-                [self setStatus:SYComputerStatus_Closed forComputer:computer];
-            else
-                [self setStatus:SYComputerStatus_Opened forComputer:computer];
-        });
+    
+    NSURLResponse *response;
+    NSError *error;
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:computer.webURL];
+    [request setTimeoutInterval:2];
+    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (error)
+            [self setStatus:SYComputerStatus_Closed forComputer:computer];
+        else
+            [self setStatus:SYComputerStatus_Opened forComputer:computer];
     });
 }
 
@@ -69,7 +72,7 @@
 {
     if (![[NSThread currentThread] isMainThread])
     {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             [self setStatus:status forComputer:computer];
         });
         return;
@@ -81,6 +84,7 @@
         return;
     
     [self.statuses setObject:@(status) forKey:computer.identifier];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SYNetworkManagerComputerStatusChangedNotification object:computer];
     
     if ([self.delegate respondsToSelector:@selector(networkManager:changedStatusForComputer:)])
         [self.delegate networkManager:self changedStatusForComputer:computer];
@@ -103,7 +107,11 @@
     BOOL startUpdate = !lastUpdateDate || [lastUpdateDate timeIntervalSinceNow] < -10;
     
     if (startUpdate && status != SYComputerStatus_Waiting)
-        [self startStatusUpdateForComputer:computer];
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self startStatusUpdateForComputer:computer];
+        });
+    }
     
     return status;
 }

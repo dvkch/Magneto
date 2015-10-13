@@ -19,9 +19,42 @@
 @property (weak,   nonatomic) IBOutlet UIImageView  *statusImageView;
 @property (weak,   nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic, readwrite) SYComputerModel *computer;
+@property (assign, nonatomic) BOOL forAvailableComputersList;
 @end
 
 @implementation SYComputerCell
+
+- (void)setComputer:(SYComputerModel *)computer
+{
+    if (self.computer)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:SYNetworkManagerComputerStatusChangedNotification
+                                                      object:self.computer];
+        
+    }
+
+    self->_computer = computer;
+    
+    if (self.computer)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notificationComputerStatusChanged:)
+                                                     name:SYNetworkManagerComputerStatusChangedNotification
+                                                   object:self.computer];
+    }
+}
+
+- (void)dealloc
+{
+    if (self.computer)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notificationComputerStatusChanged:)
+                                                     name:SYNetworkManagerComputerStatusChangedNotification
+                                                   object:self.computer];
+    }
+}
 
 - (void)setComputer:(SYComputerModel *)computer forAvailableComputersList:(BOOL)forAvailableComputersList
 {
@@ -31,6 +64,7 @@
                             UITableViewCellAccessoryNone)];
     
     [self setComputer:computer];
+    [self setForAvailableComputersList:forAvailableComputersList];
     
     self->_computer = computer;
 
@@ -53,12 +87,17 @@
         [self.hostLabel setText:@"in case yours wasn't detected"];
     }
     
+    [self updateStatus];
+}
+
+- (void)updateStatus
+{
     SYComputerStatus status = SYComputerStatus_Unknown;
-    if (!forAvailableComputersList)
-        status = [[SYNetworkManager shared] statusForComputer:computer];
-    if (forAvailableComputersList &&  computer)
+    if (!self.forAvailableComputersList)
+        status = [[SYNetworkManager shared] statusForComputer:self.computer];
+    if (self.forAvailableComputersList &&  self.computer)
         status = SYComputerStatus_Opened;
-    if (forAvailableComputersList && !computer)
+    if (self.forAvailableComputersList && !self.computer)
         status = SYComputerStatus_Waiting;
     
     switch (status)
@@ -80,6 +119,11 @@
             [self.activityIndicator stopAnimating];
             break;
     }
+}
+
+- (void)notificationComputerStatusChanged:(NSNotification *)notification
+{
+    [self updateStatus];
 }
 
 @end

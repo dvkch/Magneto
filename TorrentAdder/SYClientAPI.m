@@ -61,7 +61,9 @@
             if (sessionID)
                 headers = @{@"X-Transmission-Session-Id":sessionID};
             break;
-        default:
+        case SYClientSoftware_uTorrent:
+            parameters = @{@"action":@"add-url",
+                           @"s":magnet.absoluteString};
             break;
     }
 

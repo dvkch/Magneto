@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>JiveAuthenticatingHTTPProtocol.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,52 +62,57 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1A6F8923B8994F1AC6BA3B5C7B5700B2</key>
+		<key>0DB80A0207F2F7A412BF517A4DBA8779</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4C9FBA7A9085064D56E43BB5B436D148</key>
+		<key>324F46403834E5A6CA00720189064A19</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5944D589448CFB6A181B89B7C3723811</key>
+		<key>3672F83400BDCF6A030923F99C4FE3E3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>59DB3894275F1D9166953B1A9E2DE637</key>
+		<key>4878C70B21CA37D7CB8A476BF986741B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>612060648BDF2CAE5369751686D6A7F1</key>
+		<key>55A8573170CE51A64AABC51B37ADEF98</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>81D7D20D07FA82A3821AE905C90D9829</key>
+		<key>8A2E8FED01C8A6BC8ADFCF3C3B78368F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8323712179F7E820211C4D6D9870C23C</key>
+		<key>993873D0B5A72018C078B68756896F1F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8D9411B436F1EEE3888F3443F24C8F4F</key>
+		<key>B41C0F594C3941D46F46D3145474E26A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D526FFC596EDFEE1BEEA14E6287FB9BD</key>
+		<key>BEBD056AB1189BBBB15C406CDC9CBA52</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EA888FC6A4E7EBA230A3AC32058923C4</key>
+		<key>D31500B7BE97EC3E00AD3AEBBAD4223A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F923EF70E9BF94F2856CEE89A2E0DD30</key>
 		<dict>
 			<key>primary</key>
 			<true/>

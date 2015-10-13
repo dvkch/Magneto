@@ -59,6 +59,8 @@
         self.host       = [aDecoder decodeObjectForKey:@"host"];
         self.port       = [aDecoder decodeIntForKey:@"port"];
         self.client     = [aDecoder decodeIntForKey:@"client"];
+        self.username   = [aDecoder decodeObjectForKey:@"username"];
+        self.password   = [aDecoder decodeObjectForKey:@"password"];
     }
     return self;
 }
@@ -70,6 +72,8 @@
     [aCoder encodeObject:self.host          forKey:@"host"];
     [aCoder encodeInt:self.port             forKey:@"port"];
     [aCoder encodeInt:self.client           forKey:@"client"];
+    [aCoder encodeObject:self.username      forKey:@"username"];
+    [aCoder encodeObject:self.password      forKey:@"password"];
 }
 
 - (BOOL)isEqual:(id)object
@@ -80,46 +84,50 @@
     return [[(SYComputerModel*)object identifier] isEqualToString:self.identifier];
 }
 
+- (NSURL *)baseURL
+{
+    NSString *url;
+    
+    if (self.password.length)
+        url = [NSString stringWithFormat:@"http://%@:%@@%@:%d/", self.username, self.password, self.host, self.port];
+    else if (self.username.length)
+        url = [NSString stringWithFormat:@"http://%@@%@:%d/", self.username, self.host, self.port];
+    else
+        url = [NSString stringWithFormat:@"http://%@:%d/", self.host, self.port];
+    
+    return [NSURL URLWithString:url];
+}
+
 - (NSURL *)webURL
 {
-    NSString *format;
-    switch (self.client) {
+    switch (self.client)
+    {
         case SYClientSoftware_Transmission:
-            format = @"http://%@:%d/transmission/web/";
-            break;
+            return [NSURL URLWithString:@"transmission/web/" relativeToURL:self.baseURL];
         case SYClientSoftware_uTorrent:
-            format = @"http://%@:%d/gui";
-            break;
-        default:
-            return nil;
+            return [NSURL URLWithString:@"gui/" relativeToURL:self.baseURL];
     }
-    NSString *urlString = [NSString stringWithFormat:format,
-                           self.host,
-                           self.port];
-    
-    return [NSURL URLWithString:urlString];
 }
 
 - (NSURL *)apiURL
 {
-    NSString *format;
-    switch (self.client) {
+    switch (self.client)
+    {
         case SYClientSoftware_Transmission:
-            format = @"http://%@:%d/transmission/rpc/";
-            break;
-        default:
-            return nil;
+            return [NSURL URLWithString:@"transmission/rpc/" relativeToURL:self.baseURL];
+        case SYClientSoftware_uTorrent:
+            return [NSURL URLWithString:@"gui/" relativeToURL:self.baseURL];
     }
-    NSString *urlString = [NSString stringWithFormat:format,
-                           self.host,
-                           self.port];
-    
-    return [NSURL URLWithString:urlString];
 }
 
 - (BOOL)isValid
 {
-    return (self.name.length && self.host.length && self.port != 0);
+    BOOL authOK = YES;
+    
+    if (self.password.length)
+        authOK = (self.username.length > 0);
+    
+    return (self.name.length && self.host.length && self.port != 0 && authOK);
 }
 
 + (int)defaultPortForClient:(SYClientSoftware)client
@@ -131,6 +139,18 @@
             return 18764;
     }
     return 0;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@: %p, name: %@, host: %@:%d, user: %@, %@ password>",
+            [self class],
+            self,
+            self.name,
+            self.host,
+            self.port,
+            self.username,
+            self.password.length ? @"with" : @"no"];
 }
 
 @end

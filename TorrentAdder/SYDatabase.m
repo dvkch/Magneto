@@ -50,6 +50,11 @@ NSString * const SYDatabaseTableComputers = @"computers";
             [objects addObject:object];
         }];
     }];
+    
+    [objects sortUsingComparator:^NSComparisonResult(SYComputerModel * _Nonnull obj1, SYComputerModel * _Nonnull obj2) {
+        return [obj1.name compare:obj2.name options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch)];
+    }];
+    
     return [objects copy];
 }
 

@@ -78,7 +78,7 @@
         return;
     
 #warning change lib
-    while (self.runningIPs.count < 1)
+    while (self.runningIPs.count < 10)
     {
         NSString *ip = [self.queuedIPs firstObject];
         [self.queuedIPs removeObject:ip];
