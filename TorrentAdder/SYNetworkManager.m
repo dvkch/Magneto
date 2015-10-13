@@ -27,6 +27,7 @@ NSString * const SYNetworkManagerComputerStatusChangedNotification = @"SYNetwork
 
 @interface SYNetworkManager ()
 @property (nonatomic, strong) NSMutableDictionary *statuses;
+@property (nonatomic, strong) NSMutableDictionary *previousStatuses;
 @property (nonatomic, strong) NSMutableDictionary *times;
 @end
 
@@ -44,20 +45,29 @@ NSString * const SYNetworkManagerComputerStatusChangedNotification = @"SYNetwork
     self = [super init];
     if (self)
     {
-        self.statuses = [NSMutableDictionary dictionary];
-        self.times    = [NSMutableDictionary dictionary];
+        self.statuses           = [NSMutableDictionary dictionary];
+        self.previousStatuses   = [NSMutableDictionary dictionary];
+        self.times              = [NSMutableDictionary dictionary];
     }
     return self;
 }
 
 - (void)startStatusUpdateForComputer:(SYComputerModel *)computer
 {
+    if ([[NSThread currentThread] isMainThread])
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self startStatusUpdateForComputer:computer];
+        });
+        return;
+    }
+    
     [self setStatus:SYComputerStatus_Waiting forComputer:computer];
     
     NSURLResponse *response;
     NSError *error;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:computer.webURL];
-    [request setTimeoutInterval:2];
+    [request setTimeoutInterval:4];
     [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -83,7 +93,9 @@ NSString * const SYNetworkManagerComputerStatusChangedNotification = @"SYNetwork
     if (status == [self statusForComputer:computer])
         return;
     
+    [self.previousStatuses setObject:@([self statusForComputer:computer]) forKey:computer.identifier];
     [self.statuses setObject:@(status) forKey:computer.identifier];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:SYNetworkManagerComputerStatusChangedNotification object:computer];
     
     if ([self.delegate respondsToSelector:@selector(networkManager:changedStatusForComputer:)])
@@ -114,6 +126,20 @@ NSString * const SYNetworkManagerComputerStatusChangedNotification = @"SYNetwork
     }
     
     return status;
+}
+
+- (SYComputerStatus)previousStatusForComputer:(SYComputerModel *)computer
+{
+    if (![[NSThread currentThread] isMainThread])
+    {
+        __block SYComputerStatus status;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            status = [self previousStatusForComputer:computer];
+        });
+        return status;
+    }
+    
+    return [[self.previousStatuses objectForKey:computer.identifier] unsignedIntegerValue];
 }
 
 + (NSArray<SYNetworkModel *> *)myNetworks:(BOOL)onlyEnXinterfaces

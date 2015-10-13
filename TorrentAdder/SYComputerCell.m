@@ -94,7 +94,12 @@
 {
     SYComputerStatus status = SYComputerStatus_Unknown;
     if (!self.forAvailableComputersList)
+    {
         status = [[SYNetworkManager shared] statusForComputer:self.computer];
+        SYComputerStatus previousStatus = [[SYNetworkManager shared] previousStatusForComputer:self.computer];
+        if (status == SYComputerStatus_Waiting && previousStatus != SYComputerStatus_Unknown)
+            status = previousStatus;
+    }
     if (self.forAvailableComputersList &&  self.computer)
         status = SYComputerStatus_Opened;
     if (self.forAvailableComputersList && !self.computer)

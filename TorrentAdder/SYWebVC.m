@@ -121,11 +121,11 @@
         [av dismissWithClickedButtonIndex:av.cancelButtonIndex animated:YES];
     };
 }
-
+/*
 - (void)authenticatingHTTPProtocol:(nullable JAHPAuthenticatingHTTPProtocol *)authenticatingHTTPProtocol logWithFormat:(nonnull NSString *)format
                          arguments:(va_list)arguments
 {
     NSLog(@"%@", [[NSString alloc] initWithFormat:format arguments:arguments]);
 }
-
+*/
 @end

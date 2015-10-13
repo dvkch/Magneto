@@ -37,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintBlueHeaderHeight;
 
+@property (strong, nonatomic) NSTimer *timerRefreshComputers;
 @property (strong, nonatomic) NSArray *computers;
 @property (strong, nonatomic) NSArray *searchResults;
 @property (strong, nonatomic) NSString *searchQuery;
@@ -53,6 +54,13 @@
                                              selector:@selector(appDidOpenURL:)
                                                  name:UIAppDidOpenURLNotification
                                                object:nil];
+    
+    self.timerRefreshComputers = [NSTimer timerWithTimeInterval:5
+                                                         target:self
+                                                       selector:@selector(refreshComputersTimerTick:)
+                                                       userInfo:nil
+                                                        repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.timerRefreshComputers forMode:NSRunLoopCommonModes];
     
     [self.titleLabel addGlow:[UIColor lightGrayColor] size:4.f];
     
@@ -89,6 +97,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIAppDidOpenURLNotification
                                                   object:nil];
+    
+    [self.timerRefreshComputers invalidate];
 }
 
 - (void)appDidOpenURL:(NSNotification *)notification
@@ -292,22 +302,12 @@
     }];
 }
 
-#pragma mark - TextField
+#pragma mark - Timer
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (void)refreshComputersTimerTick:(id)sender
 {
-    [textField resignFirstResponder];
-    self.searchQuery = textField.text;
-    return NO;
-}
-
-- (BOOL)textFieldShouldClear:(UITextField *)textField
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [textField resignFirstResponder];
-    });
-    self.searchQuery = textField.text;
-    return YES;
+    for (SYComputerModel *computer in self.computers)
+        [[SYNetworkManager shared] startStatusUpdateForComputer:computer];
 }
 
 #pragma mark - Parallax

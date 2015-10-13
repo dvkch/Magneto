@@ -73,7 +73,7 @@
                                            parameters:parameters
                                                 error:nil];
     
-    [request setTimeoutInterval:2];
+    [request setTimeoutInterval:10];
     
     for (NSString *key in headers.allKeys)
         [request setValue:headers[key] forHTTPHeaderField:key];

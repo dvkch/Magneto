@@ -25,7 +25,10 @@ extern NSString * const SYNetworkManagerComputerStatusChangedNotification;
 
 + (SYNetworkManager *)shared;
 
+- (void)startStatusUpdateForComputer:(SYComputerModel *)computer;
+
 - (SYComputerStatus)statusForComputer:(SYComputerModel *)computer;
+- (SYComputerStatus)previousStatusForComputer:(SYComputerModel *)computer;
 
 + (NSArray <SYNetworkModel *> *)myNetworks:(BOOL)onlyEnXinterfaces;
 

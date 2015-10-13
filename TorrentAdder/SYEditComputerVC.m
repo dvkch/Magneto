@@ -58,7 +58,7 @@
 {
     [super viewWillDisappear:animated];
     if (!self.isCreation)
-        [[SYDatabase shared] addComputer:self.computer];
+        [self saveComputer:YES];
 }
 
 - (void)setComputer:(SYComputerModel *)computer
@@ -67,17 +67,25 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - IBActions
-
-- (void)buttonSaveTap:(id)sender
+- (BOOL)saveComputer:(BOOL)force
 {
     if (self.computer.port == 0)
         [self.computer setPort:[SYComputerModel defaultPortForClient:self.computer.client]];
     
-    if (![self.computer isValid])
-        return;
+    if (![self.computer isValid] && !force)
+        return NO;
     
     [[SYDatabase shared] addComputer:self.computer];
+    return YES;
+}
+
+#pragma mark - IBActions
+
+- (void)buttonSaveTap:(id)sender
+{
+    if (![self saveComputer:NO])
+        return;
+    
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
