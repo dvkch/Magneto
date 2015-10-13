@@ -14,12 +14,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>CocoaLumberjack.xcscheme</key>
+		<key>CDZPinger.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>GBPing.xcscheme</key>
+		<key>CocoaLumberjack.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -62,12 +62,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0DB80A0207F2F7A412BF517A4DBA8779</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>324F46403834E5A6CA00720189064A19</key>
+		<key>0C4E5F9F2FE122F7DAA0A8321C393FE5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +72,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>3EFDD6884B890A7157734598C1DD7A71</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>4878C70B21CA37D7CB8A476BF986741B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>55A8573170CE51A64AABC51B37ADEF98</key>
+		<key>4F8F64C69A901FB154BF310E6B84D91B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,27 +92,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>8DE591E4C6FD6ED643EE484FDF873F10</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>993873D0B5A72018C078B68756896F1F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B41C0F594C3941D46F46D3145474E26A</key>
+		<key>B220D071D0F9E3113221B6AB41E85D66</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BEBD056AB1189BBBB15C406CDC9CBA52</key>
+		<key>C728D491AC25247B61FC5FE4BC6F06F0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D31500B7BE97EC3E00AD3AEBBAD4223A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F923EF70E9BF94F2856CEE89A2E0DD30</key>
+		<key>C866E372B6E89CFBF0693809629CB4AE</key>
 		<dict>
 			<key>primary</key>
 			<true/>

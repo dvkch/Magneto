@@ -86,8 +86,8 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/AFNetworking.framework"
   install_framework "Pods/BlocksKit.framework"
+  install_framework "Pods/CDZPinger.framework"
   install_framework "Pods/CocoaLumberjack.framework"
-  install_framework "Pods/GBPing.framework"
   install_framework "Pods/JiveAuthenticatingHTTPProtocol.framework"
   install_framework "Pods/SPLPing.framework"
   install_framework "Pods/SYKit.framework"
@@ -97,8 +97,8 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/AFNetworking.framework"
   install_framework "Pods/BlocksKit.framework"
+  install_framework "Pods/CDZPinger.framework"
   install_framework "Pods/CocoaLumberjack.framework"
-  install_framework "Pods/GBPing.framework"
   install_framework "Pods/JiveAuthenticatingHTTPProtocol.framework"
   install_framework "Pods/SPLPing.framework"
   install_framework "Pods/SYKit.framework"

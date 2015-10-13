@@ -7,7 +7,7 @@ use_frameworks!
 
 pod 'AFNetworking'
 pod 'BlocksKit'
-pod 'GBPing'
+pod 'CDZPinger'
 pod 'YapDatabase'
 pod 'SYKit'
 pod 'BlocksKit'

@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'EB96C38E98F47FDEA2B5EF97'
-               BlueprintName = 'GBPing'
+               BlueprintIdentifier = '6B9E06466CB2F9B9050A9A01'
+               BlueprintName = 'CDZPinger'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'GBPing.framework'>
+               BuildableName = 'CDZPinger.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

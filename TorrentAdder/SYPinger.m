@@ -8,22 +8,33 @@
 
 #import "SYPinger.h"
 #import "SYNetworkModel.h"
-#import "GBPing.h"
 
-@interface SYPing : GBPing
+@import SPLPing;
+
+@interface SYPing : SPLPing
 @property (nonatomic, assign) NSUInteger countFailed;
-@property (nonatomic, assign) NSUInteger countSuccesses;
-@end
-@implementation SYPing
+@property (nonatomic, assign) NSUInteger countSuccess;
+- (void)updateWithResponse:(SPLPingResponse *)response;
 @end
 
-@interface SYPinger () <GBPingDelegate>
+@implementation SYPing
+- (void)updateWithResponse:(SPLPingResponse *)response
+{
+    if (response.error)
+        ++self.countFailed;
+    else
+        ++self.countSuccess;
+}
+@end
+
+@interface SYPinger ()
 @property (nonatomic, strong) NSArray<SYNetworkModel *> *networks;
 @property (nonatomic, assign) NSUInteger totalCount;
 @property (nonatomic, strong) NSMutableArray *queuedIPs;
 @property (nonatomic, strong) NSMutableSet *runningIPs;
 @property (nonatomic, strong) NSMutableSet *endedIPs;
 @property (nonatomic, strong) NSMutableSet *validIPs;
+@property (nonatomic, strong) NSMutableArray *pingers;
 @property (nonatomic, assign) BOOL canceled;
 
 @property (nonatomic, copy) void(^progressBlock)(CGFloat progress);
@@ -55,6 +66,7 @@
     self.runningIPs = [NSMutableSet set];
     self.endedIPs   = [NSMutableSet set];
     self.validIPs   = [NSMutableSet set];
+    self.pingers    = [NSMutableArray array];
     
     for (SYNetworkModel *network in self.networks)
     {
@@ -77,26 +89,28 @@
     if (!self.queuedIPs.count || self.canceled)
         return;
     
-#warning change lib
-    while (self.runningIPs.count < 10)
+    while (self.runningIPs.count < 64)
     {
         NSString *ip = [self.queuedIPs firstObject];
         [self.queuedIPs removeObject:ip];
         [self.runningIPs addObject:ip];
         
-        SYPing *ping = [[SYPing alloc] init];
-        [ping setHost:ip];
-        [ping setDelegate:self];
-        [ping setupWithBlock:^(BOOL success, NSError *error) {
-            if (error)
+        SPLPingConfiguration *config = [[SPLPingConfiguration alloc] initWithPingInterval:0.1 timeoutInterval:1];
+        SYPing *ping = [[SYPing alloc] initWithIPv4Address:ip configuration:config];
+        [self.pingers addObject:ping];
+        
+        [ping setObserver:^(SPLPing * _Nonnull p, SPLPingResponse * _Nonnull r) {
+            SYPing *pp = (SYPing *)p;
+            [pp updateWithResponse:r];
+            if (pp.countSuccess + pp.countFailed > 3)
             {
-                [self ip:ip finishedWithSuccess:NO];
-            }
-            else
-            {
-                [ping startPinging];
+                [pp setObserver:nil];
+                [pp stop];
+                [self ip:ip finishedWithSuccess:(pp.countSuccess > 0)];
             }
         }];
+        
+        [ping start];
     }
 }
 
@@ -119,53 +133,6 @@
     
     if (self.endedIPs.count == self.totalCount && self.finishedBlock)
         self.finishedBlock(YES);
-}
-
-- (void)dealWithPing:(SYPing *)pinger
-{
-    if (self.canceled)
-    {
-        [pinger setDelegate:nil];
-        [pinger stop];
-        return;
-    }
-    
-    if (pinger.countSuccesses + pinger.countFailed < 2)
-        return;
-    
-    [pinger setDelegate:nil];
-    [pinger stop];
-    [self ip:pinger.host finishedWithSuccess:(pinger.countSuccesses > 0)];
-}
-
-- (void)ping:(GBPing *)pinger didReceiveReplyWithSummary:(GBPingSummary *)summary
-{
-    ((SYPing *)pinger).countSuccesses += 1;
-    [self dealWithPing:(SYPing *)pinger];
-}
-
--(void)ping:(GBPing *)pinger didFailWithError:(NSError *)error
-{
-    ((SYPing *)pinger).countFailed += 1;
-    [self dealWithPing:(SYPing *)pinger];
-}
-
--(void)ping:(GBPing *)pinger didFailToSendPingWithSummary:(GBPingSummary *)summary error:(NSError *)error
-{
-    ((SYPing *)pinger).countFailed += 1;
-    [self dealWithPing:(SYPing *)pinger];
-}
-
--(void)ping:(GBPing *)pinger didTimeoutWithSummary:(GBPingSummary *)summary
-{
-    ((SYPing *)pinger).countFailed += 1;
-    [self dealWithPing:(SYPing *)pinger];
-}
-
--(void)ping:(GBPing *)pinger didReceiveUnexpectedReplyWithSummary:(GBPingSummary *)summary
-{
-    ((SYPing *)pinger).countFailed += 1;
-    [self dealWithPing:(SYPing *)pinger];
 }
 
 @end

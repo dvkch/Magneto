@@ -66,8 +66,9 @@ NSString * const SYNetworkManagerComputerStatusChangedNotification = @"SYNetwork
     
     NSURLResponse *response;
     NSError *error;
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:computer.webURL];
-    [request setTimeoutInterval:4];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:computer.webURL
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                       timeoutInterval:4];
     [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     dispatch_async(dispatch_get_main_queue(), ^{

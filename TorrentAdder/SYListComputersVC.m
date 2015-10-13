@@ -9,15 +9,15 @@
 
 #import "SYListComputersVC.h"
 #import "SYComputerCell.h"
-#import "GBPing.h"
 #import "SYComputerModel.h"
 #import "SYNetworkManager.h"
 #import "SYNetworkModel.h"
 #import "SYPinger.h"
 #import "SYBonjourClient.h"
 #import "SYEditComputerVC.h"
+#import "UIColor+SY.h"
 
-@interface SYListComputersVC () <UITableViewDataSource, UITableViewDelegate, GBPingDelegate>
+@interface SYListComputersVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UIBarButtonItem *buttonClose;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -32,7 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self.progressView setProgressTintColor:[UIColor lightBlueColor]];
     self.buttonClose = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(buttonCloseTap:)];
     [self.navigationItem setLeftBarButtonItem:self.buttonClose];
     

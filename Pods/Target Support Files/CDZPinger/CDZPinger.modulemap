@@ -1,0 +1,6 @@
+framework module CDZPinger {
+  umbrella header "CDZPinger-umbrella.h"
+
+  export *
+  module * { export * }
+}
