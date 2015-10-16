@@ -10,6 +10,7 @@
 #import <ifaddrs.h>
 #import <arpa/inet.h>
 #import "SYNetworkModel.h"
+#import "NSURLRequest+SY.h"
 
 @interface NSHost : NSObject
 + (void)flushHostCache;
@@ -69,9 +70,12 @@ NSString * const SYNetworkManagerComputerStatusChangedNotification = @"SYNetwork
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:computer.webURL
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                        timeoutInterval:4];
+    [request setComputerID:computer.identifier];
+    [request setIsIsUpRequest:YES];
     [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        //NSLog(@"%@ - %@ - %@\n\n\n", computer.name, response, error);
         if (error)
             [self setStatus:SYComputerStatus_Closed forComputer:computer];
         else

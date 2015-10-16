@@ -82,26 +82,3 @@ strip_invalid_archs() {
   fi
 }
 
-
-if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods/AFNetworking.framework"
-  install_framework "Pods/BlocksKit.framework"
-  install_framework "Pods/CDZPinger.framework"
-  install_framework "Pods/CocoaLumberjack.framework"
-  install_framework "Pods/JiveAuthenticatingHTTPProtocol.framework"
-  install_framework "Pods/SPLPing.framework"
-  install_framework "Pods/SYKit.framework"
-  install_framework "Pods/SYPopover.framework"
-  install_framework "Pods/YapDatabase.framework"
-fi
-if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods/AFNetworking.framework"
-  install_framework "Pods/BlocksKit.framework"
-  install_framework "Pods/CDZPinger.framework"
-  install_framework "Pods/CocoaLumberjack.framework"
-  install_framework "Pods/JiveAuthenticatingHTTPProtocol.framework"
-  install_framework "Pods/SPLPing.framework"
-  install_framework "Pods/SYKit.framework"
-  install_framework "Pods/SYPopover.framework"
-  install_framework "Pods/YapDatabase.framework"
-fi

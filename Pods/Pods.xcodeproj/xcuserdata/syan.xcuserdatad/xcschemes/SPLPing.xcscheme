@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '42DCF9FCD87136B5CDC51251'
+               BlueprintIdentifier = '3F72F4B6A27EE606F79DE44D'
                BlueprintName = 'SPLPing'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SPLPing.framework'>
+               BuildableName = 'libSPLPing.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		28F87760C5E07A1396206778 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59DC210CA65DAF64BFA2F8C6 /* Pods.framework */; };
+		8C3B6519C6A5CE5AE5BEB241 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9593CE567D41E1A2937C6543 /* libPods.a */; };
 		9705460C1BBD43F900C5294D /* SYNetworkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9705460B1BBD43F900C5294D /* SYNetworkModel.m */; };
 		9705460F1BBD464700C5294D /* SYIP4Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 9705460E1BBD464700C5294D /* SYIP4Model.m */; };
 		970546121BBD4E3300C5294D /* SYPinger.m in Sources */ = {isa = PBXBuildFile; fileRef = 970546111BBD4E3300C5294D /* SYPinger.m */; };
@@ -44,6 +44,7 @@
 		97A18E161BBC018100F33AF5 /* SYWebVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E151BBC018100F33AF5 /* SYWebVC.xib */; };
 		97BA94181BB9D8C0000B03FD /* SYResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BA94171BB9D8C0000B03FD /* SYResultCell.m */; };
 		97BA941B1BB9E1C6000B03FD /* NSObject+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BA941A1BB9E1C6000B03FD /* NSObject+SY.m */; };
+		97BDF8521BCD909C00D77892 /* NSURLRequest+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */; };
 		97C0F50C1BC6F28C0058E0FB /* NSURL+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C0F50B1BC6F28C0058E0FB /* NSURL+SY.m */; };
 		97EF7B311BC3128000B9D33A /* UIImage+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EF7B301BC3128000B9D33A /* UIImage+SY.m */; };
 		97F911471BC2C45C00BF1848 /* SYEditComputerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F911451BC2C45C00BF1848 /* SYEditComputerVC.m */; };
@@ -84,7 +85,7 @@
 
 /* Begin PBXFileReference section */
 		55345FDB45AB4D9C72ECFAAD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		59DC210CA65DAF64BFA2F8C6 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9593CE567D41E1A2937C6543 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9705460A1BBD43F900C5294D /* SYNetworkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYNetworkModel.h; sourceTree = "<group>"; };
 		9705460B1BBD43F900C5294D /* SYNetworkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYNetworkModel.m; sourceTree = "<group>"; };
 		9705460D1BBD464700C5294D /* SYIP4Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYIP4Model.h; sourceTree = "<group>"; };
@@ -141,6 +142,8 @@
 		97BA94171BB9D8C0000B03FD /* SYResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYResultCell.m; sourceTree = "<group>"; };
 		97BA94191BB9E1C6000B03FD /* NSObject+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SY.h"; sourceTree = "<group>"; };
 		97BA941A1BB9E1C6000B03FD /* NSObject+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SY.m"; sourceTree = "<group>"; };
+		97BDF8501BCD909C00D77892 /* NSURLRequest+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+SY.h"; sourceTree = "<group>"; };
+		97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+SY.m"; sourceTree = "<group>"; };
 		97C0F50A1BC6F28C0058E0FB /* NSURL+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SY.h"; sourceTree = "<group>"; };
 		97C0F50B1BC6F28C0058E0FB /* NSURL+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SY.m"; sourceTree = "<group>"; };
 		97EF7B2F1BC3128000B9D33A /* UIImage+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SY.h"; sourceTree = "<group>"; };
@@ -195,7 +198,7 @@
 				F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */,
 				F898675F192A317C00735175 /* UIKit.framework in Frameworks */,
 				F898675B192A317C00735175 /* Foundation.framework in Frameworks */,
-				28F87760C5E07A1396206778 /* Pods.framework in Frameworks */,
+				8C3B6519C6A5CE5AE5BEB241 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,7 +342,7 @@
 				F898675C192A317C00735175 /* CoreGraphics.framework */,
 				F898675E192A317C00735175 /* UIKit.framework */,
 				F898677C192A317D00735175 /* XCTest.framework */,
-				59DC210CA65DAF64BFA2F8C6 /* Pods.framework */,
+				9593CE567D41E1A2937C6543 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -392,6 +395,8 @@
 				97C0F50B1BC6F28C0058E0FB /* NSURL+SY.m */,
 				973A5EB31BC9463000ACA301 /* NSString+SYApp.h */,
 				973A5EB41BC9463000ACA301 /* NSString+SYApp.m */,
+				97BDF8501BCD909C00D77892 /* NSURLRequest+SY.h */,
+				97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -620,6 +625,7 @@
 				9705460C1BBD43F900C5294D /* SYNetworkModel.m in Sources */,
 				97EF7B311BC3128000B9D33A /* UIImage+SY.m in Sources */,
 				973AFF861BB46CD600BA4B8B /* SYButton.m in Sources */,
+				97BDF8521BCD909C00D77892 /* NSURLRequest+SY.m in Sources */,
 				97A0C54F1BC31BA100DC4EEC /* UIColor+SY.m in Sources */,
 				97BA941B1BB9E1C6000B03FD /* NSObject+SY.m in Sources */,
 				979B6D201BBC7ECA003B49F9 /* SYWindow.m in Sources */,

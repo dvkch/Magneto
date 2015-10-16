@@ -12,7 +12,7 @@
 
 + (NSUInteger)numberOfFields
 {
-    return 6;
+    return 4;
 }
 
 - (UIImage *)imageForField:(SYComputerModelField)field

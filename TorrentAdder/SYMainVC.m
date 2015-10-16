@@ -42,6 +42,7 @@
 @property (strong, nonatomic) NSArray *searchResults;
 @property (strong, nonatomic) NSString *searchQuery;
 @property (assign, nonatomic) CGFloat constraintBlueHeaderHeightOriginalValue;
+@property (assign, nonatomic) BOOL isVisible;
 
 @end
 
@@ -90,6 +91,18 @@
     
     self.computers = [[SYDatabase shared] computers];
     [self.tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.isVisible = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.isVisible = NO;
 }
 
 - (void)dealloc
@@ -306,6 +319,9 @@
 
 - (void)refreshComputersTimerTick:(id)sender
 {
+    if (!self.isVisible)
+        return;
+    
     for (SYComputerModel *computer in self.computers)
         [[SYNetworkManager shared] startStatusUpdateForComputer:computer];
 }

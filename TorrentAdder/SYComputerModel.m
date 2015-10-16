@@ -88,11 +88,11 @@
 {
     NSString *url;
     
-    if (self.password.length)
+    /*if (self.password.length)
         url = [NSString stringWithFormat:@"http://%@:%@@%@:%d/", self.username, self.password, self.host, self.port];
     else if (self.username.length)
         url = [NSString stringWithFormat:@"http://%@@%@:%d/", self.username, self.host, self.port];
-    else
+    else*/
         url = [NSString stringWithFormat:@"http://%@:%d/", self.host, self.port];
     
     return [NSURL URLWithString:url];
