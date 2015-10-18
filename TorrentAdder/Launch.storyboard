@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9052" systemVersion="15B30a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" initialViewController="KQ6-2K-u3T">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="RTQ-Va-KtT">
+            <objects>
+                <viewController id="KQ6-2K-u3T" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="38c-QN-GLV"/>
+                        <viewControllerLayoutGuide type="bottom" id="eiy-Qd-daI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XrO-Rl-OIN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="khO-5T-kQH">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blue_background" translatesAutoresizingMaskIntoConstraints="NO" id="QOt-Qx-Yd6">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+                                        <animations/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Torrent Adder" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T6s-Sd-yrJ">
+                                        <rect key="frame" x="15" y="24" width="213" height="44"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Ltp-hC-Ff2"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="38"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </label>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="0HO-tB-T90"/>
+                                    <constraint firstItem="QOt-Qx-Yd6" firstAttribute="leading" secondItem="khO-5T-kQH" secondAttribute="leading" id="BLJ-z3-xvF"/>
+                                    <constraint firstAttribute="bottom" secondItem="QOt-Qx-Yd6" secondAttribute="bottom" id="FRq-au-5mN"/>
+                                    <constraint firstItem="QOt-Qx-Yd6" firstAttribute="top" secondItem="khO-5T-kQH" secondAttribute="top" id="KaA-s1-bPA"/>
+                                    <constraint firstItem="T6s-Sd-yrJ" firstAttribute="leading" secondItem="khO-5T-kQH" secondAttribute="leading" constant="15" id="SWG-J6-Inl"/>
+                                    <constraint firstAttribute="trailing" secondItem="QOt-Qx-Yd6" secondAttribute="trailing" id="ahD-dj-d89"/>
+                                    <constraint firstItem="T6s-Sd-yrJ" firstAttribute="top" secondItem="khO-5T-kQH" secondAttribute="top" constant="24" id="dGM-Nd-jQd"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="khO-5T-kQH" firstAttribute="leading" secondItem="XrO-Rl-OIN" secondAttribute="leading" id="FR5-1g-b1k"/>
+                            <constraint firstItem="khO-5T-kQH" firstAttribute="top" secondItem="XrO-Rl-OIN" secondAttribute="top" id="mzb-ZI-khT"/>
+                            <constraint firstAttribute="trailing" secondItem="khO-5T-kQH" secondAttribute="trailing" id="qag-Wa-FPr"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lZR-4A-7E0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="110" y="311"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="blue_background" width="1024" height="1024"/>
+    </resources>
+</document>

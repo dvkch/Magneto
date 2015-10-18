@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'C39CB28B2B4CA64F8CB4E6BD'
+               BlueprintIdentifier = '843202B2459EC41570BB839D'
                BlueprintName = 'SYKit-SYSearchField'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'SYSearchField.bundle'>

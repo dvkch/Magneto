@@ -121,6 +121,7 @@
     
     [SYAddMagnetPopupVC showInViewController:self
                                   withMagnet:magnetURL
+                                    orResult:nil
                                appToGoBackTo:[appID parsedSYApp]];
 }
 
@@ -232,7 +233,7 @@
         }
         
         SYResultModel *result = self.searchResults[indexPath.row];
-        [SYAddMagnetPopupVC showInViewController:self withMagnet:[NSURL URLWithString:result.magnet] appToGoBackTo:SYAppUnknown];
+        [SYAddMagnetPopupVC showInViewController:self withMagnet:nil orResult:result appToGoBackTo:SYAppUnknown];
     }
 }
 

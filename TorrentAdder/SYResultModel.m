@@ -24,20 +24,30 @@
     if (self)
     {
         self.name   = [dictionary[@"name"]   parsedString];
-        self.magnet = [dictionary[@"magnet"] parsedString];
+        self.magnet = [NSURL URLWithString:[dictionary[@"magnet"] parsedString]];
         self.size   = [dictionary[@"size"]   parsedString];
+        self.age    = [dictionary[@"age"]    parsedString];
+        self.seed   = [dictionary[@"seed"]   parsedString];
+        self.leech  = [dictionary[@"leech"]  parsedString];
+        
+        self.name = [self.name stringByReplacingOccurrencesOfString:@"\u00A0" withString:@" "];
+        self.size = [self.size stringByReplacingOccurrencesOfString:@"\u00A0" withString:@" "];
+        self.age  = [self.age  stringByReplacingOccurrencesOfString:@"\u00A0" withString:@" "];
     }
     return self;
 }
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p, %@, %@, %@>",
+    return [NSString stringWithFormat:@"<%@: %p, %@, %@, %@, %@, %@/%@>",
             [self class],
             self,
-            [self.name   stringWithLimit:10],
-            [self.magnet stringWithLimit:20],
-            self.size];
+            [self.name stringWithLimit:10],
+            [self.magnet.absoluteString stringWithLimit:20],
+            self.size,
+            self.age,
+            self.seed,
+            self.leech];
 }
 
 @end

@@ -12,6 +12,7 @@
 #import "SYPopoverNavigationController.h"
 #import "SYClientAPI.h"
 #import "NSURL+SY.h"
+#import "SYResultModel.h"
 
 @interface SYAddMagnetPopupVC () <UITableViewDataSource, UITableViewDelegate, SYPopoverNavigationControllerDelegate>
 
@@ -24,6 +25,7 @@
 
 @property (nonatomic, assign) SYApp appToGoBackTo;
 @property (nonatomic, strong) NSURL *magnetURL;
+@property (nonatomic, strong) SYResultModel *result;
 @property (nonatomic, strong) NSArray *computers;
 @property (nonatomic, assign) BOOL canClose;
 
@@ -33,11 +35,13 @@
 
 + (void)showInViewController:(UIViewController *)viewController
                   withMagnet:(NSURL *)magnet
+                    orResult:(SYResultModel *)result
                appToGoBackTo:(SYApp)appToGoBackTo
 {
     SYAddMagnetPopupVC *popupVC = [[SYAddMagnetPopupVC alloc] init];
     [popupVC setAppToGoBackTo:appToGoBackTo];
-    [popupVC setMagnetURL:magnet];
+    [popupVC setResult:result];
+    [popupVC setMagnetURL:(result ? result.magnet : magnet)];
     
     SYPopoverNavigationController *nc = [[SYPopoverNavigationController alloc] initWithRootViewController:popupVC];
     [nc setPopoverDelegate:popupVC];
@@ -229,6 +233,8 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    if (self.result.name.length)
+        return self.result.name;
     return [[self.magnetURL magnetName] capitalizedString];
 }
 

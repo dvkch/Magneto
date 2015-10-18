@@ -19,13 +19,29 @@
 {
     NSMutableAttributedString *title = [[NSMutableAttributedString alloc] init];
     [title appendAttributedString:
-     [[NSAttributedString alloc] initWithString:[result.name stringByAppendingString:@" "]
+     [[NSAttributedString alloc] initWithString:[result.name stringByAppendingString:@"\n"]
                                      attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16],
                                                   NSForegroundColorAttributeName:[UIColor darkTextColor]}]];
     [title appendAttributedString:
-     [[NSAttributedString alloc] initWithString:[result.size stringByReplacingOccurrencesOfString:@" " withString:@"\u00A0"]
+     [[NSAttributedString alloc] initWithString:[result.size stringByAppendingString:@", "]
                                      attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
                                                   NSForegroundColorAttributeName:[UIColor grayColor]}]];
+    [title appendAttributedString:
+     [[NSAttributedString alloc] initWithString:[result.age stringByAppendingString:@", " ]
+                                     attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
+                                                  NSForegroundColorAttributeName:[UIColor grayColor]}]];
+    [title appendAttributedString:
+     [[NSAttributedString alloc] initWithString:result.seed
+                                     attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
+                                                  NSForegroundColorAttributeName:[UIColor colorWithRed:0 green:0.56 blue:0.05 alpha:1.]}]];
+    [title appendAttributedString:
+     [[NSAttributedString alloc] initWithString:@"/"
+                                     attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
+                                                  NSForegroundColorAttributeName:[UIColor grayColor]}]];
+    [title appendAttributedString:
+     [[NSAttributedString alloc] initWithString:result.leech
+                                     attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
+                                                  NSForegroundColorAttributeName:[UIColor redColor]}]];
     return [title copy];
 }
 

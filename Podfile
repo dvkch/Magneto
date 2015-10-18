@@ -6,15 +6,13 @@ inhibit_all_warnings!
 
 pod 'AFNetworking'
 pod 'BlocksKit'
-pod 'CDZPinger'
 pod 'YapDatabase'
 pod 'SYKit'
 pod 'BlocksKit'
 pod 'SYPopover'
 pod 'SPLPing'
-pod 'JRSwizzle'
 pod 'JiveAuthenticatingHTTPProtocol'
-pod 'SparkInspector', :podspec => 'https://raw.githubusercontent.com/Foundry376/SparkInspectorFramework/master/SparkInspector.podspec', :configurations => ['Debug']
+pod 'SparkInspector', :configurations => ['Debug']
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

@@ -67,22 +67,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pods/JiveAuthenticatingHTTPProtocol/Source/JiveAuthenticatingHTTPProtocol/JAHPAuthenticatingHTTPProtocol.m"
-            timestampString = "466460318.647351"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "713"
-            endingLineNumber = "713"
-            landmarkName = "-URLSession:task:willPerformHTTPRedirection:newRequest:completionHandler:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "TorrentAdder/SYURLRequest.m"
             timestampString = "466460572.119872"
             startingColumnNumber = "9223372036854775807"

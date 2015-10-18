@@ -10,11 +10,13 @@
 #import "SYAppDelegate.h"
 
 @class SYComputerModel;
+@class SYResultModel;
 
 @interface SYAddMagnetPopupVC : SYPopoverViewController
 
 + (void)showInViewController:(UIViewController *)viewController
                   withMagnet:(NSURL *)magnet
+                    orResult:(SYResultModel *)result
                appToGoBackTo:(SYApp)appToGoBackTo;
 
 @end

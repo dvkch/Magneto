@@ -32,16 +32,23 @@ for (var i = 0; i < items.length; ++i)
         }
     }
     
-    var size = null;
+    var size  = null;
+    var age   = null;
+    var seed  = null;
+    var leech = null;
+    
     var columns = infoColumn.parentElement.children;
     for (var j = 0; j < columns.length; ++j)
     {
         if (columns[j] == infoColumn)
         {
-            size = columns[j+1].innerText;
+            size  = columns[j+1].innerText;
+            age   = columns[j+3].innerText;
+            seed  = columns[j+4].innerText;
+            leech = columns[j+5].innerText;
             break;
         }
     }
-    itemsParsed.push({'name':nameElement.innerText, 'magnet':magnet, 'size':size});
+    itemsParsed.push({'name':nameElement.innerText, 'magnet':magnet, 'size':size, 'age':age, 'seed':seed, 'leech':leech});
 }
 JSON.stringify(itemsParsed);

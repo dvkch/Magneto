@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8C3B6519C6A5CE5AE5BEB241 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9593CE567D41E1A2937C6543 /* libPods.a */; };
 		9705460C1BBD43F900C5294D /* SYNetworkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9705460B1BBD43F900C5294D /* SYNetworkModel.m */; };
 		9705460F1BBD464700C5294D /* SYIP4Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 9705460E1BBD464700C5294D /* SYIP4Model.m */; };
 		970546121BBD4E3300C5294D /* SYPinger.m in Sources */ = {isa = PBXBuildFile; fileRef = 970546111BBD4E3300C5294D /* SYPinger.m */; };
 		971378211BBB09360060C5B6 /* SYDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 971378201BBB09360060C5B6 /* SYDatabase.m */; };
+		973784321BD40649001AD487 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973784311BD40649001AD487 /* Launch.storyboard */; };
 		973A5EB51BC9463000ACA301 /* NSString+SYApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 973A5EB41BC9463000ACA301 /* NSString+SYApp.m */; };
 		973AFF771BB418D000BA4B8B /* SYResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 973AFF761BB418D000BA4B8B /* SYResultModel.m */; };
 		973AFF801BB41CE800BA4B8B /* SYListComputersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 973AFF7F1BB41CE800BA4B8B /* SYListComputersVC.m */; };
@@ -52,6 +52,7 @@
 		97F9114C1BC2C73D00BF1848 /* SYComputerFormCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F9114A1BC2C73D00BF1848 /* SYComputerFormCell.m */; };
 		97F9114D1BC2C73D00BF1848 /* SYComputerFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */; };
 		97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */; };
+		A6865BE2F752FF2924AFD00B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C427780E6763C828A8C98DFA /* libPods.a */; };
 		F83FFA3F192BE7440034A95B /* SYClientAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = F83FFA3E192BE7440034A95B /* SYClientAPI.m */; };
 		F88EEC0B1948FF1800D98F4F /* SYWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F88EEC0A1948FF1800D98F4F /* SYWebVC.m */; };
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
@@ -85,7 +86,6 @@
 
 /* Begin PBXFileReference section */
 		55345FDB45AB4D9C72ECFAAD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		9593CE567D41E1A2937C6543 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9705460A1BBD43F900C5294D /* SYNetworkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYNetworkModel.h; sourceTree = "<group>"; };
 		9705460B1BBD43F900C5294D /* SYNetworkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYNetworkModel.m; sourceTree = "<group>"; };
 		9705460D1BBD464700C5294D /* SYIP4Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYIP4Model.h; sourceTree = "<group>"; };
@@ -94,6 +94,7 @@
 		970546111BBD4E3300C5294D /* SYPinger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPinger.m; sourceTree = "<group>"; };
 		9713781F1BBB09360060C5B6 /* SYDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYDatabase.h; sourceTree = "<group>"; };
 		971378201BBB09360060C5B6 /* SYDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYDatabase.m; sourceTree = "<group>"; };
+		973784311BD40649001AD487 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		973A5EB31BC9463000ACA301 /* NSString+SYApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SYApp.h"; sourceTree = "<group>"; };
 		973A5EB41BC9463000ACA301 /* NSString+SYApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SYApp.m"; sourceTree = "<group>"; };
 		973AFF751BB418D000BA4B8B /* SYResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYResultModel.h; sourceTree = "<group>"; };
@@ -157,6 +158,7 @@
 		97F9114E1BC3071F00BF1848 /* SYComputerModel+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SYComputerModel+UI.h"; sourceTree = "<group>"; };
 		97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SYComputerModel+UI.m"; sourceTree = "<group>"; };
 		A30D2A07BE705893426CB12E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		C427780E6763C828A8C98DFA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F83FFA3D192BE7440034A95B /* SYClientAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYClientAPI.h; sourceTree = "<group>"; };
 		F83FFA3E192BE7440034A95B /* SYClientAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYClientAPI.m; sourceTree = "<group>"; };
 		F83FFA41192BE8860034A95B /* SYMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMacros.h; sourceTree = "<group>"; };
@@ -198,7 +200,7 @@
 				F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */,
 				F898675F192A317C00735175 /* UIKit.framework in Frameworks */,
 				F898675B192A317C00735175 /* Foundation.framework in Frameworks */,
-				8C3B6519C6A5CE5AE5BEB241 /* libPods.a in Frameworks */,
+				A6865BE2F752FF2924AFD00B /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,7 +344,7 @@
 				F898675C192A317C00735175 /* CoreGraphics.framework */,
 				F898675E192A317C00735175 /* UIKit.framework */,
 				F898677C192A317D00735175 /* XCTest.framework */,
-				9593CE567D41E1A2937C6543 /* libPods.a */,
+				C427780E6763C828A8C98DFA /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -356,6 +358,7 @@
 				F89867C0192BA8E800735175 /* UI */,
 				F8986769192A317C00735175 /* SYAppDelegate.h */,
 				F898676A192A317C00735175 /* SYAppDelegate.m */,
+				973784311BD40649001AD487 /* Launch.storyboard */,
 				F8986775192A317C00735175 /* Images.xcassets */,
 				F8986761192A317C00735175 /* Supporting Files */,
 				F83FFA41192BE8860034A95B /* SYMacros.h */,
@@ -534,6 +537,7 @@
 				97A18E0C1BBC011900F33AF5 /* SYMainVC.xib in Resources */,
 				97A0C5601BC3271300DC4EEC /* form_host_org.png in Resources */,
 				97A18E161BBC018100F33AF5 /* SYWebVC.xib in Resources */,
+				973784321BD40649001AD487 /* Launch.storyboard in Resources */,
 				97A0C55E1BC3271300DC4EEC /* form_bookmark_org.png in Resources */,
 				9794DA141BB409ED0066CFFE /* extract.js in Resources */,
 			);

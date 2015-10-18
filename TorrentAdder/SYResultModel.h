@@ -11,8 +11,11 @@
 @interface SYResultModel : NSObject
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *magnet;
+@property (nonatomic, strong) NSURL    *magnet;
 @property (nonatomic, strong) NSString *size;
+@property (nonatomic, strong) NSString *age;
+@property (nonatomic, strong) NSString *seed;
+@property (nonatomic, strong) NSString *leech;
 
 + (NSArray *)arrayWithArrayOfDictionaries:(NSArray *)array;
 
