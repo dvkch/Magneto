@@ -32,12 +32,12 @@
 
 - (NSInteger)numberOfAuthTries
 {
-    return [(NSString *)self.allHTTPHeaderFields[@"Z-IsUpRequest"] integerValue];
+    return [(NSString *)self.allHTTPHeaderFields[@"Z-NumberOfAuthTries"] integerValue];
 }
 
 - (void)setNumberOfAuthTries:(NSInteger)numberOfAuthTries
 {
-    [self setValue:[@(numberOfAuthTries) stringValue] forHTTPHeaderField:@"Z-IsUpRequest"];
+    [self setValue:[@(numberOfAuthTries) stringValue] forHTTPHeaderField:@"Z-NumberOfAuthTries"];
 }
 
 @end

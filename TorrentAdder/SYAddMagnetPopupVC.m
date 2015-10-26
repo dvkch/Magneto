@@ -250,12 +250,7 @@
 {
     [self switchToLoading:YES];
     [[SYClientAPI shared] addMagnet:self.magnetURL toComputer:computer completion:^(NSString *message, NSError *error) {
-        if (message)
-        {
-            NSString *msg = [NSString stringWithFormat:@"Success!\n\nMessage from %@:\n%@", computer.name, message];
-            [self switchToDoneWithMessage:msg animated:YES];
-        }
-        else
+        if (error)
         {
             NSString *msg = [NSString stringWithFormat:@"%@\n%@", error.localizedDescription, error.localizedRecoverySuggestion];
             
@@ -272,6 +267,13 @@
             }
             
             [self switchToFailedWithMessage:msg animated:YES];
+        }
+        else
+        {
+            NSString *msg = @"Success!";
+            if (message)
+                msg = [msg stringByAppendingFormat:@"\n\nMessage from %@:\n%@", computer.name, message];
+            [self switchToDoneWithMessage:msg animated:YES];
         }
     }];
 }

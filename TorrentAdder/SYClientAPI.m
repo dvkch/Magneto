@@ -9,9 +9,11 @@
 #import "SYClientAPI.h"
 #import "SYComputerModel.h"
 #import "AFNetworking.h"
+#import "XMLDictionary.h"
 
 @interface SYClientAPI ()
-@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
+@property (nonatomic, strong) AFHTTPRequestOperationManager *managerUTorrent;
+@property (nonatomic, strong) AFHTTPRequestOperationManager *managerTransmission;
 @end
 
 @implementation SYClientAPI
@@ -28,50 +30,84 @@
     self = [super init];
     if(self)
     {
-        self.manager = [[AFHTTPRequestOperationManager alloc] init];
-        [self.manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
-        [self.manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+        self.managerTransmission = [[AFHTTPRequestOperationManager alloc] init];
+        [self.managerTransmission setRequestSerializer:[AFJSONRequestSerializer serializer]];
+        [self.managerTransmission setResponseSerializer:[AFJSONResponseSerializer serializer]];
+        
+        self.managerUTorrent = [[AFHTTPRequestOperationManager alloc] init];
+        [self.managerUTorrent setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+        [self.managerUTorrent setResponseSerializer:[AFHTTPResponseSerializer serializer]];
     }
     return self;
 }
 
 #pragma mark - Public methods
 
-// https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
 - (void)addMagnet:(NSURL *)magnet
        toComputer:(SYComputerModel *)computer
        completion:(void(^)(NSString *message, NSError *error))block
 {
-    [self addMagnet:magnet toComputer:computer sessionID:nil completion:block];
-}
-
-- (void)addMagnet:(NSURL *)magnet
-       toComputer:(SYComputerModel *)computer
-        sessionID:(NSString *)sessionID
-       completion:(void(^)(NSString *message, NSError *error))block
-{
-    NSDictionary *parameters;
-    NSDictionary *headers;
-    
-    switch (computer.client)
-    {
-        case SYClientSoftware_Transmission:
-            parameters = @{@"method"    : @"torrent-add",
-                           @"arguments" : @{@"filename":[magnet absoluteString]}};
-            if (sessionID)
-                headers = @{@"X-Transmission-Session-Id":sessionID};
-            break;
+    switch (computer.client) {
         case SYClientSoftware_uTorrent:
-            parameters = @{@"action":@"add-url",
-                           @"s":magnet.absoluteString};
+            [self addMagnet:magnet toUTorrentComputer:computer completion:block];
+            break;
+        case SYClientSoftware_Transmission:
+            [self addMagnet:magnet toTransmissionComputer:computer sessionID:nil completion:block];
             break;
     }
+}
 
+// http://stackoverflow.com/questions/22079581/utorrent-api-add-url-giving-400-invalid-request
+// http://forum.utorrent.com/topic/21814-web-ui-api/#entry207447
+// http://forum.utorrent.com/topic/49588-%C2%B5torrent-webui/
+- (void)addMagnet:(NSURL *)magnet toUTorrentComputer:(SYComputerModel *)computer completion:(void(^)(NSString *message, NSError *error))block
+{
+    void(^failureBock)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        block(nil, error);
+    };
+    
+    [self.managerUTorrent GET:[computer.apiURL.absoluteString stringByAppendingPathComponent:@"token.html"]
+                   parameters:nil
+                      success:^(AFHTTPRequestOperation * _Nonnull op, id  _Nonnull responseObject)
+    {
+        NSDictionary *dic = [NSDictionary dictionaryWithXMLData:op.responseData];
+        NSString *token = dic[@"div"][@"__text"];
+        
+        NSDictionary *parameters = @{@"token":token, @"action":@"add-url", @"s":magnet.absoluteString};
+        
+        NSMutableURLRequest *request =
+        [self.managerUTorrent.requestSerializer requestWithMethod:@"GET"
+                                                        URLString:computer.apiURL.absoluteString
+                                                       parameters:parameters
+                                                            error:nil];
+        
+        [request setTimeoutInterval:10];
+        
+        AFHTTPRequestOperation *operation =
+        [self.managerUTorrent HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            //NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:NULL];
+            block(nil, nil);
+        } failure:failureBock];
+        
+        [self.managerUTorrent.operationQueue addOperation:operation];
+        
+    } failure:failureBock];
+}
+
+// https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
+- (void)addMagnet:(NSURL *)magnet toTransmissionComputer:(SYComputerModel *)computer sessionID:(NSString *)sessionID completion:(void(^)(NSString *message, NSError *error))block
+{
+    NSDictionary *parameters = @{@"method"    : @"torrent-add",
+                                 @"arguments" : @{@"filename":[magnet absoluteString]}};
+    NSDictionary *headers;
+    if (sessionID)
+        headers = @{@"X-Transmission-Session-Id":sessionID};
+    
     NSMutableURLRequest *request =
-    [self.manager.requestSerializer requestWithMethod:@"POST"
-                                            URLString:computer.apiURL.absoluteString
-                                           parameters:parameters
-                                                error:nil];
+    [self.managerTransmission.requestSerializer requestWithMethod:@"POST"
+                                       URLString:computer.apiURL.absoluteString
+                                      parameters:parameters
+                                           error:nil];
     
     [request setTimeoutInterval:10];
     
@@ -79,29 +115,12 @@
         [request setValue:headers[key] forHTTPHeaderField:key];
     
     AFHTTPRequestOperation *operation =
-    [self.manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *message;
-        switch (computer.client) {
-            case SYClientSoftware_Transmission:
-                message = responseObject[@"result"];
-                break;
-            default:
-                break;
-        }
-        block(message, nil);
+    [self.managerTransmission HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject[@"result"], nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (operation.response.statusCode == 409)
-        {
-            [self addMagnet:magnet
-                 toComputer:computer
-                  sessionID:operation.response.allHeaderFields[@"X-Transmission-Session-Id"]
-                 completion:block];
-            return;
-        }
         block(nil, error);
     }];
     
-    [self.manager.operationQueue addOperation:operation];
-}
+    [self.managerTransmission.operationQueue addOperation:operation];}
 
 @end

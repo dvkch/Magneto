@@ -94,7 +94,6 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
     }
     
     NSMutableURLRequest *request = (NSMutableURLRequest *)authenticatingHTTPProtocol.request;
-    
     request.numberOfAuthTries += 1;
     
     if (request.numberOfAuthTries < 2)
@@ -152,11 +151,12 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
     };
 }
 
+/*
 - (void)authenticatingHTTPProtocol:(nullable JAHPAuthenticatingHTTPProtocol *)authenticatingHTTPProtocol logWithFormat:(nonnull NSString *)format
                          arguments:(va_list)arguments
 {
     NSLog(@"%@", [[NSString alloc] initWithFormat:format arguments:arguments]);
 }
-
+*/
 
 @end

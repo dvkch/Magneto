@@ -49,6 +49,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>XMLDictionary.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>YapDatabase.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,11 +62,6 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>119AC4E92DC37BB278E656B9FBC2B267</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>12E2BC28C62976C425F4B71C2723F0B1</key>
 		<dict>
 			<key>primary</key>
@@ -72,12 +72,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>29178C2E364D99B152849F62F687A12A</key>
+		<key>1682B09569C51957D7740AF3CF3EB087</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2B6B1A6674B4C92211F16E22D4F3C177</key>
+		<key>1C069553919CFAF40B34F53769A891F7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>350CA20CE30123BD5D6FD49C0B4F13CA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,12 +92,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6551A901B01552E95D6EAA912374A174</key>
+		<key>57C2354078603397003222BEF302F318</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9E877EFCB945C9FB9D511FC937108DA8</key>
+		<key>89DF14ED74844B37B2EABE3CABBD052A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CE5C9522A81C28AD224CD7BAF4E8C10F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -102,7 +112,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F0509A6FD314FFAF73F08A9D01688B92</key>
+		<key>F7BF65CFFD50FAB3B40F1119C6BBCA1C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -72,6 +72,10 @@
         [self.queuedIPs addObjectsFromArray:[network allIPsOnNetwork:NO]];
     }
     
+    // Prevents having too much IPs to scan, which caused a kernel panic on my machine when running on the sim
+    if (self.queuedIPs.count > 500)
+        [self.queuedIPs removeObjectsInRange:NSMakeRange(500, self.queuedIPs.count - 500)];
+    
     self.totalCount = self.queuedIPs.count;
     [self executeQueue];
 }

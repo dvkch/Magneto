@@ -35,13 +35,13 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - CocoaLumberjack (2.0.3):
-    - CocoaLumberjack/Default (= 2.0.3)
-    - CocoaLumberjack/Extensions (= 2.0.3)
-  - CocoaLumberjack/Core (2.0.3)
-  - CocoaLumberjack/Default (2.0.3):
+  - CocoaLumberjack (2.1.0):
+    - CocoaLumberjack/Default (= 2.1.0)
+    - CocoaLumberjack/Extensions (= 2.1.0)
+  - CocoaLumberjack/Core (2.1.0)
+  - CocoaLumberjack/Default (2.1.0):
     - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.0.3):
+  - CocoaLumberjack/Extensions (2.1.0):
     - CocoaLumberjack/Default
   - JiveAuthenticatingHTTPProtocol (0.3.2)
   - SparkInspector (1.3.4)
@@ -49,6 +49,7 @@ PODS:
   - SYKit (0.0.6)
   - SYPopover (1.0.1):
     - SYKit (>= 0.0.1)
+  - XMLDictionary (1.4)
   - YapDatabase (2.7.3):
     - YapDatabase/standard (= 2.7.3)
   - YapDatabase/standard (2.7.3):
@@ -62,17 +63,19 @@ DEPENDENCIES:
   - SPLPing
   - SYKit
   - SYPopover
+  - XMLDictionary
   - YapDatabase
 
 SPEC CHECKSUMS:
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
-  CocoaLumberjack: f58d8a19629f4d8379ae14bb3534def24161430e
+  CocoaLumberjack: d6627e7ad42e14d41a4fa2e6c7ae42489d5f3e8b
   JiveAuthenticatingHTTPProtocol: f4d81a029622fe9347c38d55c2239ecdbba91720
   SparkInspector: 0c34a98a39bfabb0a45fdf2658d091a7958fc0b0
   SPLPing: aa94e6dcb07ec3c54d72b5999f1aebc7602f0d18
   SYKit: dbca746c868e76f7ec3a98e4915880c80fae0abb
   SYPopover: 0c2fe903202e7bc359465ea2142c348db854f2d7
+  XMLDictionary: f9f51601ba76678b594ab485f2b00ec1fed23724
   YapDatabase: 6d6a30e97face6c3158830823c27614afe83e1e0
 
 COCOAPODS: 0.39.0

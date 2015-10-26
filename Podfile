@@ -13,6 +13,7 @@ pod 'SYPopover'
 pod 'SPLPing'
 pod 'JiveAuthenticatingHTTPProtocol'
 pod 'SparkInspector', :configurations => ['Debug']
+pod 'XMLDictionary'
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
