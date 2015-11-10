@@ -105,9 +105,9 @@
     
     NSMutableURLRequest *request =
     [self.managerTransmission.requestSerializer requestWithMethod:@"POST"
-                                       URLString:computer.apiURL.absoluteString
-                                      parameters:parameters
-                                           error:nil];
+                                                        URLString:computer.apiURL.absoluteString
+                                                       parameters:parameters
+                                                            error:nil];
     
     [request setTimeoutInterval:10];
     
@@ -118,6 +118,15 @@
     [self.managerTransmission HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
         block(responseObject[@"result"], nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (operation.response.statusCode == 409)
+        {
+            NSString *sessionID = operation.response.allHeaderFields[@"X-Transmission-Session-Id"];
+            if (sessionID.length)
+            {
+                [self addMagnet:magnet toTransmissionComputer:computer sessionID:sessionID completion:block];
+                return;
+            }
+        }
         block(nil, error);
     }];
     

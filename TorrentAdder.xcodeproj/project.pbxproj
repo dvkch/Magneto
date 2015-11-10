@@ -11,6 +11,7 @@
 		9705460F1BBD464700C5294D /* SYIP4Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 9705460E1BBD464700C5294D /* SYIP4Model.m */; };
 		970546121BBD4E3300C5294D /* SYPinger.m in Sources */ = {isa = PBXBuildFile; fileRef = 970546111BBD4E3300C5294D /* SYPinger.m */; };
 		971378211BBB09360060C5B6 /* SYDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 971378201BBB09360060C5B6 /* SYDatabase.m */; };
+		9718BD191BDFF55300E628EC /* TorrentAdderUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9718BD181BDFF55300E628EC /* TorrentAdderUITests.m */; };
 		973784321BD40649001AD487 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973784311BD40649001AD487 /* Launch.storyboard */; };
 		973A5EB51BC9463000ACA301 /* NSString+SYApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 973A5EB41BC9463000ACA301 /* NSString+SYApp.m */; };
 		973AFF771BB418D000BA4B8B /* SYResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 973AFF761BB418D000BA4B8B /* SYResultModel.m */; };
@@ -71,6 +72,16 @@
 		F8986836192BC9B600735175 /* NSString+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = F8986835192BC9B600735175 /* NSString+SY.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		9718BD1B1BDFF55300E628EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F898674F192A317C00735175 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F8986756192A317C00735175;
+			remoteInfo = TorrentAdder;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		F88A0B311A80F7220089DE9A /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -94,6 +105,9 @@
 		970546111BBD4E3300C5294D /* SYPinger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPinger.m; sourceTree = "<group>"; };
 		9713781F1BBB09360060C5B6 /* SYDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYDatabase.h; sourceTree = "<group>"; };
 		971378201BBB09360060C5B6 /* SYDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYDatabase.m; sourceTree = "<group>"; };
+		9718BD161BDFF55300E628EC /* TorrentAdderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TorrentAdderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9718BD181BDFF55300E628EC /* TorrentAdderUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TorrentAdderUITests.m; sourceTree = "<group>"; };
+		9718BD1A1BDFF55300E628EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		973784311BD40649001AD487 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		973A5EB31BC9463000ACA301 /* NSString+SYApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SYApp.h"; sourceTree = "<group>"; };
 		973A5EB41BC9463000ACA301 /* NSString+SYApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SYApp.m"; sourceTree = "<group>"; };
@@ -193,6 +207,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9718BD131BDFF55300E628EC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8986754192A317C00735175 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -214,6 +235,15 @@
 				55345FDB45AB4D9C72ECFAAD /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		9718BD171BDFF55300E628EC /* TorrentAdderUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9718BD181BDFF55300E628EC /* TorrentAdderUITests.m */,
+				9718BD1A1BDFF55300E628EC /* Info.plist */,
+			);
+			path = TorrentAdderUITests;
 			sourceTree = "<group>";
 		};
 		973AFF811BB41CFC00BA4B8B /* VCs */ = {
@@ -322,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				F8986760192A317C00735175 /* TorrentAdder */,
+				9718BD171BDFF55300E628EC /* TorrentAdderUITests */,
 				F8986759192A317C00735175 /* Frameworks */,
 				F8986758192A317C00735175 /* Products */,
 				F8986800192BC06700735175 /* Resources */,
@@ -333,6 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				F8986757192A317C00735175 /* TorrentAdder.app */,
+				9718BD161BDFF55300E628EC /* TorrentAdderUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -449,6 +481,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		9718BD151BDFF55300E628EC /* TorrentAdderUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9718BD1F1BDFF55300E628EC /* Build configuration list for PBXNativeTarget "TorrentAdderUITests" */;
+			buildPhases = (
+				9718BD121BDFF55300E628EC /* Sources */,
+				9718BD131BDFF55300E628EC /* Frameworks */,
+				9718BD141BDFF55300E628EC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9718BD1C1BDFF55300E628EC /* PBXTargetDependency */,
+			);
+			name = TorrentAdderUITests;
+			productName = TorrentAdderUITests;
+			productReference = 9718BD161BDFF55300E628EC /* TorrentAdderUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		F8986756192A317C00735175 /* TorrentAdder */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F898678C192A317D00735175 /* Build configuration list for PBXNativeTarget "TorrentAdder" */;
@@ -480,6 +530,10 @@
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
+					9718BD151BDFF55300E628EC = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = F8986756192A317C00735175;
+					};
 					F8986756192A317C00735175 = {
 						DevelopmentTeam = 79RY8264V4;
 						SystemCapabilities = {
@@ -510,11 +564,19 @@
 			projectRoot = "";
 			targets = (
 				F8986756192A317C00735175 /* TorrentAdder */,
+				9718BD151BDFF55300E628EC /* TorrentAdderUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9718BD141BDFF55300E628EC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8986755192A317C00735175 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -594,6 +656,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		9718BD121BDFF55300E628EC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9718BD191BDFF55300E628EC /* TorrentAdderUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8986753192A317C00735175 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -640,6 +710,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		9718BD1C1BDFF55300E628EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F8986756192A317C00735175 /* TorrentAdder */;
+			targetProxy = 9718BD1B1BDFF55300E628EC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		F8986763192A317C00735175 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -652,6 +730,43 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		9718BD1D1BDFF55300E628EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = TorrentAdderUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = me.syan.TorrentAdderUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = TorrentAdder;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		9718BD1E1BDFF55300E628EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = TorrentAdderUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = me.syan.TorrentAdderUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = TorrentAdder;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
 		F898678A192A317D00735175 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -766,6 +881,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9718BD1F1BDFF55300E628EC /* Build configuration list for PBXNativeTarget "TorrentAdderUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9718BD1D1BDFF55300E628EC /* Debug */,
+				9718BD1E1BDFF55300E628EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F8986752192A317C00735175 /* Build configuration list for PBXProject "TorrentAdder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

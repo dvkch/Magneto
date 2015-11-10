@@ -4,12 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>SafariExt.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
-		<key>TorrentAdder.xcscheme</key>
+		<key>TorrentAdder.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -17,6 +12,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>9718BD151BDFF55300E628EC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>F88A0B211A80F7220089DE9A</key>
 		<dict>
 			<key>primary</key>

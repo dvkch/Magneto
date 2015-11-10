@@ -1,0 +1,6 @@
+scheme "TorrentAdder"
+
+output_directory "./build"
+output_name "TorrentAdder"
+
+use_legacy_build_api true
