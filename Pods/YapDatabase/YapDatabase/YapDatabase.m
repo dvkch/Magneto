@@ -268,6 +268,21 @@ NSString *const YapDatabaseNotificationKey           = @"notification";
 }
 
 - (id)initWithPath:(NSString *)inPath
+           options:(nullable YapDatabaseOptions *)inOptions
+{
+	return [self initWithPath:inPath
+	         objectSerializer:NULL
+	       objectDeserializer:NULL
+	       metadataSerializer:NULL
+	     metadataDeserializer:NULL
+	       objectPreSanitizer:NULL
+	      objectPostSanitizer:NULL
+	     metadataPreSanitizer:NULL
+	    metadataPostSanitizer:NULL
+	                  options:inOptions];
+}
+
+- (id)initWithPath:(NSString *)inPath
         serializer:(YapDatabaseSerializer)inSerializer
       deserializer:(YapDatabaseDeserializer)inDeserializer
 {
@@ -276,11 +291,11 @@ NSString *const YapDatabaseNotificationKey           = @"notification";
 	       objectDeserializer:inDeserializer
 	       metadataSerializer:inSerializer
 	     metadataDeserializer:inDeserializer
-	        objectPreSanitizer:NULL
-	       objectPostSanitizer:NULL
-	      metadataPreSanitizer:NULL
-	     metadataPostSanitizer:NULL
-	                   options:nil];
+	       objectPreSanitizer:NULL
+	      objectPostSanitizer:NULL
+	     metadataPreSanitizer:NULL
+	    metadataPostSanitizer:NULL
+	                  options:nil];
 }
 
 - (id)initWithPath:(NSString *)inPath
@@ -293,10 +308,10 @@ NSString *const YapDatabaseNotificationKey           = @"notification";
 	       objectDeserializer:inDeserializer
 	       metadataSerializer:inSerializer
 	     metadataDeserializer:inDeserializer
-	        objectPreSanitizer:NULL
-	       objectPostSanitizer:NULL
-	      metadataPreSanitizer:NULL
-	     metadataPostSanitizer:NULL
+	       objectPreSanitizer:NULL
+	      objectPostSanitizer:NULL
+	     metadataPreSanitizer:NULL
+	    metadataPostSanitizer:NULL
 	                  options:inOptions];
 }
 
@@ -312,10 +327,10 @@ NSString *const YapDatabaseNotificationKey           = @"notification";
 	       objectDeserializer:inDeserializer
 	       metadataSerializer:inSerializer
 	     metadataDeserializer:inDeserializer
-	        objectPreSanitizer:inPreSanitizer
-	       objectPostSanitizer:inPostSanitizer
-	      metadataPreSanitizer:inPreSanitizer
-	     metadataPostSanitizer:inPostSanitizer
+	       objectPreSanitizer:inPreSanitizer
+	      objectPostSanitizer:inPostSanitizer
+	     metadataPreSanitizer:inPreSanitizer
+	    metadataPostSanitizer:inPostSanitizer
 	                  options:inOptions];
 }
 
@@ -763,6 +778,39 @@ NSString *const YapDatabaseNotificationKey           = @"notification";
 			return NO;
 		}
 		
+        //Setting the PBKDF2 default iteration number (this will have effect next time database is opened)
+        if (options.cipherDefaultkdfIterNumber > 0) {
+            char *errorMsg;
+            NSString *pragmaCommand = [NSString stringWithFormat:@"PRAGMA cipher_default_kdf_iter = %lu", (unsigned long)options.cipherDefaultkdfIterNumber];
+            if (sqlite3_exec(sqlite, [pragmaCommand UTF8String], NULL, NULL, &errorMsg) != SQLITE_OK)
+            {
+                YDBLogError(@"failed to set database cipher_default_kdf_iter: %s", errorMsg);
+                return NO;
+            }
+        }
+        
+        //Setting the PBKDF2 iteration number
+        if (options.kdfIterNumber > 0) {
+            char *errorMsg;
+            NSString *pragmaCommand = [NSString stringWithFormat:@"PRAGMA kdf_iter = %lu", (unsigned long)options.kdfIterNumber];
+            if (sqlite3_exec(sqlite, [pragmaCommand UTF8String], NULL, NULL, &errorMsg) != SQLITE_OK)
+            {
+                YDBLogError(@"failed to set database kdf_iter: %s", errorMsg);
+                return NO;
+            }
+        }
+        
+        //Setting the encrypted database page size
+        if (options.cipherPageSize > 0) {
+            char *errorMsg;
+            NSString *pragmaCommand = [NSString stringWithFormat:@"PRAGMA cipher_page_size = %lu", (unsigned long)options.cipherPageSize];
+            if (sqlite3_exec(sqlite, [pragmaCommand UTF8String], NULL, NULL, &errorMsg) != SQLITE_OK)
+            {
+                YDBLogError(@"failed to set database cipher_page_size: %s", errorMsg);
+                return NO;
+            }
+        }
+        
 		int status = sqlite3_key(sqlite, [keyData bytes], (int)[keyData length]);
 		if (status != SQLITE_OK)
 		{
@@ -897,17 +945,6 @@ NSString *const YapDatabaseNotificationKey           = @"notification";
 	return result;
 }
 
-+ (NSString *)pragmaValueForAutoVacuum:(int64_t)auto_vacuum
-{
-	switch(auto_vacuum)
-	{
-		case 0 : return @"NONE";
-		case 1 : return @"FULL";
-		case 2 : return @"INCREMENTAL";
-		default: return @"UNKNOWN";
-	}
-}
-
 + (NSString *)pragmaValueForSynchronous:(int64_t)synchronous
 {
 	switch(synchronous)
@@ -915,6 +952,17 @@ NSString *const YapDatabaseNotificationKey           = @"notification";
 		case 0 : return @"OFF";
 		case 1 : return @"NORMAL";
 		case 2 : return @"FULL";
+		default: return @"UNKNOWN";
+	}
+}
+
++ (NSString *)pragmaValueForAutoVacuum:(int64_t)auto_vacuum
+{
+	switch(auto_vacuum)
+	{
+		case 0 : return @"NONE";
+		case 1 : return @"FULL";
+		case 2 : return @"INCREMENTAL";
 		default: return @"UNKNOWN";
 	}
 }
@@ -2495,7 +2543,7 @@ NSString *const YapDatabaseNotificationKey           = @"notification";
  *
  * - snapshot : NSNumber with the changeset's snapshot
 **/
-- (void)notePendingChanges:(NSDictionary *)pendingChangeset fromConnection:(YapDatabaseConnection __unused *)sender
+- (void)notePendingChangeset:(NSDictionary *)pendingChangeset fromConnection:(YapDatabaseConnection __unused *)sender
 {
 	NSAssert(dispatch_get_specific(IsOnSnapshotQueueKey), @"Must go through snapshotQueue for atomic access.");
 	NSAssert([pendingChangeset objectForKey:YapDatabaseSnapshotKey], @"Missing required change key: snapshot");
@@ -2513,10 +2561,11 @@ NSString *const YapDatabaseNotificationKey           = @"notification";
  * This method is only accessible from within the snapshotQueue.
  *
  * This method is used if a transaction finds itself in a race condition.
- * It should retrieve the database's pending and/or committed changes,
- * and then process them via [connection noteCommittedChanges:].
+ * That is, the transaction started before it was able to process changesets from sibling connections.
+ *
+ * It should fetch the changesets needed and then process them via [connection noteCommittedChangeset:].
 **/
-- (NSArray *)pendingAndCommittedChangesSince:(uint64_t)connectionSnapshot until:(uint64_t)maxSnapshot
+- (NSArray *)pendingAndCommittedChangesetsSince:(uint64_t)connectionSnapshot until:(uint64_t)maxSnapshot
 {
 	NSAssert(dispatch_get_specific(IsOnSnapshotQueueKey), @"Must go through snapshotQueue for atomic access.");
 	
@@ -2546,7 +2595,7 @@ NSString *const YapDatabaseNotificationKey           = @"notification";
  *
  * - snapshot : NSNumber with the changeset's snapshot
 **/
-- (void)noteCommittedChanges:(NSDictionary *)changeset fromConnection:(YapDatabaseConnection *)sender
+- (void)noteCommittedChangeset:(NSDictionary *)changeset fromConnection:(YapDatabaseConnection *)sender
 {
 	NSAssert(dispatch_get_specific(IsOnSnapshotQueueKey), @"Must go through snapshotQueue for atomic access.");
 	NSAssert([changeset objectForKey:YapDatabaseSnapshotKey], @"Missing required change key: snapshot");
@@ -2612,7 +2661,7 @@ NSString *const YapDatabaseNotificationKey           = @"notification";
 				
 				dispatch_group_async(group, connection->connectionQueue, ^{ @autoreleasepool {
 					
-					[connection noteCommittedChanges:changeset];
+					[connection noteCommittedChangeset:changeset];
 				}});
 			}
 		}

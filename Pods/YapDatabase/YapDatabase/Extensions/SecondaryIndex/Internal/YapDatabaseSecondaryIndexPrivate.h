@@ -9,6 +9,8 @@
 #import "YapDatabaseSecondaryIndexTransaction.h"
 
 #import "YapCache.h"
+#import "YapMutationStack.h"
+#import "YapDatabaseStatement.h"
 
 #import "sqlite3.h"
 
@@ -80,17 +82,22 @@
 @interface YapDatabaseSecondaryIndexConnection () {
 @public
 	
-	__strong YapDatabaseSecondaryIndex *secondaryIndex;
+	__strong YapDatabaseSecondaryIndex *parent;
 	__unsafe_unretained YapDatabaseConnection *databaseConnection;
 	
 	NSMutableDictionary *blockDict;
 	
-	YapCache *queryCache;
+	YapCache<NSString *, YapDatabaseStatement *> *queryCache;
 	NSUInteger queryCacheLimit;
+	
+	YapMutationStack_Bool *mutationStack;
 }
 
-- (id)initWithSecondaryIndex:(YapDatabaseSecondaryIndex *)secondaryIndex
-          databaseConnection:(YapDatabaseConnection *)databaseConnection;
+- (id)initWithParent:(YapDatabaseSecondaryIndex *)parent
+  databaseConnection:(YapDatabaseConnection *)databaseConnection;
+
+- (void)postCommitCleanup;
+- (void)postRollbackCleanup;
 
 - (sqlite3_stmt *)insertStatement;
 - (sqlite3_stmt *)updateStatement;
@@ -106,13 +113,11 @@
 @interface YapDatabaseSecondaryIndexTransaction () {
 @private
 	
-	__unsafe_unretained YapDatabaseSecondaryIndexConnection *secondaryIndexConnection;
+	__unsafe_unretained YapDatabaseSecondaryIndexConnection *parentConnection;
 	__unsafe_unretained YapDatabaseReadTransaction *databaseTransaction;
-	
-	BOOL isMutated;
 }
 
-- (id)initWithSecondaryIndexConnection:(YapDatabaseSecondaryIndexConnection *)secondaryIndexConnection
-                   databaseTransaction:(YapDatabaseReadTransaction *)databaseTransaction;
+- (id)initWithParentConnection:(YapDatabaseSecondaryIndexConnection *)parentConnection
+           databaseTransaction:(YapDatabaseReadTransaction *)databaseTransaction;
 
 @end

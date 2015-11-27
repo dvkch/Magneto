@@ -135,6 +135,22 @@ Simple reproduction of iOS Safari search/URL bar. There is no simple way to cust
 	@end
 
 
+####SYButton
+
+Button class to look a bit like material design buttons, ya know the round ones with a drop shadow — oO — ya, those.
+
+	@interface SYButton : UIControl
+	
+	@property (nonatomic, strong) NSString *text;
+	@property (nonatomic, assign) CGFloat contentInset;
+	@property (nonatomic, assign) CGFloat fontSize;
+	@property (nonatomic, assign) CGFloat textVOffset;
+	@property (nonatomic, strong) UIColor *backColor;
+	@property (nonatomic, strong) UIColor *selectedBackColor;
+	
+	@end
+
+
 License
 ===
 

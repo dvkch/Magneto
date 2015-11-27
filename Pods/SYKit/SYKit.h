@@ -12,3 +12,4 @@
 #import "SYScreenHelper.h"
 #import "SYSearchField.h"
 #import "CGTools.h"
+#import "SYButton.h"

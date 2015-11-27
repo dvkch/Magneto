@@ -8,16 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-NSString *NSStringFromUIInterfaceOrientation(UIInterfaceOrientation o);
+NSString *NSStringFromUIInterfaceOrientation(UIInterfaceOrientation o) __TVOS_PROHIBITED;
 
+__TVOS_PROHIBITED
 @interface SYScreenHelper : NSObject
 
-+ (SYScreenHelper *)shared;
++ (SYScreenHelper *)shared __TVOS_PROHIBITED;
 
-@property (nonatomic, assign) BOOL showStatusBarOnIphoneLandscape;
+@property (nonatomic, assign) BOOL showStatusBarOnIphoneLandscape __TVOS_PROHIBITED;
 
-- (void)updateStatusBarVisibility:(UIInterfaceOrientation)orientation animated:(BOOL)animated;
-- (CGRect)screenRect:(UIInterfaceOrientation)orientation; // has offset (origin.y != 0) on iOS >= 7
-- (CGRect)fullScreenRect:(UIInterfaceOrientation)orientation; // ignores status bar
+- (void)updateStatusBarVisibility:(UIInterfaceOrientation)orientation animated:(BOOL)animated __TVOS_PROHIBITED;
+
+// has offset (origin.y != 0) on iOS >= 7
+- (CGRect)screenRect:(UIInterfaceOrientation)orientation __TVOS_PROHIBITED;
+
+ // ignores status bar
+- (CGRect)fullScreenRect:(UIInterfaceOrientation)orientation __TVOS_PROHIBITED;
 
 @end
+

@@ -2,9 +2,14 @@
 
 #import "YapDatabase.h"
 #import "YapDatabaseExtension.h"
+
+#import "YapDatabaseHooksConnection.h"
+#import "YapDatabaseHooksTransaction.h"
+
 #import "YapProxyObject.h"
 #import "YapWhitelistBlacklist.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_OPTIONS(NSUInteger, YapDatabaseHooksBitMask) {
 	
@@ -110,3 +115,5 @@ typedef void (^YDBHooks_DidRemoveAllRows)
 @property (atomic, strong, readwrite) YDBHooks_DidRemoveAllRows didRemoveAllRows;
 
 @end
+
+NS_ASSUME_NONNULL_END

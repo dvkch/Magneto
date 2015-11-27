@@ -48,7 +48,7 @@
     
     self.imageViewIcon = [[UIImageView alloc] init];
     
-    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [self.activityIndicatorView setColor:[UIColor darkGrayColor]];
     [self.activityIndicatorView setHidesWhenStopped:YES];
     CGRect f = self.activityIndicatorView.frame; f.size.width += 10;
@@ -69,8 +69,6 @@
     [self addSubview:self.textField];
     
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureTapped:)];
-    [self.tapGesture setNumberOfTapsRequired:1];
-    [self.tapGesture setNumberOfTouchesRequired:1];
     [self addGestureRecognizer:self.tapGesture];
     
     // if we're init-ing from a coder we don't reset settings
