@@ -40,6 +40,18 @@
     [self.tableView registerNib:[UINib nibWithNibName:[SYComputerCell className] bundle:nil]
          forCellReuseIdentifier:[SYComputerCell className]];
     [self.tableView setTableFooterView:[[UIView alloc] init]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reload)
+                                                 name:SYBonjourClientUpdatedDataNotification
+                                               object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:SYBonjourClientUpdatedDataNotification
+                                                  object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated

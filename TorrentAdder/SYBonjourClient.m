@@ -12,9 +12,9 @@
 NSString * const SYBonjourClientUpdatedDataNotification = @"SYBonjourClientUpdatedDataNotification";
 
 @interface SYBonjourClient () <NSNetServiceBrowserDelegate, NSNetServiceDelegate>
-@property (nonatomic, strong) NSMutableArray *services;
-@property (nonatomic, strong) NSNetServiceBrowser *browserAFP;
-@property (nonatomic, strong) NSNetServiceBrowser *browserSMB;
+@property (nonatomic, strong) NSMutableArray <NSNetService *> *services;
+@property (nonatomic, strong) NSMutableArray <NSNetServiceBrowser *> *browsers;
+@property (nonatomic, strong) NSArray <NSString *> *servicesTypes;
 @property (nonatomic, assign) BOOL started;
 @end
 
@@ -35,11 +35,16 @@ NSString * const SYBonjourClientUpdatedDataNotification = @"SYBonjourClientUpdat
     self = [super init];
     if (self)
     {
+        self.servicesTypes = @[@"_smb._tcp", @"_afpovertcp._tcp", @"_daap._tcp", @"_home-sharing._tcp", @"_rfb._tcp"];
         self.services = [NSMutableArray array];
-        self.browserAFP = [[NSNetServiceBrowser alloc] init];
-        [self.browserAFP setDelegate:self];
-        self.browserSMB = [[NSNetServiceBrowser alloc] init];
-        [self.browserSMB setDelegate:self];
+        self.browsers = [NSMutableArray array];
+
+        for (NSUInteger i = 0; i < self.servicesTypes.count; ++i)
+        {
+            NSNetServiceBrowser *browser = [[NSNetServiceBrowser alloc] init];
+            [browser setDelegate:self];
+            [self.browsers addObject:browser];
+        }
     }
     return self;
 }
@@ -51,10 +56,14 @@ NSString * const SYBonjourClientUpdatedDataNotification = @"SYBonjourClientUpdat
     
     self.started = YES;
     
-    [self.browserSMB searchForServicesOfType:@"_smb._tcp" inDomain:@"local."];
-    [self.browserAFP searchForServicesOfType:@"_afpovertcp._tcp" inDomain:@"local."];
-    [self.browserSMB scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
-    [self.browserAFP scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+    for (NSUInteger i = 0; i < self.servicesTypes.count; ++i)
+    {
+        NSString *serviceType = self.servicesTypes[i];
+        NSNetServiceBrowser *browser = self.browsers[i];
+        [browser stop];
+        [browser searchForServicesOfType:serviceType inDomain:@"local."];
+        [browser scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+    }
 }
 
 - (NSString *)hostnameForIP:(NSString *)ip
