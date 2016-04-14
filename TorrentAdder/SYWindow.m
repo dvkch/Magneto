@@ -17,12 +17,14 @@
     [window makeKeyAndVisible];
     
     // http://stackoverflow.com/questions/25963101/unexpected-nil-window-in-uiapplicationhandleeventfromqueueevent
-    [window setFrame:[[UIScreen mainScreen] bounds]];
+    //[window setFrame:[[UIScreen mainScreen] bounds]];
+    [window setAutoresizingMask:(UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight)];
     
     [window setRootViewController:viewController];
     [window setBackgroundColor:[UIColor whiteColor]];
     [window.layer setMasksToBounds:YES];
     [window.layer setOpaque:NO];
+    
     return window;
 }
 
@@ -43,6 +45,18 @@
 #if DEBUG
     [self toggleSlowAnimations];
 #endif
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    NSLog(@"-> %@", NSStringFromCGRect(frame));
+}
+
+- (void)setBounds:(CGRect)bounds
+{
+    [super setBounds:bounds];
+    NSLog(@"-> %@", NSStringFromCGRect(bounds));
 }
 
 @end

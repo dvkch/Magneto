@@ -12,32 +12,32 @@
 
 - (NSString *)computerID
 {
-    return self.allHTTPHeaderFields[@"Z-MyComputerID"];
+    return [NSURLProtocol propertyForKey:@"sy_computer_id" inRequest:self];
 }
 
 - (void)setComputerID:(NSString *)computerID
 {
-    [self setValue:computerID forHTTPHeaderField:@"Z-MyComputerID"];
+    [NSURLProtocol setProperty:computerID forKey:@"sy_computer_id" inRequest:self];
 }
 
 - (BOOL)isIsUpRequest
 {
-    return [(NSString *)self.allHTTPHeaderFields[@"Z-IsUpRequest"] boolValue];
+    return [[NSURLProtocol propertyForKey:@"sy_request_is_up" inRequest:self] boolValue];
 }
 
 - (void)setIsIsUpRequest:(BOOL)isIsUpRequest
 {
-    [self setValue:[@(isIsUpRequest) stringValue] forHTTPHeaderField:@"Z-IsUpRequest"];
+    [NSURLProtocol setProperty:@(isIsUpRequest) forKey:@"sy_request_is_up" inRequest:self];
 }
 
 - (NSInteger)numberOfAuthTries
 {
-    return [(NSString *)self.allHTTPHeaderFields[@"Z-NumberOfAuthTries"] integerValue];
+    return [[NSURLProtocol propertyForKey:@"sy_number_of_auth_tries" inRequest:self] integerValue];
 }
 
 - (void)setNumberOfAuthTries:(NSInteger)numberOfAuthTries
 {
-    [self setValue:[@(numberOfAuthTries) stringValue] forHTTPHeaderField:@"Z-NumberOfAuthTries"];
+    [NSURLProtocol setProperty:@(numberOfAuthTries) forKey:@"sy_number_of_auth_tries" inRequest:self];
 }
 
 @end
