@@ -206,10 +206,10 @@
         bundle = mainBundle;
     
     NSString *loupePath = [bundle pathForResource:@"loupe" ofType:@"png"];
-    UIImage *loupeImg = [[UIImage imageWithContentsOfFile:loupePath] imageResizedSquarreTo:15];
+    UIImage *loupeImg = [[UIImage imageWithContentsOfFile:loupePath] sy_imageResizedSquarreTo:15];
     
-    loupeImg = [loupeImg imageByAddingPaddingTop:0 left:8 right:7 bottom:2];
-    loupeImg = [loupeImg imageMaskedWithColor:self.loupeColor];
+    loupeImg = [loupeImg sy_imageByAddingPaddingTop:0 left:8 right:7 bottom:2];
+    loupeImg = [loupeImg sy_imageMaskedWithColor:self.loupeColor];
     CGFloat a;
     [self.loupeColor getRed:NULL green:NULL blue:NULL alpha:&a];
     

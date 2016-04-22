@@ -11,7 +11,7 @@
 
 @implementation UIScreen (SYKit)
 
-- (CGRect)boundsFixedToPortraitOrientation
+- (CGRect)sy_boundsFixedToPortraitOrientation
 {
     if ([self respondsToSelector:@selector(fixedCoordinateSpace)])
     {
@@ -21,23 +21,25 @@
     return self.bounds;
 }
 
-- (CGRect)screenRectForOrientation:(UIInterfaceOrientation)orientation
-    showStatusBarOnIphoneLandscape:(BOOL)showStatusBarOnIphoneLandscape
-           ignoreStatusBariOSOver7:(BOOL)ignoreStatusBariOSOver7
+- (CGRect)sy_screenRectForOrientation:(UIInterfaceOrientation)orientation
+       showStatusBarOnIphoneLandscape:(BOOL)showStatusBarOnIphoneLandscape
+              ignoreStatusBariOSOver7:(BOOL)ignoreStatusBariOSOver7
 {
     BOOL isPortrait = UIInterfaceOrientationIsPortrait(orientation);
-    BOOL showStatusBar = [[UIDevice currentDevice] isIpad] || isPortrait || showStatusBarOnIphoneLandscape;
+    BOOL showStatusBar = [[UIDevice currentDevice] sy_isIpad] || isPortrait || showStatusBarOnIphoneLandscape;
     
     CGFloat statusBarHeight = (showStatusBar ? 20 : 0);
     
-    CGSize screenSize = [[UIScreen mainScreen] boundsFixedToPortraitOrientation].size;
+    CGSize screenSize = [[UIScreen mainScreen] sy_boundsFixedToPortraitOrientation].size;
     CGFloat viewWidth  = isPortrait ? screenSize.width  : screenSize.height;
     CGFloat viewHeight = isPortrait ? screenSize.height : screenSize.width;
     
-    if (![UIDevice iOSis7Plus] || !ignoreStatusBariOSOver7)
+    if (![UIDevice sy_iOSis7Plus] || !ignoreStatusBariOSOver7)
         viewHeight -= statusBarHeight;
     
-    return CGRectMake(0, (ignoreStatusBariOSOver7 ? 0 : statusBarHeight), viewWidth, viewHeight);
+    BOOL noYOffset = ![UIDevice sy_iOSis7Plus] || ignoreStatusBariOSOver7;
+    
+    return CGRectMake(0, (noYOffset ? 0 : statusBarHeight), viewWidth, viewHeight);
 }
 
 @end

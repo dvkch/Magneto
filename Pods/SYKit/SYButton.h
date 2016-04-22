@@ -14,7 +14,7 @@ IB_DESIGNABLE
 @property (nonatomic, strong) IBInspectable NSString *text;
 @property (nonatomic, assign) IBInspectable CGFloat contentInset;
 @property (nonatomic, assign) IBInspectable CGFloat fontSize;
-@property (nonatomic, assign) IBInspectable CGFloat textVOffset;
+@property (nonatomic, assign) IBInspectable CGSize textOffset;
 @property (nonatomic, strong) IBInspectable UIColor *backColor;
 @property (nonatomic, strong) IBInspectable UIColor *selectedBackColor;
 

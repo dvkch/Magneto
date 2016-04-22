@@ -9,13 +9,13 @@ Some useful categories and other classes on UIKit and Foundation
 
 Obtain an enum value representing the current device model:
 
-	+ (UIDeviceModel)deviceModelFromHardwareString:(NSString *)value;
-	+ (UIDeviceModel)deviceModelFromModelNumber:(NSString *)value;
-	- (UIDeviceModel)deviceModel;
-	- (BOOL)isIpad;
+	+ (UIDeviceModel)sy_deviceModelFromHardwareString:(NSString *)value;
+	+ (UIDeviceModel)sy_deviceModelFromModelNumber:(NSString *)value;
+	- (UIDeviceModel)sy_deviceModel;
+	- (BOOL)sy_isIpad;
 
 	// UIDeviceModeliPhone5C
-	[UIDevice deviceModelFromHardwareString:@"iPhone5,4"]
+	[UIDevice sy_deviceModelFromHardwareString:@"iPhone5,4"]
 
 
 Help you identifying if the current device supports well blurring views. For now this isn't customizable. I used reports found on the web of people using `FXBlurView` but feel free to send a push request if you want to remove or add a model. The iOS version is not used, only the device model. Models where blurring is too slow for use:
@@ -34,33 +34,33 @@ Help you identifying if the current device supports well blurring views. For now
 	UIDeviceModeliPad1
 	UIDeviceModeliPad3
  
-	- (BOOL)shouldSupportViewBlur;
+	- (BOOL)sy_shouldSupportViewBlur;
 
 
 Methods to access and use the iOS version string:
 
-	- (NSString*)systemVersionCached;
+	- (NSString*)sy_systemVersionCached;
 
-	- (BOOL)iOSisEqualTo:(NSString *)version;
-	- (BOOL)iOSisGreaterThan:(NSString *)version;
-	- (BOOL)iOSisGreaterThanOrEqualTo:(NSString *)version;
-	- (BOOL)iOSisLessThan:(NSString *)version;
+	- (BOOL)sy_iOSisEqualTo:(NSString *)version;
+	- (BOOL)sy_iOSisGreaterThan:(NSString *)version;
+	- (BOOL)sy_iOSisGreaterThanOrEqualTo:(NSString *)version;
+	- (BOOL)sy_iOSisLessThan:(NSString *)version;
 	
-	+ (BOOL)iOSis6Plus;
-	+ (BOOL)iOSis7Plus;
-	+ (BOOL)iOSis8Plus;
+	+ (BOOL)sy_iOSis6Plus;
+	+ (BOOL)sy_iOSis7Plus;
+	+ (BOOL)sy_iOSis8Plus;
 
 ####UIScreen+SYCategories
 
 In iOS8 Apple changed the behavior of `-[UIScreen bounds]` method. It used to return the size of the screen independently of the interface orientation, but this is no longer the case. The following method restores this behavior:
 
-	- (CGRect)boundsFixedToPortraitOrientation;
+	- (CGRect)sy_boundsFixedToPortraitOrientation;
 
 If like me you still support old iOS versions and therefore don't use auto-layout this method allows you to obtain the usable scree, size as a frame with some options:
 
-	- (CGRect)screenRectForOrientation:(UIInterfaceOrientation)orientation
-    	showStatusBarOnIphoneLandscape:(BOOL)showStatusBarOnIphoneLandscape
-        	   ignoreStatusBariOSOver7:(BOOL)ignoreStatusBariOSOver7;
+	- (CGRect)sy_screenRectForOrientation:(UIInterfaceOrientation)orientation
+    	   showStatusBarOnIphoneLandscape:(BOOL)showStatusBarOnIphoneLandscape
+        	      ignoreStatusBariOSOver7:(BOOL)ignoreStatusBariOSOver7;
 
 
 ####SYScreenHelper
@@ -71,9 +71,9 @@ It uses a gcd-based singleton to keep a shared instance. A single property can b
 
 Methods:
 
-	- (void)updateStatusBarVisibility:(UIInterfaceOrientation)orientation animated:(BOOL)animated;
-	- (CGRect)screenRect:(UIInterfaceOrientation)orientation; // has offset (origin.y != 0) on iOS >= 7
-	- (CGRect)fullScreenRect:(UIInterfaceOrientation)orientation; // ignores status bar
+	- (void)sy_updateStatusBarVisibility:(UIInterfaceOrientation)orientation animated:(BOOL)animated;
+	- (CGRect)sy_screenRect:(UIInterfaceOrientation)orientation; // has offset (origin.y != 0) on iOS >= 7
+	- (CGRect)sy_fullScreenRect:(UIInterfaceOrientation)orientation; // ignores status bar
 
 ####CGTools
 
@@ -88,37 +88,37 @@ Contains C functions to work with `CGRect`s
 Some methods to play with images, mainly to create resized copies of images or new images from a plain color
 
 	// convert an image to an iOS6 like bar button image
-	- (UIImage *)imageWithToolbarButtonStyling;
+	- (UIImage *)sy_imageWithToolbarButtonStyling;
 
 	// mask an image with another color. the image needs to have an alpha channel
-	- (UIImage *)imageMaskedWithColor:(UIColor *)maskColor;
+	- (UIImage *)sy_imageMaskedWithColor:(UIColor *)maskColor;
 
 	// create a new 1x1 image with the given color
-	+ (UIImage *)imageWithColor:(UIColor *)color;
+	+ (UIImage *)sy_imageWithColor:(UIColor *)color;
 
 	// create a new image with the given color, size and corner radius
-	+ (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size cornerRadius:(CGFloat)cornerRadius;
+	+ (UIImage *)sy_imageWithColor:(UIColor *)color size:(CGSize)size cornerRadius:(CGFloat)cornerRadius;
 
 	// rotate an image with an arbitrary angle
-	- (UIImage *)imageWithAngle:(CGFloat)angle;
+	- (UIImage *)sy_imageWithAngle:(CGFloat)angle;
 
 	// create a new image from the receiver by adding transparent padding
-	- (UIImage *)imageByAddingPaddingTop:(CGFloat)top
-	                                left:(CGFloat)left
-	                               right:(CGFloat)right
-	                              bottom:(CGFloat)bottom;
+	- (UIImage *)sy_imageByAddingPaddingTop:(CGFloat)top
+	                                   left:(CGFloat)left
+	                                  right:(CGFloat)right
+	                                 bottom:(CGFloat)bottom;
 
 	// resize image to new size, without checking if the new image will be distrorted or not
-	- (UIImage *)imageResizedTo:(CGSize)size;
+	- (UIImage *)sy_imageResizedTo:(CGSize)size;
 	
 	// resize image to a new squarre size
-	- (UIImage *)imageResizedSquarreTo:(CGFloat)size;
+	- (UIImage *)sy_imageResizedSquarreTo:(CGFloat)size;
 	
 	// resize image with correct ascpect to a new height
-	- (UIImage *)imageResizedHeightTo:(CGFloat)height;
+	- (UIImage *)sy_imageResizedHeightTo:(CGFloat)height;
 	
 	// resize image with correct ascpect to a new width
-	- (UIImage *)imageResizedWidthTo:(CGFloat)width;
+	- (UIImage *)sy_imageResizedWidthTo:(CGFloat)width;
 
 
 ####SYSearchBar
@@ -148,6 +148,74 @@ Button class to look a bit like material design buttons, ya know the round ones 
 	@property (nonatomic, strong) UIColor *backColor;
 	@property (nonatomic, strong) UIColor *selectedBackColor;
 	
+	@end
+
+####SYShapeView and SYGradientView
+
+`UIView` subclasses that changes the type of the layer to `CAShapeLayer` and `CAGradientLayer`, and allowing you to update the shape/gradient using its `layoutSubviewsBlock` block.
+
+######SYShapeView.h
+
+	@interface SYShapeView : UIView
+	
+	@property (nonatomic, readonly, strong) CAShapeLayer *layer;
+	
+	// will use clearColor for the view background and set/get 
+	// backgroundColor will become a proxy to the layer's fillColor
+	// super usefull for UITableViewCell selectedBackgroundView for instance
+	@property (nonatomic, assign) BOOL useBackgroundColorAsFillColor;
+	
+	// will be called right after [super layoutSubviews]
+	@property (nonatomic, copy) void(^layoutSubviewsBlock)(SYShapeView *view);
+	
+	@end
+
+######SYGradientView.h
+
+	@interface SYGradientView : UIView
+
+	@property (nonatomic, readonly, strong) CAGradientLayer *layer;
+	@property (nonatomic, copy) void(^layoutSubviewsBlock)(SYShapeView *view);
+
+	@end
+
+####UIButton+SYKit
+
+Category on `UIButton` to add some new features.
+
+	// creates a 1x1 image of color buttonColor and associates it as a background for the given state
+	-(void)sy_setButtonBackgroundColor:(UIColor *)buttonColor forState:(UIControlState)state;
+
+####UIView+SYKit
+
+Adds a way to override `pointInside:withEvent:` to "grow" your view touch areas outside of their natural bounds.
+
+	@interface UIView (SYKit)
+	
+	@property (nonatomic, assign) UIEdgeInsets sy_tapInsets;
+	
+	@end
+
+####NSObject+SYKit
+
+Adds to methods to work with swizzling object methods and executing a block on a specific `NSThread`
+
+	@interface NSObject (SYKit)
+
+	- (void)sy_performBlock:(void(^)(void))block onThread:(NSThread *)thread;
+	+ (void)sy_swizzleSelector:(SEL)originalSelector withSelector:(SEL)swizzledSelector;
+	
+	@end
+
+####UITableViewCell+SYKit
+
+Adds some help to compute a cell height using auto layout. Implementation may not be perfect, feel free to send PR my way if you have any suggestion.
+
+	@interface UITableViewCell (SYKit)
+
+	+ (CGFloat)sy_cellHeightForWidth:(CGFloat)width
+    	          configurationBlock:(void(^)(UITableViewCell *sizingCell))configurationBlock;
+
 	@end
 
 

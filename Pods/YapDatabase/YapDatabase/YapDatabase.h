@@ -28,6 +28,12 @@ NS_ASSUME_NONNULL_BEGIN
  * You can even read from the database while writing to it from another connection on another thread.
 **/
 
+#if defined(SQLITE_HAS_CODEC) && defined(YAP_STANDARD_SQLITE)
+
+	#error It seems you're using CocoaPods and you included YapDatabase and YapDatabase/Cipher pods. You just need to use "pod YapDatabase/SQLCipher"
+
+#endif
+
 /**
  * How does YapDatabase store my objects to disk?
  *
@@ -144,6 +150,11 @@ extern NSString *const YapDatabasePathShmKey;
  * The notification object will be the database instance itself.
  * That is, it will be an instance of YapDatabase.
  *
+ * This notification is only posted for internal modifications.
+ * When the `enableMultiprocessSupport` option is set, external modification notifications are made
+ * available by adding a `CrossProcessNotifier` extension to the database, and listening to the
+ * `YapDatabaseModifiedExternallyNotification`.
+ *
  * The userInfo dictionary will look something like this:
  * @{
  *     YapDatabaseSnapshotKey   : <NSNumber of snapshot, incremented per read-write transaction w/modification>,
@@ -156,6 +167,15 @@ extern NSString *const YapDatabasePathShmKey;
 **/
 extern NSString *const YapDatabaseModifiedNotification;
 
+/**
+ * When the `enableMultiprocessSupport` option is set and a `CrossProcessNotifier` extension has been
+ * added to the database, this notification is posted following a readwrite transaction where the
+ * database was modified in another process.
+ *
+ * This notification is always posted to the main thread.
+ **/
+extern NSString *const YapDatabaseModifiedExternallyNotification;
+
 extern NSString *const YapDatabaseSnapshotKey;
 extern NSString *const YapDatabaseConnectionKey;
 extern NSString *const YapDatabaseExtensionsKey;
@@ -166,6 +186,7 @@ extern NSString *const YapDatabaseMetadataChangesKey;
 extern NSString *const YapDatabaseRemovedKeysKey;
 extern NSString *const YapDatabaseRemovedCollectionsKey;
 extern NSString *const YapDatabaseAllKeysRemovedKey;
+extern NSString *const YapDatabaseModifiedExternallyKey;
 
 
 @interface YapDatabase : NSObject
@@ -306,17 +327,17 @@ extern NSString *const YapDatabaseAllKeysRemovedKey;
 @property (nonatomic, strong, readonly) NSString *databasePath_wal;
 @property (nonatomic, strong, readonly) NSString *databasePath_shm;
 
-@property (nonatomic, strong, readonly) YapDatabaseSerializer objectSerializer;
-@property (nonatomic, strong, readonly) YapDatabaseDeserializer objectDeserializer;
+@property (nonatomic, copy, readonly) YapDatabaseSerializer objectSerializer;
+@property (nonatomic, copy, readonly) YapDatabaseDeserializer objectDeserializer;
 
-@property (nonatomic, strong, readonly) YapDatabaseSerializer metadataSerializer;
-@property (nonatomic, strong, readonly) YapDatabaseDeserializer metadataDeserializer;
+@property (nonatomic, copy, readonly) YapDatabaseSerializer metadataSerializer;
+@property (nonatomic, copy, readonly) YapDatabaseDeserializer metadataDeserializer;
 
-@property (nonatomic, strong, readonly, nullable) YapDatabasePreSanitizer objectPreSanitizer;
-@property (nonatomic, strong, readonly, nullable) YapDatabasePostSanitizer objectPostSanitizer;
+@property (nonatomic, copy, readonly, nullable) YapDatabasePreSanitizer objectPreSanitizer;
+@property (nonatomic, copy, readonly, nullable) YapDatabasePostSanitizer objectPostSanitizer;
 
-@property (nonatomic, strong, readonly, nullable) YapDatabasePreSanitizer metadataPreSanitizer;
-@property (nonatomic, strong, readonly, nullable) YapDatabasePostSanitizer metadataPostSanitizer;
+@property (nonatomic, copy, readonly, nullable) YapDatabasePreSanitizer metadataPreSanitizer;
+@property (nonatomic, copy, readonly, nullable) YapDatabasePostSanitizer metadataPostSanitizer;
 
 @property (nonatomic, copy, readonly) YapDatabaseOptions *options;
 
@@ -637,6 +658,39 @@ extern NSString *const YapDatabaseAllKeysRemovedKey;
  *     the extension registration code (sometimes important for performance tuning.)
  *     If you pass nil, an internal databaseConnection will automatically be used.
  *
+ * @param completionBlock (optional)
+ *     An optional completion block may be used.
+ *     If the extension registration was successful then the ready parameter will be YES.
+ *     The completionBlock will be invoked on the main thread (dispatch_get_main_queue()).
+**/
+- (void)asyncRegisterExtension:(YapDatabaseExtension *)extension
+                      withName:(NSString *)extensionName
+                    connection:(nullable YapDatabaseConnection *)connection
+               completionBlock:(nullable void(^)(BOOL ready))completionBlock;
+
+/**
+ * Asynchronoulsy starts the extension registration process.
+ * After registration everything works automatically using just the extension name.
+ *
+ * The registration process is equivalent to an asyncReadwrite transaction.
+ * It involves persisting various information about the extension to the database,
+ * as well as possibly populating the extension by enumerating existing rows in the database.
+ * 
+ * @param extension (required)
+ *     The YapDatabaseExtension subclass instance you wish to register.
+ *     For example, this might be a YapDatabaseView instance.
+ *
+ * @param extensionName (required)
+ *     This is an arbitrary string you assign to the extension.
+ *     Once registered, you will generally access the extension instance via this name.
+ *     For example: [[transaction ext:@"myView"] numberOfGroups];
+ * 
+ * @param connection (optional)
+ *     You may optionally pass your own databaseConnection for this method to use.
+ *     This allows you to control things such as the cache size of the connection that performs
+ *     the extension registration code (sometimes important for performance tuning.)
+ *     If you pass nil, an internal databaseConnection will automatically be used.
+ *
  * @param completionQueue (optional)
  *     The dispatch_queue to invoke the completion block may optionally be specified.
  *     If NULL, dispatch_get_main_queue() is automatically used.
@@ -734,10 +788,31 @@ extern NSString *const YapDatabaseAllKeysRemovedKey;
  *
  * @param completionBlock (optional)
  *     An optional completion block may be used.
- *     If the extension registration was successful then the ready parameter will be YES.
 **/
 - (void)asyncUnregisterExtensionWithName:(NSString *)extensionName
                          completionQueue:(nullable dispatch_queue_t)completionQueue
+                         completionBlock:(nullable dispatch_block_t)completionBlock;
+
+/**
+ * Asynchronoulsy starts the extension unregistration process.
+ *
+ * The unregistration process is equivalent to an asyncReadwrite transaction.
+ * It involves deleting various information about the extension from the database,
+ * as well as possibly dropping related tables the extension may have been using.
+ *
+ * @param extensionName (required)
+ *     This is the arbitrary string you assigned to the extension when you registered it.
+ * 
+ * @param connection (optional)
+ *     You may optionally pass your own databaseConnection for this method to use.
+ *     If you pass nil, an internal databaseConnection will automatically be used.
+ *
+ * @param completionBlock (optional)
+ *     An optional completion block may be used.
+ *     The completionBlock will be invoked on the main thread (dispatch_get_main_queue()).
+**/
+- (void)asyncUnregisterExtensionWithName:(NSString *)extensionName
+                              connection:(nullable YapDatabaseConnection *)connection
                          completionBlock:(nullable dispatch_block_t)completionBlock;
 
 /**
@@ -760,7 +835,6 @@ extern NSString *const YapDatabaseAllKeysRemovedKey;
  *
  * @param completionBlock (optional)
  *     An optional completion block may be used.
- *     If the extension registration was successful then the ready parameter will be YES.
 **/
 - (void)asyncUnregisterExtensionWithName:(NSString *)extensionName
                               connection:(nullable YapDatabaseConnection *)connection

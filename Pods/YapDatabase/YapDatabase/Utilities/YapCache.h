@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
-#ifndef YAP_CACHE_STATISTICS
-#define YAP_CACHE_STATISTICS 0
+#ifndef YapCache_Enable_Statistics
+  #define YapCache_Enable_Statistics 0
 #endif
 
 NS_ASSUME_NONNULL_BEGIN
@@ -36,7 +36,6 @@ NS_ASSUME_NONNULL_BEGIN
  * And thus performing this action (if desired) is up to you.
  * The various YapDatabase classes which use it do this themselves.
 **/
-
 @interface YapCache<KeyType, ObjectType> : NSObject
 
 /**
@@ -99,8 +98,8 @@ NS_ASSUME_NONNULL_BEGIN
  * In general, assertions are disabled when you compile for release.
  * But to be precise, the checks are only run if NS_BLOCK_ASSERTIONS is not defined.
 **/
-@property (nonatomic, copy, readwrite) NSSet<Class> *allowedKeyClasses;
-@property (nonatomic, copy, readwrite) NSSet<Class> *allowedObjectClasses;
+@property (nonatomic, copy, readwrite, nullable) NSSet<Class> *allowedKeyClasses;
+@property (nonatomic, copy, readwrite, nullable) NSSet<Class> *allowedObjectClasses;
 
 //
 // The normal cache stuff...
@@ -115,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeAllObjects;
 - (void)removeObjectForKey:(KeyType)key;
-- (void)removeObjectsForKeys:(NSArray<KeyType> *)keys;
+- (void)removeObjectsForKeys:(id <NSFastEnumeration>)keys;
 
 - (void)enumerateKeysWithBlock:(void (^)(KeyType key, BOOL *stop))block;
 - (void)enumerateKeysAndObjectsWithBlock:(void (^)(KeyType key, ObjectType obj, BOOL *stop))block;
@@ -124,7 +123,7 @@ NS_ASSUME_NONNULL_BEGIN
 // Some debugging stuff that gets compiled out
 //
 
-#if YAP_CACHE_STATISTICS
+#if YapCache_Enable_Statistics
 
 /**
  * When querying the cache for an object via objectForKey,

@@ -1,6 +1,6 @@
 //
 //  UIImage+SYKit.h
-//  PhoneBook
+//  SYKit
 //
 //  Created by rominet on 1/1/13.
 //  Copyright (c) 2013 Syan. All rights reserved.
@@ -10,21 +10,21 @@
 
 @interface UIImage (SYKit)
 
-- (UIImage *)imageByAddingPaddingTop:(CGFloat)top
-                                left:(CGFloat)left
-                               right:(CGFloat)right
-                              bottom:(CGFloat)bottom;
+- (UIImage *)sy_imageByAddingPaddingTop:(CGFloat)top
+                                   left:(CGFloat)left
+                                  right:(CGFloat)right
+                                 bottom:(CGFloat)bottom;
 
 
-- (UIImage *)imageResizedTo:(CGSize)size;
-- (UIImage *)imageResizedSquarreTo:(CGFloat)size;
-- (UIImage *)imageResizedHeightTo:(CGFloat)height;
-- (UIImage *)imageResizedWidthTo:(CGFloat)width;
+- (UIImage *)sy_imageResizedTo:(CGSize)size;
+- (UIImage *)sy_imageResizedSquarreTo:(CGFloat)size;
+- (UIImage *)sy_imageResizedHeightTo:(CGFloat)height;
+- (UIImage *)sy_imageResizedWidthTo:(CGFloat)width;
 
-- (UIImage *)imageWithToolbarButtonStyling;
-- (UIImage *)imageMaskedWithColor:(UIColor *)maskColor;
-+ (UIImage *)imageWithColor:(UIColor *)color;
-+ (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size cornerRadius:(CGFloat)cornerRadius;
-- (UIImage *)imageWithAngle:(CGFloat)angle;
+- (UIImage *)sy_imageWithToolbarButtonStyling;
+- (UIImage *)sy_imageMaskedWithColor:(UIColor *)maskColor;
++ (UIImage *)sy_imageWithColor:(UIColor *)color;
++ (UIImage *)sy_imageWithColor:(UIColor *)color size:(CGSize)size cornerRadius:(CGFloat)cornerRadius;
+- (UIImage *)sy_imageWithAngle:(CGFloat)angle;
 
 @end

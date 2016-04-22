@@ -82,8 +82,8 @@
     [self.backView setFrame:rect];
     
     [self.label sizeToFit];
-    [self.label setCenter:CGPointMake(self.backView.bounds.size.width  / 2.,
-                                      self.backView.bounds.size.height / 2. + self.textVOffset)];
+    [self.label setCenter:CGPointMake(self.backView.bounds.size.width  / 2. + self.textOffset.width,
+                                      self.backView.bounds.size.height / 2. + self.textOffset.height)];
 }
 
 - (void)setBackColor:(UIColor *)backColor
@@ -153,9 +153,9 @@
     return self.label.text;
 }
 
-- (void)setTextVOffset:(CGFloat)textVOffset
+- (void)setTextOffset:(CGSize)textOffset
 {
-    self->_textVOffset = textVOffset;
+    self->_textOffset = textOffset;
     [self setNeedsLayout];
 }
 

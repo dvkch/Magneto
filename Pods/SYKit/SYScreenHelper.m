@@ -38,7 +38,7 @@ NSString *NSStringFromUIInterfaceOrientation(UIInterfaceOrientation o)
 - (BOOL)shouldShowStatusBarForOrientation:(UIInterfaceOrientation)orientation
 {
     BOOL isPortrait = UIInterfaceOrientationIsPortrait(orientation);
-    return [[UIDevice currentDevice] isIpad] || (isPortrait || self.showStatusBarOnIphoneLandscape);
+    return [[UIDevice currentDevice] sy_isIpad] || (isPortrait || self.showStatusBarOnIphoneLandscape);
 }
 
 - (void)updateStatusBarVisibility:(UIInterfaceOrientation)orientation animated:(BOOL)animated
@@ -49,16 +49,16 @@ NSString *NSStringFromUIInterfaceOrientation(UIInterfaceOrientation o)
 
 - (CGRect)screenRect:(UIInterfaceOrientation)orientation
 {
-    return [[UIScreen mainScreen] screenRectForOrientation:orientation
-                            showStatusBarOnIphoneLandscape:self.showStatusBarOnIphoneLandscape
-                                   ignoreStatusBariOSOver7:NO];
+    return [[UIScreen mainScreen] sy_screenRectForOrientation:orientation
+                               showStatusBarOnIphoneLandscape:self.showStatusBarOnIphoneLandscape
+                                      ignoreStatusBariOSOver7:NO];
 }
 
 - (CGRect)fullScreenRect:(UIInterfaceOrientation)orientation
 {
-    return [[UIScreen mainScreen] screenRectForOrientation:orientation
-                            showStatusBarOnIphoneLandscape:self.showStatusBarOnIphoneLandscape
-                                   ignoreStatusBariOSOver7:YES];
+    return [[UIScreen mainScreen] sy_screenRectForOrientation:orientation
+                               showStatusBarOnIphoneLandscape:self.showStatusBarOnIphoneLandscape
+                                      ignoreStatusBariOSOver7:YES];
 }
 
 @end

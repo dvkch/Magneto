@@ -390,6 +390,29 @@ typedef NS_OPTIONS(NSUInteger, YapDatabaseConnectionFlushMemoryFlags) {
                 completionQueue:(nullable dispatch_queue_t)completionQueue
                 completionBlock:(nullable dispatch_block_t)completionBlock;
 
+/**
+ * It's sometimes useful to find out when all previously queued transactions on a connection have completed.
+ * For example, you may have multiple methods (perhaps scattered across multiple classes) that may queue
+ * asyncReadWriteTransaction's on a particular databaseConnection. And you'd like to know when all
+ * the queued readWriteTransactions have completed.
+ * 
+ * One way to accomplish this is simply to queue an asyncReadTransaction on the databaseConnection.
+ * Since all transactions on a databaseConnection are queued onto a serial dispatch queue, you'll know that once
+ * your asyncReadTransaction is running, all previously scheduled transactions have completed.
+ *
+ * Although the above technique works, the 'flushTransactionsWithCompletionQueue:completionBlock:'
+ * is a more efficient way to accomplish this task. (And a more elegant & readable way too.)
+ *
+ * @param completionQueue
+ *   The dispatch_queue to invoke the completionBlock on.
+ *   If NULL, dispatch_get_main_queue() is automatically used.
+ * 
+ * @param completionBlock
+ *   The block to invoke once all previously scheduled transactions have completed.
+**/
+- (void)flushTransactionsWithCompletionQueue:(nullable dispatch_queue_t)completionQueue
+                             completionBlock:(nullable dispatch_block_t)completionBlock;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Long-Lived Transactions
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -509,9 +532,11 @@ typedef NS_OPTIONS(NSUInteger, YapDatabaseConnectionFlushMemoryFlags) {
  * or [transaction removeAllObjectsInAllCollections] was invoked
  * during any of the commits represented by the given notifications,
  * then the key may not be included in the enumeration.
- * You must use didClearCollection:inNotifications: if you need to handle that case.
+ * You must use didClearCollection:inNotifications: or didClearAllCollectionsInNotifications:
+ * if you need to handle that case.
  * 
  * @see didClearCollection:inNotifications:
+ * @see didClearAllCollectionsInNotifications:
 **/
 - (void)enumerateChangedKeysInCollection:(NSString *)collection
                          inNotifications:(NSArray<NSNotification *> *)notifications
@@ -520,11 +545,14 @@ typedef NS_OPTIONS(NSUInteger, YapDatabaseConnectionFlushMemoryFlags) {
 /**
  * Allows you to enumerate all the changed collection/key tuples for the given commits.
  * 
- * Keep in mind that if [transaction removeAllObjectsInAllCollections] was invoked
+ * Keep in mind that if [transaction removeAllObjectsInCollection:] was invoked on the given collection
+ * or [transaction removeAllObjectsInAllCollections] was invoked
  * during any of the commits represented by the given notifications,
  * then the collection/key tuple may not be included in the enumeration.
- * You must use didClearAllCollectionsInNotifications: if you need to handle that case.
+ * You must use didClearCollection:inNotifications: or didClearAllCollectionsInNotifications:
+ * if you need to handle that case.
  * 
+ * @see didClearCollection:inNotifications:
  * @see didClearAllCollectionsInNotifications:
 **/
 - (void)enumerateChangedCollectionKeysInNotifications:(NSArray<NSNotification *> *)notifications

@@ -10,10 +10,10 @@
 
 @interface UIScreen (SYKit)
 
-- (CGRect)boundsFixedToPortraitOrientation __TVOS_PROHIBITED;
+- (CGRect)sy_boundsFixedToPortraitOrientation __TVOS_PROHIBITED;
 
-- (CGRect)screenRectForOrientation:(UIInterfaceOrientation)orientation
-    showStatusBarOnIphoneLandscape:(BOOL)showStatusBarOnIphoneLandscape
-           ignoreStatusBariOSOver7:(BOOL)ignoreStatusBariOSOver7 __TVOS_PROHIBITED;
+- (CGRect)sy_screenRectForOrientation:(UIInterfaceOrientation)orientation
+       showStatusBarOnIphoneLandscape:(BOOL)showStatusBarOnIphoneLandscape
+              ignoreStatusBariOSOver7:(BOOL)ignoreStatusBariOSOver7 __TVOS_PROHIBITED;
 
 @end

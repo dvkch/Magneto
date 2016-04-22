@@ -14,7 +14,7 @@ static NSDictionary *_syModelNumberToModels;
 
 @implementation UIDevice (SYKit)
 
-+ (UIDeviceModel)deviceModelFromHardwareString:(NSString *)value
++ (UIDeviceModel)sy_deviceModelFromHardwareString:(NSString *)value
 {
     if(!_syHardwareToModels)
     {
@@ -28,6 +28,7 @@ static NSDictionary *_syModelNumberToModels;
                                 @(UIDeviceModeliPodTouch3G): @[@"iPod3,1"],
                                 @(UIDeviceModeliPodTouch4G): @[@"iPod4,1"],
                                 @(UIDeviceModeliPodTouch5G): @[@"iPod5,1"],
+                                @(UIDeviceModeliPodTouch6G): @[@"iPod7,1"],
                                 
                                 // iPad (9.7 inches)
                                 @(UIDeviceModeliPad1):       @[@"iPad1,1"],
@@ -41,6 +42,10 @@ static NSDictionary *_syModelNumberToModels;
                                 @(UIDeviceModeliPadMini):    @[@"iPad2,5", @"iPad2,6", @"iPad2,7"],
                                 @(UIDeviceModeliPadMini2):   @[@"iPad4,4", @"iPad4,5"],
                                 @(UIDeviceModeliPadMini3):   @[@"iPad4,7", @"iPad4,8", @"iPad4,9"],
+                                @(UIDeviceModeliPadMini4):   @[@"iPad5,1", @"iPad5,2"],
+                                
+                                // iPad Pro
+                                @(UIDeviceModeliPadPro):     @[@"iPad6,7", @"iPad6,8"],
                                 
                                 // iPhone
                                 @(UIDeviceModeliPhone):      @[@"iPhone1,1"],
@@ -53,11 +58,14 @@ static NSDictionary *_syModelNumberToModels;
                                 @(UIDeviceModeliPhone5S):    @[@"iPhone6,1", @"iPhone6,2"],
                                 @(UIDeviceModeliPhone6):     @[@"iPhone7,2"],
                                 @(UIDeviceModeliPhone6Plus): @[@"iPhone7,1"],
+                                @(UIDeviceModeliPhone6S):    @[@"iPhone8,1"],
+                                @(UIDeviceModeliPhone6SPlus):@[@"iPhone8,2"],
                                 
                                 // AppleTV
                                 @(UIDeviceModelAppleTV2Gen):     @[@"AppleTV2,1"],
                                 @(UIDeviceModelAppleTV3Gen):     @[@"AppleTV3,1"],
                                 @(UIDeviceModelAppleTV3GenRevA): @[@"AppleTV3,2"],
+                                @(UIDeviceModelAppleTV4Gen):     @[@"AppleTV5,3"],
                                 };
     }
     
@@ -74,7 +82,7 @@ static NSDictionary *_syModelNumberToModels;
     return UIDeviceModelUnknown;
 }
 
-+ (UIDeviceModel)deviceModelFromModelNumber:(NSString *)value
++ (UIDeviceModel)sy_deviceModelFromModelNumber:(NSString *)value
 {
     if(!_syModelNumberToModels)
     {
@@ -84,6 +92,7 @@ static NSDictionary *_syModelNumberToModels;
                                    @(UIDeviceModeliPodTouch3G): @[@"A1318"],
                                    @(UIDeviceModeliPodTouch4G): @[@"A1367"],
                                    @(UIDeviceModeliPodTouch5G): @[@"A1421"],
+                                   @(UIDeviceModeliPodTouch6G): @[@"A1574"],
                                    
                                    // iPad (9.7 inches)
                                    @(UIDeviceModeliPad1):       @[@"A1219", @"A1337"],
@@ -97,7 +106,11 @@ static NSDictionary *_syModelNumberToModels;
                                    @(UIDeviceModeliPadMini):    @[@"A1432", @"A1454", @"A1455"],
                                    @(UIDeviceModeliPadMini2):   @[@"A1489", @"A1490", @"A1491"],
                                    @(UIDeviceModeliPadMini3):   @[@"A1599", @"A1600"],
-                                   
+                                   @(UIDeviceModeliPadMini4):   @[@"A1538", @"A1550"],
+
+                                   // iPad Pro
+                                   @(UIDeviceModeliPadPro):     @[@"A1584", @"A1652"],
+
                                    // iPhone
                                    @(UIDeviceModeliPhone):      @[@"A1203"],
                                    @(UIDeviceModeliPhone3G):    @[@"A1324", @"A1241"],
@@ -109,11 +122,14 @@ static NSDictionary *_syModelNumberToModels;
                                    @(UIDeviceModeliPhone5S):    @[@"A1533", @"A1453", @"A1457", @"A1530"],
                                    @(UIDeviceModeliPhone6):     @[@"A1549", @"A1586"],
                                    @(UIDeviceModeliPhone6Plus): @[@"A1522", @"A1524"],
+                                   @(UIDeviceModeliPhone6S):    @[@"A1633", @"A1688"],
+                                   @(UIDeviceModeliPhone6SPlus):@[@"A1634", @"A1687"],
                                    
                                    // AppleTV
                                    @(UIDeviceModelAppleTV2Gen):     @[@"A1378"],
                                    @(UIDeviceModelAppleTV3Gen):     @[@"A1427"],
                                    @(UIDeviceModelAppleTV3GenRevA): @[@"A1469"],
+                                   @(UIDeviceModelAppleTV4Gen):     @[@"A1625"],
                                    };
     }
     
@@ -130,7 +146,7 @@ static NSDictionary *_syModelNumberToModels;
     return UIDeviceModelUnknown;
 }
 
-- (NSString*)machineName
+- (NSString*)sy_machineName
 {
     struct utsname systemInfo;
     uname(&systemInfo);
@@ -139,14 +155,14 @@ static NSDictionary *_syModelNumberToModels;
                               encoding:NSUTF8StringEncoding];
 }
 
-- (UIDeviceModel)deviceModel
+- (UIDeviceModel)sy_deviceModel
 {
-    return [[self class] deviceModelFromHardwareString:[self machineName]];
+    return [[self class] sy_deviceModelFromHardwareString:[self sy_machineName]];
 }
 
-- (BOOL)shouldSupportViewBlur
+- (BOOL)sy_shouldSupportViewBlur
 {
-    UIDeviceModel deviceModel = [self deviceModel];
+    UIDeviceModel deviceModel = [self sy_deviceModel];
     NSArray *noBlurModels = @[@(UIDeviceModeliPodTouch1G),  @(UIDeviceModeliPodTouch2G),
                               @(UIDeviceModeliPodTouch3G),  @(UIDeviceModeliPodTouch4G),
                               
@@ -164,51 +180,51 @@ static NSDictionary *_syModelNumberToModels;
 // long time to retrieve
 static NSString *_sySystemVersionCached;
 
-- (NSString*)systemVersionCached
+- (NSString*)sy_systemVersionCached
 {
     if(!_sySystemVersionCached)
         _sySystemVersionCached = [self systemVersion];
     return _sySystemVersionCached;
 }
 
-- (BOOL)isIpad
+- (BOOL)sy_isIpad
 {
     return [self userInterfaceIdiom] == UIUserInterfaceIdiomPad;
 }
 
-- (BOOL)iOSisEqualTo:(NSString *)version
+- (BOOL)sy_iOSisEqualTo:(NSString *)version
 {
-    return [[self systemVersionCached] compare:version options:NSNumericSearch] == NSOrderedSame;
+    return [[self sy_systemVersionCached] compare:version options:NSNumericSearch] == NSOrderedSame;
 }
 
-- (BOOL)iOSisGreaterThan:(NSString *)version
+- (BOOL)sy_iOSisGreaterThan:(NSString *)version
 {
-    return [[self systemVersionCached] compare:version options:NSNumericSearch] == NSOrderedDescending;
+    return [[self sy_systemVersionCached] compare:version options:NSNumericSearch] == NSOrderedDescending;
 }
 
-- (BOOL)iOSisGreaterThanOrEqualTo:(NSString *)version
+- (BOOL)sy_iOSisGreaterThanOrEqualTo:(NSString *)version
 {
-    return [[self systemVersionCached] compare:version options:NSNumericSearch] != NSOrderedAscending;
+    return [[self sy_systemVersionCached] compare:version options:NSNumericSearch] != NSOrderedAscending;
 }
 
-- (BOOL)iOSisLessThan:(NSString *)version
+- (BOOL)sy_iOSisLessThan:(NSString *)version
 {
-    return [[self systemVersionCached] compare:version options:NSNumericSearch] == NSOrderedAscending;
+    return [[self sy_systemVersionCached] compare:version options:NSNumericSearch] == NSOrderedAscending;
 }
 
-+ (BOOL)iOSis6Plus
++ (BOOL)sy_iOSis6Plus
 {
-    return [[self currentDevice] iOSisGreaterThanOrEqualTo:@"6.0"];
+    return [[self currentDevice] sy_iOSisGreaterThanOrEqualTo:@"6.0"];
 }
 
-+ (BOOL)iOSis7Plus
++ (BOOL)sy_iOSis7Plus
 {
-    return [[self currentDevice] iOSisGreaterThanOrEqualTo:@"7.0"];
+    return [[self currentDevice] sy_iOSisGreaterThanOrEqualTo:@"7.0"];
 }
 
-+ (BOOL)iOSis8Plus
++ (BOOL)sy_iOSis8Plus
 {
-    return [[self currentDevice] iOSisGreaterThanOrEqualTo:@"8.0"];
+    return [[self currentDevice] sy_iOSisGreaterThanOrEqualTo:@"8.0"];
 }
 
 @end

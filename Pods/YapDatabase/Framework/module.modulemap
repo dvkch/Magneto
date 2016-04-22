@@ -115,11 +115,34 @@ framework module YapDatabase {
 	
 	explicit module YapDatabaseRTreeIndex {
 		header "YapDatabaseRTreeIndex.h"
-		header "YapDatabaseExtension.h"
 		header "YapDatabaseRTreeIndexSetup.h"
 		header "YapDatabaseRTreeIndexHandler.h"
 		header "YapDatabaseRTreeIndexOptions.h"
 		header "YapDatabaseRTreeIndexConnection.h"
 		header "YapDatabaseRTreeIndexTransaction.h"
+	}
+	
+	// Extension: ConnectionProxy
+	
+	explicit module YapDatabaseConnectionProxy {
+		header "YapDatabaseConnectionProxy.h"
+	}
+	
+	// Extension: ActionManager
+	
+	explicit module YapDatabaseActionManager {
+		header "YapActionable.h"
+		header "YapActionItem.h"
+		header "YapDatabaseActionManager.h"
+		header "YapDatabaseActionManagerConnection.h"
+		header "YapDatabaseActionManagerTransaction.h"
+	}
+	
+	// Extension: CrossProcessNotification
+	
+	explicit module YapDatabaseCrossProcessNotification {
+		header "YapDatabaseCrossProcessNotification.h"
+		header "YapDatabaseCrossProcessNotificationConnection.h"
+		header "YapDatabaseCrossProcessNotificationTransaction.h"
 	}
 }

@@ -17,6 +17,7 @@ typedef enum : NSUInteger {
     UIDeviceModeliPodTouch3G,
     UIDeviceModeliPodTouch4G,
     UIDeviceModeliPodTouch5G,
+    UIDeviceModeliPodTouch6G,
     UIDeviceModeliPhone,
     UIDeviceModeliPhone3G,
     UIDeviceModeliPhone3GS,
@@ -27,6 +28,8 @@ typedef enum : NSUInteger {
     UIDeviceModeliPhone5S,
     UIDeviceModeliPhone6,
     UIDeviceModeliPhone6Plus,
+    UIDeviceModeliPhone6S,
+    UIDeviceModeliPhone6SPlus,
     UIDeviceModeliPad1,
     UIDeviceModeliPad2,
     UIDeviceModeliPad3,
@@ -36,30 +39,32 @@ typedef enum : NSUInteger {
     UIDeviceModeliPadMini,
     UIDeviceModeliPadMini2,
     UIDeviceModeliPadMini3,
+    UIDeviceModeliPadMini4,
+    UIDeviceModeliPadPro,
     UIDeviceModelAppleTV2Gen,
     UIDeviceModelAppleTV3Gen,
     UIDeviceModelAppleTV3GenRevA,
+    UIDeviceModelAppleTV4Gen,
 } UIDeviceModel;
-
 
 @interface UIDevice (SYKit)
 
-+ (UIDeviceModel)deviceModelFromHardwareString:(NSString *)value;
-+ (UIDeviceModel)deviceModelFromModelNumber:(NSString *)value;
-- (UIDeviceModel)deviceModel;
++ (UIDeviceModel)sy_deviceModelFromHardwareString:(NSString *)value;
++ (UIDeviceModel)sy_deviceModelFromModelNumber:(NSString *)value;
+- (UIDeviceModel)sy_deviceModel;
 
-- (BOOL)shouldSupportViewBlur;
-- (BOOL)isIpad;
+- (BOOL)sy_shouldSupportViewBlur;
+- (BOOL)sy_isIpad;
 
-- (NSString*)systemVersionCached;
+- (NSString*)sy_systemVersionCached;
 
-- (BOOL)iOSisEqualTo:(NSString *)version;
-- (BOOL)iOSisGreaterThan:(NSString *)version;
-- (BOOL)iOSisGreaterThanOrEqualTo:(NSString *)version;
-- (BOOL)iOSisLessThan:(NSString *)version;
+- (BOOL)sy_iOSisEqualTo:(NSString *)version;
+- (BOOL)sy_iOSisGreaterThan:(NSString *)version;
+- (BOOL)sy_iOSisGreaterThanOrEqualTo:(NSString *)version;
+- (BOOL)sy_iOSisLessThan:(NSString *)version;
 
-+ (BOOL)iOSis6Plus;
-+ (BOOL)iOSis7Plus;
-+ (BOOL)iOSis8Plus;
++ (BOOL)sy_iOSis6Plus;
++ (BOOL)sy_iOSis7Plus;
++ (BOOL)sy_iOSis8Plus;
 
 @end

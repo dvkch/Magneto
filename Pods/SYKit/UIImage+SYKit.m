@@ -1,6 +1,6 @@
 //
 //  UIImage+SYKit.m
-//  PhoneBook
+//  SYKit
 //
 //  Created by rominet on 1/1/13.
 //  Copyright (c) 2013 Syan. All rights reserved.
@@ -10,10 +10,10 @@
 
 @implementation UIImage (SYKit)
 
-- (UIImage *)imageByAddingPaddingTop:(CGFloat)top
-                                left:(CGFloat)left
-                               right:(CGFloat)right
-                              bottom:(CGFloat)bottom
+- (UIImage *)sy_imageByAddingPaddingTop:(CGFloat)top
+                                   left:(CGFloat)left
+                                  right:(CGFloat)right
+                                 bottom:(CGFloat)bottom
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.size.width + left + right, self.size.height + top + bottom), NO, 0.0f);
     [self drawAtPoint:CGPointMake(left, top)];
@@ -22,7 +22,7 @@
     return img;
 }
 
-- (UIImage *)imageResizedTo:(CGSize)size
+- (UIImage *)sy_imageResizedTo:(CGSize)size
 {
     UIGraphicsBeginImageContextWithOptions(size, NO, self.scale);
     [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
@@ -31,22 +31,22 @@
     return newImage;
 }
 
-- (UIImage *)imageResizedSquarreTo:(CGFloat)size
+- (UIImage *)sy_imageResizedSquarreTo:(CGFloat)size
 {
-    return [self imageResizedTo:CGSizeMake(size, size)];
+    return [self sy_imageResizedTo:CGSizeMake(size, size)];
 }
 
-- (UIImage *)imageResizedHeightTo:(CGFloat)height
+- (UIImage *)sy_imageResizedHeightTo:(CGFloat)height
 {
-    return [self imageResizedTo:CGSizeMake(self.size.width * height / self.size.height, height)];
+    return [self sy_imageResizedTo:CGSizeMake(self.size.width * height / self.size.height, height)];
 }
 
-- (UIImage *)imageResizedWidthTo:(CGFloat)width
+- (UIImage *)sy_imageResizedWidthTo:(CGFloat)width
 {
-    return [self imageResizedTo:CGSizeMake(width, self.size.height * width / self.size.width)];
+    return [self sy_imageResizedTo:CGSizeMake(width, self.size.height * width / self.size.width)];
 }
 
-- (UIImage *)imageWithToolbarButtonStyling
+- (UIImage *)sy_imageWithToolbarButtonStyling
 {
     float shadowOffset = 1;
     float shadowOpacity = .54f;
@@ -70,7 +70,7 @@
     return newImage;
 }
 
-- (UIImage *)imageMaskedWithColor:(UIColor *)maskColor
+- (UIImage *)sy_imageMaskedWithColor:(UIColor *)maskColor
 {
     CGRect imageRect = CGRectMake(0.0f, 0.0f, self.size.width, self.size.height);
     UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, self.scale);
@@ -86,12 +86,12 @@
     return newImage;
 }
 
-+ (UIImage *)imageWithColor:(UIColor *)color
++ (UIImage *)sy_imageWithColor:(UIColor *)color
 {
-    return [self imageWithColor:color size:CGSizeMake(1, 1) cornerRadius:0];
+    return [self sy_imageWithColor:color size:CGSizeMake(1, 1) cornerRadius:0];
 }
 
-+ (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size cornerRadius:(CGFloat)cornerRadius
++ (UIImage *)sy_imageWithColor:(UIColor *)color size:(CGSize)size cornerRadius:(CGFloat)cornerRadius
 {
     CGRect rect = (CGRect){{0, 0}, size};
     UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
@@ -126,7 +126,7 @@ CGContextRef NYXImageCreateARGBBitmapContext(const size_t width, const size_t he
 }
 
 // http://www.lukaszielinski.de/blog/posts/2014/01/21/ios-how-to-resize-and-rotate-uiimages-in-a-thread-safe-fashion/
-- (UIImage *)imageWithAngle:(CGFloat)angle
+- (UIImage *)sy_imageWithAngle:(CGFloat)angle
 {
     CGImageRef cgImage = self.CGImage;
     const CGFloat originalWidth  = CGImageGetWidth(cgImage);
