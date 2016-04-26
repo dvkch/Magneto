@@ -24,7 +24,6 @@
 		9797FBB61BC0305700CA3BEF /* SYBonjourClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB51BC0305700CA3BEF /* SYBonjourClient.m */; };
 		9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB81BC0322A00CA3BEF /* NSNetService+SY.m */; };
 		979B6D1D1BBC63F6003B49F9 /* SYAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 979B6D1C1BBC63F6003B49F9 /* SYAlertManager.m */; };
-		979B6D201BBC7ECA003B49F9 /* SYWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 979B6D1F1BBC7ECA003B49F9 /* SYWindow.m */; };
 		97A0C54F1BC31BA100DC4EEC /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A0C54E1BC31BA100DC4EEC /* UIColor+SY.m */; };
 		97A0C5521BC31E8E00DC4EEC /* SYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A0C5511BC31E8E00DC4EEC /* SYNavigationController.m */; };
 		97A0C5541BC3228400DC4EEC /* error.html in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5531BC3228400DC4EEC /* error.html */; };
@@ -129,8 +128,6 @@
 		9797FBB81BC0322A00CA3BEF /* NSNetService+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNetService+SY.m"; sourceTree = "<group>"; };
 		979B6D1B1BBC63F6003B49F9 /* SYAlertManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYAlertManager.h; sourceTree = "<group>"; };
 		979B6D1C1BBC63F6003B49F9 /* SYAlertManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAlertManager.m; sourceTree = "<group>"; };
-		979B6D1E1BBC7ECA003B49F9 /* SYWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYWindow.h; sourceTree = "<group>"; };
-		979B6D1F1BBC7ECA003B49F9 /* SYWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYWindow.m; sourceTree = "<group>"; };
 		97A0C54D1BC31BA100DC4EEC /* UIColor+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SY.h"; sourceTree = "<group>"; };
 		97A0C54E1BC31BA100DC4EEC /* UIColor+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SY.m"; sourceTree = "<group>"; };
 		97A0C5501BC31E8E00DC4EEC /* SYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYNavigationController.h; sourceTree = "<group>"; };
@@ -290,8 +287,6 @@
 			children = (
 				F89867B5192B859600735175 /* SYLabelTag.h */,
 				F89867B6192B859600735175 /* SYLabelTag.m */,
-				979B6D1E1BBC7ECA003B49F9 /* SYWindow.h */,
-				979B6D1F1BBC7ECA003B49F9 /* SYWindow.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -696,7 +691,6 @@
 				97BDF8521BCD909C00D77892 /* NSURLRequest+SY.m in Sources */,
 				97A0C54F1BC31BA100DC4EEC /* UIColor+SY.m in Sources */,
 				97BA941B1BB9E1C6000B03FD /* NSObject+SY.m in Sources */,
-				979B6D201BBC7ECA003B49F9 /* SYWindow.m in Sources */,
 				F89867AE192A4E4C00735175 /* SYComputerModel.m in Sources */,
 				F89867B1192AA9CB00735175 /* NSData+IPAddress.m in Sources */,
 			);

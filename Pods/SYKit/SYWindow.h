@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface SYWindow : UIWindow
-+ (SYWindow *)mainWindowWithRootViewController:(UIViewController *)viewController;
+
++ (instancetype)mainWindowWithRootViewController:(UIViewController *)viewController;
+
+@property (atomic, assign) BOOL preventSlowAnimationsOnShake;
+
+- (void)toggleSlowAnimations;
+
 @end

@@ -11,20 +11,24 @@
 #define SLOW_ANIMATION_SPEED (0.05f)
 @implementation SYWindow
 
-+ (SYWindow *)mainWindowWithRootViewController:(UIViewController *)viewController
++ (instancetype)mainWindowWithRootViewController:(UIViewController *)viewController
 {
     SYWindow *window = [[SYWindow alloc] init];
     [window makeKeyAndVisible];
     
     // http://stackoverflow.com/questions/25963101/unexpected-nil-window-in-uiapplicationhandleeventfromqueueevent
+    // The issue and solution described in the link above don't apply
+    // for iOS 9+ screen spliting, an app started with a fraction of
+    // the window would have the wrong frame.
+    // Plus it seems that for previous verions of iOS it applies only
+    // if you set the frame manually, if you don't set the frame at all
+    // it should be okay.
     //[window setFrame:[[UIScreen mainScreen] bounds]];
-    [window setAutoresizingMask:(UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight)];
     
     [window setRootViewController:viewController];
     [window setBackgroundColor:[UIColor whiteColor]];
     [window.layer setMasksToBounds:YES];
     [window.layer setOpaque:NO];
-    
     return window;
 }
 
@@ -42,21 +46,11 @@
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
+    [super motionEnded:motion withEvent:event];
 #if DEBUG
-    [self toggleSlowAnimations];
+    if (!self.preventSlowAnimationsOnShake)
+        [self toggleSlowAnimations];
 #endif
-}
-
-- (void)setFrame:(CGRect)frame
-{
-    [super setFrame:frame];
-    NSLog(@"-> %@", NSStringFromCGRect(frame));
-}
-
-- (void)setBounds:(CGRect)bounds
-{
-    [super setBounds:bounds];
-    NSLog(@"-> %@", NSStringFromCGRect(bounds));
 }
 
 @end
