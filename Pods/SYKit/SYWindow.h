@@ -10,9 +10,10 @@
 
 @interface SYWindow : UIWindow
 
-+ (instancetype)mainWindowWithRootViewController:(UIViewController *)viewController;
+@property (atomic,    assign) BOOL    preventSlowAnimationsOnShake;
+@property (nonatomic, assign) CGFloat alternateAnimationSpeed;
 
-@property (atomic, assign) BOOL preventSlowAnimationsOnShake;
++ (instancetype)mainWindowWithRootViewController:(UIViewController *)viewController;
 
 - (void)toggleSlowAnimations;
 

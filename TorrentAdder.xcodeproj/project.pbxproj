@@ -7,19 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10DA2B70FE56CFB2E5189478 /* libPods-TorrentAdder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9AB4A48A3F7A937C48B90B /* libPods-TorrentAdder.a */; };
 		9705460C1BBD43F900C5294D /* SYNetworkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9705460B1BBD43F900C5294D /* SYNetworkModel.m */; };
 		9705460F1BBD464700C5294D /* SYIP4Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 9705460E1BBD464700C5294D /* SYIP4Model.m */; };
 		970546121BBD4E3300C5294D /* SYPinger.m in Sources */ = {isa = PBXBuildFile; fileRef = 970546111BBD4E3300C5294D /* SYPinger.m */; };
 		971378211BBB09360060C5B6 /* SYDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 971378201BBB09360060C5B6 /* SYDatabase.m */; };
-		9718BD191BDFF55300E628EC /* TorrentAdderUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9718BD181BDFF55300E628EC /* TorrentAdderUITests.m */; };
 		973784321BD40649001AD487 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973784311BD40649001AD487 /* Launch.storyboard */; };
 		973A5EB51BC9463000ACA301 /* NSString+SYApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 973A5EB41BC9463000ACA301 /* NSString+SYApp.m */; };
-		973AFF771BB418D000BA4B8B /* SYResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 973AFF761BB418D000BA4B8B /* SYResultModel.m */; };
 		973AFF801BB41CE800BA4B8B /* SYListComputersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 973AFF7F1BB41CE800BA4B8B /* SYListComputersVC.m */; };
 		973F6D381BBB12B700A8BDC9 /* SYNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 973F6D371BBB12B700A8BDC9 /* SYNetworkManager.m */; };
 		976B76DE1BBB03B200641AD5 /* SYComputersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 976B76DD1BBB03B200641AD5 /* SYComputersCell.m */; };
 		9772B3CA1BC68BC60022E370 /* SYAddMagnetPopupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9772B3C91BC68BC60022E370 /* SYAddMagnetPopupVC.m */; };
-		9786BAD91BB3122100786363 /* SYKickAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9786BAD81BB3122100786363 /* SYKickAPI.m */; };
+		9786BAD91BB3122100786363 /* SYWebAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9786BAD81BB3122100786363 /* SYWebAPI.m */; };
 		9794DA141BB409ED0066CFFE /* extract.js in Resources */ = {isa = PBXBuildFile; fileRef = 9794DA131BB409ED0066CFFE /* extract.js */; };
 		9797FBB61BC0305700CA3BEF /* SYBonjourClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB51BC0305700CA3BEF /* SYBonjourClient.m */; };
 		9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB81BC0322A00CA3BEF /* NSNetService+SY.m */; };
@@ -51,7 +50,6 @@
 		97F9114C1BC2C73D00BF1848 /* SYComputerFormCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F9114A1BC2C73D00BF1848 /* SYComputerFormCell.m */; };
 		97F9114D1BC2C73D00BF1848 /* SYComputerFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */; };
 		97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */; };
-		A6865BE2F752FF2924AFD00B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C427780E6763C828A8C98DFA /* libPods.a */; };
 		F83FFA3F192BE7440034A95B /* SYClientAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = F83FFA3E192BE7440034A95B /* SYClientAPI.m */; };
 		F88EEC0B1948FF1800D98F4F /* SYWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F88EEC0A1948FF1800D98F4F /* SYWebVC.m */; };
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
@@ -70,16 +68,6 @@
 		F8986836192BC9B600735175 /* NSString+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = F8986835192BC9B600735175 /* NSString+SY.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		9718BD1B1BDFF55300E628EC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F898674F192A317C00735175 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8986756192A317C00735175;
-			remoteInfo = TorrentAdder;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		F88A0B311A80F7220089DE9A /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -94,7 +82,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		55345FDB45AB4D9C72ECFAAD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		0B69C8AE8CFDA1E82A1EF6EC /* Pods-TorrentAdder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TorrentAdder.release.xcconfig"; path = "Pods/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder.release.xcconfig"; sourceTree = "<group>"; };
 		9705460A1BBD43F900C5294D /* SYNetworkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYNetworkModel.h; sourceTree = "<group>"; };
 		9705460B1BBD43F900C5294D /* SYNetworkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYNetworkModel.m; sourceTree = "<group>"; };
 		9705460D1BBD464700C5294D /* SYIP4Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYIP4Model.h; sourceTree = "<group>"; };
@@ -103,14 +91,9 @@
 		970546111BBD4E3300C5294D /* SYPinger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPinger.m; sourceTree = "<group>"; };
 		9713781F1BBB09360060C5B6 /* SYDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYDatabase.h; sourceTree = "<group>"; };
 		971378201BBB09360060C5B6 /* SYDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYDatabase.m; sourceTree = "<group>"; };
-		9718BD161BDFF55300E628EC /* TorrentAdderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TorrentAdderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9718BD181BDFF55300E628EC /* TorrentAdderUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TorrentAdderUITests.m; sourceTree = "<group>"; };
-		9718BD1A1BDFF55300E628EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		973784311BD40649001AD487 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		973A5EB31BC9463000ACA301 /* NSString+SYApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SYApp.h"; sourceTree = "<group>"; };
 		973A5EB41BC9463000ACA301 /* NSString+SYApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SYApp.m"; sourceTree = "<group>"; };
-		973AFF751BB418D000BA4B8B /* SYResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYResultModel.h; sourceTree = "<group>"; };
-		973AFF761BB418D000BA4B8B /* SYResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYResultModel.m; sourceTree = "<group>"; };
 		973AFF7E1BB41CE800BA4B8B /* SYListComputersVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYListComputersVC.h; sourceTree = "<group>"; };
 		973AFF7F1BB41CE800BA4B8B /* SYListComputersVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYListComputersVC.m; sourceTree = "<group>"; };
 		973F6D361BBB12B700A8BDC9 /* SYNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYNetworkManager.h; sourceTree = "<group>"; };
@@ -119,8 +102,8 @@
 		976B76DD1BBB03B200641AD5 /* SYComputersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYComputersCell.m; sourceTree = "<group>"; };
 		9772B3C81BC68BC60022E370 /* SYAddMagnetPopupVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYAddMagnetPopupVC.h; sourceTree = "<group>"; };
 		9772B3C91BC68BC60022E370 /* SYAddMagnetPopupVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAddMagnetPopupVC.m; sourceTree = "<group>"; };
-		9786BAD71BB3122100786363 /* SYKickAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYKickAPI.h; sourceTree = "<group>"; };
-		9786BAD81BB3122100786363 /* SYKickAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYKickAPI.m; sourceTree = "<group>"; };
+		9786BAD71BB3122100786363 /* SYWebAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYWebAPI.h; sourceTree = "<group>"; };
+		9786BAD81BB3122100786363 /* SYWebAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYWebAPI.m; sourceTree = "<group>"; };
 		9794DA131BB409ED0066CFFE /* extract.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = extract.js; sourceTree = "<group>"; };
 		9797FBB41BC0305700CA3BEF /* SYBonjourClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYBonjourClient.h; sourceTree = "<group>"; };
 		9797FBB51BC0305700CA3BEF /* SYBonjourClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYBonjourClient.m; sourceTree = "<group>"; };
@@ -165,8 +148,8 @@
 		97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYComputerFormCell.xib; sourceTree = "<group>"; };
 		97F9114E1BC3071F00BF1848 /* SYComputerModel+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SYComputerModel+UI.h"; sourceTree = "<group>"; };
 		97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SYComputerModel+UI.m"; sourceTree = "<group>"; };
-		A30D2A07BE705893426CB12E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		C427780E6763C828A8C98DFA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECB5BC1A5208F37710432FDC /* Pods-TorrentAdder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TorrentAdder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder.debug.xcconfig"; sourceTree = "<group>"; };
+		EF9AB4A48A3F7A937C48B90B /* libPods-TorrentAdder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TorrentAdder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F83FFA3D192BE7440034A95B /* SYClientAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYClientAPI.h; sourceTree = "<group>"; };
 		F83FFA3E192BE7440034A95B /* SYClientAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYClientAPI.m; sourceTree = "<group>"; };
 		F83FFA41192BE8860034A95B /* SYMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMacros.h; sourceTree = "<group>"; };
@@ -201,13 +184,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9718BD131BDFF55300E628EC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F8986754192A317C00735175 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -215,31 +191,13 @@
 				F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */,
 				F898675F192A317C00735175 /* UIKit.framework in Frameworks */,
 				F898675B192A317C00735175 /* Foundation.framework in Frameworks */,
-				A6865BE2F752FF2924AFD00B /* libPods.a in Frameworks */,
+				10DA2B70FE56CFB2E5189478 /* libPods-TorrentAdder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7D46273E7AD94D8AF4126FFD /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A30D2A07BE705893426CB12E /* Pods.debug.xcconfig */,
-				55345FDB45AB4D9C72ECFAAD /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		9718BD171BDFF55300E628EC /* TorrentAdderUITests */ = {
-			isa = PBXGroup;
-			children = (
-				9718BD181BDFF55300E628EC /* TorrentAdderUITests.m */,
-				9718BD1A1BDFF55300E628EC /* Info.plist */,
-			);
-			path = TorrentAdderUITests;
-			sourceTree = "<group>";
-		};
 		973AFF811BB41CFC00BA4B8B /* VCs */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,8 +267,8 @@
 			children = (
 				F83FFA3D192BE7440034A95B /* SYClientAPI.h */,
 				F83FFA3E192BE7440034A95B /* SYClientAPI.m */,
-				9786BAD71BB3122100786363 /* SYKickAPI.h */,
-				9786BAD81BB3122100786363 /* SYKickAPI.m */,
+				9786BAD71BB3122100786363 /* SYWebAPI.h */,
+				9786BAD81BB3122100786363 /* SYWebAPI.m */,
 				9794DA131BB409ED0066CFFE /* extract.js */,
 				97A0C5531BC3228400DC4EEC /* error.html */,
 			);
@@ -324,6 +282,15 @@
 				971378201BBB09360060C5B6 /* SYDatabase.m */,
 			);
 			name = Storage;
+			sourceTree = "<group>";
+		};
+		D2AE9763663001786F053965 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				ECB5BC1A5208F37710432FDC /* Pods-TorrentAdder.debug.xcconfig */,
+				0B69C8AE8CFDA1E82A1EF6EC /* Pods-TorrentAdder.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		F83FFA40192BE74E0034A95B /* Controllers */ = {
@@ -342,11 +309,10 @@
 			isa = PBXGroup;
 			children = (
 				F8986760192A317C00735175 /* TorrentAdder */,
-				9718BD171BDFF55300E628EC /* TorrentAdderUITests */,
 				F8986759192A317C00735175 /* Frameworks */,
 				F8986758192A317C00735175 /* Products */,
 				F8986800192BC06700735175 /* Resources */,
-				7D46273E7AD94D8AF4126FFD /* Pods */,
+				D2AE9763663001786F053965 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -354,7 +320,6 @@
 			isa = PBXGroup;
 			children = (
 				F8986757192A317C00735175 /* TorrentAdder.app */,
-				9718BD161BDFF55300E628EC /* TorrentAdderUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -366,7 +331,7 @@
 				F898675C192A317C00735175 /* CoreGraphics.framework */,
 				F898675E192A317C00735175 /* UIKit.framework */,
 				F898677C192A317D00735175 /* XCTest.framework */,
-				C427780E6763C828A8C98DFA /* libPods.a */,
+				EF9AB4A48A3F7A937C48B90B /* libPods-TorrentAdder.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -433,8 +398,6 @@
 				F89867AD192A4E4C00735175 /* SYComputerModel.m */,
 				97F9114E1BC3071F00BF1848 /* SYComputerModel+UI.h */,
 				97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */,
-				973AFF751BB418D000BA4B8B /* SYResultModel.h */,
-				973AFF761BB418D000BA4B8B /* SYResultModel.m */,
 				9705460A1BBD43F900C5294D /* SYNetworkModel.h */,
 				9705460B1BBD43F900C5294D /* SYNetworkModel.m */,
 				9705460D1BBD464700C5294D /* SYIP4Model.h */,
@@ -471,35 +434,17 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9718BD151BDFF55300E628EC /* TorrentAdderUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9718BD1F1BDFF55300E628EC /* Build configuration list for PBXNativeTarget "TorrentAdderUITests" */;
-			buildPhases = (
-				9718BD121BDFF55300E628EC /* Sources */,
-				9718BD131BDFF55300E628EC /* Frameworks */,
-				9718BD141BDFF55300E628EC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9718BD1C1BDFF55300E628EC /* PBXTargetDependency */,
-			);
-			name = TorrentAdderUITests;
-			productName = TorrentAdderUITests;
-			productReference = 9718BD161BDFF55300E628EC /* TorrentAdderUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		F8986756192A317C00735175 /* TorrentAdder */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F898678C192A317D00735175 /* Build configuration list for PBXNativeTarget "TorrentAdder" */;
 			buildPhases = (
-				5EB10D0D3D04A6B3A9DCBC15 /* Check Pods Manifest.lock */,
+				2E37C883200E80A532B2ACFD /* [CP] Check Pods Manifest.lock */,
 				F8986753192A317C00735175 /* Sources */,
 				F8986754192A317C00735175 /* Frameworks */,
 				F8986755192A317C00735175 /* Resources */,
 				F88A0B311A80F7220089DE9A /* Embed App Extensions */,
-				B61D74F239314D74C17BB08E /* Copy Pods Resources */,
-				590E1FA564A3AA0DDE3DD624 /* Embed Pods Frameworks */,
+				FAF7719DF38D205F1D5C7765 /* [CP] Embed Pods Frameworks */,
+				5810FD01E387CD1ED03B81C4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -517,13 +462,9 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SY;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
-					9718BD151BDFF55300E628EC = {
-						CreatedOnToolsVersion = 7.1;
-						TestTargetID = F8986756192A317C00735175;
-					};
 					F8986756192A317C00735175 = {
 						DevelopmentTeam = 79RY8264V4;
 						SystemCapabilities = {
@@ -554,19 +495,11 @@
 			projectRoot = "";
 			targets = (
 				F8986756192A317C00735175 /* TorrentAdder */,
-				9718BD151BDFF55300E628EC /* TorrentAdderUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9718BD141BDFF55300E628EC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F8986755192A317C00735175 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -598,29 +531,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		590E1FA564A3AA0DDE3DD624 /* Embed Pods Frameworks */ = {
+		2E37C883200E80A532B2ACFD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5EB10D0D3D04A6B3A9DCBC15 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -628,32 +546,39 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		B61D74F239314D74C17BB08E /* Copy Pods Resources */ = {
+		5810FD01E387CD1ED03B81C4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FAF7719DF38D205F1D5C7765 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9718BD121BDFF55300E628EC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9718BD191BDFF55300E628EC /* TorrentAdderUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F8986753192A317C00735175 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -665,7 +590,6 @@
 				97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */,
 				9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */,
 				9772B3CA1BC68BC60022E370 /* SYAddMagnetPopupVC.m in Sources */,
-				973AFF771BB418D000BA4B8B /* SYResultModel.m in Sources */,
 				F898676B192A317C00735175 /* SYAppDelegate.m in Sources */,
 				976B76DE1BBB03B200641AD5 /* SYComputersCell.m in Sources */,
 				F88EEC0B1948FF1800D98F4F /* SYWebVC.m in Sources */,
@@ -685,7 +609,7 @@
 				971378211BBB09360060C5B6 /* SYDatabase.m in Sources */,
 				97BA94181BB9D8C0000B03FD /* SYResultCell.m in Sources */,
 				F83FFA3F192BE7440034A95B /* SYClientAPI.m in Sources */,
-				9786BAD91BB3122100786363 /* SYKickAPI.m in Sources */,
+				9786BAD91BB3122100786363 /* SYWebAPI.m in Sources */,
 				9705460C1BBD43F900C5294D /* SYNetworkModel.m in Sources */,
 				97EF7B311BC3128000B9D33A /* UIImage+SY.m in Sources */,
 				97BDF8521BCD909C00D77892 /* NSURLRequest+SY.m in Sources */,
@@ -697,14 +621,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9718BD1C1BDFF55300E628EC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8986756192A317C00735175 /* TorrentAdder */;
-			targetProxy = 9718BD1B1BDFF55300E628EC /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		F8986763192A317C00735175 /* InfoPlist.strings */ = {
@@ -718,43 +634,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		9718BD1D1BDFF55300E628EC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TorrentAdderUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = me.syan.TorrentAdderUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = TorrentAdder;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		9718BD1E1BDFF55300E628EC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TorrentAdderUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = me.syan.TorrentAdderUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = TorrentAdder;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
 		F898678A192A317D00735175 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -770,13 +649,16 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -811,12 +693,15 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -832,7 +717,7 @@
 		};
 		F898678D192A317D00735175 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A30D2A07BE705893426CB12E /* Pods.debug.xcconfig */;
+			baseConfigurationReference = ECB5BC1A5208F37710432FDC /* Pods-TorrentAdder.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -850,7 +735,7 @@
 		};
 		F898678E192A317D00735175 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55345FDB45AB4D9C72ECFAAD /* Pods.release.xcconfig */;
+			baseConfigurationReference = 0B69C8AE8CFDA1E82A1EF6EC /* Pods-TorrentAdder.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -869,15 +754,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9718BD1F1BDFF55300E628EC /* Build configuration list for PBXNativeTarget "TorrentAdderUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9718BD1D1BDFF55300E628EC /* Debug */,
-				9718BD1E1BDFF55300E628EC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		F8986752192A317C00735175 /* Build configuration list for PBXProject "TorrentAdder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -12,7 +12,7 @@
 #import "SYPopoverNavigationController.h"
 #import "SYClientAPI.h"
 #import "NSURL+SY.h"
-#import "SYResultModel.h"
+#import "SYWebAPI.h"
 
 @interface SYAddMagnetPopupVC () <UITableViewDataSource, UITableViewDelegate, SYPopoverNavigationControllerDelegate>
 
@@ -41,7 +41,7 @@
     SYAddMagnetPopupVC *popupVC = [[SYAddMagnetPopupVC alloc] init];
     [popupVC setAppToGoBackTo:appToGoBackTo];
     [popupVC setResult:result];
-    [popupVC setMagnetURL:(result ? result.magnet : magnet)];
+    [popupVC setMagnetURL:magnet];
     
     SYPopoverNavigationController *nc = [[SYPopoverNavigationController alloc] initWithRootViewController:popupVC];
     [nc setPopoverDelegate:popupVC];
@@ -241,10 +241,33 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self addToComputer:self.computers[indexPath.row]];
+    [self fetchMagnetURLAndAddToComputer:self.computers[indexPath.row]];
 }
 
 #pragma mark - Download
+
+- (void)fetchMagnetURLAndAddToComputer:(SYComputerModel *)computer
+{
+    [self switchToLoading:YES];
+    
+    if (self.magnetURL)
+    {
+        [self addToComputer:computer];
+        return;
+    }
+    
+    [[SYWebAPI shared] getMagnetForResult:self.result andCompletionBlock:^(NSString *magnet, NSError *error) {
+        if (error)
+        {
+            [self switchToFailedWithMessage:error.localizedDescription animated:YES];
+        }
+        else
+        {
+            [self setMagnetURL:[NSURL URLWithString:magnet]];
+            [self addToComputer:computer];
+        }
+    }];
+}
 
 - (void)addToComputer:(SYComputerModel *)computer
 {

@@ -24,7 +24,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods.xcscheme</key>
+		<key>Pods-TorrentAdder.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -64,14 +64,14 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>hpple.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>12076B180274F594D6AEBB16690939A9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>12E2BC28C62976C425F4B71C2723F0B1</key>
 		<dict>
 			<key>primary</key>
@@ -82,22 +82,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>29F4CC9BFEDC09CE098CFD0B78848DC5</key>
+		<key>2F2FAAFDC5EB749958DB368F1FDC56EA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>479C016F824416400745CC1D05AFD715</key>
+		<key>48EB6459230898732EB055C29DCA705D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6F82F1970E4263F439E8625E0834E51B</key>
+		<key>677685833AD24AB8E8288F3B2A54B03B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>71C45AB08EF9D32E029C9012C956E226</key>
+		<key>82802436F567BC691BD16F4D3F57F1ED</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -107,12 +107,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AA761CBECF01E0583C7A0B8D1C50F6E9</key>
+		<key>9C4E5BDADC246C8D67F2DE75A443ACAC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CF20848831CFC73B46F59A001E09EDD2</key>
+		<key>BA250BDE05647A8E5AE0B5FB0421E3CC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BFD8176EE71F6049F6FAC6D6BB7C812E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D5E7E8A1C6F01AA3742D91E93F19B511</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -122,7 +132,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DF0F06B869EA6FE6086E1DD28BC98A6A</key>
+		<key>F58CA4A980E9B1883FA408C725B225BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

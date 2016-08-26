@@ -1,6 +1,6 @@
 //
 //  SYPopoverNavigationController.h
-//  TicTacDoh
+//  SYPopover
 //
 //  Created by Stanislas Chevallier on 04/07/14.
 //  Copyright (c) 2014 Syan. All rights reserved.

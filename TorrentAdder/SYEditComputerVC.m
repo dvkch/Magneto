@@ -35,7 +35,7 @@
         [buttonAdd setTintColor:[UIColor whiteColor]];
         [buttonAdd setBackColor:[UIColor lightBlueColor]];
         [buttonAdd setText:@"+"];
-        [buttonAdd setTextVOffset:-2];
+        [buttonAdd setTextOffset:CGSizeMake(0, -2)];
         [buttonAdd setFontSize:30];
         [buttonAdd addTarget:self action:@selector(buttonSaveTap:) forControlEvents:UIControlEventTouchUpInside];
         [buttonAdd setFrame:CGRectMake(0, 0, 50, 50)];

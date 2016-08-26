@@ -7,7 +7,7 @@
 //
 
 #import "SYResultCell.h"
-#import "SYResultModel.h"
+#import "SYWebAPI.h"
 
 @interface SYResultCell ()
 @property (nonatomic, weak) IBOutlet UILabel *labelName;
@@ -31,7 +31,7 @@
                                      attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
                                                   NSForegroundColorAttributeName:[UIColor grayColor]}]];
     [title appendAttributedString:
-     [[NSAttributedString alloc] initWithString:result.seed
+     [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", (long)result.seed]
                                      attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
                                                   NSForegroundColorAttributeName:[UIColor colorWithRed:0 green:0.56 blue:0.05 alpha:1.]}]];
     [title appendAttributedString:
@@ -39,7 +39,7 @@
                                      attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
                                                   NSForegroundColorAttributeName:[UIColor grayColor]}]];
     [title appendAttributedString:
-     [[NSAttributedString alloc] initWithString:result.leech
+     [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", (long)result.leech]
                                      attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
                                                   NSForegroundColorAttributeName:[UIColor redColor]}]];
     return [title copy];

@@ -15,7 +15,7 @@
 #import "SYButton.h"
 #import "SYListComputersVC.h"
 #import "SYResultCell.h"
-#import "SYKickAPI.h"
+#import "SYWebAPI.h"
 #import "SYAlertManager.h"
 #import "SYDatabase.h"
 #import "SYEditComputerVC.h"
@@ -24,8 +24,8 @@
 #import "UIView+Glow.h"
 #import "SYSearchField.h"
 #import "SYAddMagnetPopupVC.h"
-#import "SYResultModel.h"
 #import "NSString+SYApp.h"
+#import "SYWebAPI.h"
 
 #define ALERT_VIEW_TAG_OPEN_SOURCE_APP (4)
 
@@ -293,8 +293,7 @@
     }
     
     [self.searchField showLoadingIndicator:YES];
-    
-    [[SYKickAPI shared] lookFor:self.searchQuery
+    [[SYWebAPI shared] lookFor:self.searchQuery
             withCompletionBlock:^(NSArray *items, NSError *error)
     {
         if (![self.searchQuery isEqualToString:searchQuery])

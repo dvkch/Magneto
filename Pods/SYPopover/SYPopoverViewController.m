@@ -1,6 +1,6 @@
 //
 //  SYPopoverViewController.m
-//  TicTacDoh
+//  SYPopover
 //
 //  Created by Stanislas Chevallier on 26/07/14.
 //  Copyright (c) 2014 Syan. All rights reserved.
@@ -33,7 +33,7 @@
                                            UIViewAutoresizingFlexibleTopMargin |
                                            UIViewAutoresizingFlexibleLeftMargin |
                                            UIViewAutoresizingFlexibleRightMargin)
-];
+     ];
     [self.view addSubview:self.popoverView];
     
     self.underPopoverView = [[UIView alloc] initWithFrame:self.view.bounds];
@@ -78,12 +78,12 @@
 
 - (CGSize)preferredContentSize
 {
-    BOOL iPhoneSmallScreen = [[UIScreen mainScreen] boundsFixedToPortraitOrientation].size.height < 490;
+    BOOL iPhoneSmallScreen = [[UIScreen mainScreen] sy_boundsFixedToPortraitOrientation].size.height < 490;
     
     if(self.popoverSizeBlock)
-        return self.popoverSizeBlock([[UIDevice currentDevice] isIpad], iPhoneSmallScreen);
+        return self.popoverSizeBlock([[UIDevice currentDevice] sy_isIpad], iPhoneSmallScreen);
     
-    if([[UIDevice currentDevice] isIpad])
+    if([[UIDevice currentDevice] sy_isIpad])
         return CGSizeMake(400, 400);
     
     return CGSizeMake(300, 300);
@@ -118,7 +118,7 @@
 - (void)close
 {
     if(![self.navigationController isKindOfClass:[SYPopoverNavigationController class]]) {
-        [self.navigationController dismissViewControllerAnimated:[UIDevice iOSis8Plus] completion:nil];
+        [self.navigationController dismissViewControllerAnimated:[UIDevice sy_iOSis8Plus] completion:nil];
         return;
     }
     
@@ -126,7 +126,7 @@
     [nc close];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
 }
 

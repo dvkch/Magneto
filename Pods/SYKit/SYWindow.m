@@ -7,8 +7,10 @@
 //
 
 #import "SYWindow.h"
+#import "UIDevice+SYKit.h"
 
-#define SLOW_ANIMATION_SPEED (0.05f)
+static CGFloat const SYWindow_DefaultAleternateAnimationSpeed = 0.05f;
+
 @implementation SYWindow
 
 + (instancetype)mainWindowWithRootViewController:(UIViewController *)viewController
@@ -19,11 +21,11 @@
     // http://stackoverflow.com/questions/25963101/unexpected-nil-window-in-uiapplicationhandleeventfromqueueevent
     // The issue and solution described in the link above don't apply
     // for iOS 9+ screen spliting, an app started with a fraction of
-    // the window would have the wrong frame.
-    // Plus it seems that for previous verions of iOS it applies only
-    // if you set the frame manually, if you don't set the frame at all
-    // it should be okay.
-    //[window setFrame:[[UIScreen mainScreen] bounds]];
+    // the window would have the wrong frame. iOS uses the right frame
+    // automatically
+    
+    if ([[UIDevice currentDevice] sy_iOSisLessThan:@"9.0"])
+        [window setFrame:[[UIScreen mainScreen] bounds]];
     
     [window setRootViewController:viewController];
     [window setBackgroundColor:[UIColor whiteColor]];
@@ -32,11 +34,18 @@
     return window;
 }
 
+- (CGFloat)alternateAnimationSpeed
+{
+    if (_alternateAnimationSpeed == 0.)
+        _alternateAnimationSpeed = SYWindow_DefaultAleternateAnimationSpeed;
+    return _alternateAnimationSpeed;
+}
+
 - (void)toggleSlowAnimations
 {
     if(self.layer.speed == 1) {
         NSLog(@"enabling slow animations");
-        self.layer.speed = SLOW_ANIMATION_SPEED;
+        self.layer.speed = self.alternateAnimationSpeed;
     }
     else {
         NSLog(@"disabling slow animations");

@@ -4,16 +4,19 @@ platform :ios, '8.0'
 
 inhibit_all_warnings!
 
-pod 'AFNetworking'
-pod 'BlocksKit'
-pod 'YapDatabase'
-pod 'SYKit'
-pod 'BlocksKit'
-pod 'SYPopover'
-pod 'SPLPing'
-pod 'JiveAuthenticatingHTTPProtocol'
-pod 'SparkInspector', :configurations => ['Debug']
-pod 'XMLDictionary'
+target 'TorrentAdder' do
+	pod 'AFNetworking'
+	pod 'BlocksKit'
+	pod 'YapDatabase'
+	pod 'SYKit'
+	pod 'BlocksKit'
+	pod 'SYPopover'
+	pod 'SPLPing'
+	pod 'JiveAuthenticatingHTTPProtocol'
+	#pod 'SparkInspector', :configurations => ['Debug']
+	pod 'XMLDictionary'
+	pod 'hpple'
+end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

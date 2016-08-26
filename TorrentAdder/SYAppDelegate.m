@@ -8,7 +8,7 @@
 
 #import "SYAppDelegate.h"
 #import "NSString+SY.h"
-#import "SYKickAPI.h"
+#import "SYWebAPI.h"
 #import "SYMainVC.h"
 #import "SYWindow.h"
 #import "SYBonjourClient.h"

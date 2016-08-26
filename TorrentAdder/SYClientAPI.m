@@ -12,8 +12,8 @@
 #import "XMLDictionary.h"
 
 @interface SYClientAPI ()
-@property (nonatomic, strong) AFHTTPRequestOperationManager *managerUTorrent;
-@property (nonatomic, strong) AFHTTPRequestOperationManager *managerTransmission;
+@property (nonatomic, strong) AFHTTPSessionManager *managerUTorrent;
+@property (nonatomic, strong) AFHTTPSessionManager *managerTransmission;
 @end
 
 @implementation SYClientAPI
@@ -30,13 +30,15 @@
     self = [super init];
     if(self)
     {
-        self.managerTransmission = [[AFHTTPRequestOperationManager alloc] init];
+        self.managerTransmission = [[AFHTTPSessionManager alloc] init];
         [self.managerTransmission setRequestSerializer:[AFJSONRequestSerializer serializer]];
         [self.managerTransmission setResponseSerializer:[AFJSONResponseSerializer serializer]];
+        [self.managerTransmission.requestSerializer setTimeoutInterval:10];
         
-        self.managerUTorrent = [[AFHTTPRequestOperationManager alloc] init];
+        self.managerUTorrent = [[AFHTTPSessionManager alloc] init];
         [self.managerUTorrent setRequestSerializer:[AFHTTPRequestSerializer serializer]];
         [self.managerUTorrent setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+        [self.managerUTorrent.requestSerializer setTimeoutInterval:10];
     }
     return self;
 }
@@ -62,35 +64,27 @@
 // http://forum.utorrent.com/topic/49588-%C2%B5torrent-webui/
 - (void)addMagnet:(NSURL *)magnet toUTorrentComputer:(SYComputerModel *)computer completion:(void(^)(NSString *message, NSError *error))block
 {
-    void(^failureBock)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    void(^failureBock)(NSURLSessionDataTask *, NSError *) = ^(NSURLSessionDataTask *task, NSError *error) {
         block(nil, error);
     };
     
     [self.managerUTorrent GET:[computer.apiURL.absoluteString stringByAppendingPathComponent:@"token.html"]
                    parameters:nil
-                      success:^(AFHTTPRequestOperation * _Nonnull op, id  _Nonnull responseObject)
+                     progress:nil
+                      success:^(NSURLSessionDataTask *task, id responseObject)
     {
-        NSDictionary *dic = [NSDictionary dictionaryWithXMLData:op.responseData];
+        NSDictionary *dic = [NSDictionary dictionaryWithXMLData:responseObject];
         NSString *token = dic[@"div"][@"__text"];
         
         NSDictionary *parameters = @{@"token":token, @"action":@"add-url", @"s":magnet.absoluteString};
         
-        NSMutableURLRequest *request =
-        [self.managerUTorrent.requestSerializer requestWithMethod:@"GET"
-                                                        URLString:computer.apiURL.absoluteString
-                                                       parameters:parameters
-                                                            error:nil];
-        
-        [request setTimeoutInterval:10];
-        
-        AFHTTPRequestOperation *operation =
-        [self.managerUTorrent HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            //NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:NULL];
+        [self.managerUTorrent GET:computer.apiURL.absoluteString
+                       parameters:parameters
+                         progress:nil
+                          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+        {
             block(nil, nil);
         } failure:failureBock];
-        
-        [self.managerUTorrent.operationQueue addOperation:operation];
-        
     } failure:failureBock];
 }
 
@@ -114,22 +108,28 @@
     for (NSString *key in headers.allKeys)
         [request setValue:headers[key] forHTTPHeaderField:key];
     
-    AFHTTPRequestOperation *operation =
-    [self.managerTransmission HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        block(responseObject[@"result"], nil);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (operation.response.statusCode == 409)
+    NSURLSessionDataTask *task =
+    [self.managerTransmission dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        if (error)
         {
-            NSString *sessionID = operation.response.allHeaderFields[@"X-Transmission-Session-Id"];
-            if (sessionID.length)
+            if (((NSHTTPURLResponse *)response).statusCode == 409)
             {
-                [self addMagnet:magnet toTransmissionComputer:computer sessionID:sessionID completion:block];
-                return;
+                NSString *sessionID = ((NSHTTPURLResponse *)response).allHeaderFields[@"X-Transmission-Session-Id"];
+                if (sessionID.length)
+                {
+                    [self addMagnet:magnet toTransmissionComputer:computer sessionID:sessionID completion:block];
+                    return;
+                }
             }
+            block(nil, error);
         }
-        block(nil, error);
+        else
+        {
+            block(responseObject[@"result"], nil);
+        }
     }];
     
-    [self.managerTransmission.operationQueue addOperation:operation];}
+    [task resume];
+}
 
 @end

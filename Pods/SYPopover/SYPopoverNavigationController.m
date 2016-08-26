@@ -1,6 +1,6 @@
 //
 //  SYPopoverNavigationController.m
-//  TicTacDoh
+//  SYPopover
 //
 //  Created by Stanislas Chevallier on 04/07/14.
 //  Copyright (c) 2014 Syan. All rights reserved.
@@ -65,12 +65,12 @@ UIViewControllerTransitioningDelegate>
 - (void)presentAsPopoverFromViewController:(UIViewController *)viewController
                                   animated:(BOOL)animated
 {
-    if([UIDevice iOSis8Plus]) {
+    if([UIDevice sy_iOSis8Plus]) {
         [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
         [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
         [self setTransitioningDelegate:self];
     }
-    else if([UIDevice iOSis7Plus]) {
+    else if([UIDevice sy_iOSis7Plus]) {
         // needed for rotation events to come
         [self setModalPresentationStyle:UIModalPresentationCustom];
         
@@ -125,7 +125,7 @@ UIViewControllerTransitioningDelegate>
                 transition.subtype = kCATransitionFromTop;
                 break;
         }
-        if([UIDevice iOSis8Plus])
+        if([UIDevice sy_iOSis8Plus])
             transition.subtype = kCATransitionFromRight;
         [self.view.layer addAnimation:transition forKey:kCATransition];
     }
@@ -141,23 +141,26 @@ UIViewControllerTransitioningDelegate>
         transition.duration = 0.3f;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
         transition.type = kCATransitionPush;
-        switch (self.interfaceOrientation) {
-            case UIInterfaceOrientationUnknown:
-            case UIInterfaceOrientationPortrait:
-                transition.subtype = kCATransitionFromLeft;
-                break;
-            case UIInterfaceOrientationPortraitUpsideDown:
-                transition.subtype = kCATransitionFromRight;
-                break;
-            case UIInterfaceOrientationLandscapeLeft:
-                transition.subtype = kCATransitionFromTop;
-                break;
-            case UIInterfaceOrientationLandscapeRight:
-                transition.subtype = kCATransitionFromBottom;
-                break;
+        transition.subtype = kCATransitionFromLeft;
+        
+        if (![UIDevice sy_iOSis8Plus]) {
+            switch (self.interfaceOrientation) {
+                case UIInterfaceOrientationUnknown:
+                case UIInterfaceOrientationPortrait:
+                    transition.subtype = kCATransitionFromLeft;
+                    break;
+                case UIInterfaceOrientationPortraitUpsideDown:
+                    transition.subtype = kCATransitionFromRight;
+                    break;
+                case UIInterfaceOrientationLandscapeLeft:
+                    transition.subtype = kCATransitionFromTop;
+                    break;
+                case UIInterfaceOrientationLandscapeRight:
+                    transition.subtype = kCATransitionFromBottom;
+                    break;
+            }
         }
-        if([UIDevice iOSis8Plus])
-            transition.subtype = kCATransitionFromLeft;
+        
         [self.view.layer addAnimation:transition forKey:kCATransition];
     }
     
