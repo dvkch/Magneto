@@ -1,0 +1,59 @@
+private_lane :update_build_number do 
+	build_number = :get_release_build_number
+	`agvtool new-version -all #{build_number}`
+end
+
+private_lane :get_release_build_number do    
+	build_number =  `git rev-list --count master..`
+	build_number
+end
+
+# opt_out_usage
+# update_fastlane
+
+fastlane_version "1.35.0"
+
+default_platform :ios
+
+platform :ios do
+  before_all do
+    sh "clear"
+    cocoapods
+    update_build_number
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+  end
+
+  desc "Submit a new Beta Build using FTP"
+  desc "This will also make sure the profile is up to date"
+  lane :ota do
+    cert
+    sigh(adhoc: true)
+    gym
+    ftp(host: "ftp.stanislaschevallier.fr",
+      username: 'stanislaw',
+      upload: {
+        src: 'build/TorrentAdder.ipa',
+        dest: '/www/ota/'
+      }
+    )
+    #pilot
+  end
+
+  after_all do |lane|
+    # This block is called, only if the executed lane was successful
+    
+    # slack(
+    #   message: "Successfully deployed new App Update."
+    # )
+  end
+
+  error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
+  end
+end

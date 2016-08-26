@@ -6,7 +6,6 @@ inhibit_all_warnings!
 
 target 'TorrentAdder' do
 	pod 'AFNetworking'
-	pod 'BlocksKit'
 	pod 'YapDatabase'
 	pod 'SYKit'
 	pod 'BlocksKit'

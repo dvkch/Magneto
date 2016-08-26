@@ -19,7 +19,6 @@
 		976B76DE1BBB03B200641AD5 /* SYComputersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 976B76DD1BBB03B200641AD5 /* SYComputersCell.m */; };
 		9772B3CA1BC68BC60022E370 /* SYAddMagnetPopupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9772B3C91BC68BC60022E370 /* SYAddMagnetPopupVC.m */; };
 		9786BAD91BB3122100786363 /* SYWebAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9786BAD81BB3122100786363 /* SYWebAPI.m */; };
-		9794DA141BB409ED0066CFFE /* extract.js in Resources */ = {isa = PBXBuildFile; fileRef = 9794DA131BB409ED0066CFFE /* extract.js */; };
 		9797FBB61BC0305700CA3BEF /* SYBonjourClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB51BC0305700CA3BEF /* SYBonjourClient.m */; };
 		9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB81BC0322A00CA3BEF /* NSNetService+SY.m */; };
 		979B6D1D1BBC63F6003B49F9 /* SYAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 979B6D1C1BBC63F6003B49F9 /* SYAlertManager.m */; };
@@ -104,7 +103,6 @@
 		9772B3C91BC68BC60022E370 /* SYAddMagnetPopupVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAddMagnetPopupVC.m; sourceTree = "<group>"; };
 		9786BAD71BB3122100786363 /* SYWebAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYWebAPI.h; sourceTree = "<group>"; };
 		9786BAD81BB3122100786363 /* SYWebAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYWebAPI.m; sourceTree = "<group>"; };
-		9794DA131BB409ED0066CFFE /* extract.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = extract.js; sourceTree = "<group>"; };
 		9797FBB41BC0305700CA3BEF /* SYBonjourClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYBonjourClient.h; sourceTree = "<group>"; };
 		9797FBB51BC0305700CA3BEF /* SYBonjourClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYBonjourClient.m; sourceTree = "<group>"; };
 		9797FBB71BC0322A00CA3BEF /* NSNetService+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNetService+SY.h"; sourceTree = "<group>"; };
@@ -269,7 +267,6 @@
 				F83FFA3E192BE7440034A95B /* SYClientAPI.m */,
 				9786BAD71BB3122100786363 /* SYWebAPI.h */,
 				9786BAD81BB3122100786363 /* SYWebAPI.m */,
-				9794DA131BB409ED0066CFFE /* extract.js */,
 				97A0C5531BC3228400DC4EEC /* error.html */,
 			);
 			name = API;
@@ -524,7 +521,6 @@
 				97A18E161BBC018100F33AF5 /* SYWebVC.xib in Resources */,
 				973784321BD40649001AD487 /* Launch.storyboard in Resources */,
 				97A0C55E1BC3271300DC4EEC /* form_bookmark_org.png in Resources */,
-				9794DA141BB409ED0066CFFE /* extract.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

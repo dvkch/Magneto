@@ -147,17 +147,6 @@
         
         block(results, nil);
         
-        /*
-        NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        [self.webView bk_setDidFinishLoadBlock:^(UIWebView *webView) {
-            NSString *json = [webView stringByEvaluatingJavaScriptFromString:self.js];
-            NSArray *dics = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                block([SYResultModel arrayWithArrayOfDictionaries:dics], nil);
-            });
-        }];
-        [self.webView loadHTMLString:string baseURL:nil];
-         */
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (((NSHTTPURLResponse *)task.response).statusCode == 404)
             block(@[], nil);

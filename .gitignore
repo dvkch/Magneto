@@ -1,3 +1,8 @@
+# Fastlane
+build/
+*.mobileprovision
+*.cer
+
 # Xcode
 #
 build/
