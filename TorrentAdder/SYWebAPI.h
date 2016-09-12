@@ -15,6 +15,7 @@
 @property (nonatomic, assign) BOOL       verified;
 @property (nonatomic, assign) NSUInteger seed;
 @property (nonatomic, assign) NSUInteger leech;
+- (NSURL *)fullURL;
 @end
 
 

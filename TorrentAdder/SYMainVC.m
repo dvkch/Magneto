@@ -38,8 +38,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintBlueHeaderHeight;
 
 @property (strong, nonatomic) NSTimer *timerRefreshComputers;
-@property (strong, nonatomic) NSArray *computers;
-@property (strong, nonatomic) NSArray *searchResults;
+@property (strong, nonatomic) NSArray <SYComputerModel *> *computers;
+@property (strong, nonatomic) NSArray <SYResultModel *> *searchResults;
 @property (strong, nonatomic) NSString *searchQuery;
 @property (assign, nonatomic) CGFloat constraintBlueHeaderHeightOriginalValue;
 @property (assign, nonatomic) BOOL isVisible;
@@ -200,14 +200,6 @@
     return [SYResultCell cellHeightForResult:self.searchResults[indexPath.row] width:tableView.frame.size.width];
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView
-           editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section == 1)
-        return UITableViewCellEditingStyleDelete;
-    return UITableViewCellEditingStyleNone;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -269,6 +261,24 @@
              [tableView endUpdates];
          }];
         return @[deleteAction, editAction];
+    }
+    
+    if (indexPath.section == 2)
+    {
+        UITableViewRowAction *shareAction =
+        [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Share page link" handler:
+         ^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath)
+         {
+             SYResultModel *result = wSelf.searchResults[indexPath.row];
+             
+             UIActivityViewController *activityVC =
+             [[UIActivityViewController alloc] initWithActivityItems:@[[result fullURL]] applicationActivities:nil];
+             
+             [wSelf presentViewController:activityVC animated:YES completion:nil];
+             [wSelf.tableView setEditing:NO animated:YES];
+         }];
+        [shareAction setBackgroundColor:[UIColor colorWithRed:14./255. green:162./255. blue:1. alpha:1.]];
+        return @[shareAction];
     }
     return nil;
 }

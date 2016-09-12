@@ -3,47 +3,47 @@
   <testsuite name="fastlane.lanes">
     
       
-      <testcase classname="fastlane.lanes" name="0: Verifying required fastlane version" time="0.0005">
+      <testcase classname="fastlane.lanes" name="0: Verifying required fastlane version" time="0.000465">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: default_platform" time="0.000347">
+      <testcase classname="fastlane.lanes" name="1: default_platform" time="0.000418">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: clear" time="0.005677">
+      <testcase classname="fastlane.lanes" name="2: clear" time="0.005301">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: cocoapods" time="6.221038">
+      <testcase classname="fastlane.lanes" name="3: cocoapods" time="8.1193">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: Switch to ios update_build_number lane" time="0.000494">
+      <testcase classname="fastlane.lanes" name="4: Switch to ios update_build_number lane" time="0.000286">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="5: cert" time="7.37912">
+      <testcase classname="fastlane.lanes" name="5: cert" time="59.262981">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="6: sigh" time="8.277235">
+      <testcase classname="fastlane.lanes" name="6: sigh" time="10.946957">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="7: gym" time="53.243163">
+      <testcase classname="fastlane.lanes" name="7: gym" time="81.471987">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="8: ftp" time="13.818022">
+      <testcase classname="fastlane.lanes" name="8: ftp" time="15.921978">
         
       </testcase>
     

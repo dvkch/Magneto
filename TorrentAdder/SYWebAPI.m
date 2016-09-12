@@ -15,6 +15,7 @@
 @interface SYResultModel ()
 @property (nonatomic, strong) NSString   *magnet;
 @property (nonatomic, strong) NSString   *pageURL;
+@property (nonatomic, strong) NSURL      *rootURL;
 @end
 
 @interface SYWebAPI ()
@@ -134,8 +135,24 @@
             size = [size stringByReplacingOccurrencesOfString:@"Size " withString:@""];
             
             SYResultModel *result = [[SYResultModel alloc] init];
-            result.name     = [[[tdDetails firstChildWithTagName:@"div"] firstChildWithTagName:@"a"] text];
-            result.pageURL  = [[[tdDetails firstChildWithTagName:@"div"] firstChildWithTagName:@"a"] objectForKey:@"href"];
+            result.name     = [[[tdDetails firstChildWithTagName:@"div"]
+                                firstChildWithTagName:@"a"]
+                               text];
+            
+            if (!result.name.length)
+            {
+                result.name     = [[[[tdDetails firstChildWithTagName:@"div"]
+                                     firstChildWithTagName:@"a"]
+                                    firstChildWithTagName:@"span"]
+                                   text];
+            }
+            
+            NSAssert(result.name.length, @"No name for result row");
+            
+            result.rootURL  = self.manager.baseURL;
+            result.pageURL  = [[[tdDetails firstChildWithTagName:@"div"]
+                                firstChildWithTagName:@"a"]
+                               objectForKey:@"href"];
             result.seed     = [[tdSE text] integerValue];
             result.leech    = [[tdLE text] integerValue];
             result.verified = [[tdDetails raw] containsString:@"VIP"];
@@ -193,4 +210,23 @@
 @end
 
 @implementation SYResultModel
+
+- (NSURL *)fullURL
+{
+    return [NSURL URLWithString:self.pageURL relativeToURL:self.rootURL];
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@: %p, %@ (%@, %@), %d/%d, verif: %d>",
+            self.class,
+            self,
+            self.name,
+            self.size,
+            self.age,
+            (int)self.seed,
+            (int)self.leech,
+            self.verified];
+}
+
 @end
