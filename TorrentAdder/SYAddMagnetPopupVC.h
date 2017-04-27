@@ -6,13 +6,13 @@
 //  Copyright © 2015 Syan. All rights reserved.
 //
 
-#import "SYPopoverViewController.h"
+#import <UIKit/UIKit.h>
 #import "SYAppDelegate.h"
 
 @class SYComputerModel;
 @class SYResultModel;
 
-@interface SYAddMagnetPopupVC : SYPopoverViewController
+@interface SYAddMagnetPopupVC : UIViewController
 
 + (void)showInViewController:(UIViewController *)viewController
                   withMagnet:(NSURL *)magnet

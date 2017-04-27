@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '13132FA2616F624021F9C4EDD9DDF279'
+               BlueprintIdentifier = 'AEB8C23AAD15680CC0538A62419DD29C'
                BlueprintName = 'JiveAuthenticatingHTTPProtocol'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libJiveAuthenticatingHTTPProtocol.a'>

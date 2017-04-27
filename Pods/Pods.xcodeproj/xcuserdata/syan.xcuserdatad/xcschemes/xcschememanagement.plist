@@ -19,7 +19,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>JGMethodSwizzler.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>JRSwizzle.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JiveAuthenticatingHTTPProtocol.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Masonry.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -49,7 +64,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SYPopover.xcscheme</key>
+		<key>SYPopoverController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -72,67 +87,82 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>12E2BC28C62976C425F4B71C2723F0B1</key>
+		<key>0606AE1E7696CCFE3E1400A92489A474</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>13132FA2616F624021F9C4EDD9DDF279</key>
+		<key>0AC55E754182E1FCF070AC7F74379523</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2F2FAAFDC5EB749958DB368F1FDC56EA</key>
+		<key>14BCE7CBCC9F55255DE8C00DDB9DA5D3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>48EB6459230898732EB055C29DCA705D</key>
+		<key>18D4A81773A5C714473313EF2E128E81</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>677685833AD24AB8E8288F3B2A54B03B</key>
+		<key>1A5ED98C85C01919A9FE9A28474A3B30</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>82802436F567BC691BD16F4D3F57F1ED</key>
+		<key>1A9298B32F31A61F3742650B19EE27BD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>928353533005A4198EBDA5B700D37B64</key>
+		<key>2267615D0C23AEC2B78AF3386510F1AF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9C4E5BDADC246C8D67F2DE75A443ACAC</key>
+		<key>432C7905A317102B7E67EA1EB47E8BB7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BA250BDE05647A8E5AE0B5FB0421E3CC</key>
+		<key>538E9235F83EE9084EDC1F3B7C6969B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BFD8176EE71F6049F6FAC6D6BB7C812E</key>
+		<key>7C214356709EB3EA286F3E87E9ABE638</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D5E7E8A1C6F01AA3742D91E93F19B511</key>
+		<key>9DC8D9E02903E93BD0B2FEC9D846EA20</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DA1A7295DF2A99609DA0EEBF5E83233D</key>
+		<key>9E033EDB5EC0819481B0546434FA577B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F58CA4A980E9B1883FA408C725B225BF</key>
+		<key>A55193D77DF6284CFFED60908BB0A8FA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AEB8C23AAD15680CC0538A62419DD29C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D469ABA8B8B857E61F88543DF8F650AF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F98297B2A75DBBBA793E070DA6F148A3</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -10,12 +10,12 @@
 #import "UIColor+SY.h"
 
 @interface SYNavigationController ()
-
 @end
 
 @implementation SYNavigationController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     [self.navigationBar setBarTintColor:[UIColor lightBlueColor]];
     [self.navigationBar setTintColor:[UIColor whiteColor]];

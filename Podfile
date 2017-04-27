@@ -9,18 +9,12 @@ target 'TorrentAdder' do
 	pod 'YapDatabase'
 	pod 'SYKit'
 	pod 'BlocksKit'
-	pod 'SYPopover'
+	pod 'SYPopoverController'
 	pod 'SPLPing'
 	pod 'JiveAuthenticatingHTTPProtocol'
-	#pod 'SparkInspector', :configurations => ['Debug']
+	pod 'SparkInspector', :configurations => ['Debug']
 	pod 'XMLDictionary'
 	pod 'hpple'
-end
-
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['ENABLE_BITCODE'] = 'NO'
-    end
-  end
+	pod "JRSwizzle"
+	pod "Masonry"
 end

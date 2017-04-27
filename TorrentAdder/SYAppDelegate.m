@@ -44,7 +44,19 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
     
     SYMainVC *mainVC = [[SYMainVC alloc] init];
     SYNavigationController *nc = [[SYNavigationController alloc] initWithRootViewController:mainVC];
+    
     self.window = [SYWindow mainWindowWithRootViewController:nc];
+    [(SYWindow *)self.window setPreventSlowAnimationsOnShake:NO];
+    
+#if DEBUG_POPUP
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSString *magnet = @"magnet:?xt=urn:btih:0403fb4728bd788fbcb67e87d6feb241ef38c75a&dn=ubuntu-16.10-desktop-amd64.iso&tr=http%3A%2F%2Ftorrent.ubuntu.com%3A6969%2Fannounce&tr=http%3A%2F%2Fipv6.torrent.ubuntu.com%3A6969%2Fannounce";
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:UIAppDidOpenURLNotification
+                                                            object:nil
+                                                          userInfo:@{UIAppDidOpenURLNotification_MagnetURLKey:[NSURL URLWithString:magnet]}];
+    });
+#endif
     
     return YES;
 }

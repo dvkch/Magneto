@@ -29,71 +29,75 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - CocoaLumberjack (2.3.0):
-    - CocoaLumberjack/Default (= 2.3.0)
-    - CocoaLumberjack/Extensions (= 2.3.0)
-  - CocoaLumberjack/Core (2.3.0)
-  - CocoaLumberjack/Default (2.3.0):
+  - CocoaLumberjack (2.4.0):
+    - CocoaLumberjack/Default (= 2.4.0)
+    - CocoaLumberjack/Extensions (= 2.4.0)
+  - CocoaLumberjack/Core (2.4.0)
+  - CocoaLumberjack/Default (2.4.0):
     - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.3.0):
+  - CocoaLumberjack/Extensions (2.4.0):
     - CocoaLumberjack/Default
   - hpple (0.2.0)
+  - JGMethodSwizzler (2.0.1)
   - JiveAuthenticatingHTTPProtocol (0.3.2)
+  - JRSwizzle (1.0)
+  - Masonry (1.0.2)
   - Reachability (3.2)
+  - SparkInspector (1.3.4)
   - SPLPing (1.1.6)
-  - SYKit (0.0.23)
-  - SYPopover (1.0.4):
-    - SYKit (>= 0.0.12)
-  - XMLDictionary (1.4)
-  - YapDatabase (2.9.1):
-    - YapDatabase/Standard (= 2.9.1)
-  - YapDatabase/Standard (2.9.1):
-    - YapDatabase/Standard/Core (= 2.9.1)
-    - YapDatabase/Standard/Extensions (= 2.9.1)
-  - YapDatabase/Standard/Core (2.9.1):
+  - SYKit (0.0.35):
+    - JGMethodSwizzler
+  - SYPopoverController (2.0.1)
+  - XMLDictionary (1.4.1)
+  - YapDatabase (2.9.2):
+    - YapDatabase/Standard (= 2.9.2)
+  - YapDatabase/Standard (2.9.2):
+    - YapDatabase/Standard/Core (= 2.9.2)
+    - YapDatabase/Standard/Extensions (= 2.9.2)
+  - YapDatabase/Standard/Core (2.9.2):
     - CocoaLumberjack (~> 2)
-  - YapDatabase/Standard/Extensions (2.9.1):
+  - YapDatabase/Standard/Extensions (2.9.2):
     - YapDatabase/Standard/Core
-    - YapDatabase/Standard/Extensions/ActionManager (= 2.9.1)
-    - YapDatabase/Standard/Extensions/CloudKit (= 2.9.1)
-    - YapDatabase/Standard/Extensions/ConnectionProxy (= 2.9.1)
-    - YapDatabase/Standard/Extensions/CrossProcessNotification (= 2.9.1)
-    - YapDatabase/Standard/Extensions/FilteredViews (= 2.9.1)
-    - YapDatabase/Standard/Extensions/FullTextSearch (= 2.9.1)
-    - YapDatabase/Standard/Extensions/Hooks (= 2.9.1)
-    - YapDatabase/Standard/Extensions/Relationships (= 2.9.1)
-    - YapDatabase/Standard/Extensions/RTreeIndex (= 2.9.1)
-    - YapDatabase/Standard/Extensions/SearchResults (= 2.9.1)
-    - YapDatabase/Standard/Extensions/SecondaryIndex (= 2.9.1)
-    - YapDatabase/Standard/Extensions/Views (= 2.9.1)
-  - YapDatabase/Standard/Extensions/ActionManager (2.9.1):
+    - YapDatabase/Standard/Extensions/ActionManager (= 2.9.2)
+    - YapDatabase/Standard/Extensions/CloudKit (= 2.9.2)
+    - YapDatabase/Standard/Extensions/ConnectionProxy (= 2.9.2)
+    - YapDatabase/Standard/Extensions/CrossProcessNotification (= 2.9.2)
+    - YapDatabase/Standard/Extensions/FilteredViews (= 2.9.2)
+    - YapDatabase/Standard/Extensions/FullTextSearch (= 2.9.2)
+    - YapDatabase/Standard/Extensions/Hooks (= 2.9.2)
+    - YapDatabase/Standard/Extensions/Relationships (= 2.9.2)
+    - YapDatabase/Standard/Extensions/RTreeIndex (= 2.9.2)
+    - YapDatabase/Standard/Extensions/SearchResults (= 2.9.2)
+    - YapDatabase/Standard/Extensions/SecondaryIndex (= 2.9.2)
+    - YapDatabase/Standard/Extensions/Views (= 2.9.2)
+  - YapDatabase/Standard/Extensions/ActionManager (2.9.2):
     - Reachability (~> 3)
     - YapDatabase/Standard/Core
     - YapDatabase/Standard/Extensions/Views
-  - YapDatabase/Standard/Extensions/CloudKit (2.9.1):
+  - YapDatabase/Standard/Extensions/CloudKit (2.9.2):
     - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/ConnectionProxy (2.9.1):
+  - YapDatabase/Standard/Extensions/ConnectionProxy (2.9.2):
     - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/CrossProcessNotification (2.9.1):
+  - YapDatabase/Standard/Extensions/CrossProcessNotification (2.9.2):
     - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/FilteredViews (2.9.1):
+  - YapDatabase/Standard/Extensions/FilteredViews (2.9.2):
     - YapDatabase/Standard/Core
     - YapDatabase/Standard/Extensions/Views
-  - YapDatabase/Standard/Extensions/FullTextSearch (2.9.1):
+  - YapDatabase/Standard/Extensions/FullTextSearch (2.9.2):
     - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/Hooks (2.9.1):
+  - YapDatabase/Standard/Extensions/Hooks (2.9.2):
     - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/Relationships (2.9.1):
+  - YapDatabase/Standard/Extensions/Relationships (2.9.2):
     - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/RTreeIndex (2.9.1):
+  - YapDatabase/Standard/Extensions/RTreeIndex (2.9.2):
     - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/SearchResults (2.9.1):
+  - YapDatabase/Standard/Extensions/SearchResults (2.9.2):
     - YapDatabase/Standard/Core
     - YapDatabase/Standard/Extensions/FullTextSearch
     - YapDatabase/Standard/Extensions/Views
-  - YapDatabase/Standard/Extensions/SecondaryIndex (2.9.1):
+  - YapDatabase/Standard/Extensions/SecondaryIndex (2.9.2):
     - YapDatabase/Standard/Core
-  - YapDatabase/Standard/Extensions/Views (2.9.1):
+  - YapDatabase/Standard/Extensions/Views (2.9.2):
     - YapDatabase/Standard/Core
 
 DEPENDENCIES:
@@ -101,25 +105,32 @@ DEPENDENCIES:
   - BlocksKit
   - hpple
   - JiveAuthenticatingHTTPProtocol
+  - JRSwizzle
+  - Masonry
+  - SparkInspector
   - SPLPing
   - SYKit
-  - SYPopover
+  - SYPopoverController
   - XMLDictionary
   - YapDatabase
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
-  CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
+  CocoaLumberjack: aa9dcab71bdf9eaf2a63bbd9ddc87863efe45457
   hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
+  JGMethodSwizzler: e0ea5c1c6c55304ec4ef3f54e441400c6735c899
   JiveAuthenticatingHTTPProtocol: f4d81a029622fe9347c38d55c2239ecdbba91720
+  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SparkInspector: 0c34a98a39bfabb0a45fdf2658d091a7958fc0b0
   SPLPing: aa94e6dcb07ec3c54d72b5999f1aebc7602f0d18
-  SYKit: fee5c3ea2100874d4ae7ffdabcec34ff61a6527f
-  SYPopover: 24ac32bc276dfffc894050955416245db567997c
-  XMLDictionary: f9f51601ba76678b594ab485f2b00ec1fed23724
-  YapDatabase: 713d4018cfacbd6e77dd430710ca84730e450980
+  SYKit: 83903dace2b4ac77c3eada69d86262f7331f3e62
+  SYPopoverController: faf6a1a28c33f5245012ee1f140565fb4e1843e5
+  XMLDictionary: fa07b6ff422b3a91d47a5de9bc82e3fc04fbd167
+  YapDatabase: b1e43555a34a5298e23a045be96817a5ef0da58f
 
-PODFILE CHECKSUM: 175aa5a5b6653ebbc24b6bdeade7f393148f0231
+PODFILE CHECKSUM: 9484e8b37131b2234c37571657ed9a892f34486a
 
-COCOAPODS: 1.1.0.rc.3
+COCOAPODS: 1.2.1

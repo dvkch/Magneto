@@ -9,12 +9,12 @@
 #import "SYAddMagnetPopupVC.h"
 #import "SYComputerModel.h"
 #import "SYDatabase.h"
-#import "SYPopoverNavigationController.h"
+#import "SYPopoverController.h"
 #import "SYClientAPI.h"
 #import "NSURL+SY.h"
 #import "SYWebAPI.h"
 
-@interface SYAddMagnetPopupVC () <UITableViewDataSource, UITableViewDelegate, SYPopoverNavigationControllerDelegate>
+@interface SYAddMagnetPopupVC () <UITableViewDataSource, UITableViewDelegate, SYPopoverContentViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UILabel *labelStatus;
@@ -31,6 +31,9 @@
 
 @end
 
+@interface TESTVC : UIViewController
+@end
+
 @implementation SYAddMagnetPopupVC
 
 + (void)showInViewController:(UIViewController *)viewController
@@ -42,30 +45,28 @@
     [popupVC setAppToGoBackTo:appToGoBackTo];
     [popupVC setResult:result];
     [popupVC setMagnetURL:magnet];
-    
-    SYPopoverNavigationController *nc = [[SYPopoverNavigationController alloc] initWithRootViewController:popupVC];
-    [nc setPopoverDelegate:popupVC];
-    [nc setBackgroundsColor:[UIColor colorWithWhite:0.7 alpha:0.7]];
-    [nc presentAsPopoverFromViewController:viewController animated:YES];
+    [viewController sy_presentPopover:[[SYNavigationController alloc] initWithRootViewController:popupVC]
+                             animated:YES
+                           completion:nil];
+    //[viewController sy_presentPopup:popupVC animated:YES completion:nil];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self.popoverView setBackgroundColor:[UIColor whiteColor]];
-    [self.popoverView.layer setCornerRadius:6];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.view.layer setCornerRadius:6];
+    [self.view.layer setMasksToBounds:YES];
     
-    [self setPopoverSizeBlock:^CGSize(BOOL iPad, BOOL iPhoneSmallScreen) {
-        return CGSizeMake(300, 250);
-    }];
+    [self setPreferredContentSize:CGSizeMake(300, 250)];
     
     self.tableView = [[UITableView alloc] init];
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellComputer"];
     [self.tableView setTableFooterView:[[UIView alloc] init]];
-    [self.popoverView addSubview:self.tableView];
+    [self.view addSubview:self.tableView];
     
     self.buttonCancel = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.buttonCancel setBackgroundColor:[UIColor clearColor]];
@@ -73,7 +74,7 @@
     [self.buttonCancel setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
     [self.buttonCancel setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [self.buttonCancel addTarget:self action:@selector(buttonCancelTap:) forControlEvents:UIControlEventTouchUpInside];
-    [self.popoverView addSubview:self.buttonCancel];
+    [self.view addSubview:self.buttonCancel];
     
     self.buttonOK = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.buttonOK setBackgroundColor:[UIColor clearColor]];
@@ -81,7 +82,7 @@
     [self.buttonOK setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
     [self.buttonOK setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [self.buttonOK addTarget:self action:@selector(buttonOKTap:) forControlEvents:UIControlEventTouchUpInside];
-    [self.popoverView addSubview:self.buttonOK];
+    [self.view addSubview:self.buttonOK];
     
     self.buttonBackToApp = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.buttonBackToApp setBackgroundColor:[UIColor clearColor]];
@@ -89,7 +90,7 @@
     [self.buttonBackToApp setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
     [self.buttonBackToApp setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [self.buttonBackToApp addTarget:self action:@selector(buttonBackToAppTap:) forControlEvents:UIControlEventTouchUpInside];
-    [self.popoverView addSubview:self.buttonBackToApp];
+    [self.view addSubview:self.buttonBackToApp];
     
     for (UIView *view in @[self.buttonOK, self.buttonCancel, self.buttonBackToApp])
     {
@@ -104,22 +105,22 @@
     [self.labelStatus setTextAlignment:NSTextAlignmentCenter];
     [self.labelStatus setNumberOfLines:0];
     [self.labelStatus setFont:[UIFont systemFontOfSize:15]];
-    [self.popoverView addSubview:self.labelStatus];
+    [self.view addSubview:self.labelStatus];
     
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [self.spinner setColor:[UIColor grayColor]];
-    [self.popoverView addSubview:self.spinner];
+    [self.view addSubview:self.spinner];
     
     self.computers = [[SYDatabase shared] computers];
     [self switchToTableView:NO];
 }
 
-- (void)updateFramesAndAlphas
+- (void)viewWillLayoutSubviews
 {
-    [super updateFramesAndAlphas];
+    [super viewWillLayoutSubviews];
     
-    CGFloat w = CGRectGetWidth(self.popoverView.bounds);
-    CGFloat h = CGRectGetHeight(self.popoverView.bounds);
+    CGFloat w = CGRectGetWidth(self.view.bounds);
+    CGFloat h = CGRectGetHeight(self.view.bounds);
     
     // button height
     CGFloat bh = 40;
@@ -203,18 +204,23 @@
 
 - (void)buttonCancelTap:(id)sender
 {
-    [self close];
+#if DEBUG_POPUP
+    // TODO: finish
+    [self.navigationController pushViewController:[TESTVC new] animated:YES];
+#else
+    [self dismissViewControllerAnimated:YES completion:nil];
+#endif
 }
 
 - (void)buttonBackToAppTap:(id)sender
 {
     [[SYAppDelegate obtain] openApp:self.appToGoBackTo];
-    [self close];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)buttonOKTap:(id)sender
 {
-    [self close];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - TableView
@@ -303,19 +309,57 @@
 
 #pragma mark - PopupNavigationController
 
-- (BOOL)popoverNavigationControllerShouldDismiss:(SYPopoverNavigationController *)popoverNavigationController
+- (BOOL)popoverControllerShouldDismissOnBackgroundTap:(SYPopoverController *)popoverController
 {
     return self.canClose;
 }
 
-- (void)popoverNavigationControllerWillDismiss:(SYPopoverNavigationController *)popoverNavigationController animated:(BOOL)animated
+- (UIColor *)popoverControllerBackgroundColor:(SYPopoverController *)popoverController
 {
-    
-}
-
-- (void)popoverNavigationControllerWillPresent:(SYPopoverNavigationController *)popoverNavigationController animated:(BOOL)animated
-{
-    
+    return [UIColor colorWithWhite:0.7 alpha:0.7];
 }
 
 @end
+
+
+
+#warning BRRRR
+@interface UIViewController (PAOID)
+- (CGSize)_adjustedContentSizeForPopover:(CGSize)size;
+@end
+
+@interface TESTVC () <SYPopoverContentViewDelegate>
+@end
+
+@implementation TESTVC
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.view.layer setCornerRadius:6];
+    [self.view.layer setMasksToBounds:YES];
+    NSLog(@"did load 1 %@", [self parentViewController]);
+    [self setPreferredContentSize:CGSizeMake(320, 250)];
+    NSLog(@"did load 2");
+}
+
+- (CGSize)_adjustedContentSizeForPopover:(CGSize)size
+{
+    NSLog(@"Yo");
+    return [super _adjustedContentSizeForPopover:size];
+}
+
+- (UIColor *)popupControllerBackgroundColor:(SYPopoverController *)popupController
+{
+#if DEBUG_POPUP
+    return [[UIColor greenColor] colorWithAlphaComponent:0.3];
+#else
+    return [UIColor whiteColor];
+#endif
+}
+
+@end
+
+
+

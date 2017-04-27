@@ -21,6 +21,7 @@
 @interface SYWebAPI ()
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, strong) NSURL *mirrorURL;
+@property (nonatomic, strong) NSMutableArray <NSURL *> *availableMirrorsURLs;
 @end
 
 @implementation SYWebAPI
@@ -42,6 +43,28 @@
         [self.manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
     }
     return self;
+}
+
+- (void)setMirrorURL:(NSURL *)mirrorURL
+{
+    self->_mirrorURL = mirrorURL;
+    
+    self.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:mirrorURL];
+    [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+    [self.manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+    
+    NSLog(@"-> Using mirror: %@", self.mirrorURL);
+}
+
+- (BOOL)switchMirror
+{
+    [self.availableMirrorsURLs removeObject:self.mirrorURL];
+    if (!self.availableMirrorsURLs.count)
+        return NO;
+    
+    NSUInteger maxURLIndex = MIN(self.availableMirrorsURLs.count, 3);
+    [self setMirrorURL:self.availableMirrorsURLs[arc4random() % maxURLIndex]];
+    return YES;
 }
 
 - (void)findMirrorWithCompletionBlock:(void(^)(NSError *error))block
@@ -67,12 +90,11 @@
         
         if (urls.count)
         {
-            [self setMirrorURL:urls[arc4random() % MIN(urls.count, 3)]];
-
-            self.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:self.mirrorURL];
-            [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
-            [self.manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+            self.availableMirrorsURLs = urls;
             
+            NSUInteger maxURLIndex = MIN(urls.count, 3);
+            [self setMirrorURL:urls[arc4random() % maxURLIndex]];
+
             block(nil);
         }
         else {
@@ -98,7 +120,6 @@
         return;
     }
     
-    
     NSString *escapedTerm = [term stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
     
     [self.manager GET:@"s/"
@@ -122,17 +143,22 @@
             TFHppleElement *tdLE      = [row childrenWithTagName:@"td"][3];
             
             TFHppleElement *fontChild = [tdDetails firstChildWithTagName:@"font"];
-            NSString *dateSizeAndUser = [fontChild text];
-            if ([fontChild firstChildWithTagName:@"a"])
-                dateSizeAndUser = [dateSizeAndUser stringByAppendingString:[[fontChild firstChildWithTagName:@"a"] text]];
-            else
-                dateSizeAndUser = [dateSizeAndUser stringByAppendingString:[[fontChild firstChildWithTagName:@"i"] text]];
+            NSMutableString *dateSizeAndUser = [[fontChild text] mutableCopy];
+            if ([fontChild firstChildWithTagName:@"b"])
+                [dateSizeAndUser appendString:[[fontChild firstChildWithTagName:@"b"] text]];
             
-            NSString *date = [dateSizeAndUser componentsSeparatedByString:@", "][0];
+            if ([fontChild firstChildWithTagName:@"a"])
+                [dateSizeAndUser appendString:[[fontChild firstChildWithTagName:@"a"] text]];
+            else
+                [dateSizeAndUser appendString:[[fontChild firstChildWithTagName:@"i"] text]];
+            
+            NSArray <NSString *> *components = [dateSizeAndUser componentsSeparatedByString:@", "];
+            NSString *date = components[0];
             date = [date stringByReplacingOccurrencesOfString:@"Uploaded " withString:@""];
             
-            NSString *size = [dateSizeAndUser componentsSeparatedByString:@", "][1];
-            size = [size stringByReplacingOccurrencesOfString:@"Size " withString:@""];
+            NSString *size = @"";
+            if (components.count >= 2)
+                size = [components[1] stringByReplacingOccurrencesOfString:@"Size " withString:@""];
             
             SYResultModel *result = [[SYResultModel alloc] init];
             result.name     = [[[tdDetails firstChildWithTagName:@"div"]
@@ -167,6 +193,13 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (((NSHTTPURLResponse *)task.response).statusCode == 404)
             block(@[], nil);
+        else if (((NSHTTPURLResponse *)task.response).statusCode == 500)
+        {
+            if ([self switchMirror])
+                [self lookFor:term withCompletionBlock:block];
+            else
+                block(nil, error);
+        }
         else
             block(nil, error);
     }];
