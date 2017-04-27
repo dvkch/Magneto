@@ -39,6 +39,8 @@
 		97A18E141BBC017C00F33AF5 /* SYListComputersVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E131BBC017C00F33AF5 /* SYListComputersVC.xib */; };
 		97A18E161BBC018100F33AF5 /* SYWebVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E151BBC018100F33AF5 /* SYWebVC.xib */; };
 		97AE99901EB2618F000C0FF0 /* SYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AE998F1EB2618F000C0FF0 /* SYNavigationController.m */; };
+		97AE99931EB26495000C0FF0 /* SYResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AE99921EB26495000C0FF0 /* SYResultModel.m */; };
+		97AE99961EB26894000C0FF0 /* NSCalendar+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AE99951EB26894000C0FF0 /* NSCalendar+SY.m */; };
 		97BA94181BB9D8C0000B03FD /* SYResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BA94171BB9D8C0000B03FD /* SYResultCell.m */; };
 		97BA941B1BB9E1C6000B03FD /* NSObject+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BA941A1BB9E1C6000B03FD /* NSObject+SY.m */; };
 		97BDF8521BCD909C00D77892 /* NSURLRequest+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */; };
@@ -128,6 +130,10 @@
 		97A18E151BBC018100F33AF5 /* SYWebVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYWebVC.xib; sourceTree = "<group>"; };
 		97AE998E1EB2618F000C0FF0 /* SYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYNavigationController.h; sourceTree = "<group>"; };
 		97AE998F1EB2618F000C0FF0 /* SYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYNavigationController.m; sourceTree = "<group>"; };
+		97AE99911EB26495000C0FF0 /* SYResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYResultModel.h; sourceTree = "<group>"; };
+		97AE99921EB26495000C0FF0 /* SYResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYResultModel.m; sourceTree = "<group>"; };
+		97AE99941EB26894000C0FF0 /* NSCalendar+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+SY.h"; sourceTree = "<group>"; };
+		97AE99951EB26894000C0FF0 /* NSCalendar+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+SY.m"; sourceTree = "<group>"; };
 		97BA94161BB9D8C0000B03FD /* SYResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYResultCell.h; sourceTree = "<group>"; };
 		97BA94171BB9D8C0000B03FD /* SYResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYResultCell.m; sourceTree = "<group>"; };
 		97BA94191BB9E1C6000B03FD /* NSObject+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SY.h"; sourceTree = "<group>"; };
@@ -384,6 +390,8 @@
 				973A5EB41BC9463000ACA301 /* NSString+SYApp.m */,
 				97BDF8501BCD909C00D77892 /* NSURLRequest+SY.h */,
 				97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */,
+				97AE99941EB26894000C0FF0 /* NSCalendar+SY.h */,
+				97AE99951EB26894000C0FF0 /* NSCalendar+SY.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -399,6 +407,8 @@
 				9705460B1BBD43F900C5294D /* SYNetworkModel.m */,
 				9705460D1BBD464700C5294D /* SYIP4Model.h */,
 				9705460E1BBD464700C5294D /* SYIP4Model.m */,
+				97AE99911EB26495000C0FF0 /* SYResultModel.h */,
+				97AE99921EB26495000C0FF0 /* SYResultModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -599,9 +609,11 @@
 				97F911471BC2C45C00BF1848 /* SYEditComputerVC.m in Sources */,
 				97F9114C1BC2C73D00BF1848 /* SYComputerFormCell.m in Sources */,
 				970546121BBD4E3300C5294D /* SYPinger.m in Sources */,
+				97AE99961EB26894000C0FF0 /* NSCalendar+SY.m in Sources */,
 				F89867B7192B859600735175 /* SYLabelTag.m in Sources */,
 				F898679A192A34E600735175 /* UIView+Glow.m in Sources */,
 				9797FBB61BC0305700CA3BEF /* SYBonjourClient.m in Sources */,
+				97AE99931EB26495000C0FF0 /* SYResultModel.m in Sources */,
 				971378211BBB09360060C5B6 /* SYDatabase.m in Sources */,
 				97BA94181BB9D8C0000B03FD /* SYResultCell.m in Sources */,
 				F83FFA3F192BE7440034A95B /* SYClientAPI.m in Sources */,

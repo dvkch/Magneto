@@ -273,6 +273,15 @@ Various methods to created new attributed strings, concatenate them, and estimat
 	- (CGSize)sy_sizeInBoundingWidth:(CGFloat)width;
 	
 	@end
+	
+	
+	@interface NSMutableString (SYKit)
+	
+	- (void)sy_append:(NSAttributedString *)string;
+	- (void)sy_appendString:(NSString *)string font:(UIFont *)font color:(UIColor *)color;
+	- (void)sy_setAlignment:(NSTextAlignment)alignment paragraphSpacing:(CGFloat)paragraphSpacing;
+	
+	@end
 
 ####NSLayoutConstraint+SYKit
 

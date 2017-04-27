@@ -16,5 +16,5 @@ target 'TorrentAdder' do
 	pod 'XMLDictionary'
 	pod 'hpple'
 	pod "JRSwizzle"
-	pod "Masonry"
+	pod "NSDate+TimeAgo"
 end

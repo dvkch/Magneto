@@ -41,11 +41,11 @@ PODS:
   - JGMethodSwizzler (2.0.1)
   - JiveAuthenticatingHTTPProtocol (0.3.2)
   - JRSwizzle (1.0)
-  - Masonry (1.0.2)
+  - NSDate+TimeAgo (1.0.6)
   - Reachability (3.2)
   - SparkInspector (1.3.4)
   - SPLPing (1.1.6)
-  - SYKit (0.0.35):
+  - SYKit (0.0.37):
     - JGMethodSwizzler
   - SYPopoverController (2.0.1)
   - XMLDictionary (1.4.1)
@@ -106,7 +106,7 @@ DEPENDENCIES:
   - hpple
   - JiveAuthenticatingHTTPProtocol
   - JRSwizzle
-  - Masonry
+  - NSDate+TimeAgo
   - SparkInspector
   - SPLPing
   - SYKit
@@ -122,15 +122,15 @@ SPEC CHECKSUMS:
   JGMethodSwizzler: e0ea5c1c6c55304ec4ef3f54e441400c6735c899
   JiveAuthenticatingHTTPProtocol: f4d81a029622fe9347c38d55c2239ecdbba91720
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
-  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  NSDate+TimeAgo: 35601c619b2d59290055e4fe76e61d97677a2360
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SparkInspector: 0c34a98a39bfabb0a45fdf2658d091a7958fc0b0
   SPLPing: aa94e6dcb07ec3c54d72b5999f1aebc7602f0d18
-  SYKit: 83903dace2b4ac77c3eada69d86262f7331f3e62
+  SYKit: ded11f6b88309f4fa0e13632846efecfd52ae5f8
   SYPopoverController: faf6a1a28c33f5245012ee1f140565fb4e1843e5
   XMLDictionary: fa07b6ff422b3a91d47a5de9bc82e3fc04fbd167
   YapDatabase: b1e43555a34a5298e23a045be96817a5ef0da58f
 
-PODFILE CHECKSUM: 9484e8b37131b2234c37571657ed9a892f34486a
+PODFILE CHECKSUM: 60258a145097a09dd3c16e6abc600f5c4494d1b2
 
 COCOAPODS: 1.2.1

@@ -11,13 +11,6 @@
 #import "UIWebView+BlocksKit.h"
 #import <TFHpple.h>
 
-
-@interface SYResultModel ()
-@property (nonatomic, strong) NSString   *magnet;
-@property (nonatomic, strong) NSString   *pageURL;
-@property (nonatomic, strong) NSURL      *rootURL;
-@end
-
 @interface SYWebAPI ()
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, strong) NSURL *mirrorURL;
@@ -109,7 +102,8 @@
     }];
 }
 
-- (void)lookFor:(NSString *)term withCompletionBlock:(void (^)(NSArray<SYResultModel *> *, NSError *))block
+- (void)lookFor:(NSString *)term
+     completion:(void (^)(NSArray<SYResultModel *> *, NSError *))block
 {
     if (!self.mirrorURL)
     {
@@ -117,7 +111,7 @@
             if (error)
                 block(nil, error);
             else
-                [self lookFor:term withCompletionBlock:block];
+                [self lookFor:term completion:block];
         }];
         return;
     }
@@ -129,66 +123,9 @@
              progress:nil
               success:^(NSURLSessionDataTask *task, id responseObject)
     {
-        //NSLog(@"-> \n%@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
-        
-        TFHpple *result = [TFHpple hppleWithHTMLData:responseObject];
-        
-        NSArray <TFHppleElement *> *rows = [result searchWithXPathQuery:@"//table[@id='searchResult']/tr"];
-        if (!rows.count)
-            rows = [result searchWithXPathQuery:@"//table[@id='searchResult']/tbody/tr"];
-        
-        NSMutableArray <SYResultModel *> *results = [NSMutableArray array];
-        for (TFHppleElement *row in rows)
-        {
-            TFHppleElement *tdDetails = [row childrenWithTagName:@"td"][1];
-            TFHppleElement *tdSE      = [row childrenWithTagName:@"td"][2];
-            TFHppleElement *tdLE      = [row childrenWithTagName:@"td"][3];
-            
-            TFHppleElement *fontChild = [tdDetails firstChildWithTagName:@"font"];
-            NSMutableString *dateSizeAndUser = [[fontChild text] mutableCopy];
-            if ([fontChild firstChildWithTagName:@"b"])
-                [dateSizeAndUser appendString:[[fontChild firstChildWithTagName:@"b"] text]];
-            
-            if ([fontChild firstChildWithTagName:@"a"])
-                [dateSizeAndUser appendString:[[fontChild firstChildWithTagName:@"a"] text]];
-            else
-                [dateSizeAndUser appendString:[[fontChild firstChildWithTagName:@"i"] text]];
-            
-            NSArray <NSString *> *components = [dateSizeAndUser componentsSeparatedByString:@", "];
-            NSString *date = components[0];
-            date = [date stringByReplacingOccurrencesOfString:@"Uploaded " withString:@""];
-            
-            NSString *size = @"";
-            if (components.count >= 2)
-                size = [components[1] stringByReplacingOccurrencesOfString:@"Size " withString:@""];
-            
-            SYResultModel *result = [[SYResultModel alloc] init];
-            result.name     = [[[tdDetails firstChildWithTagName:@"div"]
-                                firstChildWithTagName:@"a"]
-                               text];
-            
-            if (!result.name.length)
-            {
-                result.name     = [[[[tdDetails firstChildWithTagName:@"div"]
-                                     firstChildWithTagName:@"a"]
-                                    firstChildWithTagName:@"span"]
-                                   text];
-            }
-            
-            NSAssert(result.name.length, @"No name for result row");
-            
-            result.rootURL  = self.manager.baseURL;
-            result.pageURL  = [[[tdDetails firstChildWithTagName:@"div"]
-                                firstChildWithTagName:@"a"]
-                               objectForKey:@"href"];
-            result.seed     = [[tdSE text] integerValue];
-            result.leech    = [[tdLE text] integerValue];
-            result.verified = [[tdDetails raw] containsString:@"VIP"];
-            result.age      = date;
-            result.size     = size;
-            
-            [results addObject:result];
-        }
+        NSArray <SYResultModel *> *results =
+        [SYResultModel resultsFromWebData:responseObject
+                                  rootURL:self.manager.baseURL];
         
         block(results, nil);
         
@@ -198,7 +135,7 @@
         else if (((NSHTTPURLResponse *)task.response).statusCode == 500)
         {
             if ([self switchMirror])
-                [self lookFor:term withCompletionBlock:block];
+                [self lookFor:term completion:block];
             else
                 block(nil, error);
         }
@@ -207,7 +144,8 @@
     }];
 }
 
-- (void)getMagnetForResult:(SYResultModel *)result andCompletionBlock:(void(^)(NSString *magnet, NSError *error))block
+- (void)getMagnetForResult:(SYResultModel *)result
+                completion:(void(^)(NSString *magnet, NSError *error))block
 {
     if (result.magnet.length)
     {
@@ -220,23 +158,9 @@
              progress:nil
               success:^(NSURLSessionDataTask *task, id responseObject)
      {
-         TFHpple *webobject = [TFHpple hppleWithHTMLData:responseObject];
+         [result updateMagnetURLFromWebData:responseObject];
+         block(result.magnet, nil);
          
-         NSArray <TFHppleElement *> *links = [webobject searchWithXPathQuery:@"//div[@class='download']/a"];
-         
-         NSString *magnetURL = nil;
-         for (TFHppleElement *link in links)
-         {
-             NSString *tempURL = [link objectForKey:@"href"];
-             if ([tempURL hasPrefix:@"magnet:"])
-             {
-                 magnetURL = tempURL;
-                 break;
-             }
-         }
-         
-         [result setMagnet:magnetURL];
-         block(magnetURL, nil);
      } failure:^(NSURLSessionDataTask *task, NSError *error) {
          block(nil, error);
      }];
@@ -244,24 +168,3 @@
 
 @end
 
-@implementation SYResultModel
-
-- (NSURL *)fullURL
-{
-    return [NSURL URLWithString:self.pageURL relativeToURL:self.rootURL];
-}
-
-- (NSString *)description
-{
-    return [NSString stringWithFormat:@"<%@: %p, %@ (%@, %@), %d/%d, verif: %d>",
-            self.class,
-            self,
-            self.name,
-            self.size,
-            self.age,
-            (int)self.seed,
-            (int)self.leech,
-            self.verified];
-}
-
-@end

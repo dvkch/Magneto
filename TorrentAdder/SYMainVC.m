@@ -311,7 +311,7 @@
     
     [self.searchField showLoadingIndicator:YES];
     [[SYWebAPI shared] lookFor:self.searchQuery
-            withCompletionBlock:^(NSArray *items, NSError *error)
+                    completion:^(NSArray *items, NSError *error)
     {
         if (![self.searchQuery isEqualToString:searchQuery])
             return;

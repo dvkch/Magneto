@@ -261,7 +261,8 @@
         return;
     }
     
-    [[SYWebAPI shared] getMagnetForResult:self.result andCompletionBlock:^(NSString *magnet, NSError *error) {
+    [[SYWebAPI shared] getMagnetForResult:self.result completion:^(NSString *magnet, NSError *error)
+    {
         if (error)
         {
             [self switchToFailedWithMessage:error.localizedDescription animated:YES];

@@ -80,9 +80,11 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "NSDate+TimeAgo/NSDateTimeAgo.bundle"
   install_resource "$PODS_CONFIGURATION_BUILD_DIR/SYKit/SYSearchField.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "NSDate+TimeAgo/NSDateTimeAgo.bundle"
   install_resource "$PODS_CONFIGURATION_BUILD_DIR/SYKit/SYSearchField.bundle"
 fi
 

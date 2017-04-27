@@ -8,23 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SYResultModel : NSObject
-@property (nonatomic, strong) NSString   *name;
-@property (nonatomic, strong) NSString   *size;
-@property (nonatomic, strong) NSString   *age;
-@property (nonatomic, assign) BOOL       verified;
-@property (nonatomic, assign) NSUInteger seed;
-@property (nonatomic, assign) NSUInteger leech;
-- (NSURL *)fullURL;
-@end
-
+#import "SYResultModel.h"
 
 @interface SYWebAPI : NSObject
 
 + (SYWebAPI *)shared;
 
 - (void)findMirrorWithCompletionBlock:(void(^)(NSError *error))block;
-- (void)lookFor:(NSString *)term withCompletionBlock:(void(^)(NSArray<SYResultModel *> *items, NSError *error))block;
-- (void)getMagnetForResult:(SYResultModel *)result andCompletionBlock:(void(^)(NSString *magnet, NSError *error))block;
+
+- (void)lookFor:(NSString *)term
+     completion:(void(^)(NSArray<SYResultModel *> *items, NSError *error))block;
+
+- (void)getMagnetForResult:(SYResultModel *)result
+                completion:(void(^)(NSString *magnet, NSError *error))block;
 
 @end
