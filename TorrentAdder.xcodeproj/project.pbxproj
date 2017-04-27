@@ -23,7 +23,6 @@
 		9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB81BC0322A00CA3BEF /* NSNetService+SY.m */; };
 		979B6D1D1BBC63F6003B49F9 /* SYAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 979B6D1C1BBC63F6003B49F9 /* SYAlertManager.m */; };
 		97A0C54F1BC31BA100DC4EEC /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A0C54E1BC31BA100DC4EEC /* UIColor+SY.m */; };
-		97A0C5521BC31E8E00DC4EEC /* SYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A0C5511BC31E8E00DC4EEC /* SYNavigationController.m */; };
 		97A0C5541BC3228400DC4EEC /* error.html in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5531BC3228400DC4EEC /* error.html */; };
 		97A0C55D1BC3271300DC4EEC /* blue_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5551BC3271300DC4EEC /* blue_background.png */; };
 		97A0C55E1BC3271300DC4EEC /* form_bookmark_org.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5561BC3271300DC4EEC /* form_bookmark_org.png */; };
@@ -39,6 +38,7 @@
 		97A18E121BBC017500F33AF5 /* SYResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E111BBC017500F33AF5 /* SYResultCell.xib */; };
 		97A18E141BBC017C00F33AF5 /* SYListComputersVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E131BBC017C00F33AF5 /* SYListComputersVC.xib */; };
 		97A18E161BBC018100F33AF5 /* SYWebVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E151BBC018100F33AF5 /* SYWebVC.xib */; };
+		97AE99901EB2618F000C0FF0 /* SYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AE998F1EB2618F000C0FF0 /* SYNavigationController.m */; };
 		97BA94181BB9D8C0000B03FD /* SYResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BA94171BB9D8C0000B03FD /* SYResultCell.m */; };
 		97BA941B1BB9E1C6000B03FD /* NSObject+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BA941A1BB9E1C6000B03FD /* NSObject+SY.m */; };
 		97BDF8521BCD909C00D77892 /* NSURLRequest+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */; };
@@ -111,8 +111,6 @@
 		979B6D1C1BBC63F6003B49F9 /* SYAlertManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAlertManager.m; sourceTree = "<group>"; };
 		97A0C54D1BC31BA100DC4EEC /* UIColor+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SY.h"; sourceTree = "<group>"; };
 		97A0C54E1BC31BA100DC4EEC /* UIColor+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SY.m"; sourceTree = "<group>"; };
-		97A0C5501BC31E8E00DC4EEC /* SYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYNavigationController.h; sourceTree = "<group>"; };
-		97A0C5511BC31E8E00DC4EEC /* SYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYNavigationController.m; sourceTree = "<group>"; };
 		97A0C5531BC3228400DC4EEC /* error.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = error.html; path = Resources/error.html; sourceTree = SOURCE_ROOT; };
 		97A0C5551BC3271300DC4EEC /* blue_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_background.png; sourceTree = "<group>"; };
 		97A0C5561BC3271300DC4EEC /* form_bookmark_org.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_bookmark_org.png; sourceTree = "<group>"; };
@@ -128,6 +126,8 @@
 		97A18E111BBC017500F33AF5 /* SYResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYResultCell.xib; sourceTree = "<group>"; };
 		97A18E131BBC017C00F33AF5 /* SYListComputersVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYListComputersVC.xib; sourceTree = "<group>"; };
 		97A18E151BBC018100F33AF5 /* SYWebVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYWebVC.xib; sourceTree = "<group>"; };
+		97AE998E1EB2618F000C0FF0 /* SYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYNavigationController.h; sourceTree = "<group>"; };
+		97AE998F1EB2618F000C0FF0 /* SYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYNavigationController.m; sourceTree = "<group>"; };
 		97BA94161BB9D8C0000B03FD /* SYResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYResultCell.h; sourceTree = "<group>"; };
 		97BA94171BB9D8C0000B03FD /* SYResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYResultCell.m; sourceTree = "<group>"; };
 		97BA94191BB9E1C6000B03FD /* NSObject+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SY.h"; sourceTree = "<group>"; };
@@ -199,8 +199,8 @@
 		973AFF811BB41CFC00BA4B8B /* VCs */ = {
 			isa = PBXGroup;
 			children = (
-				97A0C5501BC31E8E00DC4EEC /* SYNavigationController.h */,
-				97A0C5511BC31E8E00DC4EEC /* SYNavigationController.m */,
+				97AE998E1EB2618F000C0FF0 /* SYNavigationController.h */,
+				97AE998F1EB2618F000C0FF0 /* SYNavigationController.m */,
 				F8986792192A324800735175 /* SYMainVC.h */,
 				F8986793192A324800735175 /* SYMainVC.m */,
 				97A18E0B1BBC011900F33AF5 /* SYMainVC.xib */,
@@ -584,13 +584,13 @@
 				9705460F1BBD464700C5294D /* SYIP4Model.m in Sources */,
 				F89867B4192B7B1100735175 /* SYComputerCell.m in Sources */,
 				97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */,
+				97AE99901EB2618F000C0FF0 /* SYNavigationController.m in Sources */,
 				9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */,
 				9772B3CA1BC68BC60022E370 /* SYAddMagnetPopupVC.m in Sources */,
 				F898676B192A317C00735175 /* SYAppDelegate.m in Sources */,
 				976B76DE1BBB03B200641AD5 /* SYComputersCell.m in Sources */,
 				F88EEC0B1948FF1800D98F4F /* SYWebVC.m in Sources */,
 				973A5EB51BC9463000ACA301 /* NSString+SYApp.m in Sources */,
-				97A0C5521BC31E8E00DC4EEC /* SYNavigationController.m in Sources */,
 				F8986794192A324800735175 /* SYMainVC.m in Sources */,
 				973AFF801BB41CE800BA4B8B /* SYListComputersVC.m in Sources */,
 				F8986767192A317C00735175 /* main.m in Sources */,

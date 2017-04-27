@@ -13,6 +13,7 @@
 #import "SYClientAPI.h"
 #import "NSURL+SY.h"
 #import "SYWebAPI.h"
+#import "SYComputerCell.h"
 
 @interface SYAddMagnetPopupVC () <UITableViewDataSource, UITableViewDelegate, SYPopoverContentViewDelegate>
 
@@ -45,10 +46,7 @@
     [popupVC setAppToGoBackTo:appToGoBackTo];
     [popupVC setResult:result];
     [popupVC setMagnetURL:magnet];
-    [viewController sy_presentPopover:[[SYNavigationController alloc] initWithRootViewController:popupVC]
-                             animated:YES
-                           completion:nil];
-    //[viewController sy_presentPopup:popupVC animated:YES completion:nil];
+    [viewController sy_presentPopover:popupVC animated:YES completion:nil];
 }
 
 - (void)viewDidLoad
@@ -64,7 +62,8 @@
     self.tableView = [[UITableView alloc] init];
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellComputer"];
+    [self.tableView registerNib:[UINib nibWithNibName:[SYComputerCell className] bundle:nil]
+         forCellReuseIdentifier:[SYComputerCell className]];
     [self.tableView setTableFooterView:[[UIView alloc] init]];
     [self.view addSubview:self.tableView];
     
@@ -204,12 +203,7 @@
 
 - (void)buttonCancelTap:(id)sender
 {
-#if DEBUG_POPUP
-    // TODO: finish
-    [self.navigationController pushViewController:[TESTVC new] animated:YES];
-#else
     [self dismissViewControllerAnimated:YES completion:nil];
-#endif
 }
 
 - (void)buttonBackToAppTap:(id)sender
@@ -232,9 +226,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellComputer"];
-    [cell.textLabel setText:[(SYComputerModel *)self.computers[indexPath.row] name]];
+    SYComputerCell *cell = [tableView dequeueReusableCellWithIdentifier:[SYComputerCell className]];
+    [cell setComputer:self.computers[indexPath.row] forAvailableComputersList:NO];
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -320,46 +319,4 @@
 }
 
 @end
-
-
-
-#warning BRRRR
-@interface UIViewController (PAOID)
-- (CGSize)_adjustedContentSizeForPopover:(CGSize)size;
-@end
-
-@interface TESTVC () <SYPopoverContentViewDelegate>
-@end
-
-@implementation TESTVC
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
-    [self.view.layer setCornerRadius:6];
-    [self.view.layer setMasksToBounds:YES];
-    NSLog(@"did load 1 %@", [self parentViewController]);
-    [self setPreferredContentSize:CGSizeMake(320, 250)];
-    NSLog(@"did load 2");
-}
-
-- (CGSize)_adjustedContentSizeForPopover:(CGSize)size
-{
-    NSLog(@"Yo");
-    return [super _adjustedContentSizeForPopover:size];
-}
-
-- (UIColor *)popupControllerBackgroundColor:(SYPopoverController *)popupController
-{
-#if DEBUG_POPUP
-    return [[UIColor greenColor] colorWithAlphaComponent:0.3];
-#else
-    return [UIColor whiteColor];
-#endif
-}
-
-@end
-
-
 

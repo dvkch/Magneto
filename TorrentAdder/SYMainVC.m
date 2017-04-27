@@ -99,51 +99,6 @@
 {
     [super viewDidAppear:animated];
     self.isVisible = YES;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        
-        
-        
-        
-        // 1. The controllers your want to present in the popup
-        UINavigationController *navController = [[UINavigationController alloc] init];
-        UIViewController *viewController = [[UIViewController alloc] init];
-        [navController setViewControllers:@[viewController]];
-        
-        // 2. Prepare the navigationController to use SYPopupController
-        [navController setModalPresentationStyle:UIModalPresentationCustom];
-        [navController setTransitioningDelegate:[SYPopoverTransitioningDelegate shared]];
-        
-        // 3. Present
-        [self presentViewController:navController animated:YES completion:nil];
-        
-        // (Optional) 4. Access the popupController to use the background you wish
-        // Here we use a semi-transparent white color
-        SYPopoverController *popupController = (SYPopoverController *)navController.presentationController;
-        [popupController.backgroundView setBackgroundColor:[UIColor colorWithWhite:1. alpha:0.6]];
-        
-        // Alternative to 2+3: use the helper method
-        [self sy_presentPopover:navController animated:YES completion:nil];
-
-        
-        
-        
-        
-        
-        
-        
-        UIViewController *vc = [[UIViewController alloc] init];
-        vc.preferredContentSize = CGSizeMake(300, 200);
-        [vc.view setBackgroundColor:[UIColor redColor]];
-        [vc setModalPresentationStyle:UIModalPresentationCustom];
-        [vc setTransitioningDelegate:[SYPopoverTransitioningDelegate shared]];
-        
-        SYPopoverController *pc = (SYPopoverController *)vc.presentationController;
-        [pc.backgroundView setBackgroundColor:[UIColor colorWithWhite:1. alpha:0.6]];
-        
-        [self sy_presentPopover:vc animated:YES completion:nil];
-    });
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -381,7 +336,6 @@
 
 - (void)refreshComputersTimerTick:(id)sender
 {
-#warning Add tick in magnet VC
     if (!self.isVisible)
         return;
     

@@ -58,7 +58,9 @@
 
 - (BOOL)switchMirror
 {
-    [self.availableMirrorsURLs removeObject:self.mirrorURL];
+    if (self.mirrorURL)
+        [self.availableMirrorsURLs removeObject:self.mirrorURL];
+    
     if (!self.availableMirrorsURLs.count)
         return NO;
     
@@ -91,14 +93,14 @@
         if (urls.count)
         {
             self.availableMirrorsURLs = urls;
-            
-            NSUInteger maxURLIndex = MIN(urls.count, 3);
-            [self setMirrorURL:urls[arc4random() % maxURLIndex]];
+            [self switchMirror];
 
             block(nil);
         }
         else {
-            block([NSError errorWithDomain:@"me.syan.TorrentAdded" code:1 userInfo:@{NSLocalizedDescriptionKey:@"No mirror found"}]);
+            block([NSError errorWithDomain:@"me.syan.TorrentAdded"
+                                      code:1
+                                  userInfo:@{NSLocalizedDescriptionKey:@"No mirror found"}]);
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
