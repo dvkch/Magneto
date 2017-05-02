@@ -353,8 +353,6 @@
     else
         self.constraintBlueHeaderHeight.constant =
         self.constraintBlueHeaderHeightOriginalValue;
-    
-    [self.searchField.textField resignFirstResponder];
 }
 
 @end
