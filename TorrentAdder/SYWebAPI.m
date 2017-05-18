@@ -116,7 +116,7 @@
         return;
     }
     
-    NSString *escapedTerm = [term stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    NSString *escapedTerm = [term stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     [self.manager GET:@"s/"
            parameters:@{@"q":escapedTerm, @"page":@(0), @"orderby":@(99)}
