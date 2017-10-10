@@ -8,8 +8,8 @@
 
 #import "SYResultCell.h"
 #import "SYWebAPI.h"
-#import <NSDate+TimeAgo.h>
-#import <NSAttributedString+SYKit.h>
+#import "NSDate+TimeAgo.h"
+#import "NSAttributedString+SYKit.h"
 
 @interface SYResultCell ()
 @property (nonatomic, weak) IBOutlet UILabel *labelName;

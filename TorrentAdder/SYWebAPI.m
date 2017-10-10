@@ -9,7 +9,7 @@
 #import "SYWebAPI.h"
 #import "AFNetworking.h"
 #import "UIWebView+BlocksKit.h"
-#import <TFHpple.h>
+#import "TFHpple.h"
 
 @interface SYWebAPI ()
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
@@ -33,6 +33,7 @@
     {
         self.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://thepiratebay-proxylist.org/"]];
         [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+        [self.manager.requestSerializer setTimeoutInterval:20];
         [self.manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
     }
     return self;
@@ -44,6 +45,7 @@
     
     self.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:mirrorURL];
     [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+    [self.manager.requestSerializer setTimeoutInterval:20];
     [self.manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
     
     NSLog(@"-> Using mirror: %@", self.mirrorURL);
@@ -132,7 +134,9 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (((NSHTTPURLResponse *)task.response).statusCode == 404)
             block(@[], nil);
-        else if (((NSHTTPURLResponse *)task.response).statusCode == 500)
+        else if (((NSHTTPURLResponse *)task.response).statusCode == 500 ||
+                 ((NSHTTPURLResponse *)task.response).statusCode == 502 ||
+                 ([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorTimedOut))
         {
             if ([self switchMirror])
                 [self lookFor:term completion:block];
