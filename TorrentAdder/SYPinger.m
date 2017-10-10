@@ -8,7 +8,7 @@
 
 #import "SYPinger.h"
 #import "SYNetworkModel.h"
-#import "SPLPing.h"
+@import SPLPing
 
 @interface SYPing : SPLPing
 @property (nonatomic, assign) NSUInteger countFailed;

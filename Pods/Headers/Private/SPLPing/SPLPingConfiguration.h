@@ -1,1 +1,0 @@
-../../../SPLPing/SPLPing/SPLPingConfiguration.h

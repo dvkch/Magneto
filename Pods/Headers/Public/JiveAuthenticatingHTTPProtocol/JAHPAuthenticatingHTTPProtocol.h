@@ -1,1 +1,0 @@
-../../../JiveAuthenticatingHTTPProtocol/Source/JiveAuthenticatingHTTPProtocol/JAHPAuthenticatingHTTPProtocol.h

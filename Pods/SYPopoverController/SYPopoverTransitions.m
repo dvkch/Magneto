@@ -68,6 +68,15 @@
         [inView addSubview:to.view];
         [inView addSubview:from.view];
         
+        // when using SYPopoverController, at this point the view hierarchy will be:
+        // - 0: SYPopoverController background view
+        // - 1: presenter view
+        // - 0: SYPopoverController content view
+        // This call will put the presenter view (to.view) at the back of the
+        // stack, restoring the background at the middle position
+        [inView sendSubviewToBack:to.view];
+        [inView bringSubviewToFront:from.view];
+        
         from.view.userInteractionEnabled = NO;
         to.view.userInteractionEnabled = NO;
         

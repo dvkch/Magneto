@@ -1,1 +1,0 @@
-../../../JiveAuthenticatingHTTPProtocol/Source/JiveAuthenticatingHTTPProtocol/JAHPCacheStoragePolicy.h

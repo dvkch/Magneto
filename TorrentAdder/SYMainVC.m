@@ -280,6 +280,9 @@
              
              UIActivityViewController *activityVC =
              [[UIActivityViewController alloc] initWithActivityItems:@[[result fullURL]] applicationActivities:nil];
+             [activityVC.popoverPresentationController setSourceRect:[wSelf.tableView cellForRowAtIndexPath:indexPath].frame];
+             [activityVC.popoverPresentationController setSourceView:wSelf.view];
+             // TODO: use better sourceRect (centered ?) and arrowDirection
              
              [wSelf presentViewController:activityVC animated:YES completion:nil];
              [wSelf.tableView setEditing:NO animated:YES];

@@ -1175,7 +1175,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 		{
 			if ((edge->state & YDB_EdgeState_HasSourceRowid) && srcRowid)
 			{
-				if (edge->sourceRowid != srcRowid.unsignedLongLongValue)
+				if (edge->sourceRowid != srcRowid.longLongValue)
 				{
 					continue;
 				}
@@ -1228,7 +1228,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 				// Shortcut:
 				// We already know the sourceRowid. It was given to us as a parameter.
 				
-				edge->sourceRowid = srcRowid.unsignedLongLongValue;
+				edge->sourceRowid = srcRowid.longLongValue;
 				edge->flags |= YDB_EdgeState_HasSourceRowid;
 			}
 			else
@@ -1286,7 +1286,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 			}
 			else if ((edge->state & YDB_EdgeState_HasDestinationRowid) && dstRowid)
 			{
-				if (edge->destinationRowid != dstRowid.unsignedLongLongValue)
+				if (edge->destinationRowid != dstRowid.longLongValue)
 				{
 					continue;
 				}
@@ -1319,7 +1319,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 			}
 			else if ((edge->state & YDB_EdgeState_HasDestinationRowid) && dstRowid)
 			{
-				if (edge->destinationRowid != dstRowid.unsignedLongLongValue)
+				if (edge->destinationRowid != dstRowid.longLongValue)
 				{
 					continue;
 				}
@@ -1376,7 +1376,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 				// Shortcut:
 				// We already know the sourceRowid. It was given to us as a parameter.
 				
-				edge->destinationRowid = dstRowid.unsignedLongLongValue;
+				edge->destinationRowid = dstRowid.longLongValue;
 				edge->state |= YDB_EdgeState_HasDestinationRowid;
 			}
 			else
@@ -1477,7 +1477,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 			[self lookupEdgeSourceRowid:edge isDeleted:NULL];
 		}
 		
-		// No need to attempt destinationRowid lookup on edges with destinationFilePath
+		// No need to attempt destinationRowid lookup on edges with destinationFileURL
 	}
 	
 	return changes;
@@ -1534,7 +1534,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 		}
 		else if ((edge->state & YDB_EdgeState_HasDestinationRowid) && dstRowid)
 		{
-			if (edge->destinationRowid != dstRowid.unsignedLongLongValue)
+			if (edge->destinationRowid != dstRowid.longLongValue)
 			{
 				continue;
 			}
@@ -1562,7 +1562,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 		{
 			if ((edge->state & YDB_EdgeState_HasSourceRowid) && srcRowid)
 			{
-				if (edge->sourceRowid != srcRowid.unsignedLongLongValue)
+				if (edge->sourceRowid != srcRowid.longLongValue)
 				{
 					continue;
 				}
@@ -1582,7 +1582,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 			}
 			else if ((edge->state & YDB_EdgeState_HasDestinationRowid) && dstRowid)
 			{
-				if (edge->destinationRowid != dstRowid.unsignedLongLongValue)
+				if (edge->destinationRowid != dstRowid.longLongValue)
 				{
 					continue;
 				}
@@ -1634,7 +1634,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 				// Shortcut:
 				// We already know the sourceRowid. It was given to us as a parameter.
 				
-				edge->sourceRowid = srcRowid.unsignedLongLongValue;
+				edge->sourceRowid = srcRowid.longLongValue;
 				edge->state |= YDB_EdgeState_HasSourceRowid;
 			}
 			else
@@ -1650,7 +1650,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 				// Shortcut:
 				// We already know the destinationRowid. It was given to us as a parameter.
 				
-				edge->destinationRowid = dstRowid.unsignedLongLongValue;
+				edge->destinationRowid = dstRowid.longLongValue;
 				edge->state |= YDB_EdgeState_HasDestinationRowid;
 			}
 			else
@@ -1722,7 +1722,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 		{
 			if ((edge->state & YDB_EdgeState_HasSourceRowid) && srcRowid)
 			{
-				if (edge->sourceRowid != srcRowid.unsignedLongLongValue)
+				if (edge->sourceRowid != srcRowid.longLongValue)
 				{
 					continue;
 				}
@@ -1779,7 +1779,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 				// Shortcut:
 				// We already know the sourceRowid. It was given to us as a parameter.
 				
-				edge->sourceRowid = srcRowid.unsignedLongLongValue;
+				edge->sourceRowid = srcRowid.longLongValue;
 				edge->state |= YDB_EdgeState_HasSourceRowid;
 			}
 			else
@@ -1788,7 +1788,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 			}
 		}
 		
-		// No need to attempt destinationRowid lookup on edges with destinationFilePath
+		// No need to attempt destinationRowid lookup on edges with destinationFileURL
 	}
 	
 	return changes;
@@ -2074,7 +2074,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 **/
 - (int64_t)edgeCountWithDestinationFileURL:(NSURL *)dstFileURL
                                       name:(NSString *)name
-                           excludingSource:(int64_t)srcRowid
+                           excludingSource:(int64_t)exclSrcRowid
 {
 	NSAssert(dstFileURL != nil, @"Internal logic error");
 	NSAssert(name != nil, @"Internal logic error");
@@ -2091,15 +2091,15 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 	// AKA: typeof(dst) IS BLOB
 	
 	int const column_idx_rowid  = SQLITE_COLUMN_START + 0;
-	int const column_idx_src    = SQLITE_COLUMN_START + 2;
-	int const column_idx_dst    = SQLITE_COLUMN_START + 3;
-	int const column_idx_rules  = SQLITE_COLUMN_START + 4;
-	int const column_idx_manual = SQLITE_COLUMN_START + 5;
+	int const column_idx_src    = SQLITE_COLUMN_START + 1;
+	int const column_idx_dst    = SQLITE_COLUMN_START + 2;
+	int const column_idx_rules  = SQLITE_COLUMN_START + 3;
+	int const column_idx_manual = SQLITE_COLUMN_START + 4;
 	
 	int const bind_idx_src = SQLITE_BIND_START + 0;
 	int const bind_idx_name = SQLITE_BIND_START + 1;
 	
-	sqlite3_bind_int64(statement, bind_idx_src, srcRowid);
+	sqlite3_bind_int64(statement, bind_idx_src, exclSrcRowid);
 	
 	YapDatabaseString _name; MakeYapDatabaseString(&_name, name);
 	sqlite3_bind_text(statement, bind_idx_name, _name.str, _name.length, SQLITE_STATIC);
@@ -2204,7 +2204,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 		sqlite3_stmt *statement = [parentConnection findManualEdgeWithDstFileURLStatement];
 		if (statement == NULL) return nil;
 		
-		// SELECT "rowid", "rules" FROM "tableName"
+		// SELECT "rowid", "dst", "rules" FROM "tableName"
 		//   WHERE "src" = ? AND "name" = ? AND "dst" > INT64_MAX AND "manual" = 1;
 		//
 		// AKA: typeof(dst) IS BLOB
@@ -2625,17 +2625,29 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 				edge->action = YDB_EdgeAction_Delete;
 				edge->flags |= YDB_EdgeFlags_SourceDeleted;
 				edge->flags |= YDB_EdgeFlags_BadSource;
+                if (!(edge->state & YDB_EdgeState_HasEdgeRowid))
+                {
+                    edge->flags |= YDB_EdgeFlags_EdgeNotInDatabase;
+                }
 			}
 			else if (srcDeleted)
 			{
 				edge->action = YDB_EdgeAction_Delete;
 				edge->flags |= YDB_EdgeFlags_SourceDeleted;
+                if (!(edge->state & YDB_EdgeState_HasEdgeRowid))
+                {
+                    edge->flags |= YDB_EdgeFlags_EdgeNotInDatabase;
+                }
 			}
 		}
 		else if ([parentConnection->deletedInfo ydb_containsKey:@(edge->sourceRowid)])
 		{
 			edge->action = YDB_EdgeAction_Delete;
 			edge->flags |= YDB_EdgeFlags_SourceDeleted;
+            if (!(edge->state & YDB_EdgeState_HasEdgeRowid))
+            {
+                edge->flags |= YDB_EdgeFlags_EdgeNotInDatabase;
+            }
 		}
 		
 		
@@ -2659,17 +2671,29 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 				edge->action = YDB_EdgeAction_Delete;
 				edge->flags |= YDB_EdgeFlags_DestinationDeleted;
 				edge->flags |= YDB_EdgeFlags_BadDestination;
+                if (!(edge->state & YDB_EdgeState_HasEdgeRowid))
+                {
+                    edge->flags |= YDB_EdgeFlags_EdgeNotInDatabase;
+                }
 			}
 			else if (dstDeleted)
 			{
 				edge->action = YDB_EdgeAction_Delete;
 				edge->flags |= YDB_EdgeFlags_DestinationDeleted;
+                if (!(edge->state & YDB_EdgeState_HasEdgeRowid))
+                {
+                    edge->flags |= YDB_EdgeFlags_EdgeNotInDatabase;
+                }
 			}
 		}
 		else if ([parentConnection->deletedInfo ydb_containsKey:@(edge->destinationRowid)])
 		{
 			edge->action = YDB_EdgeAction_Delete;
 			edge->flags |= YDB_EdgeFlags_DestinationDeleted;
+            if (!(edge->state & YDB_EdgeState_HasEdgeRowid))
+            {
+                edge->flags |= YDB_EdgeFlags_EdgeNotInDatabase;
+            }
 		}
 	}
 }
@@ -2881,7 +2905,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * Helper method for executing the sqlite statement to delete all protocol edges from the database.
  *
  * This means all edges that were created via the YapDatabaseRelationshipNode protocol.
- * So every edge in the database where the 'manual' column in set to zero.
+ * So every edge in the database where the 'manual' column is set to zero.
 **/
 - (void)removeAllProtocolEdges
 {
@@ -2908,9 +2932,9 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 }
 
 /**
- * This method is called from handleRemoveAllObjectsInAllCollections.
+ * This method is called from didRemoveAllObjectsInAllCollections.
  * 
- * It first finds all referenced destinationFilePaths, and add them to our filesToDelete set.
+ * It first finds all referenced destinationFileURLs, and add them to our filesToDelete set.
  * Then it removes all edges, both protocol & manual edges.
 **/
 - (void)removeAllEdges
@@ -3905,10 +3929,10 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleInsertObject:(id)object
-          forCollectionKey:(YapCollectionKey *)collectionKey
-              withMetadata:(id __unused)metadata
-                     rowid:(int64_t)rowid
+- (void)didInsertObject:(id)object
+       forCollectionKey:(YapCollectionKey *)collectionKey
+           withMetadata:(id __unused)metadata
+                  rowid:(int64_t)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -3974,10 +3998,10 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleUpdateObject:(id)object
-          forCollectionKey:(YapCollectionKey *)collectionKey
-              withMetadata:(id __unused)metadata
-                     rowid:(int64_t)rowid
+- (void)didUpdateObject:(id)object
+       forCollectionKey:(YapCollectionKey *)collectionKey
+           withMetadata:(id __unused)metadata
+                  rowid:(int64_t)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -4034,7 +4058,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleReplaceObject:(id)object forCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
+- (void)didReplaceObject:(id)object forCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -4090,9 +4114,9 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleReplaceMetadata:(id __unused)metadata
-             forCollectionKey:(YapCollectionKey __unused *)collectionKey
-                    withRowid:(int64_t __unused)rowid
+- (void)didReplaceMetadata:(id __unused)metadata
+          forCollectionKey:(YapCollectionKey __unused *)collectionKey
+                 withRowid:(int64_t __unused)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -4103,7 +4127,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleTouchObjectForCollectionKey:(YapCollectionKey __unused *)collectionKey withRowid:(int64_t __unused)rowid
+- (void)didTouchObjectForCollectionKey:(YapCollectionKey __unused *)collectionKey withRowid:(int64_t __unused)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -4115,7 +4139,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleTouchMetadataForCollectionKey:(YapCollectionKey __unused *)collectionKey withRowid:(int64_t __unused)rowid
+- (void)didTouchMetadataForCollectionKey:(YapCollectionKey __unused *)collectionKey withRowid:(int64_t __unused)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -4127,7 +4151,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleTouchRowForCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
+- (void)didTouchRowForCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -4139,7 +4163,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleRemoveObjectForCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
+- (void)didRemoveObjectForCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -4157,7 +4181,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleRemoveObjectsForKeys:(NSArray *)keys inCollection:(NSString *)collection withRowids:(NSArray *)rowids
+- (void)didRemoveObjectsForKeys:(NSArray *)keys inCollection:(NSString *)collection withRowids:(NSArray *)rowids
 {
 	YDBLogAutoTrace();
 	
@@ -4184,7 +4208,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleRemoveAllObjectsInAllCollections
+- (void)didRemoveAllObjectsInAllCollections
 {
 	YDBLogAutoTrace();
 	
@@ -4446,10 +4470,10 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * @param name (optional)
  *   The name of the edge (case sensitive).
  *
- * @param sourceKey (optional)
+ * @param srcKey (optional)
  *   The edge.sourceKey to match.
  *
- * @param sourceCollection (optional)
+ * @param srcCollection (optional)
  *   The edge.sourceCollection to match.
  *
  * If you pass a non-nil sourceKey, and sourceCollection is nil,
@@ -4763,10 +4787,10 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * @param name (optional)
  *   The name of the edge (case sensitive).
  *
- * @param destinationKey (optional)
+ * @param dstKey (optional)
  *   The edge.destinationKey to match.
  *
- * @param destinationCollection (optional)
+ * @param dstCollection (optional)
  *   The edge.destinationCollection to match.
  *
  * If you pass a non-nil destinationKey, and destinationCollection is nil,
@@ -5036,14 +5060,14 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * You can specify any combination of the following:
  *
  * - name only
- * - destinationFilePath
- * - name + destinationFilePath
+ * - destinationFileURL
+ * - name + destinationFileURL
  *
  * @param name (optional)
  *   The name of the edge (case sensitive).
  *
- * @param destinationFilePath (optional)
- *   The edge.destinationFilePath to match.
+ * @param dstFileURL (optional)
+ *   The edge.destinationFileURL to match.
  * 
  * IMPORTANT:
  * This internal method does NOT prep the edge for the public (e.g. srcKey/dstKey/dstFileURL may be nil).
@@ -5330,16 +5354,16 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * @param name (optional)
  *   The name of the edge (case sensitive).
  *
- * @param sourceKey (optional)
+ * @param srcKey (optional)
  *   The edge.sourceKey to match.
  *
- * @param sourceCollection (optional)
+ * @param srcCollection (optional)
  *   The edge.sourceCollection to match.
  *
- * @param destinationKey (optional)
+ * @param dstKey (optional)
  *   The edge.destinationKey to match.
  *
- * @param destinationCollection (optional)
+ * @param dstCollection (optional)
  *   The edge.destinationCollection to match.
  *
  * If you pass a non-nil sourceKey, and sourceCollection is nil,
@@ -5491,6 +5515,7 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 				
 				int64_t edgeRowid = sqlite3_column_int64(statement, column_idx_rowid);
 				
+                edge = [parentConnection->edgeCache objectForKey:@(edgeRowid)];
 				if (edge)
 				{
 					edge->sourceRowid = srcRowid;
@@ -5635,14 +5660,14 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * @param name (optional)
  *   The name of the edge (case sensitive).
  *
- * @param sourceKey (optional)
+ * @param srcKey (optional)
  *   The edge.sourceKey to match.
  *
- * @param sourceCollection (optional)
+ * @param srcCollection (optional)
  *   The edge.sourceCollection to match.
  * 
- * @param destinationFilePath (optional)
- *   The edge.destinationFilePath to match.
+ * @param dstFileURL (optional)
+ *   The edge.destinationFileURL to match.
  *
  * If you pass a non-nil sourceKey, and sourceCollection is nil,
  * then the sourceCollection is treated as the empty string, just like the rest of the YapDatabase framework.
@@ -6036,14 +6061,14 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * You can specify any combination of the following:
  *
  * - name only
- * - destinationFilePath
- * - name + destinationFilePath
+ * - destinationFileURL
+ * - name + destinationFileURL
  *
  * @param name (optional)
  *   The name of the edge (case sensitive).
  *
- * @param destinationFilePath (optional)
- *   The edge.destinationFilePath to match.
+ * @param destinationFileURL (optional)
+ *   The edge.destinationFileURL to match.
 **/
 - (void)enumerateEdgesWithName:(NSString *)name
             destinationFileURL:(NSURL *)dstFileURL
@@ -6129,8 +6154,8 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * @param sourceCollection (optional)
  *   The edge.sourceCollection to match.
  * 
- * @param destinationFilePath (optional)
- *   The edge.destinationFilePath to match.
+ * @param destinationFileURL (optional)
+ *   The edge.destinationFileURL to match.
  *
  * If you pass a non-nil sourceKey, and sourceCollection is nil,
  * then the sourceCollection is treated as the empty string, just like the rest of the YapDatabase framework.
@@ -6221,10 +6246,10 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * @param name (optional)
  *   The name of the edge (case sensitive).
  *
- * @param sourceKey (optional)
+ * @param srcKey (optional)
  *   The edge.sourceKey to match.
  *
- * @param sourceCollection (optional)
+ * @param srcCollection (optional)
  *   The edge.sourceCollection to match.
  *
  * If you pass a non-nil sourceKey, and sourceCollection is nil,
@@ -6425,14 +6450,14 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * You can specify any combination of the following:
  *
  * - name only
- * - destinationFilePath
- * - name + destinationFilePath
+ * - destinationFileURL
+ * - name + destinationFileURL
  *
  * @param name (optional)
  *   The name of the edge (case sensitive).
  *
- * @param destinationFilePath (optional)
- *   The edge.destinationFilePath to match.
+ * @param dstFileURL (optional)
+ *   The edge.destinationFileURL to match.
 **/
 - (NSUInteger)edgeCountWithName:(NSString *)name
              destinationFileURL:(NSURL *)dstFileURL
@@ -6466,16 +6491,16 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * @param name (optional)
  *   The name of the edge (case sensitive).
  *
- * @param sourceKey (optional)
+ * @param srcKey (optional)
  *   The edge.sourceKey to match.
  *
- * @param sourceCollection (optional)
+ * @param srcCollection (optional)
  *   The edge.sourceCollection to match.
  *
- * @param destinationKey (optional)
+ * @param dstKey (optional)
  *   The edge.destinationKey to match.
  *
- * @param destinationCollection (optional)
+ * @param dstCollection (optional)
  *   The edge.destinationCollection to match.
  *
  * If you pass a non-nil sourceKey, and sourceCollection is nil,
@@ -6605,10 +6630,10 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  *
  * - name only
  * - sourceKey & sourceCollection only
- * - destinationFilePath
+ * - destinationFileURL
  * - name + sourceKey & sourceCollection
- * - name + destinationFilePath
- * - name + sourceKey & sourceCollection + destinationFilePath
+ * - name + destinationFileURL
+ * - name + sourceKey & sourceCollection + destinationFileURL
  *
  * @param name (optional)
  *   The name of the edge (case sensitive).
@@ -6619,8 +6644,8 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
  * @param sourceCollection (optional)
  *   The edge.sourceCollection to match.
  * 
- * @param destinationFilePath (optional)
- *   The edge.destinationFilePath to match.
+ * @param destinationFileURL (optional)
+ *   The edge.destinationFileURL to match.
  *
  * If you pass a non-nil sourceKey, and sourceCollection is nil,
  * then the sourceCollection is treated as the empty string, just like the rest of the YapDatabase framework.
@@ -6795,6 +6820,10 @@ NS_INLINE BOOL URLMatchesURL(NSURL *url1, NSURL *url2)
 					edge->edgeRowid = pendingEdge->edgeRowid;
 					edge->state |= YDB_EdgeState_HasEdgeRowid;
 				}
+                else
+                {
+                    edge->flags |= YDB_EdgeFlags_EdgeNotInDatabase;
+                }
 				
 				[edges replaceObjectAtIndex:i withObject:edge];
 				return;

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		10DA2B70FE56CFB2E5189478 /* libPods-TorrentAdder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9AB4A48A3F7A937C48B90B /* libPods-TorrentAdder.a */; };
+		6628422579BAE3C1A2B8B69A /* Pods_TorrentAdder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C49869784A7E738760973F /* Pods_TorrentAdder.framework */; };
 		9705460C1BBD43F900C5294D /* SYNetworkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9705460B1BBD43F900C5294D /* SYNetworkModel.m */; };
 		9705460F1BBD464700C5294D /* SYIP4Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 9705460E1BBD464700C5294D /* SYIP4Model.m */; };
 		970546121BBD4E3300C5294D /* SYPinger.m in Sources */ = {isa = PBXBuildFile; fileRef = 970546111BBD4E3300C5294D /* SYPinger.m */; };
@@ -84,6 +84,7 @@
 
 /* Begin PBXFileReference section */
 		0B69C8AE8CFDA1E82A1EF6EC /* Pods-TorrentAdder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TorrentAdder.release.xcconfig"; path = "Pods/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder.release.xcconfig"; sourceTree = "<group>"; };
+		28C49869784A7E738760973F /* Pods_TorrentAdder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TorrentAdder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9705460A1BBD43F900C5294D /* SYNetworkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYNetworkModel.h; sourceTree = "<group>"; };
 		9705460B1BBD43F900C5294D /* SYNetworkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYNetworkModel.m; sourceTree = "<group>"; };
 		9705460D1BBD464700C5294D /* SYIP4Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYIP4Model.h; sourceTree = "<group>"; };
@@ -153,7 +154,6 @@
 		97F9114E1BC3071F00BF1848 /* SYComputerModel+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SYComputerModel+UI.h"; sourceTree = "<group>"; };
 		97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SYComputerModel+UI.m"; sourceTree = "<group>"; };
 		ECB5BC1A5208F37710432FDC /* Pods-TorrentAdder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TorrentAdder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder.debug.xcconfig"; sourceTree = "<group>"; };
-		EF9AB4A48A3F7A937C48B90B /* libPods-TorrentAdder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TorrentAdder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F83FFA3D192BE7440034A95B /* SYClientAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYClientAPI.h; sourceTree = "<group>"; };
 		F83FFA3E192BE7440034A95B /* SYClientAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYClientAPI.m; sourceTree = "<group>"; };
 		F83FFA41192BE8860034A95B /* SYMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMacros.h; sourceTree = "<group>"; };
@@ -195,7 +195,7 @@
 				F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */,
 				F898675F192A317C00735175 /* UIKit.framework in Frameworks */,
 				F898675B192A317C00735175 /* Foundation.framework in Frameworks */,
-				10DA2B70FE56CFB2E5189478 /* libPods-TorrentAdder.a in Frameworks */,
+				6628422579BAE3C1A2B8B69A /* Pods_TorrentAdder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,7 +334,7 @@
 				F898675C192A317C00735175 /* CoreGraphics.framework */,
 				F898675E192A317C00735175 /* UIKit.framework */,
 				F898677C192A317D00735175 /* XCTest.framework */,
-				EF9AB4A48A3F7A937C48B90B /* libPods-TorrentAdder.a */,
+				28C49869784A7E738760973F /* Pods_TorrentAdder.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -543,13 +543,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TorrentAdder-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5810FD01E387CD1ED03B81C4 /* [CP] Copy Pods Resources */ = {
@@ -573,9 +576,36 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/BlocksKit/BlocksKit.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
+				"${BUILT_PRODUCTS_DIR}/JGMethodSwizzler/JGMethodSwizzler.framework",
+				"${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework",
+				"${BUILT_PRODUCTS_DIR}/JiveAuthenticatingHTTPProtocol/JiveAuthenticatingHTTPProtocol.framework",
+				"${BUILT_PRODUCTS_DIR}/NSDate+TimeAgo/NSDate_TimeAgo.framework",
+				"${BUILT_PRODUCTS_DIR}/SPLPing/SPLPing.framework",
+				"${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SYPopoverController/SYPopoverController.framework",
+				"${BUILT_PRODUCTS_DIR}/XMLDictionary/XMLDictionary.framework",
+				"${BUILT_PRODUCTS_DIR}/YapDatabase/YapDatabase.framework",
+				"${BUILT_PRODUCTS_DIR}/hpple/hpple.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlocksKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGMethodSwizzler.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JRSwizzle.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JiveAuthenticatingHTTPProtocol.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSDate_TimeAgo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SPLPing.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYPopoverController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XMLDictionary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YapDatabase.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hpple.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

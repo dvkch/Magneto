@@ -26,10 +26,19 @@
 
 @interface SYPopoverController : UIPresentationController <UIAdaptivePresentationControllerDelegate>
 @property (nonatomic, strong, readonly) UIView *backgroundView;
+@property (nonatomic, strong) UIVisualEffect *backgroundVisualEffet;
+@property (nonatomic, weak) id<SYPopoverControllerDelegate> popoverDelegate;
 @end
 
 @interface UIViewController (SYPopoverController)
 
-- (void)sy_presentPopover:(UIViewController *)viewController animated:(BOOL)flag completion:(void (^)(void))completion;
+- (void)sy_presentPopover:(UIViewController *)viewController
+                 animated:(BOOL)animated
+               completion:(void (^)(void))completion;
+
+- (void)sy_presentPopover:(UIViewController *)viewController
+         backgroundEffect:(UIVisualEffect *)backgroundEffect
+                 animated:(BOOL)animated
+               completion:(void (^)(void))completion;
 
 @end

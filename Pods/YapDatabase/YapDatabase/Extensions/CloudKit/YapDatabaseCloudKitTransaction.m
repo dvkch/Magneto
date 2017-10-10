@@ -1027,7 +1027,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
 	uint8_t bufferStack[maxStackSize];
 	void *buffer = NULL;
 	
-	if (maxLen <= maxStackSize)
+	if (maxLen <= (NSUInteger)maxStackSize)
 		buffer = bufferStack;
 	else
 		buffer = malloc((size_t)maxLen);
@@ -1086,7 +1086,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
 	NSData *hashData = [NSData dataWithBytesNoCopy:(void *)hashBytes length:CC_SHA1_DIGEST_LENGTH freeWhenDone:NO];
 	NSString *hashStr = [hashData base64EncodedStringWithOptions:0];
 	
-	if (maxLen > maxStackSize) {
+	if (maxLen > (NSUInteger)maxStackSize) {
 		free(buffer);
 	}
 	return hashStr;
@@ -1414,7 +1414,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
 }
 
 /**
- * This method is called from handleRemoveObjectsForKeys:inCollection:withRowids:.
+ * This method is called from didRemoveObjectsForKeys:inCollection:withRowids:.
  *
  * It's used to fetch all the mappingTableInfo items for all the given rowids.
  * This information is used in order to determine which rowids are mapped to a CKRecords (in the record table).
@@ -1478,7 +1478,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
 		sqlite3 *db = databaseTransaction->connection->db;
 		
 		// Note:
-		// The handleRemoveObjectsForKeys:inCollection:withRowids: has the following guarantee:
+		// The didRemoveObjectsForKeys:inCollection:withRowids: has the following guarantee:
 		//     count <= (SQLITE_LIMIT_VARIABLE_NUMBER - 1)
 		//
 		// So we don't have to worry about sqlite's upper bound on host parameters.
@@ -1866,7 +1866,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
 }
 
 /**
- * This method is called from handleRemoveObjectsForKeys:inCollection:withRowids:.
+ * This method is called from didRemoveObjectsForKeys:inCollection:withRowids:.
  * 
  * It's used to fetch all the recordInfo items for all the given rowids.
  * This information is used in order to determine which rowids have associated CKRecords,
@@ -1929,7 +1929,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
 		sqlite3 *db = databaseTransaction->connection->db;
 		
 		// Note:
-		// The handleRemoveObjectsForKeys:inCollection:withRowids: has the following guarantee:
+		// The didRemoveObjectsForKeys:inCollection:withRowids: has the following guarantee:
 		//     count <= (SQLITE_LIMIT_VARIABLE_NUMBER - 1)
 		//
 		// So we don't have to worry about sqlite's upper bound on host parameters.
@@ -3260,10 +3260,10 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleInsertObject:(id)object
-          forCollectionKey:(YapCollectionKey *)collectionKey
-              withMetadata:(id)metadata
-                     rowid:(int64_t)rowid
+- (void)didInsertObject:(id)object
+       forCollectionKey:(YapCollectionKey *)collectionKey
+           withMetadata:(id)metadata
+                  rowid:(int64_t)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -3306,10 +3306,10 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleUpdateObject:(id)object
-          forCollectionKey:(YapCollectionKey *)collectionKey
-              withMetadata:(id)metadata
-                     rowid:(int64_t)rowid
+- (void)didUpdateObject:(id)object
+       forCollectionKey:(YapCollectionKey *)collectionKey
+           withMetadata:(id)metadata
+                  rowid:(int64_t)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -3344,7 +3344,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleReplaceObject:(id)object forCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
+- (void)didReplaceObject:(id)object forCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -3384,7 +3384,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleReplaceMetadata:(id)metadata forCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
+- (void)didReplaceMetadata:(id)metadata forCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -3424,7 +3424,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleTouchObjectForCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
+- (void)didTouchObjectForCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
 {
 	// Check for possible MidMerge
 	
@@ -3468,7 +3468,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleTouchMetadataForCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
+- (void)didTouchMetadataForCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
 {
 	// Check for possible MidMerge
 	
@@ -3512,7 +3512,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleTouchRowForCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
+- (void)didTouchRowForCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
 {
 	// Check for possible MidMerge
 	
@@ -3557,7 +3557,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleRemoveObjectForCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
+- (void)didRemoveObjectForCollectionKey:(YapCollectionKey *)collectionKey withRowid:(int64_t)rowid
 {
 	YDBLogAutoTrace();
 	
@@ -3583,7 +3583,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleRemoveObjectsForKeys:(NSArray *)keys inCollection:(NSString *)collection withRowids:(NSArray *)rowids
+- (void)didRemoveObjectsForKeys:(NSArray *)keys inCollection:(NSString *)collection withRowids:(NSArray *)rowids
 {
 	YDBLogAutoTrace();
 	
@@ -3625,7 +3625,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
  * YapDatabase extension hook.
  * This method is invoked by a YapDatabaseReadWriteTransaction as a post-operation-hook.
 **/
-- (void)handleRemoveAllObjectsInAllCollections
+- (void)didRemoveAllObjectsInAllCollections
 {
 	YDBLogAutoTrace();
 	
@@ -3646,63 +3646,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * This method is used to associate an existing CKRecord with a row in the database.
- * There are two primary use cases for this method.
- *
- * 1. To associate a discovered/pulled CKRecord with a row in the database before you insert it the row.
- *    In particular, for the following situation:
- *
- *    - You're pulling record changes from the server via CKFetchRecordChangesOperation (or similar).
- *    - You discover a record that was inserted by another device.
- *    - You need to add a corresponding row to the database,
- *      but you also need to inform the YapDatabaseCloudKit extension about the existing record,
- *      so it won't bother invoking the recordHandler, or attempting to upload the existing record.
- *    - So you invoke this method FIRST.
- *    - And THEN you insert the corresponding object into the database via the
- *      normal setObject:forKey:inCollection: method (or similar methods).
- *
- * 2. To assist in the migration process when switching to YapDatabaseCloudKit.
- *    In particular, for the following situation:
- *
- *    - You've been handling CloudKit manually (not via YapDatabaseCloudKit).
- *    - And you now want YapDatabaseCloudKit to manage the CKRecord for you.
- *    - So you can invoke this method for an object that already exists in the database,
- *      OR you can invoke this method FIRST, and then insert the new object that you want linked to the record.
- *
- * Thus, this method works as a simple "hand-off" of the CKRecord to the YapDatabaseCloudKit extension.
- *
- * In other words, YapDatbaseCloudKit will write the system fields of the given CKRecord to its internal table,
- * and associate it with the given collection/key tuple.
- *
- * @param record
- *   The CKRecord to associate with the collection/key tuple.
- *
- * @param databaseIdentifer
- *   The identifying string for the CKDatabase.
- *   @see YapDatabaseCloudKitDatabaseIdentifierBlock.
- *
- * @param key
- *   The key of the row to associate the record with.
- *
- * @param collection
- *   The collection of the row to associate the record with.
- *
- * @param shouldUpload
- *   If NO, then the record is simply associated with the collection/key,
- *     and YapDatabaseCloudKit doesn't attempt to push the record to the cloud.
- *   If YES, then the record is associated with the collection/key,
- *     and YapDatabaseCloutKit assumes the given record is dirty and will push the record to the cloud.
- *
- * @return
- *   YES if the record was associated with the given collection/key.
- *   NO if one of the following errors occurred.
- *
- * The following errors will prevent this method from succeeding:
- * - The given record is nil.
- * - The given collection/key is already associated with a different record (so must detach it first).
- *
- * Important: This method only works if within a readWriteTrasaction.
- * Invoking this method from within a read-only transaction will throw an exception.
+ * See header file for documentation.
 **/
 - (BOOL)attachRecord:(CKRecord *)inRecord
   databaseIdentifier:(NSString *)databaseIdentifier
@@ -3842,7 +3786,7 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
  *   Note: If a record was deleted remotely, and the record was associated with MULTIPLE items in the database,
  *   then you should be sure to invoke this method for each attached collection/key.
  *
- * @param shouldUpload
+ * @param shouldUploadDeletion
  *   Whether or not the extension should push a deleted CKRecordID to the cloud.
  *   In use case #2 (from the above discussion, concerning migration), you'd pass NO.
  *   In use case #3 (from the above discussion, concerning moving), you'd pass YES.

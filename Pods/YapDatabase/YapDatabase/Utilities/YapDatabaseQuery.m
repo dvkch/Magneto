@@ -287,9 +287,14 @@
 		
 		__block NSUInteger unpackingOffset = 0;
 		
-		[paramIndexToArrayCountMap enumerateKeysAndObjectsUsingBlock:
-		    ^(NSNumber *paramIndexNum, NSNumber *arrayCountNum, BOOL *stop)
+		NSArray *sortedKeys = [paramIndexToArrayCountMap.allKeys sortedArrayUsingDescriptors:({
+			NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"integerValue" ascending:YES];
+			@[sortDescriptor];
+		})];
+		[sortedKeys enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
 		{
+			NSNumber *paramIndexNum = obj;
+			NSNumber *arrayCountNum = paramIndexToArrayCountMap[obj];
 			NSUInteger arrayCount = [arrayCountNum unsignedIntegerValue];
 			
 			NSMutableString *unpackedParamsStr = [NSMutableString stringWithCapacity:(arrayCount * 2)];

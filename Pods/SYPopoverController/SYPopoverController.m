@@ -7,10 +7,11 @@
 //
 
 #import "SYPopoverController.h"
+#import <objc/runtime.h>
 
 @interface SYPopoverController () <UINavigationControllerDelegate>
 @property (nonatomic, strong, readwrite) UIView *backgroundView;
-@property (nonatomic, weak) id<SYPopoverControllerDelegate> popoverDelegate;
+@property (nonatomic, strong) UIVisualEffectView *visualEffectView;
 @property (nonatomic, assign) CGRect oldRect;
 @end
 
@@ -38,16 +39,46 @@
             [presentedViewController setPreferredContentSize:CGSizeMake(2000, 2000)];
         }
         
-        if ([presentingViewController conformsToProtocol:@protocol(SYPopoverControllerDelegate)])
-            [self setPopoverDelegate:(id<SYPopoverControllerDelegate>)presentingViewController];
-        
         UITapGestureRecognizer *tapOutside =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOutside:)];
         
         self.backgroundView = [[UIView alloc] init];
         [self.backgroundView addGestureRecognizer:tapOutside];
+        
+        self.visualEffectView = [[UIVisualEffectView alloc] init];
+        
+        // We registered for frame updates. This is needed to get the frame right when a modal VC
+        // is being dismissed, or else the presentedViewController.view will be full size...
+        // The view needs to be loaded before registering (we prevent warnings on iOS < 9 with setHidden:NO)
+        [presentedViewController.view setHidden:NO];
+        [presentedViewController addObserver:self forKeyPath:@"view.frame"
+                                     options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
+                                     context:NULL];
     }
     return self;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if (object == self.presentedViewController && [keyPath isEqualToString:@"view.frame"])
+    {
+        CGRect oldValue = [change[NSKeyValueChangeOldKey] CGRectValue];
+        CGRect newValue = [change[NSKeyValueChangeNewKey] CGRectValue];
+        if (!CGSizeEqualToSize(oldValue.size, newValue.size))
+        {
+            // we need to update the appearance async, or else the size is correct but not the origin...
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self updateAppearance];
+            });
+        }
+        return;
+    }
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+}
+
+- (void)dealloc
+{
+    [self.presentedViewController removeObserver:self forKeyPath:@"view.frame"];
 }
 
 - (CGRect)frameOfPresentedViewInContainerView
@@ -136,6 +167,9 @@
 {
     [self.backgroundView setBackgroundColor:[self currentBackgroundColor]];
     [self.backgroundView setFrame:self.containerView.bounds];
+    [self.visualEffectView setEffect:self.backgroundVisualEffet];
+    [self.visualEffectView setFrame:self.backgroundView.bounds];
+    
     [self.presentedView setFrame:[self frameOfPresentedViewInContainerView]];
     [self.presentedView setClipsToBounds:YES];
     
@@ -152,17 +186,38 @@
 - (void)presentationTransitionWillBegin
 {
     [super presentationTransitionWillBegin];
-    
-    [self.backgroundView setAlpha:0.];
-    [self.containerView insertSubview:self.backgroundView atIndex:0];
-
     [self updateAppearance];
-
-    [self.presentedViewController.transitionCoordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+    id <UIViewControllerTransitionCoordinator> coordinator = self.presentedViewController.transitionCoordinator;
+    
+    [self.containerView insertSubview:self.backgroundView atIndex:0];
+    [self.backgroundView addSubview:self.visualEffectView];
+    
+    // on iOS 10+ animating the alpha of a UIVisualEffetView hides it
+    // completely, we use the new UIViewPropertyAnimator to animate the
+    // effect instead
+    NSOperatingSystemVersion iOS10 = (NSOperatingSystemVersion){10, 0, 0};
+    if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:iOS10] && self.backgroundVisualEffet)
+    {
         [self.backgroundView setAlpha:1.];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        // [self updateAppearance];
-    }];
+        [self.visualEffectView setEffect:nil];
+        
+        [[UIViewPropertyAnimator runningPropertyAnimatorWithDuration:coordinator.transitionDuration
+                                                               delay:0
+                                                             options:coordinator.completionCurve << 16
+                                                          animations:^
+        {
+            [self.visualEffectView setEffect:self.backgroundVisualEffet];
+        } completion:nil] startAnimation];
+    }
+    else
+    {
+        [self.backgroundView setAlpha:0.];
+        [self.visualEffectView setEffect:self.backgroundVisualEffet];
+    }
+    
+    [self.presentedViewController.transitionCoordinator animateAlongsideTransition:^(id _) {
+        [self.backgroundView setAlpha:1.];
+    } completion:nil];
     
     if ([self.popoverDelegate respondsToSelector:@selector(popoverControllerWillPresent:)])
         [self.popoverDelegate popoverControllerWillPresent:self];
@@ -171,6 +226,29 @@
 - (void)dismissalTransitionWillBegin
 {
     [super dismissalTransitionWillBegin];
+    id <UIViewControllerTransitionCoordinator> coordinator = self.presentedViewController.transitionCoordinator;
+    
+    // on iOS 10+ animating the alpha of a UIVisualEffetView hides it
+    // completely, we use the new UIViewPropertyAnimator to animate the
+    // effect instead
+    NSOperatingSystemVersion iOS10 = (NSOperatingSystemVersion){10, 0, 0};
+    if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:iOS10] && self.backgroundVisualEffet)
+    {
+        [[UIViewPropertyAnimator runningPropertyAnimatorWithDuration:coordinator.transitionDuration
+                                                               delay:0
+                                                             options:coordinator.completionCurve << 16
+                                                          animations:^
+        {
+            [self.visualEffectView setEffect:nil];
+        } completion:nil] startAnimation];
+    }
+    else
+    {
+        [coordinator animateAlongsideTransition:^(id _) {
+            [self.backgroundView setAlpha:0.];
+        } completion:nil];
+    }
+    
     if ([self.popoverDelegate respondsToSelector:@selector(popoverControllerWillDismiss:)])
         [self.popoverDelegate popoverControllerWillDismiss:self];
 }
@@ -199,11 +277,25 @@
 
 @implementation UIViewController (SYPopoverController)
 
-- (void)sy_presentPopover:(UIViewController *)viewController animated:(BOOL)flag completion:(void (^)(void))completion
+- (void)sy_presentPopover:(UIViewController *)viewController
+                 animated:(BOOL)animated
+               completion:(void (^)(void))completion
+{
+    [self sy_presentPopover:viewController backgroundEffect:nil animated:animated completion:completion];
+}
+
+- (void)sy_presentPopover:(UIViewController *)viewController
+         backgroundEffect:(UIVisualEffect *)backgroundEffect
+                 animated:(BOOL)animated
+               completion:(void (^)(void))completion
 {
     [viewController setModalPresentationStyle:UIModalPresentationCustom];
     [viewController setTransitioningDelegate:[SYPopoverTransitioningDelegate shared]];
-    [self presentViewController:viewController animated:YES completion:nil];
+    
+    SYPopoverController *controller = (SYPopoverController *)viewController.presentationController;
+    [controller setBackgroundVisualEffet:backgroundEffect];
+    
+    [self presentViewController:viewController animated:animated completion:nil];
 }
 
 @end
