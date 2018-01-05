@@ -6,6 +6,7 @@
 
 #import "YapDatabaseCloudCorePipeline.h"
 #import "YapDatabaseCloudCoreGraph.h"
+#import "YapDatabaseCloudCore.h"
 
 
 @interface YapDatabaseCloudCorePipeline ()
@@ -21,11 +22,12 @@
 **/
 @property (nonatomic, assign, readwrite) int64_t rowid;
 
+- (BOOL)setOwner:(YapDatabaseCloudCore *)owner;
+
 - (NSArray<NSArray<YapDatabaseCloudCoreOperation *> *> *)graphOperations;
 
-- (void)getGraphUUID:(NSUUID **)outGraphUUID
-       prevGraphUUID:(NSUUID **)outPrevGraphUUID
-         forGraphIdx:(NSUInteger)graphIdx;
+- (BOOL)getGraphID:(uint64_t *)graphIdPtr forIndex:(NSUInteger)idx;
+- (uint64_t)nextGraphID;
 
 - (BOOL)getStatus:(YDBCloudCoreOperationStatus *)statusPtr
          isOnHold:(BOOL *)isOnHoldPtr
@@ -36,8 +38,6 @@
 - (void)processAddedGraph:(YapDatabaseCloudCoreGraph *)graph
 		 insertedOperations:(NSDictionary<NSNumber *, NSArray<YapDatabaseCloudCoreOperation *> *> *)insertedOperations
        modifiedOperations:(NSDictionary<NSUUID *, YapDatabaseCloudCoreOperation *> *)modifiedOperations;
-
-- (YapDatabaseCloudCoreGraph *)lastGraph;
 
 /**
  * All of the public methods that return an operation (directly, or via enumeration block),
@@ -59,10 +59,11 @@
 
 @interface YapDatabaseCloudCoreGraph ()
 
-- (instancetype)initWithUUID:(NSUUID *)uuid operations:(NSArray<YapDatabaseCloudCoreOperation *> *)operations;
+- (instancetype)initWithPersistentOrder:(uint64_t)peristentOrder
+                             operations:(NSArray<YapDatabaseCloudCoreOperation *> *)operations;
 
-@property (nonatomic, strong, readonly) NSUUID *uuid;
-@property (nonatomic, strong, readonly) NSArray<YapDatabaseCloudCoreOperation *> *operations;
+@property (nonatomic, assign, readonly) uint64_t persistentOrder;
+@property (nonatomic, copy, readonly) NSArray<YapDatabaseCloudCoreOperation *> *operations;
 
 @property (nonatomic, unsafe_unretained, readwrite) YapDatabaseCloudCorePipeline *pipeline;
 

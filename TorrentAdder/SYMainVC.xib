@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeueLights.ttc">
+            <string>HelveticaNeue-Thin</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SYMainVC">
             <connections>
@@ -25,20 +31,20 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SlC-Su-ftz">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blue_background" translatesAutoresizingMaskIntoConstraints="NO" id="v50-Te-mgi">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
                         </imageView>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Torrent Adder" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ebA-QW-uAb">
-                            <rect key="frame" x="15" y="24" width="212.5" height="44"/>
+                            <rect key="frame" x="15" y="25" width="212.5" height="53"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="38"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                             <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PoE-uH-CVm" customClass="SYSearchField">
-                            <rect key="frame" x="8" y="82" width="359" height="30"/>
+                            <rect key="frame" x="8" y="92" width="359" height="30"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="Nwf-lC-KoR"/>
@@ -55,21 +61,22 @@
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="PoE-uH-CVm" secondAttribute="bottom" constant="8" id="1A8-88-8w6"/>
-                        <constraint firstItem="ebA-QW-uAb" firstAttribute="top" secondItem="SlC-Su-ftz" secondAttribute="top" constant="24" id="2ms-tX-BAr"/>
                         <constraint firstAttribute="bottom" secondItem="v50-Te-mgi" secondAttribute="bottom" id="382-OU-znd"/>
                         <constraint firstItem="v50-Te-mgi" firstAttribute="top" secondItem="SlC-Su-ftz" secondAttribute="top" id="99o-q0-m32"/>
                         <constraint firstItem="PoE-uH-CVm" firstAttribute="top" secondItem="ebA-QW-uAb" secondAttribute="bottom" constant="14" id="Ed7-qI-aNx"/>
+                        <constraint firstItem="ebA-QW-uAb" firstAttribute="leading" secondItem="MuI-Vl-gf5" secondAttribute="leading" constant="15" id="Jru-jf-W6A"/>
                         <constraint firstItem="v50-Te-mgi" firstAttribute="leading" secondItem="SlC-Su-ftz" secondAttribute="leading" id="PBt-0Q-z5n"/>
-                        <constraint firstItem="ebA-QW-uAb" firstAttribute="leading" secondItem="SlC-Su-ftz" secondAttribute="leading" constant="15" id="WtX-lk-ltR"/>
-                        <constraint firstItem="PoE-uH-CVm" firstAttribute="leading" secondItem="SlC-Su-ftz" secondAttribute="leading" constant="8" id="ZvD-Bm-38a"/>
-                        <constraint firstAttribute="height" constant="120" id="ayq-Dc-e7k"/>
+                        <constraint firstItem="PoE-uH-CVm" firstAttribute="leading" secondItem="MuI-Vl-gf5" secondAttribute="leading" constant="8" id="Q0r-G1-Je0"/>
+                        <constraint firstAttribute="bottom" secondItem="PoE-uH-CVm" secondAttribute="bottom" constant="8" id="UXc-G3-PxK"/>
+                        <constraint firstItem="MuI-Vl-gf5" firstAttribute="trailing" secondItem="PoE-uH-CVm" secondAttribute="trailing" constant="8" id="ZTH-z1-gdP"/>
+                        <constraint firstAttribute="height" constant="130" id="ayq-Dc-e7k"/>
+                        <constraint firstItem="ebA-QW-uAb" firstAttribute="top" secondItem="MuI-Vl-gf5" secondAttribute="top" constant="5" id="bsV-pz-Dih"/>
                         <constraint firstAttribute="trailing" secondItem="v50-Te-mgi" secondAttribute="trailing" id="mzN-gg-Dgp"/>
-                        <constraint firstAttribute="trailing" secondItem="PoE-uH-CVm" secondAttribute="trailing" constant="8" id="u55-my-W9E"/>
                     </constraints>
+                    <viewLayoutGuide key="safeArea" id="MuI-Vl-gf5"/>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="o4O-Tf-fV3">
-                    <rect key="frame" x="0.0" y="120" width="375" height="547"/>
+                    <rect key="frame" x="0.0" y="130" width="375" height="537"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="tPr-6t-tMz"/>
@@ -102,24 +109,21 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="o4O-Tf-fV3" firstAttribute="top" secondItem="KTm-qJ-gVZ" secondAttribute="top" constant="120" id="2NY-jI-oDS"/>
+                <constraint firstItem="o4O-Tf-fV3" firstAttribute="top" secondItem="KTm-qJ-gVZ" secondAttribute="top" constant="130" id="2NY-jI-oDS"/>
                 <constraint firstAttribute="trailing" secondItem="SlC-Su-ftz" secondAttribute="trailing" id="3EX-dA-pG4"/>
                 <constraint firstAttribute="bottom" secondItem="8B6-pO-siO" secondAttribute="bottom" constant="10" id="6vG-iB-1LW"/>
                 <constraint firstItem="SlC-Su-ftz" firstAttribute="top" secondItem="KTm-qJ-gVZ" secondAttribute="top" id="ONm-SF-f2S"/>
                 <constraint firstAttribute="trailing" secondItem="o4O-Tf-fV3" secondAttribute="trailing" id="RcT-Io-vF5"/>
+                <constraint firstItem="o4O-Tf-fV3" firstAttribute="bottom" secondItem="Lbr-DV-gq5" secondAttribute="bottom" id="Uns-nQ-g11"/>
                 <constraint firstItem="SlC-Su-ftz" firstAttribute="leading" secondItem="KTm-qJ-gVZ" secondAttribute="leading" id="gjY-zL-tjt"/>
                 <constraint firstAttribute="trailing" secondItem="8B6-pO-siO" secondAttribute="trailing" constant="10" id="lig-b1-A8K"/>
                 <constraint firstItem="o4O-Tf-fV3" firstAttribute="leading" secondItem="KTm-qJ-gVZ" secondAttribute="leading" id="nJs-DM-4Ar"/>
-                <constraint firstAttribute="bottom" secondItem="o4O-Tf-fV3" secondAttribute="bottom" id="vjy-GT-hjb"/>
             </constraints>
+            <viewLayoutGuide key="safeArea" id="Lbr-DV-gq5"/>
+            <point key="canvasLocation" x="35" y="55"/>
         </view>
     </objects>
     <resources>
         <image name="blue_background" width="1024" height="1024"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
-    </simulatedMetricsContainer>
 </document>

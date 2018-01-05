@@ -217,16 +217,6 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string></string>
-			<key>License</key>
-			<string>Copyright</string>
-			<key>Title</key>
-			<string>SparkInspector</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
 			<string>XMLDictionary
 
 Copyright (C) 2011 Charcoal Design

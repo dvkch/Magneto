@@ -6,12 +6,13 @@
 //  Copyright (c) 2014 Syan. All rights reserved.
 //
 
+#import <WebKit/WebKit.h>
 #import "SYWebVC.h"
 #import "SYComputerModel.h"
 #import "NSURLRequest+SY.h"
 
-@interface SYWebVC () <UIWebViewDelegate, NSURLConnectionDelegate>
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@interface SYWebVC () <WKNavigationDelegate, NSURLConnectionDelegate>
+@property (strong, nonatomic) WKWebView *webView;
 @property (strong, nonatomic) UIActivityIndicatorView *spinView;
 @property (strong, nonatomic) UIBarButtonItem *buttonClose;
 @end
@@ -22,19 +23,26 @@
 {
     [super viewDidLoad];
     
+    self.webView = [[WKWebView alloc] init];
+    self.webView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.webView];
+    [[self.webView.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor] setActive:YES];
+    [[self.webView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor] setActive:YES];
+    [[self.webView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor] setActive:YES];
+    [[self.webView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor] setActive:YES];
+
     self.buttonClose = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(buttonCloseTap:)];
-    
-    self.spinView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    UIBarButtonItem *buttonSpin = [[UIBarButtonItem alloc] initWithCustomView:self.spinView];
-    
     [self.navigationItem setLeftBarButtonItem:self.buttonClose];
-    [self.navigationItem setRightBarButtonItem:buttonSpin];
+
+    self.spinView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    self.spinView.hidesWhenStopped = YES;
+    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.spinView]];
     
-    [self.webView setDelegate:self];
-    [self.spinView setHidesWhenStopped:YES];
+    self.webView.navigationDelegate = self;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     [self setTitle:self.computer.name];
     
@@ -45,43 +53,39 @@
     [self.webView loadRequest:request];
 }
 
-- (void)buttonCloseTap:(id)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+- (void)buttonCloseTap:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UIWebViewDelegate methods
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
- navigationType:(UIWebViewNavigationType)navigationType
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
-    if ([request.URL.absoluteString hasPrefix:self.computer.webURL.absoluteString])
-    {
-        [NSURLConnection connectionWithRequest:request delegate:self];
-        return YES;
-    }
+    [self.spinView startAnimating];
+}
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error
+{
+    [self.spinView stopAnimating];
     
-    if ([request.URL.absoluteString isEqualToString:@"about:blank"])
-        return YES;
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation
+{
+    [self.spinView stopAnimating];
+}
+
+- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error
+{
+    [self.spinView stopAnimating];
     
-    return NO;
-}
-
-- (void)webViewDidStartLoad:(UIWebView *)webView
-{
-    [[self spinView] startAnimating];
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    [[self spinView] stopAnimating];
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"error" ofType:@"html"];
-    NSString *html = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:NULL];
-    html = [html stringByReplacingOccurrencesOfString:@"{ERROR}" withString:error.localizedDescription];
-    [webView loadHTMLString:html baseURL:nil];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end

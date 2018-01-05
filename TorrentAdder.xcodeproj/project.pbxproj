@@ -23,7 +23,6 @@
 		9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB81BC0322A00CA3BEF /* NSNetService+SY.m */; };
 		979B6D1D1BBC63F6003B49F9 /* SYAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 979B6D1C1BBC63F6003B49F9 /* SYAlertManager.m */; };
 		97A0C54F1BC31BA100DC4EEC /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A0C54E1BC31BA100DC4EEC /* UIColor+SY.m */; };
-		97A0C5541BC3228400DC4EEC /* error.html in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5531BC3228400DC4EEC /* error.html */; };
 		97A0C55D1BC3271300DC4EEC /* blue_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5551BC3271300DC4EEC /* blue_background.png */; };
 		97A0C55E1BC3271300DC4EEC /* form_bookmark_org.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5561BC3271300DC4EEC /* form_bookmark_org.png */; };
 		97A0C55F1BC3271300DC4EEC /* form_cmd_org.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5571BC3271300DC4EEC /* form_cmd_org.png */; };
@@ -37,7 +36,6 @@
 		97A18E101BBC017000F33AF5 /* SYComputersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E0F1BBC017000F33AF5 /* SYComputersCell.xib */; };
 		97A18E121BBC017500F33AF5 /* SYResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E111BBC017500F33AF5 /* SYResultCell.xib */; };
 		97A18E141BBC017C00F33AF5 /* SYListComputersVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E131BBC017C00F33AF5 /* SYListComputersVC.xib */; };
-		97A18E161BBC018100F33AF5 /* SYWebVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E151BBC018100F33AF5 /* SYWebVC.xib */; };
 		97AE99901EB2618F000C0FF0 /* SYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AE998F1EB2618F000C0FF0 /* SYNavigationController.m */; };
 		97AE99931EB26495000C0FF0 /* SYResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AE99921EB26495000C0FF0 /* SYResultModel.m */; };
 		97AE99961EB26894000C0FF0 /* NSCalendar+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AE99951EB26894000C0FF0 /* NSCalendar+SY.m */; };
@@ -114,7 +112,6 @@
 		979B6D1C1BBC63F6003B49F9 /* SYAlertManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAlertManager.m; sourceTree = "<group>"; };
 		97A0C54D1BC31BA100DC4EEC /* UIColor+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SY.h"; sourceTree = "<group>"; };
 		97A0C54E1BC31BA100DC4EEC /* UIColor+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SY.m"; sourceTree = "<group>"; };
-		97A0C5531BC3228400DC4EEC /* error.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = error.html; path = Resources/error.html; sourceTree = SOURCE_ROOT; };
 		97A0C5551BC3271300DC4EEC /* blue_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_background.png; sourceTree = "<group>"; };
 		97A0C5561BC3271300DC4EEC /* form_bookmark_org.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_bookmark_org.png; sourceTree = "<group>"; };
 		97A0C5571BC3271300DC4EEC /* form_cmd_org.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_cmd_org.png; sourceTree = "<group>"; };
@@ -128,7 +125,6 @@
 		97A18E0F1BBC017000F33AF5 /* SYComputersCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYComputersCell.xib; sourceTree = "<group>"; };
 		97A18E111BBC017500F33AF5 /* SYResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYResultCell.xib; sourceTree = "<group>"; };
 		97A18E131BBC017C00F33AF5 /* SYListComputersVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYListComputersVC.xib; sourceTree = "<group>"; };
-		97A18E151BBC018100F33AF5 /* SYWebVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYWebVC.xib; sourceTree = "<group>"; };
 		97AE998E1EB2618F000C0FF0 /* SYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYNavigationController.h; sourceTree = "<group>"; };
 		97AE998F1EB2618F000C0FF0 /* SYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYNavigationController.m; sourceTree = "<group>"; };
 		97AE99911EB26495000C0FF0 /* SYResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYResultModel.h; sourceTree = "<group>"; };
@@ -212,7 +208,6 @@
 				97A18E0B1BBC011900F33AF5 /* SYMainVC.xib */,
 				F88EEC091948FF1800D98F4F /* SYWebVC.h */,
 				F88EEC0A1948FF1800D98F4F /* SYWebVC.m */,
-				97A18E151BBC018100F33AF5 /* SYWebVC.xib */,
 				973AFF7E1BB41CE800BA4B8B /* SYListComputersVC.h */,
 				973AFF7F1BB41CE800BA4B8B /* SYListComputersVC.m */,
 				97A18E131BBC017C00F33AF5 /* SYListComputersVC.xib */,
@@ -273,7 +268,6 @@
 				F83FFA3E192BE7440034A95B /* SYClientAPI.m */,
 				9786BAD71BB3122100786363 /* SYWebAPI.h */,
 				9786BAD81BB3122100786363 /* SYWebAPI.m */,
-				97A0C5531BC3228400DC4EEC /* error.html */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -514,7 +508,6 @@
 				97A18E101BBC017000F33AF5 /* SYComputersCell.xib in Resources */,
 				F8986776192A317C00735175 /* Images.xcassets in Resources */,
 				97A18E121BBC017500F33AF5 /* SYResultCell.xib in Resources */,
-				97A0C5541BC3228400DC4EEC /* error.html in Resources */,
 				97A0C55F1BC3271300DC4EEC /* form_cmd_org.png in Resources */,
 				97A0C55D1BC3271300DC4EEC /* blue_background.png in Resources */,
 				97A18E141BBC017C00F33AF5 /* SYListComputersVC.xib in Resources */,
@@ -528,7 +521,6 @@
 				97F9114D1BC2C73D00BF1848 /* SYComputerFormCell.xib in Resources */,
 				97A18E0C1BBC011900F33AF5 /* SYMainVC.xib in Resources */,
 				97A0C5601BC3271300DC4EEC /* form_host_org.png in Resources */,
-				97A18E161BBC018100F33AF5 /* SYWebVC.xib in Resources */,
 				973784321BD40649001AD487 /* Launch.storyboard in Resources */,
 				97A0C55E1BC3271300DC4EEC /* form_bookmark_org.png in Resources */,
 			);
@@ -711,7 +703,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -750,7 +742,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

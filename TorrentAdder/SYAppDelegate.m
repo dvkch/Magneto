@@ -66,7 +66,6 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    //if (IOS_VER_GREATER_OR_EQUAL(@"9.0"))
     [[NSNotificationCenter defaultCenter] postNotificationName:UIAppDidOpenURLNotification
                                                         object:nil
                                                       userInfo:@{UIAppDidOpenURLNotification_AppIDKey:sourceApplication,

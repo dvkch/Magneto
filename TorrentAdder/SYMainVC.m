@@ -127,15 +127,21 @@
                                appToGoBackTo:[appID parsedSYApp]];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)helpButtonClick:(id)sender
 {
-    [[[UIAlertView alloc] initWithTitle:@"Help"
-                                message:@"To add a torrent you need to open this app with a magnet. Go to Safari, open a page with a magnet link in it, click the magnet to open this app, and then select a computer to start downloading the torrent."
-                               delegate:nil
-                      cancelButtonTitle:nil
-                      otherButtonTitles:@"Close", nil] show];
+    UIAlertController *alert =
+    [UIAlertController alertControllerWithTitle:@"Help"
+                                        message:@"To add a torrent you need to open this app with a magnet. Go to Safari, open a page with a magnet link in it, click the magnet to open this app, and then select a computer to start downloading the torrent."
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - UITableView methods
@@ -326,11 +332,12 @@
         
         if (error)
         {
-            [[[UIAlertView alloc] initWithTitle:@"Cannot load results"
-                                        message:error.localizedDescription
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"Close", nil] show];
+            UIAlertController *alert =
+            [UIAlertController alertControllerWithTitle:@"Cannot load results"
+                                                message:error.localizedDescription
+                                         preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
         }
     }];
 }

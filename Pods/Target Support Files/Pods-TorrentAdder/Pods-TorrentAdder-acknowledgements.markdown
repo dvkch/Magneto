@@ -156,10 +156,6 @@ Use it as you like in every project you want, redistribute with mentions of my n
 
 -- dvkch
 
-## SparkInspector
-
-
-
 ## XMLDictionary
 
 XMLDictionary
