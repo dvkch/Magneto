@@ -31,19 +31,21 @@
     self = [super init];
     if (self)
     {
-        self.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://thepiratebay-proxylist.org/"]];
-        [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
-        [self.manager.requestSerializer setTimeoutInterval:20];
-        [self.manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+        [self setMirrorURL:nil];
     }
     return self;
+}
+
+- (NSURL *)mirrorsListURL
+{
+    return [NSURL URLWithString:@"https://thepiratebay-proxylist.org/"];
 }
 
 - (void)setMirrorURL:(NSURL *)mirrorURL
 {
     self->_mirrorURL = mirrorURL;
     
-    self.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:mirrorURL];
+    self.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:mirrorURL ?: self.mirrorsListURL];
     [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [self.manager.requestSerializer setTimeoutInterval:20];
     [self.manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
