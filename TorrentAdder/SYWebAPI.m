@@ -79,10 +79,10 @@
               success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
     {
         TFHpple *result = [TFHpple hppleWithHTMLData:responseObject];
-        NSArray <TFHppleElement *> *links = [result searchWithXPathQuery:@"//td[@title='URL']/a"];
+        NSArray <TFHppleElement *> *links = [result searchWithXPathQuery:@"//td[@title='URL']"];
         NSMutableArray <NSURL *> *urls = [NSMutableArray array];
         for (TFHppleElement *link in links) {
-            NSURL *url = [NSURL URLWithString:[link objectForKey:@"href"]];
+            NSURL *url = [NSURL URLWithString:[link objectForKey:@"data-href"]];
             if (url)
                 [urls addObject:url];
         }
