@@ -11,7 +11,6 @@
 #import "SYComputerCell.h"
 #import "SYComputersCell.h"
 #import "SYAppDelegate.h"
-#import "SYWebVC.h"
 #import "SYButton.h"
 #import "SYListComputersVC.h"
 #import "SYResultCell.h"
@@ -26,6 +25,7 @@
 #import "NSString+SYApp.h"
 #import "SYWebAPI.h"
 #import "SYPopoverController.h"
+#import <SafariServices/SafariServices.h>
 
 
 #define ALERT_VIEW_TAG_OPEN_SOURCE_APP (4)
@@ -218,10 +218,12 @@
     }
     if (indexPath.section == 1)
     {
-        SYWebVC *vc = [[SYWebVC alloc] init];
-        [vc setComputer:self.computers[indexPath.row]];
-        SYNavigationController *nc = [[SYNavigationController alloc] initWithRootViewController:vc];
-        [self.navigationController presentViewController:nc animated:YES completion:nil];
+        SYComputerModel *computer = self.computers[indexPath.row];
+        SFSafariViewController *vc = [[SFSafariViewController alloc] initWithURL:computer.webURL];
+        if (@available(iOS 10, *)) {
+            vc.preferredBarTintColor = [UIColor lightBlueColor];
+        }
+        [self presentViewController:vc animated:YES completion:nil];
     }
     if (indexPath.section == 2)
     {

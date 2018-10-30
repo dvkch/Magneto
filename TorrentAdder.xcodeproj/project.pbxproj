@@ -49,7 +49,6 @@
 		97F9114D1BC2C73D00BF1848 /* SYComputerFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */; };
 		97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */; };
 		F83FFA3F192BE7440034A95B /* SYClientAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = F83FFA3E192BE7440034A95B /* SYClientAPI.m */; };
-		F88EEC0B1948FF1800D98F4F /* SYWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F88EEC0A1948FF1800D98F4F /* SYWebVC.m */; };
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
 		F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675C192A317C00735175 /* CoreGraphics.framework */; };
 		F898675F192A317C00735175 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675E192A317C00735175 /* UIKit.framework */; };
@@ -150,8 +149,6 @@
 		F83FFA3D192BE7440034A95B /* SYClientAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYClientAPI.h; sourceTree = "<group>"; };
 		F83FFA3E192BE7440034A95B /* SYClientAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYClientAPI.m; sourceTree = "<group>"; };
 		F83FFA41192BE8860034A95B /* SYMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMacros.h; sourceTree = "<group>"; };
-		F88EEC091948FF1800D98F4F /* SYWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYWebVC.h; sourceTree = "<group>"; };
-		F88EEC0A1948FF1800D98F4F /* SYWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYWebVC.m; sourceTree = "<group>"; };
 		F8986757192A317C00735175 /* TorrentAdder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TorrentAdder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F898675A192A317C00735175 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F898675C192A317C00735175 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -203,8 +200,6 @@
 				F8986792192A324800735175 /* SYMainVC.h */,
 				F8986793192A324800735175 /* SYMainVC.m */,
 				97A18E0B1BBC011900F33AF5 /* SYMainVC.xib */,
-				F88EEC091948FF1800D98F4F /* SYWebVC.h */,
-				F88EEC0A1948FF1800D98F4F /* SYWebVC.m */,
 				973AFF7E1BB41CE800BA4B8B /* SYListComputersVC.h */,
 				973AFF7F1BB41CE800BA4B8B /* SYListComputersVC.m */,
 				97A18E131BBC017C00F33AF5 /* SYListComputersVC.xib */,
@@ -598,7 +593,6 @@
 				9772B3CA1BC68BC60022E370 /* SYAddMagnetPopupVC.m in Sources */,
 				F898676B192A317C00735175 /* SYAppDelegate.m in Sources */,
 				976B76DE1BBB03B200641AD5 /* SYComputersCell.m in Sources */,
-				F88EEC0B1948FF1800D98F4F /* SYWebVC.m in Sources */,
 				973A5EB51BC9463000ACA301 /* NSString+SYApp.m in Sources */,
 				F8986794192A324800735175 /* SYMainVC.m in Sources */,
 				973AFF801BB41CE800BA4B8B /* SYListComputersVC.m in Sources */,
@@ -665,6 +659,7 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -719,6 +714,7 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
