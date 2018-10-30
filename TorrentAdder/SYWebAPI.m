@@ -8,7 +8,6 @@
 
 #import "SYWebAPI.h"
 #import "AFNetworking.h"
-#import "UIWebView+BlocksKit.h"
 #import "TFHpple.h"
 
 @interface SYWebAPI ()

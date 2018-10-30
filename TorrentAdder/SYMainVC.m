@@ -16,7 +16,6 @@
 #import "SYListComputersVC.h"
 #import "SYResultCell.h"
 #import "SYWebAPI.h"
-#import "SYAlertManager.h"
 #import "SYDatabase.h"
 #import "SYEditComputerVC.h"
 #import "UIColor+SY.h"
@@ -228,7 +227,11 @@
     {
         if (!self.computers.count)
         {
-            [SYAlertManager showNoComputerAlert];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot add torent"
+                                                                           message:@"No computer saved in your settings, please add one before trying to download this item"
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
             return;
         }
         

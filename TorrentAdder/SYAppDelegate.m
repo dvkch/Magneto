@@ -13,7 +13,6 @@
 #import "SYWindow.h"
 #import "SYBonjourClient.h"
 #import "JAHPAuthenticatingHTTPProtocol.h"
-#import "UIAlertView+BlocksKit.h"
 #import "SYComputerModel.h"
 #import "SYDatabase.h"
 #import "NSURLRequest+SY.h"
@@ -123,26 +122,29 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
     }
     
     __block BOOL canceled = NO;
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Authentication needed"
-                                                 message:[NSString stringWithFormat:@"%@ requires a user and a password", computer.name]
-                                                delegate:nil
-                                       cancelButtonTitle:nil
-                                       otherButtonTitles:nil];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Authentication needed"
+                                                                   message:[NSString stringWithFormat:@"%@ requires a user and a password", computer.name]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
     
-    [av setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Username";
+    }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Password";
+        textField.secureTextEntry = YES;
+    }];
     
-    [av bk_setCancelButtonWithTitle:@"Cancel" handler:^{
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [self setShowingAuthAlertView:NO];
         if (canceled)
             return;
         [authenticatingHTTPProtocol cancelPendingAuthenticationChallenge];
-    }];
-    
-    [av bk_addButtonWithTitle:@"Login" handler:^{
-        [computer setUsername:[av textFieldAtIndex:0].text];
-        [computer setPassword:[av textFieldAtIndex:1].text];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Login" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [computer setUsername:alert.textFields.firstObject.text];
+        [computer setPassword:alert.textFields.lastObject.text];
         [[SYDatabase shared] addComputer:computer];
-
+        
         [self setShowingAuthAlertView:NO];
         
         if (canceled)
@@ -152,10 +154,11 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
                                                                  password:computer.password
                                                               persistence:NSURLCredentialPersistenceForSession];
         [authenticatingHTTPProtocol resolvePendingAuthenticationChallengeWithCredential:credential];
-    }];
+    }]];
+    
     
     [self setShowingAuthAlertView:YES];
-    [av show];
+    [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
     
     return ^(JAHPAuthenticatingHTTPProtocol * __nonnull authenticatingHTTPProtocol, NSURLAuthenticationChallenge * __nonnull challenge) {
         canceled = YES;

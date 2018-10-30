@@ -21,7 +21,6 @@
 		9786BAD91BB3122100786363 /* SYWebAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9786BAD81BB3122100786363 /* SYWebAPI.m */; };
 		9797FBB61BC0305700CA3BEF /* SYBonjourClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB51BC0305700CA3BEF /* SYBonjourClient.m */; };
 		9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB81BC0322A00CA3BEF /* NSNetService+SY.m */; };
-		979B6D1D1BBC63F6003B49F9 /* SYAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 979B6D1C1BBC63F6003B49F9 /* SYAlertManager.m */; };
 		97A0C54F1BC31BA100DC4EEC /* UIColor+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A0C54E1BC31BA100DC4EEC /* UIColor+SY.m */; };
 		97A0C55D1BC3271300DC4EEC /* blue_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5551BC3271300DC4EEC /* blue_background.png */; };
 		97A0C55E1BC3271300DC4EEC /* form_bookmark_org.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5561BC3271300DC4EEC /* form_bookmark_org.png */; };
@@ -108,8 +107,6 @@
 		9797FBB51BC0305700CA3BEF /* SYBonjourClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYBonjourClient.m; sourceTree = "<group>"; };
 		9797FBB71BC0322A00CA3BEF /* NSNetService+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNetService+SY.h"; sourceTree = "<group>"; };
 		9797FBB81BC0322A00CA3BEF /* NSNetService+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNetService+SY.m"; sourceTree = "<group>"; };
-		979B6D1B1BBC63F6003B49F9 /* SYAlertManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYAlertManager.h; sourceTree = "<group>"; };
-		979B6D1C1BBC63F6003B49F9 /* SYAlertManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAlertManager.m; sourceTree = "<group>"; };
 		97A0C54D1BC31BA100DC4EEC /* UIColor+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SY.h"; sourceTree = "<group>"; };
 		97A0C54E1BC31BA100DC4EEC /* UIColor+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SY.m"; sourceTree = "<group>"; };
 		97A0C5551BC3271300DC4EEC /* blue_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_background.png; sourceTree = "<group>"; };
@@ -296,8 +293,6 @@
 				97EACC011BC2C31B00382614 /* API */,
 				97EACC001BC2C31300382614 /* Network */,
 				97EACC021BC2C32700382614 /* Storage */,
-				979B6D1B1BBC63F6003B49F9 /* SYAlertManager.h */,
-				979B6D1C1BBC63F6003B49F9 /* SYAlertManager.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -554,7 +549,6 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
-				"${BUILT_PRODUCTS_DIR}/BlocksKit/BlocksKit.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/JGMethodSwizzler/JGMethodSwizzler.framework",
 				"${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework",
@@ -570,7 +564,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlocksKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGMethodSwizzler.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JRSwizzle.framework",
@@ -611,7 +604,6 @@
 				973AFF801BB41CE800BA4B8B /* SYListComputersVC.m in Sources */,
 				F8986767192A317C00735175 /* main.m in Sources */,
 				97C0F50C1BC6F28C0058E0FB /* NSURL+SY.m in Sources */,
-				979B6D1D1BBC63F6003B49F9 /* SYAlertManager.m in Sources */,
 				97F911471BC2C45C00BF1848 /* SYEditComputerVC.m in Sources */,
 				97F9114C1BC2C73D00BF1848 /* SYComputerFormCell.m in Sources */,
 				970546121BBD4E3300C5294D /* SYPinger.m in Sources */,
