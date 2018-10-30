@@ -34,6 +34,7 @@
     UIViewController *to   = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     
     UIView *inView = transitionContext.containerView;
+    UIWindow *window = inView.window;
     
     NSTimeInterval duration = [self transitionDuration:transitionContext];
     
@@ -93,7 +94,8 @@
                              [transitionContext completeTransition:YES];
                              
                              // http://openradar.appspot.com/radar?id=5320103646199808
-                             [[UIApplication sharedApplication].keyWindow addSubview:to.view];
+                             // don't use UIAppDelegate.keyWindow, it may not be the main one (e.g. if an alert window is still visible)
+                             [window addSubview:to.view];
                          }];
     }
 }
@@ -163,48 +165,48 @@
                           delay:0.f
                         options:(UIViewAnimationOptionLayoutSubviews)
                      animations:^
-    {
-        if (isPush)
-        {
-            toView.transform    = CGAffineTransformIdentity;
-            fromView.transform  = translateHalfLeft;
-        }
-        else
-        {
-            toView.transform    = CGAffineTransformIdentity;
-            fromView.transform  = translateFullRight;
-            fromView.alpha      = 0.;
-        }
-        
-        if (self.additionalAnimationBlock)
-            self.additionalAnimationBlock();
-        
-        // forces navigationBar items to reposition. shows some log because the "state" ivar is modified
-        // inside the animation. restoring it after these call doesn't work and actually leaves the
-        // navigation bar in a broken state. this has been tested on iOS 8.4 and 10.3 and looks good
-        {
-            UINavigationBar *nb = toVC.navigationController.navigationBar;
-            [nb setValue:@(NO)  forKey:[@[@"loc", @"ked"] componentsJoinedByString:@""]];
-            [nb setItems:nb.items.copy animated:NO];
-            [nb setValue:@(YES) forKey:[@[@"loc", @"ked"] componentsJoinedByString:@""]];
-        }
-        
-    } completion:^(BOOL finished)
-    {
-        toView.transform    = CGAffineTransformIdentity;
-        fromView.transform  = CGAffineTransformIdentity;
-        fromView.alpha      = 1.;
-        
-        if ([transitionContext transitionWasCancelled])
-            [toView removeFromSuperview];
-        else
-            [fromView removeFromSuperview];
-        
-        [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-        
-        if (self.completionBlock)
-            self.completionBlock();
-    }];
+     {
+         if (isPush)
+         {
+             toView.transform    = CGAffineTransformIdentity;
+             fromView.transform  = translateHalfLeft;
+         }
+         else
+         {
+             toView.transform    = CGAffineTransformIdentity;
+             fromView.transform  = translateFullRight;
+             fromView.alpha      = 0.;
+         }
+         
+         if (self.additionalAnimationBlock)
+             self.additionalAnimationBlock();
+         
+         // forces navigationBar items to reposition. shows some log because the "state" ivar is modified
+         // inside the animation. restoring it after these call doesn't work and actually leaves the
+         // navigation bar in a broken state. this has been tested on iOS 8.4 and 10.3 and looks good
+         {
+             UINavigationBar *nb = toVC.navigationController.navigationBar;
+             [nb setValue:@(NO)  forKey:[@[@"loc", @"ked"] componentsJoinedByString:@""]];
+             [nb setItems:nb.items.copy animated:NO];
+             [nb setValue:@(YES) forKey:[@[@"loc", @"ked"] componentsJoinedByString:@""]];
+         }
+         
+     } completion:^(BOOL finished)
+     {
+         toView.transform    = CGAffineTransformIdentity;
+         fromView.transform  = CGAffineTransformIdentity;
+         fromView.alpha      = 1.;
+         
+         if ([transitionContext transitionWasCancelled])
+             [toView removeFromSuperview];
+         else
+             [fromView removeFromSuperview];
+         
+         [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+         
+         if (self.completionBlock)
+             self.completionBlock();
+     }];
 }
 
 @end

@@ -31,7 +31,7 @@
     self = [super init];
     if (self)
     {
-        [self setMirrorURL:nil];
+        [self setMirrorURL:[NSURL URLWithString:@"https://thepiratebay.org/"]];
     }
     return self;
 }
@@ -120,7 +120,7 @@
         return;
     }
     
-    NSString *escapedTerm = [term stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *escapedTerm = [term stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     [self.manager GET:@"s/"
            parameters:@{@"q":escapedTerm, @"page":@(0), @"orderby":@(99)}
