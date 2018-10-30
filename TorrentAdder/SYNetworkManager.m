@@ -27,6 +27,7 @@
 NSString * const SYNetworkManagerComputerStatusChangedNotification = @"SYNetworkManagerComputerStatusChangedNotification";
 
 @interface SYNetworkManager ()
+@property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSMutableDictionary *statuses;
 @property (nonatomic, strong) NSMutableDictionary *previousStatuses;
 @property (nonatomic, strong) NSMutableDictionary *times;
@@ -46,6 +47,7 @@ NSString * const SYNetworkManagerComputerStatusChangedNotification = @"SYNetwork
     self = [super init];
     if (self)
     {
+        self.session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
         self.statuses           = [NSMutableDictionary dictionary];
         self.previousStatuses   = [NSMutableDictionary dictionary];
         self.times              = [NSMutableDictionary dictionary];
@@ -55,32 +57,24 @@ NSString * const SYNetworkManagerComputerStatusChangedNotification = @"SYNetwork
 
 - (void)startStatusUpdateForComputer:(SYComputerModel *)computer
 {
-    if ([[NSThread currentThread] isMainThread])
-    {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self startStatusUpdateForComputer:computer];
-        });
-        return;
-    }
-    
     [self setStatus:SYComputerStatus_Waiting forComputer:computer];
     
-    NSURLResponse *response;
-    NSError *error;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:computer.webURL
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                        timeoutInterval:4];
     [request setComputerID:computer.identifier];
     [request setIsIsUpRequest:YES];
-    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        //NSLog(@"%@ - %@ - %@\n\n\n", computer.name, response, error);
-        if (error)
-            [self setStatus:SYComputerStatus_Closed forComputer:computer];
-        else
-            [self setStatus:SYComputerStatus_Opened forComputer:computer];
-    });
+    NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //NSLog(@"%@ - %@ - %@\n\n\n", computer.name, response, error);
+            if (error)
+                [self setStatus:SYComputerStatus_Closed forComputer:computer];
+            else
+                [self setStatus:SYComputerStatus_Opened forComputer:computer];
+        });
+    }];
+    [task resume];
 }
 
 - (void)setStatus:(SYComputerStatus)status forComputer:(SYComputerModel *)computer

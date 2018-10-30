@@ -59,16 +59,14 @@ NSString *const NSTorrentAddedSuccessfully = @"kNSTorrentAddedSuccessfully";
     
     return YES;
 }
-							
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:UIAppDidOpenURLNotification
-                                                        object:nil
-                                                      userInfo:@{UIAppDidOpenURLNotification_AppIDKey:sourceApplication,
-                                                                 UIAppDidOpenURLNotification_MagnetURLKey:url}];
+    NSMutableDictionary <NSString *, id> *params = [NSMutableDictionary dictionary];
+    params[UIAppDidOpenURLNotification_MagnetURLKey]    = url;
+    params[UIAppDidOpenURLNotification_AppIDKey]        = options[UIApplicationOpenURLOptionsSourceApplicationKey];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:UIAppDidOpenURLNotification object:nil userInfo:params];
     return YES;
 }
 

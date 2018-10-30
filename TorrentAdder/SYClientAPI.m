@@ -109,7 +109,8 @@
         [request setValue:headers[key] forHTTPHeaderField:key];
     
     NSURLSessionDataTask *task =
-    [self.managerTransmission dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+    [self.managerTransmission dataTaskWithRequest:request uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse *response, id responseObject, NSError * error)
+    {
         if (error)
         {
             if (((NSHTTPURLResponse *)response).statusCode == 409)
