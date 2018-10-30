@@ -14,21 +14,6 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
-  - BlocksKit (2.2.5):
-    - BlocksKit/All (= 2.2.5)
-  - BlocksKit/All (2.2.5):
-    - BlocksKit/Core
-    - BlocksKit/DynamicDelegate
-    - BlocksKit/MessageUI
-    - BlocksKit/UIKit
-  - BlocksKit/Core (2.2.5)
-  - BlocksKit/DynamicDelegate (2.2.5)
-  - BlocksKit/MessageUI (2.2.5):
-    - BlocksKit/Core
-    - BlocksKit/DynamicDelegate
-  - BlocksKit/UIKit (2.2.5):
-    - BlocksKit/Core
-    - BlocksKit/DynamicDelegate
   - CocoaLumberjack (3.4.2):
     - CocoaLumberjack/Default (= 3.4.2)
     - CocoaLumberjack/Extensions (= 3.4.2)
@@ -111,7 +96,6 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
-  - BlocksKit
   - hpple
   - JiveAuthenticatingHTTPProtocol
   - JRSwizzle
@@ -125,7 +109,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
-    - BlocksKit
     - CocoaLumberjack
     - hpple
     - JGMethodSwizzler
@@ -140,7 +123,6 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
   hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
   JGMethodSwizzler: e0ea5c1c6c55304ec4ef3f54e441400c6735c899
@@ -153,6 +135,6 @@ SPEC CHECKSUMS:
   XMLDictionary: fa07b6ff422b3a91d47a5de9bc82e3fc04fbd167
   YapDatabase: b418a4baa6906e8028748938f9159807fd039af4
 
-PODFILE CHECKSUM: e985d29ff31999b169d285705881ec3daf56d123
+PODFILE CHECKSUM: 2753a871d40e16b66b12fb461d1a673308659e86
 
 COCOAPODS: 1.5.3

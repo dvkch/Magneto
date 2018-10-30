@@ -10,7 +10,6 @@ target 'TorrentAdder' do
 	pod 'AFNetworking'
 	pod 'YapDatabase'
 	pod 'SYKit'
-	pod 'BlocksKit'
 	pod 'SYPopoverController'
 	pod 'SPLPing'
 	pod 'JiveAuthenticatingHTTPProtocol'
