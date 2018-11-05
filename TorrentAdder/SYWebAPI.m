@@ -10,6 +10,8 @@
 #import "AFNetworking.h"
 #import "TFHpple.h"
 
+static NSString * const kSYPrefLastMirrorURL = @"last_mirror_url";
+
 @interface SYWebAPI ()
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 @property (nonatomic, strong) NSURL *mirrorURL;
@@ -30,24 +32,29 @@
     self = [super init];
     if (self)
     {
-        [self setMirrorURL:[NSURL URLWithString:@"https://thepiratebay.org/"]];
+        self.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:self.mirrorsListURL];
+        [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+        [self.manager.requestSerializer setTimeoutInterval:20];
+        [self.manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+        
+        NSString *previousMirror =  [[NSUserDefaults standardUserDefaults] objectForKey:kSYPrefLastMirrorURL];
+        if (previousMirror)
+            self.mirrorURL = [NSURL URLWithString:previousMirror];
     }
     return self;
 }
 
 - (NSURL *)mirrorsListURL
 {
-    return [NSURL URLWithString:@"https://thepiratebay-proxylist.org/"];
+    return [NSURL URLWithString:@"https://thepiratebay-proxylist.se/"];
 }
 
 - (void)setMirrorURL:(NSURL *)mirrorURL
 {
     self->_mirrorURL = mirrorURL;
     
-    self.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:mirrorURL ?: self.mirrorsListURL];
-    [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
-    [self.manager.requestSerializer setTimeoutInterval:20];
-    [self.manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+    if (mirrorURL != nil)
+        [[NSUserDefaults standardUserDefaults] setObject:mirrorURL.absoluteString forKey:kSYPrefLastMirrorURL];
     
     NSLog(@"-> Using mirror: %@", self.mirrorURL);
 }
@@ -72,7 +79,7 @@
         return;
     }
     
-    [self.manager GET:@""
+    [self.manager GET:self.mirrorsListURL.absoluteString
            parameters:nil
              progress:nil
               success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
@@ -121,7 +128,7 @@
     
     NSString *escapedTerm = [term stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
-    [self.manager GET:@"s/"
+    [self.manager GET:[self.mirrorURL.absoluteString stringByAppendingString:@"/s/"]
            parameters:@{@"q":escapedTerm, @"page":@(0), @"orderby":@(99)}
              progress:nil
               success:^(NSURLSessionDataTask *task, id responseObject)
@@ -158,7 +165,7 @@
         return;
     }
     
-    [self.manager GET:result.pageURL
+    [self.manager GET:[self.mirrorURL.absoluteString stringByAppendingString:result.pageURL]
            parameters:nil
              progress:nil
               success:^(NSURLSessionDataTask *task, id responseObject)
