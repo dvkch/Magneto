@@ -12,11 +12,11 @@ class SYComputerCell: UITableViewCell {
     
     // MARK: Init
     override func awakeFromNib() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateStatus), name: .SYNetworkManagerComputerStatusChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateStatus), name: .clientStatusChanged, object: nil)
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: .SYNetworkManagerComputerStatusChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .clientStatusChanged, object: nil)
     }
     
     // MARK: Properties
@@ -64,37 +64,32 @@ class SYComputerCell: UITableViewCell {
     }
     
     @objc private func updateStatus() {
-        var status = SYComputerStatus_Unknown
-        if !isAvailableComputersList {
-            status = SYNetworkManager.shared.status(forComputer: computer)
-            let prevStatus = SYNetworkManager.shared.previousStatus(forComputer: computer)
-            if status == SYComputerStatus_Waiting && prevStatus != SYComputerStatus_Unknown {
-                status = prevStatus
-            }
-        }
+        var loading = SYClientStatusManager.shared.isComputerLoading(computer)
+        var status = SYClientStatusManager.shared.lastStatusForComputer(computer)
+        
         if isAvailableComputersList && computer != nil {
-            status = SYComputerStatus_Opened
+            status = .online
         }
         if isAvailableComputersList && computer == nil {
-            status = SYComputerStatus_Waiting
+            loading = true
+        }
+        
+        if loading {
+            statusImageView.image = nil
+            activityIndicator.startAnimating()
+            return
         }
         
         switch status {
-        case SYComputerStatus_Unknown:
-            statusImageView.image = nil
-            activityIndicator.stopAnimating()
-        case SYComputerStatus_Waiting:
-            statusImageView.image = nil
-            activityIndicator.startAnimating()
-        case SYComputerStatus_Closed:
-            statusImageView.image = UIImage(named: "traffic_grey")
-            activityIndicator.stopAnimating()
-        case SYComputerStatus_Opened:
+        case .online:
             statusImageView.image = UIImage(named: "traffic_green")
             activityIndicator.stopAnimating()
-        // TODO: remove when using native enum
-        default:
-            break;
+        case .offline:
+            statusImageView.image = UIImage(named: "traffic_grey")
+            activityIndicator.stopAnimating()
+        case .unknown:
+            statusImageView.image = nil
+            activityIndicator.stopAnimating()
         }
     }
 }

@@ -7,9 +7,8 @@
 //
 
 #import "SYComputerModel.h"
-#import "NSData+IPAddress.h"
-#import "SYNetworkManager.h"
-#import "SYBonjourClient.h"
+#import "NSHost+SY.h"
+// #import "SYBonjourClient.h"
 
 @interface SYComputerModel ()
 @property (readwrite, strong, atomic) NSString *identifier;
@@ -37,10 +36,11 @@
         self.host = host;
         
         if (!self.name)
-            self.name = [SYNetworkManager hostnameForIP:self.host];
+            self.name = [NSHost hostWithAddress:self.host].name;
+        // TODO: monitor
         
-        if (!self.name)
-            self.name = [[SYBonjourClient shared] hostnameForIP:self.host];
+        // if (!self.name)
+        // TODO:    self.name = [[SYBonjourClient shared] hostnameForIP:self.host];
         
         if (!self.name)
             self.name = host;

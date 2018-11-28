@@ -23,11 +23,11 @@ class SYListComputersVC: UIViewController {
         tableView.registerCell(name: SYComputerCell.className)
         tableView.tableFooterView = UIView()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.bonjourClientUpdatedNotification), name: .SYBonjourClientUpdatedData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.bonjourClientUpdatedNotification), name: .bonjourClientUpdated, object: nil)
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: .SYBonjourClientUpdatedData, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .bonjourClientUpdated, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,18 +75,19 @@ class SYListComputersVC: UIViewController {
     private func startPinging() {
         guard pinger == nil else { return }
         
-        progressView.progress = 0
-        pinger = SYPinger(networks: SYNetworkManager.myNetworks(true) ?? [])
-        pinger?.pingNetwork(progressBlock: { [weak self] (progress) in
+        pinger = SYPinger(networks: SYNetworkModel.myNetworks(true))
+        pinger?.progressBlock = { [weak self] (progress) in
             self?.progressView.setProgress(Float(progress), animated: true)
-            return
-        }, validIpFound: { [weak self] (ip) in
+        }
+        pinger?.ipFoundBlock = { [weak self] (ip) in
             self?.addComputer(with: ip)
-            return
-        }, finishedBlock: { [weak self] (finished) in
+        }
+        pinger?.finishedBlock = { [weak self] (finished) in
             self?.progressView?.setProgress(1, animated: true)
-            return
-        })
+        }
+        
+        progressView.progress = 0
+        pinger?.start()
     }
 }
 

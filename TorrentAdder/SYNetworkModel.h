@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSString *ipAddress;
 @property (nonatomic, strong) NSString *submask;
 
-- (NSArray *)allIPsOnNetwork:(BOOL)ignoreMyIP;
+- (nonnull NSArray <NSString *> *)allIPsOnNetwork:(BOOL)ignoreMyIP;
+
++ (nonnull NSArray<SYNetworkModel *> *)myNetworks:(BOOL)onlyLocalEnXinterfaces;
 
 @end

@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        SYBonjourClient.shared().start()
+        SYBonjourClient.shared.start()
         
         JAHPAuthenticatingHTTPProtocol.setDelegate(self)
         JAHPAuthenticatingHTTPProtocol.start()
@@ -41,13 +41,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = SYWindow.mainWindow(withRootViewController: nc)
         window?.preventSlowAnimationsOnShake = false
         
-        // TODO: #if DEBUG_POPUP
+        #if DEBUG_POPUP
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             let magnet = "magnet:?xt=urn:btih:0403fb4728bd788fbcb67e87d6feb241ef38c75a&dn=ubuntu-16.10-desktop-amd64.iso&tr=http%3A%2F%2Ftorrent.ubuntu.com%3A6969%2Fannounce&tr=http%3A%2F%2Fipv6.torrent.ubuntu.com%3A6969%2Fannounce"
             
             NotificationCenter.default.post(name: .didOpenURL, object: nil, userInfo: [UIApplication.DidOpenURLKey.magnetURL: URL(string: magnet)!])
         }
-        // TODO: #endif
+        #endif
         
         return true
     }
