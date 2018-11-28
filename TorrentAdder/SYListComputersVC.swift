@@ -1,5 +1,5 @@
 //
-//  SYListComputersVCSwift.swift
+//  SYListComputersVC.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -45,7 +45,6 @@ class SYListComputersVC: UIViewController {
     // MARK: Actions
     @objc private func closeButtonTap() {
         dismiss(animated: true, completion: nil)
-        // TODO: ?? [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }
     
     // MARK: Notifications

@@ -8,7 +8,6 @@
 #import "SYResultCell.h"
 #import "SYWebAPI.h"
 #import "SYDatabase.h"
-#import "SYEditComputerVC.h"
 #import "UIColor+SY.h"
 #import "SYNetworkManager.h"
 #import "UIView+Glow.h"
@@ -29,5 +28,7 @@
 #import "SYNetworkModel.h"
 #import "SYPinger.h"
 #import "SYBonjourClient.h"
-#import "SYEditComputerVC.h"
 #import "UIColor+SY.h"
+
+#import "SYComputerFormCell.h"
+#import "SYDatabase.h"

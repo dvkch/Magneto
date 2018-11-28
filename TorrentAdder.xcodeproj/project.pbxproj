@@ -26,6 +26,7 @@
 		9771AB2721AEF5E6005DE97D /* SYSourceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2621AEF5E6005DE97D /* SYSourceApp.swift */; };
 		9771AB2921AEF898005DE97D /* SYNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2821AEF898005DE97D /* SYNavigationController.swift */; };
 		9771AB2B21AEF901005DE97D /* SYListComputersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2A21AEF901005DE97D /* SYListComputersVC.swift */; };
+		9771AB2D21AEFF09005DE97D /* SYEditComputerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2C21AEFF09005DE97D /* SYEditComputerVC.swift */; };
 		9786BAD91BB3122100786363 /* SYWebAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9786BAD81BB3122100786363 /* SYWebAPI.m */; };
 		9797FBB61BC0305700CA3BEF /* SYBonjourClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB51BC0305700CA3BEF /* SYBonjourClient.m */; };
 		9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB81BC0322A00CA3BEF /* NSNetService+SY.m */; };
@@ -49,7 +50,6 @@
 		97BA941B1BB9E1C6000B03FD /* NSObject+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BA941A1BB9E1C6000B03FD /* NSObject+SY.m */; };
 		97BDF8521BCD909C00D77892 /* NSURLRequest+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */; };
 		97EF7B311BC3128000B9D33A /* UIImage+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EF7B301BC3128000B9D33A /* UIImage+SY.m */; };
-		97F911471BC2C45C00BF1848 /* SYEditComputerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F911451BC2C45C00BF1848 /* SYEditComputerVC.m */; };
 		97F911481BC2C45C00BF1848 /* SYEditComputerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* SYEditComputerVC.xib */; };
 		97F9114C1BC2C73D00BF1848 /* SYComputerFormCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F9114A1BC2C73D00BF1848 /* SYComputerFormCell.m */; };
 		97F9114D1BC2C73D00BF1848 /* SYComputerFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */; };
@@ -109,6 +109,7 @@
 		9771AB2621AEF5E6005DE97D /* SYSourceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYSourceApp.swift; sourceTree = "<group>"; };
 		9771AB2821AEF898005DE97D /* SYNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYNavigationController.swift; sourceTree = "<group>"; };
 		9771AB2A21AEF901005DE97D /* SYListComputersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYListComputersVC.swift; sourceTree = "<group>"; };
+		9771AB2C21AEFF09005DE97D /* SYEditComputerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYEditComputerVC.swift; sourceTree = "<group>"; };
 		9786BAD71BB3122100786363 /* SYWebAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYWebAPI.h; sourceTree = "<group>"; };
 		9786BAD81BB3122100786363 /* SYWebAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYWebAPI.m; sourceTree = "<group>"; };
 		9797FBB41BC0305700CA3BEF /* SYBonjourClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYBonjourClient.h; sourceTree = "<group>"; };
@@ -142,8 +143,6 @@
 		97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+SY.m"; sourceTree = "<group>"; };
 		97EF7B2F1BC3128000B9D33A /* UIImage+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SY.h"; sourceTree = "<group>"; };
 		97EF7B301BC3128000B9D33A /* UIImage+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SY.m"; sourceTree = "<group>"; };
-		97F911441BC2C45C00BF1848 /* SYEditComputerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYEditComputerVC.h; sourceTree = "<group>"; };
-		97F911451BC2C45C00BF1848 /* SYEditComputerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYEditComputerVC.m; sourceTree = "<group>"; };
 		97F911461BC2C45C00BF1848 /* SYEditComputerVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYEditComputerVC.xib; sourceTree = "<group>"; };
 		97F911491BC2C73D00BF1848 /* SYComputerFormCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYComputerFormCell.h; sourceTree = "<group>"; };
 		97F9114A1BC2C73D00BF1848 /* SYComputerFormCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYComputerFormCell.m; sourceTree = "<group>"; };
@@ -200,8 +199,7 @@
 				97A18E0B1BBC011900F33AF5 /* SYMainVC.xib */,
 				9771AB2A21AEF901005DE97D /* SYListComputersVC.swift */,
 				97A18E131BBC017C00F33AF5 /* SYListComputersVC.xib */,
-				97F911441BC2C45C00BF1848 /* SYEditComputerVC.h */,
-				97F911451BC2C45C00BF1848 /* SYEditComputerVC.m */,
+				9771AB2C21AEFF09005DE97D /* SYEditComputerVC.swift */,
 				97F911461BC2C45C00BF1848 /* SYEditComputerVC.xib */,
 				9771AB1E21AEE457005DE97D /* SYAddMagnetPopupVC.swift */,
 				9771AB2021AEE679005DE97D /* SYAddMagnetPopupVC.xib */,
@@ -621,13 +619,13 @@
 				9771AB2521AEF3CE005DE97D /* UIView+SY.swift in Sources */,
 				9771AB1F21AEE457005DE97D /* SYAddMagnetPopupVC.swift in Sources */,
 				9771AB1321AEC919005DE97D /* SYMainVC.swift in Sources */,
-				97F911471BC2C45C00BF1848 /* SYEditComputerVC.m in Sources */,
 				9771AB2321AEF1A5005DE97D /* URL+SY.swift in Sources */,
 				97F9114C1BC2C73D00BF1848 /* SYComputerFormCell.m in Sources */,
 				970546121BBD4E3300C5294D /* SYPinger.m in Sources */,
 				97AE99961EB26894000C0FF0 /* NSCalendar+SY.m in Sources */,
 				F89867B7192B859600735175 /* SYLabelTag.m in Sources */,
 				F898679A192A34E600735175 /* UIView+Glow.m in Sources */,
+				9771AB2D21AEFF09005DE97D /* SYEditComputerVC.swift in Sources */,
 				9771AB2721AEF5E6005DE97D /* SYSourceApp.swift in Sources */,
 				9797FBB61BC0305700CA3BEF /* SYBonjourClient.m in Sources */,
 				97AE99931EB26495000C0FF0 /* SYResultModel.m in Sources */,

@@ -10,7 +10,7 @@
 
 @implementation SYComputerModel (UI)
 
-+ (NSUInteger)numberOfFields
++ (NSInteger)numberOfFields
 {
     return 4;
 }

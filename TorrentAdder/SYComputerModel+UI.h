@@ -8,7 +8,7 @@
 
 #import "SYComputerModel.h"
 
-typedef enum : NSUInteger {
+typedef enum : NSInteger {
     SYComputerModelField_Name,
     SYComputerModelField_ClientSoftware,
     SYComputerModelField_Host,
@@ -19,7 +19,7 @@ typedef enum : NSUInteger {
 
 @interface SYComputerModel (UI)
 
-+ (NSUInteger)numberOfFields;
++ (NSInteger)numberOfFields;
 - (UIImage *)imageForField:(SYComputerModelField)field;
 - (id)valueForField:(SYComputerModelField)field;
 - (void)setValue:(id)value forField:(SYComputerModelField)field;
