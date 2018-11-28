@@ -21,7 +21,7 @@ class SYMainVC: UIViewController {
         timerRefreshComputers = Timer(timeInterval: 5, target: self, selector: #selector(self.refreshComputersTimerTick), userInfo: nil, repeats: true)
         RunLoop.main.add(timerRefreshComputers!, forMode: .common)
 
-        titleLabel.addGlow(.lightGray, size: 4)
+        titleLabel.addGlow(color: .lightGray, size: 4)
 
         searchField.backgroundColor = UIColor(white: 1, alpha: 0.3)
         searchField.activityIndicatorView.color = .black
@@ -113,6 +113,7 @@ extension SYMainVC {
         
         guard !searchQuery.isEmpty else {
             searchResults = []
+            searchField.showLoadingIndicator(false)
             tableView.reloadData()
             return
         }
@@ -221,8 +222,8 @@ extension SYMainVC : UITableViewDataSource {
         switch tableSection {
         case .buttons:
             let cell = tableView.dequeueReusableCell(withIdentifier: SYComputersCell.className, for: indexPath) as! SYComputersCell
-            cell.numberOfComputers = computers.count
-            cell.tappedAddComputerBlock = { [weak self] in
+            cell.computersCount = computers.count
+            cell.addButtonTapBlock = { [weak self] in
                 let vc = SYListComputersVC()
                 let nc = SYNavigationController(rootViewController: vc)
                 self?.present(nc, animated: true, completion: nil)
@@ -242,12 +243,21 @@ extension SYMainVC : UITableViewDataSource {
 }
 
 extension SYMainVC : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let tableSection = TableSection(rawValue: indexPath.section) else { return 0 }
+        switch tableSection {
+        case .buttons: return 60
+        case .computers: return 60
+        case .results: return 80
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return 0 }
         switch tableSection {
         case .buttons: return 60
         case .computers: return 60
-        case .results: return SYResultCell.cellHeight(forResult: searchResults[indexPath.row], width: tableView.bounds.width)
+        case .results: return UITableView.automaticDimension
         }
     }
     

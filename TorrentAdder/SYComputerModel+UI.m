@@ -75,7 +75,7 @@
     }
 }
 
-- (NSArray *)optionsForEnumField:(SYComputerModelField)field
+- (NSArray <NSString *> *)optionsForEnumField:(SYComputerModelField)field
 {
     switch (field) {
         case SYComputerModelField_Name:

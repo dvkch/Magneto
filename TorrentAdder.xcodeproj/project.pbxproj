@@ -14,7 +14,6 @@
 		971378211BBB09360060C5B6 /* SYDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 971378201BBB09360060C5B6 /* SYDatabase.m */; };
 		973784321BD40649001AD487 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973784311BD40649001AD487 /* Launch.storyboard */; };
 		973F6D381BBB12B700A8BDC9 /* SYNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 973F6D371BBB12B700A8BDC9 /* SYNetworkManager.m */; };
-		976B76DE1BBB03B200641AD5 /* SYComputersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 976B76DD1BBB03B200641AD5 /* SYComputersCell.m */; };
 		9771AB1321AEC919005DE97D /* SYMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1221AEC919005DE97D /* SYMainVC.swift */; };
 		9771AB1621AECB95005DE97D /* UITableView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1521AECB95005DE97D /* UITableView+SY.swift */; };
 		9771AB1821AECBC3005DE97D /* NSObject+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1721AECBC3005DE97D /* NSObject+SY.swift */; };
@@ -27,6 +26,10 @@
 		9771AB2921AEF898005DE97D /* SYNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2821AEF898005DE97D /* SYNavigationController.swift */; };
 		9771AB2B21AEF901005DE97D /* SYListComputersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2A21AEF901005DE97D /* SYListComputersVC.swift */; };
 		9771AB2D21AEFF09005DE97D /* SYEditComputerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2C21AEFF09005DE97D /* SYEditComputerVC.swift */; };
+		9771AB2F21AF0356005DE97D /* SYComputersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2E21AF0356005DE97D /* SYComputersCell.swift */; };
+		9771AB3121AF0534005DE97D /* SYComputerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3021AF0534005DE97D /* SYComputerCell.swift */; };
+		9771AB3321AF08E4005DE97D /* SYResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3221AF08E4005DE97D /* SYResultCell.swift */; };
+		9771AB3521AF0C59005DE97D /* SYComputerFormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3421AF0C59005DE97D /* SYComputerFormCell.swift */; };
 		9786BAD91BB3122100786363 /* SYWebAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9786BAD81BB3122100786363 /* SYWebAPI.m */; };
 		9797FBB61BC0305700CA3BEF /* SYBonjourClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB51BC0305700CA3BEF /* SYBonjourClient.m */; };
 		9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB81BC0322A00CA3BEF /* NSNetService+SY.m */; };
@@ -46,12 +49,9 @@
 		97A18E141BBC017C00F33AF5 /* SYListComputersVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E131BBC017C00F33AF5 /* SYListComputersVC.xib */; };
 		97AE99931EB26495000C0FF0 /* SYResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AE99921EB26495000C0FF0 /* SYResultModel.m */; };
 		97AE99961EB26894000C0FF0 /* NSCalendar+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AE99951EB26894000C0FF0 /* NSCalendar+SY.m */; };
-		97BA94181BB9D8C0000B03FD /* SYResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BA94171BB9D8C0000B03FD /* SYResultCell.m */; };
 		97BA941B1BB9E1C6000B03FD /* NSObject+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BA941A1BB9E1C6000B03FD /* NSObject+SY.m */; };
 		97BDF8521BCD909C00D77892 /* NSURLRequest+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */; };
-		97EF7B311BC3128000B9D33A /* UIImage+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EF7B301BC3128000B9D33A /* UIImage+SY.m */; };
 		97F911481BC2C45C00BF1848 /* SYEditComputerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* SYEditComputerVC.xib */; };
-		97F9114C1BC2C73D00BF1848 /* SYComputerFormCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F9114A1BC2C73D00BF1848 /* SYComputerFormCell.m */; };
 		97F9114D1BC2C73D00BF1848 /* SYComputerFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */; };
 		97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */; };
 		F83FFA3F192BE7440034A95B /* SYClientAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = F83FFA3E192BE7440034A95B /* SYClientAPI.m */; };
@@ -60,11 +60,8 @@
 		F898675F192A317C00735175 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675E192A317C00735175 /* UIKit.framework */; };
 		F8986765192A317C00735175 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F8986763192A317C00735175 /* InfoPlist.strings */; };
 		F8986776192A317C00735175 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8986775192A317C00735175 /* Images.xcassets */; };
-		F898679A192A34E600735175 /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = F8986799192A34E600735175 /* UIView+Glow.m */; };
 		F89867AE192A4E4C00735175 /* SYComputerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F89867AD192A4E4C00735175 /* SYComputerModel.m */; };
 		F89867B1192AA9CB00735175 /* NSData+IPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = F89867B0192AA9CB00735175 /* NSData+IPAddress.m */; };
-		F89867B4192B7B1100735175 /* SYComputerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F89867B3192B7B1100735175 /* SYComputerCell.m */; };
-		F89867B7192B859600735175 /* SYLabelTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F89867B6192B859600735175 /* SYLabelTag.m */; };
 		F8986836192BC9B600735175 /* NSString+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = F8986835192BC9B600735175 /* NSString+SY.m */; };
 /* End PBXBuildFile section */
 
@@ -95,8 +92,6 @@
 		973784311BD40649001AD487 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		973F6D361BBB12B700A8BDC9 /* SYNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYNetworkManager.h; sourceTree = "<group>"; };
 		973F6D371BBB12B700A8BDC9 /* SYNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYNetworkManager.m; sourceTree = "<group>"; };
-		976B76DC1BBB03B200641AD5 /* SYComputersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYComputersCell.h; sourceTree = "<group>"; };
-		976B76DD1BBB03B200641AD5 /* SYComputersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYComputersCell.m; sourceTree = "<group>"; };
 		9771AB1121AEC918005DE97D /* TorrentAdder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TorrentAdder-Bridging-Header.h"; sourceTree = "<group>"; };
 		9771AB1221AEC919005DE97D /* SYMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMainVC.swift; sourceTree = "<group>"; };
 		9771AB1521AECB95005DE97D /* UITableView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+SY.swift"; sourceTree = "<group>"; };
@@ -110,6 +105,10 @@
 		9771AB2821AEF898005DE97D /* SYNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYNavigationController.swift; sourceTree = "<group>"; };
 		9771AB2A21AEF901005DE97D /* SYListComputersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYListComputersVC.swift; sourceTree = "<group>"; };
 		9771AB2C21AEFF09005DE97D /* SYEditComputerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYEditComputerVC.swift; sourceTree = "<group>"; };
+		9771AB2E21AF0356005DE97D /* SYComputersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYComputersCell.swift; sourceTree = "<group>"; };
+		9771AB3021AF0534005DE97D /* SYComputerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYComputerCell.swift; sourceTree = "<group>"; };
+		9771AB3221AF08E4005DE97D /* SYResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYResultCell.swift; sourceTree = "<group>"; };
+		9771AB3421AF0C59005DE97D /* SYComputerFormCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYComputerFormCell.swift; sourceTree = "<group>"; };
 		9786BAD71BB3122100786363 /* SYWebAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYWebAPI.h; sourceTree = "<group>"; };
 		9786BAD81BB3122100786363 /* SYWebAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYWebAPI.m; sourceTree = "<group>"; };
 		9797FBB41BC0305700CA3BEF /* SYBonjourClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYBonjourClient.h; sourceTree = "<group>"; };
@@ -135,17 +134,11 @@
 		97AE99921EB26495000C0FF0 /* SYResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYResultModel.m; sourceTree = "<group>"; };
 		97AE99941EB26894000C0FF0 /* NSCalendar+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCalendar+SY.h"; sourceTree = "<group>"; };
 		97AE99951EB26894000C0FF0 /* NSCalendar+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCalendar+SY.m"; sourceTree = "<group>"; };
-		97BA94161BB9D8C0000B03FD /* SYResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYResultCell.h; sourceTree = "<group>"; };
-		97BA94171BB9D8C0000B03FD /* SYResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYResultCell.m; sourceTree = "<group>"; };
 		97BA94191BB9E1C6000B03FD /* NSObject+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SY.h"; sourceTree = "<group>"; };
 		97BA941A1BB9E1C6000B03FD /* NSObject+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SY.m"; sourceTree = "<group>"; };
 		97BDF8501BCD909C00D77892 /* NSURLRequest+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+SY.h"; sourceTree = "<group>"; };
 		97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+SY.m"; sourceTree = "<group>"; };
-		97EF7B2F1BC3128000B9D33A /* UIImage+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SY.h"; sourceTree = "<group>"; };
-		97EF7B301BC3128000B9D33A /* UIImage+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SY.m"; sourceTree = "<group>"; };
 		97F911461BC2C45C00BF1848 /* SYEditComputerVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYEditComputerVC.xib; sourceTree = "<group>"; };
-		97F911491BC2C73D00BF1848 /* SYComputerFormCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYComputerFormCell.h; sourceTree = "<group>"; };
-		97F9114A1BC2C73D00BF1848 /* SYComputerFormCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYComputerFormCell.m; sourceTree = "<group>"; };
 		97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYComputerFormCell.xib; sourceTree = "<group>"; };
 		97F9114E1BC3071F00BF1848 /* SYComputerModel+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SYComputerModel+UI.h"; sourceTree = "<group>"; };
 		97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SYComputerModel+UI.m"; sourceTree = "<group>"; };
@@ -162,16 +155,10 @@
 		F8986768192A317C00735175 /* TorrentAdder-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TorrentAdder-Prefix.pch"; sourceTree = "<group>"; };
 		F8986775192A317C00735175 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F898677C192A317D00735175 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		F8986798192A34E600735175 /* UIView+Glow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Glow.h"; sourceTree = "<group>"; };
-		F8986799192A34E600735175 /* UIView+Glow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Glow.m"; sourceTree = "<group>"; };
 		F89867AC192A4E4C00735175 /* SYComputerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYComputerModel.h; sourceTree = "<group>"; };
 		F89867AD192A4E4C00735175 /* SYComputerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYComputerModel.m; sourceTree = "<group>"; };
 		F89867AF192AA9CB00735175 /* NSData+IPAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+IPAddress.h"; sourceTree = "<group>"; };
 		F89867B0192AA9CB00735175 /* NSData+IPAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+IPAddress.m"; sourceTree = "<group>"; };
-		F89867B2192B7B1100735175 /* SYComputerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYComputerCell.h; sourceTree = "<group>"; };
-		F89867B3192B7B1100735175 /* SYComputerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYComputerCell.m; sourceTree = "<group>"; };
-		F89867B5192B859600735175 /* SYLabelTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYLabelTag.h; sourceTree = "<group>"; };
-		F89867B6192B859600735175 /* SYLabelTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYLabelTag.m; sourceTree = "<group>"; };
 		F8986834192BC9B600735175 /* NSString+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SY.h"; sourceTree = "<group>"; };
 		F8986835192BC9B600735175 /* NSString+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SY.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -210,29 +197,16 @@
 		973AFF821BB41D0700BA4B8B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				976B76DC1BBB03B200641AD5 /* SYComputersCell.h */,
-				976B76DD1BBB03B200641AD5 /* SYComputersCell.m */,
+				9771AB2E21AF0356005DE97D /* SYComputersCell.swift */,
 				97A18E0F1BBC017000F33AF5 /* SYComputersCell.xib */,
-				F89867B2192B7B1100735175 /* SYComputerCell.h */,
-				F89867B3192B7B1100735175 /* SYComputerCell.m */,
+				9771AB3021AF0534005DE97D /* SYComputerCell.swift */,
 				97A18E0D1BBC016B00F33AF5 /* SYComputerCell.xib */,
-				97BA94161BB9D8C0000B03FD /* SYResultCell.h */,
-				97BA94171BB9D8C0000B03FD /* SYResultCell.m */,
+				9771AB3221AF08E4005DE97D /* SYResultCell.swift */,
 				97A18E111BBC017500F33AF5 /* SYResultCell.xib */,
-				97F911491BC2C73D00BF1848 /* SYComputerFormCell.h */,
-				97F9114A1BC2C73D00BF1848 /* SYComputerFormCell.m */,
+				9771AB3421AF0C59005DE97D /* SYComputerFormCell.swift */,
 				97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */,
 			);
 			name = Cells;
-			sourceTree = "<group>";
-		};
-		973AFF831BB41D1300BA4B8B /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				F89867B5192B859600735175 /* SYLabelTag.h */,
-				F89867B6192B859600735175 /* SYLabelTag.m */,
-			);
-			name = Views;
 			sourceTree = "<group>";
 		};
 		9771AB1421AECB84005DE97D /* Extensions */ = {
@@ -360,10 +334,6 @@
 		F89867BE192BA8D500735175 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				F8986798192A34E600735175 /* UIView+Glow.h */,
-				F8986799192A34E600735175 /* UIView+Glow.m */,
-				97EF7B2F1BC3128000B9D33A /* UIImage+SY.h */,
-				97EF7B301BC3128000B9D33A /* UIImage+SY.m */,
 				F89867AF192AA9CB00735175 /* NSData+IPAddress.h */,
 				F89867B0192AA9CB00735175 /* NSData+IPAddress.m */,
 				F8986834192BC9B600735175 /* NSString+SY.h */,
@@ -405,7 +375,6 @@
 			children = (
 				973AFF811BB41CFC00BA4B8B /* VCs */,
 				973AFF821BB41D0700BA4B8B /* Cells */,
-				973AFF831BB41D1300BA4B8B /* Views */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -611,31 +580,28 @@
 				973F6D381BBB12B700A8BDC9 /* SYNetworkManager.m in Sources */,
 				9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */,
 				9705460F1BBD464700C5294D /* SYIP4Model.m in Sources */,
-				F89867B4192B7B1100735175 /* SYComputerCell.m in Sources */,
 				97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */,
 				9771AB1821AECBC3005DE97D /* NSObject+SY.swift in Sources */,
 				9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */,
-				976B76DE1BBB03B200641AD5 /* SYComputersCell.m in Sources */,
 				9771AB2521AEF3CE005DE97D /* UIView+SY.swift in Sources */,
 				9771AB1F21AEE457005DE97D /* SYAddMagnetPopupVC.swift in Sources */,
 				9771AB1321AEC919005DE97D /* SYMainVC.swift in Sources */,
 				9771AB2321AEF1A5005DE97D /* URL+SY.swift in Sources */,
-				97F9114C1BC2C73D00BF1848 /* SYComputerFormCell.m in Sources */,
+				9771AB3521AF0C59005DE97D /* SYComputerFormCell.swift in Sources */,
 				970546121BBD4E3300C5294D /* SYPinger.m in Sources */,
 				97AE99961EB26894000C0FF0 /* NSCalendar+SY.m in Sources */,
-				F89867B7192B859600735175 /* SYLabelTag.m in Sources */,
-				F898679A192A34E600735175 /* UIView+Glow.m in Sources */,
 				9771AB2D21AEFF09005DE97D /* SYEditComputerVC.swift in Sources */,
 				9771AB2721AEF5E6005DE97D /* SYSourceApp.swift in Sources */,
 				9797FBB61BC0305700CA3BEF /* SYBonjourClient.m in Sources */,
 				97AE99931EB26495000C0FF0 /* SYResultModel.m in Sources */,
 				971378211BBB09360060C5B6 /* SYDatabase.m in Sources */,
-				97BA94181BB9D8C0000B03FD /* SYResultCell.m in Sources */,
 				9771AB2921AEF898005DE97D /* SYNavigationController.swift in Sources */,
 				F83FFA3F192BE7440034A95B /* SYClientAPI.m in Sources */,
 				9786BAD91BB3122100786363 /* SYWebAPI.m in Sources */,
 				9705460C1BBD43F900C5294D /* SYNetworkModel.m in Sources */,
-				97EF7B311BC3128000B9D33A /* UIImage+SY.m in Sources */,
+				9771AB2F21AF0356005DE97D /* SYComputersCell.swift in Sources */,
+				9771AB3321AF08E4005DE97D /* SYResultCell.swift in Sources */,
+				9771AB3121AF0534005DE97D /* SYComputerCell.swift in Sources */,
 				97BDF8521BCD909C00D77892 /* NSURLRequest+SY.m in Sources */,
 				97A0C54F1BC31BA100DC4EEC /* UIColor+SY.m in Sources */,
 				97BA941B1BB9E1C6000B03FD /* NSObject+SY.m in Sources */,

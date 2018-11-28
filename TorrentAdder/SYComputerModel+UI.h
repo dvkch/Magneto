@@ -23,7 +23,7 @@ typedef enum : NSInteger {
 - (UIImage *)imageForField:(SYComputerModelField)field;
 - (id)valueForField:(SYComputerModelField)field;
 - (void)setValue:(id)value forField:(SYComputerModelField)field;
-- (NSArray *)optionsForEnumField:(SYComputerModelField)field;
+- (NSArray <NSString *> *)optionsForEnumField:(SYComputerModelField)field;
 - (NSString *)nameForField:(SYComputerModelField)field;
 - (UIKeyboardType)keyboardTypeForField:(SYComputerModelField)field;
 

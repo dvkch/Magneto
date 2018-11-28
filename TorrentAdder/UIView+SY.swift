@@ -18,4 +18,12 @@ extension UIView {
             isHidden = newValue
         }
     }
+
+    func addGlow(color: UIColor?, size: CGFloat) {
+        layer.shadowColor = (color ?? tintColor)?.cgColor
+        layer.shadowRadius = size
+        layer.shadowOpacity = 1
+        layer.shadowOffset = .zero
+        layer.masksToBounds = false
+    }
 }

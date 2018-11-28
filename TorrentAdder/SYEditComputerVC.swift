@@ -92,7 +92,8 @@ extension SYEditComputerVC : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SYComputerFormCell.className, for: indexPath) as! SYComputerFormCell
-        cell.setComputer(computer, andField: SYComputerModelField(indexPath.row))
+        cell.computer = computer
+        cell.formField = SYComputerModelField(indexPath.row)
         return cell
     }
 }
