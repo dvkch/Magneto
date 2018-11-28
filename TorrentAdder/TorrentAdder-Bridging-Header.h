@@ -5,7 +5,6 @@
 #import "SYComputerModel.h"
 #import "SYComputerCell.h"
 #import "SYComputersCell.h"
-#import "SYListComputersVC.h"
 #import "SYResultCell.h"
 #import "SYWebAPI.h"
 #import "SYDatabase.h"
@@ -14,7 +13,6 @@
 #import "SYNetworkManager.h"
 #import "UIView+Glow.h"
 #import "SYWebAPI.h"
-#import "SYNavigationController.h"
 
 #import "NSString+SY.h"
 #import "SYBonjourClient.h"
@@ -24,3 +22,12 @@
 #import "SYClientAPI.h"
 #import "SYWebAPI.h"
 #import "SYComputerCell.h"
+
+#import "SYComputerCell.h"
+#import "SYComputerModel.h"
+#import "SYNetworkManager.h"
+#import "SYNetworkModel.h"
+#import "SYPinger.h"
+#import "SYBonjourClient.h"
+#import "SYEditComputerVC.h"
+#import "UIColor+SY.h"

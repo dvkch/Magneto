@@ -87,6 +87,11 @@ NSString * const SYNetworkManagerComputerStatusChangedNotification = @"SYNetwork
         return;
     }
     
+    if (computer.identifier == nil) {
+        NSLog(@"invalid id");
+        return;
+    }
+    
     [self.times setObject:[NSDate date] forKey:computer.identifier];
     
     if (status == [self statusForComputer:computer])

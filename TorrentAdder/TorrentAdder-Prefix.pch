@@ -18,5 +18,4 @@
 #   import "NSObject+SY.h"
 #   import "NSString+SY.h"
 #   import "SYMacros.h"
-#   import "SYNavigationController.h"
 #endif
