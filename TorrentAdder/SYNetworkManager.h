@@ -23,7 +23,7 @@ extern NSString * const SYNetworkManagerComputerStatusChangedNotification;
 
 @property (nonatomic, weak) id <SYNetworkManagerDelegate> delegate;
 
-+ (SYNetworkManager *)shared;
+@property (class, readonly) SYNetworkManager *shared;
 
 - (void)startStatusUpdateForComputer:(SYComputerModel *)computer;
 

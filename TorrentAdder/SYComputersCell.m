@@ -16,7 +16,7 @@
 
 @implementation SYComputersCell
 
-- (void)setNumberOfComputers:(NSUInteger)numberOfComputers
+- (void)setNumberOfComputers:(NSInteger)numberOfComputers
 {
     self->_numberOfComputers = numberOfComputers;
     [self.labelCount setText:[NSString stringWithFormat:@"%d computer%@",

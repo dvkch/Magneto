@@ -17,6 +17,10 @@
 		973AFF801BB41CE800BA4B8B /* SYListComputersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 973AFF7F1BB41CE800BA4B8B /* SYListComputersVC.m */; };
 		973F6D381BBB12B700A8BDC9 /* SYNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 973F6D371BBB12B700A8BDC9 /* SYNetworkManager.m */; };
 		976B76DE1BBB03B200641AD5 /* SYComputersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 976B76DD1BBB03B200641AD5 /* SYComputersCell.m */; };
+		9771AB1321AEC919005DE97D /* SYMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1221AEC919005DE97D /* SYMainVC.swift */; };
+		9771AB1621AECB95005DE97D /* UITableView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1521AECB95005DE97D /* UITableView+SY.swift */; };
+		9771AB1821AECBC3005DE97D /* NSObject+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1721AECBC3005DE97D /* NSObject+SY.swift */; };
+		9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1A21AEDC92005DE97D /* AppDelegate.swift */; };
 		9772B3CA1BC68BC60022E370 /* SYAddMagnetPopupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9772B3C91BC68BC60022E370 /* SYAddMagnetPopupVC.m */; };
 		9786BAD91BB3122100786363 /* SYWebAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9786BAD81BB3122100786363 /* SYWebAPI.m */; };
 		9797FBB61BC0305700CA3BEF /* SYBonjourClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9797FBB51BC0305700CA3BEF /* SYBonjourClient.m */; };
@@ -53,10 +57,7 @@
 		F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675C192A317C00735175 /* CoreGraphics.framework */; };
 		F898675F192A317C00735175 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675E192A317C00735175 /* UIKit.framework */; };
 		F8986765192A317C00735175 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F8986763192A317C00735175 /* InfoPlist.strings */; };
-		F8986767192A317C00735175 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8986766192A317C00735175 /* main.m */; };
-		F898676B192A317C00735175 /* SYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F898676A192A317C00735175 /* SYAppDelegate.m */; };
 		F8986776192A317C00735175 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8986775192A317C00735175 /* Images.xcassets */; };
-		F8986794192A324800735175 /* SYMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F8986793192A324800735175 /* SYMainVC.m */; };
 		F898679A192A34E600735175 /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = F8986799192A34E600735175 /* UIView+Glow.m */; };
 		F89867AE192A4E4C00735175 /* SYComputerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F89867AD192A4E4C00735175 /* SYComputerModel.m */; };
 		F89867B1192AA9CB00735175 /* NSData+IPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = F89867B0192AA9CB00735175 /* NSData+IPAddress.m */; };
@@ -98,6 +99,11 @@
 		973F6D371BBB12B700A8BDC9 /* SYNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYNetworkManager.m; sourceTree = "<group>"; };
 		976B76DC1BBB03B200641AD5 /* SYComputersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYComputersCell.h; sourceTree = "<group>"; };
 		976B76DD1BBB03B200641AD5 /* SYComputersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYComputersCell.m; sourceTree = "<group>"; };
+		9771AB1121AEC918005DE97D /* TorrentAdder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TorrentAdder-Bridging-Header.h"; sourceTree = "<group>"; };
+		9771AB1221AEC919005DE97D /* SYMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMainVC.swift; sourceTree = "<group>"; };
+		9771AB1521AECB95005DE97D /* UITableView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+SY.swift"; sourceTree = "<group>"; };
+		9771AB1721AECBC3005DE97D /* NSObject+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+SY.swift"; sourceTree = "<group>"; };
+		9771AB1A21AEDC92005DE97D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9772B3C81BC68BC60022E370 /* SYAddMagnetPopupVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYAddMagnetPopupVC.h; sourceTree = "<group>"; };
 		9772B3C91BC68BC60022E370 /* SYAddMagnetPopupVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAddMagnetPopupVC.m; sourceTree = "<group>"; };
 		9786BAD71BB3122100786363 /* SYWebAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYWebAPI.h; sourceTree = "<group>"; };
@@ -155,14 +161,9 @@
 		F898675E192A317C00735175 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F8986762192A317C00735175 /* TorrentAdder-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TorrentAdder-Info.plist"; sourceTree = "<group>"; };
 		F8986764192A317C00735175 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		F8986766192A317C00735175 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F8986768192A317C00735175 /* TorrentAdder-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TorrentAdder-Prefix.pch"; sourceTree = "<group>"; };
-		F8986769192A317C00735175 /* SYAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYAppDelegate.h; sourceTree = "<group>"; };
-		F898676A192A317C00735175 /* SYAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYAppDelegate.m; sourceTree = "<group>"; };
 		F8986775192A317C00735175 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F898677C192A317D00735175 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		F8986792192A324800735175 /* SYMainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYMainVC.h; sourceTree = "<group>"; };
-		F8986793192A324800735175 /* SYMainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYMainVC.m; sourceTree = "<group>"; };
 		F8986798192A34E600735175 /* UIView+Glow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Glow.h"; sourceTree = "<group>"; };
 		F8986799192A34E600735175 /* UIView+Glow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Glow.m"; sourceTree = "<group>"; };
 		F89867AC192A4E4C00735175 /* SYComputerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYComputerModel.h; sourceTree = "<group>"; };
@@ -197,8 +198,7 @@
 			children = (
 				97AE998E1EB2618F000C0FF0 /* SYNavigationController.h */,
 				97AE998F1EB2618F000C0FF0 /* SYNavigationController.m */,
-				F8986792192A324800735175 /* SYMainVC.h */,
-				F8986793192A324800735175 /* SYMainVC.m */,
+				9771AB1221AEC919005DE97D /* SYMainVC.swift */,
 				97A18E0B1BBC011900F33AF5 /* SYMainVC.xib */,
 				973AFF7E1BB41CE800BA4B8B /* SYListComputersVC.h */,
 				973AFF7F1BB41CE800BA4B8B /* SYListComputersVC.m */,
@@ -238,6 +238,15 @@
 				F89867B6192B859600735175 /* SYLabelTag.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		9771AB1421AECB84005DE97D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9771AB1521AECB95005DE97D /* UITableView+SY.swift */,
+				9771AB1721AECBC3005DE97D /* NSObject+SY.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		97EACC001BC2C31300382614 /* Network */ = {
@@ -326,12 +335,13 @@
 		F8986760192A317C00735175 /* TorrentAdder */ = {
 			isa = PBXGroup;
 			children = (
+				9771AB1421AECB84005DE97D /* Extensions */,
 				F83FFA40192BE74E0034A95B /* Controllers */,
 				F89867BE192BA8D500735175 /* Categories */,
 				F89867BF192BA8DC00735175 /* Models */,
 				F89867C0192BA8E800735175 /* UI */,
-				F8986769192A317C00735175 /* SYAppDelegate.h */,
-				F898676A192A317C00735175 /* SYAppDelegate.m */,
+				9771AB1A21AEDC92005DE97D /* AppDelegate.swift */,
+				9771AB1121AEC918005DE97D /* TorrentAdder-Bridging-Header.h */,
 				973784311BD40649001AD487 /* Launch.storyboard */,
 				F8986775192A317C00735175 /* Images.xcassets */,
 				F8986761192A317C00735175 /* Supporting Files */,
@@ -345,7 +355,6 @@
 			children = (
 				F8986762192A317C00735175 /* TorrentAdder-Info.plist */,
 				F8986763192A317C00735175 /* InfoPlist.strings */,
-				F8986766192A317C00735175 /* main.m */,
 				F8986768192A317C00735175 /* TorrentAdder-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -430,6 +439,7 @@
 			buildConfigurationList = F898678C192A317D00735175 /* Build configuration list for PBXNativeTarget "TorrentAdder" */;
 			buildPhases = (
 				2E37C883200E80A532B2ACFD /* [CP] Check Pods Manifest.lock */,
+				9771AB1921AED473005DE97D /* TODOs */,
 				F8986753192A317C00735175 /* Sources */,
 				F8986754192A317C00735175 /* Frameworks */,
 				F8986755192A317C00735175 /* Resources */,
@@ -457,6 +467,7 @@
 				TargetAttributes = {
 					F8986756192A317C00735175 = {
 						DevelopmentTeam = 79RY8264V4;
+						LastSwiftMigration = 1010;
 						SystemCapabilities = {
 							com.apple.DataProtection = {
 								enabled = 0;
@@ -536,6 +547,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		9771AB1921AED473005DE97D /* TODOs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = TODOs;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "declare -a TAGS=(\"TODO:\" \"FIXME:\" \"ASK:\" \"WAITING:\")\necho \"searching ${SRCROOT} for ${TAGS}\"\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/TorrentAdder\" \\( -name \"*.swift\" -or -name \"*.m\" -or -name \"*.h\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n";
+		};
 		FAF7719DF38D205F1D5C7765 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -585,18 +614,18 @@
 			files = (
 				F8986836192BC9B600735175 /* NSString+SY.m in Sources */,
 				973F6D381BBB12B700A8BDC9 /* SYNetworkManager.m in Sources */,
+				9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */,
 				9705460F1BBD464700C5294D /* SYIP4Model.m in Sources */,
 				F89867B4192B7B1100735175 /* SYComputerCell.m in Sources */,
 				97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */,
 				97AE99901EB2618F000C0FF0 /* SYNavigationController.m in Sources */,
+				9771AB1821AECBC3005DE97D /* NSObject+SY.swift in Sources */,
 				9797FBB91BC0322A00CA3BEF /* NSNetService+SY.m in Sources */,
 				9772B3CA1BC68BC60022E370 /* SYAddMagnetPopupVC.m in Sources */,
-				F898676B192A317C00735175 /* SYAppDelegate.m in Sources */,
 				976B76DE1BBB03B200641AD5 /* SYComputersCell.m in Sources */,
 				973A5EB51BC9463000ACA301 /* NSString+SYApp.m in Sources */,
-				F8986794192A324800735175 /* SYMainVC.m in Sources */,
 				973AFF801BB41CE800BA4B8B /* SYListComputersVC.m in Sources */,
-				F8986767192A317C00735175 /* main.m in Sources */,
+				9771AB1321AEC919005DE97D /* SYMainVC.swift in Sources */,
 				97C0F50C1BC6F28C0058E0FB /* NSURL+SY.m in Sources */,
 				97F911471BC2C45C00BF1848 /* SYEditComputerVC.m in Sources */,
 				97F9114C1BC2C73D00BF1848 /* SYComputerFormCell.m in Sources */,
@@ -617,6 +646,7 @@
 				97BA941B1BB9E1C6000B03FD /* NSObject+SY.m in Sources */,
 				F89867AE192A4E4C00735175 /* SYComputerModel.m in Sources */,
 				F89867B1192AA9CB00735175 /* NSData+IPAddress.m in Sources */,
+				9771AB1621AECB95005DE97D /* UITableView+SY.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,15 +773,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TorrentAdder/TorrentAdder-Prefix.pch";
 				INFOPLIST_FILE = "TorrentAdder/TorrentAdder-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TorrentAdder/TorrentAdder-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -762,15 +797,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TorrentAdder/TorrentAdder-Prefix.pch";
 				INFOPLIST_FILE = "TorrentAdder/TorrentAdder-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "me.syan.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TorrentAdder/TorrentAdder-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -8,7 +8,6 @@
 
 #import "SYComputerModel.h"
 #import "NSData+IPAddress.h"
-#import "SYAppDelegate.h"
 #import "SYNetworkManager.h"
 #import "SYBonjourClient.h"
 

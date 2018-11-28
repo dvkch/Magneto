@@ -12,8 +12,7 @@
 
 @interface SYComputerCell : UITableViewCell
 
-@property (strong, nonatomic, readonly) SYComputerModel *computer;
-
-- (void)setComputer:(SYComputerModel *)computer forAvailableComputersList:(BOOL)forAvailableComputersList;
+@property (strong, nonatomic) SYComputerModel *computer;
+@property (assign, nonatomic) BOOL isAvailableComputersList;
 
 @end

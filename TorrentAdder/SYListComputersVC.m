@@ -123,9 +123,11 @@
     SYComputerCell *cell = [tableView dequeueReusableCellWithIdentifier:[SYComputerCell className]];
     
     if (indexPath.row >= self.computers.count)
-        [cell setComputer:nil forAvailableComputersList:YES];
+        cell.computer = nil;
     else
-        [cell setComputer:self.computers[indexPath.row] forAvailableComputersList:YES];
+        cell.computer = self.computers[indexPath.row];
+
+    cell.isAvailableComputersList = YES;
     
     return cell;
 }

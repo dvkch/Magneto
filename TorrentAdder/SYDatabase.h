@@ -7,14 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class SYComputerModel;
+#import "SYComputerModel.h"
 
 @interface SYDatabase : NSObject
 
-+ (SYDatabase *)shared;
+@property (class, readonly) SYDatabase *shared;
 
-- (NSArray *)computers;
+- (NSArray <SYComputerModel *> *)computers;
 - (SYComputerModel *)computerWithID:(NSString *)identifier;
 - (void)addComputer:(SYComputerModel *)computer;
 - (void)removeComputer:(SYComputerModel *)computer;

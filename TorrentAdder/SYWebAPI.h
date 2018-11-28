@@ -7,12 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "SYResultModel.h"
 
 @interface SYWebAPI : NSObject
 
-+ (SYWebAPI *)shared;
+@property (class, readonly) SYWebAPI *shared;
 
 - (void)findMirrorWithCompletionBlock:(void(^)(NSError *error))block;
 

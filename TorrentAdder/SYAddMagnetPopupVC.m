@@ -208,7 +208,7 @@
 
 - (void)buttonBackToAppTap:(id)sender
 {
-    [[SYAppDelegate obtain] openApp:self.appToGoBackTo];
+    // TODO: [[SYAppDelegate obtain] openApp:self.appToGoBackTo];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -227,7 +227,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SYComputerCell *cell = [tableView dequeueReusableCellWithIdentifier:[SYComputerCell className]];
-    [cell setComputer:self.computers[indexPath.row] forAvailableComputersList:NO];
+    cell.computer = self.computers[indexPath.row];
+    cell.isAvailableComputersList = NO;
     return cell;
 }
 

@@ -18,14 +18,16 @@
 @property (weak,   nonatomic) IBOutlet UILabel      *hostLabel;
 @property (weak,   nonatomic) IBOutlet UIImageView  *statusImageView;
 @property (weak,   nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (strong, nonatomic, readwrite) SYComputerModel *computer;
-@property (assign, nonatomic) BOOL forAvailableComputersList;
 @end
 
 @implementation SYComputerCell
 
 - (void)setComputer:(SYComputerModel *)computer
 {
+    self->_computer = computer;
+    [self updateStatus];
+    [self updateTexts];
+
     if (self.computer)
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -56,29 +58,28 @@
     }
 }
 
-- (void)setComputer:(SYComputerModel *)computer forAvailableComputersList:(BOOL)forAvailableComputersList
+- (void)setIsAvailableComputersList:(BOOL)isAvailableComputersList
 {
-    
-    [self setAccessoryType:(forAvailableComputersList ?
+    [self setAccessoryType:(isAvailableComputersList ?
                             UITableViewCellAccessoryDisclosureIndicator :
                             UITableViewCellAccessoryNone)];
+    [self updateTexts];
     
-    [self setComputer:computer];
-    [self setForAvailableComputersList:forAvailableComputersList];
-    
-    self->_computer = computer;
+}
 
+- (void)updateTexts
+{
     if (self.computer)
     {
-        [self.nameLabel setText:computer.name];
-        if (forAvailableComputersList)
+        [self.nameLabel setText:self.computer.name];
+        if (self.isAvailableComputersList)
         {
-            [self.hostLabel setText:computer.host];
+            [self.hostLabel setText:self.computer.host];
         }
         else
         {
             [self.hostLabel setText:[NSString stringWithFormat:@"%@:%d",
-                                     computer.host, computer.port]];
+                                     self.computer.host, self.computer.port]];
         }
     }
     else
@@ -86,23 +87,21 @@
         [self.nameLabel setText:@"Add a custom computer"];
         [self.hostLabel setText:@"in case yours wasn't detected"];
     }
-    
-    [self updateStatus];
 }
 
 - (void)updateStatus
 {
     SYComputerStatus status = SYComputerStatus_Unknown;
-    if (!self.forAvailableComputersList)
+    if (!self.isAvailableComputersList)
     {
         status = [[SYNetworkManager shared] statusForComputer:self.computer];
         SYComputerStatus previousStatus = [[SYNetworkManager shared] previousStatusForComputer:self.computer];
         if (status == SYComputerStatus_Waiting && previousStatus != SYComputerStatus_Unknown)
             status = previousStatus;
     }
-    if (self.forAvailableComputersList &&  self.computer)
+    if (self.isAvailableComputersList &&  self.computer)
         status = SYComputerStatus_Opened;
-    if (self.forAvailableComputersList && !self.computer)
+    if (self.isAvailableComputersList && !self.computer)
         status = SYComputerStatus_Waiting;
     
     switch (status)

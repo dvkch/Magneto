@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SYAppDelegate.h"
+#import "NSString+SYApp.h"
 
 @class SYComputerModel;
 @class SYResultModel;

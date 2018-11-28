@@ -11,6 +11,6 @@
 @interface SYComputersCell : UITableViewCell
 
 @property (nonatomic, copy) void(^tappedAddComputerBlock)(void);
-@property (nonatomic, assign) NSUInteger numberOfComputers;
+@property (nonatomic, assign) NSInteger numberOfComputers;
 
 @end
