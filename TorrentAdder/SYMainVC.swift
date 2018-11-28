@@ -76,10 +76,10 @@ class SYMainVC: UIViewController {
 extension SYMainVC {
     
     @objc private func appDidOpenURLNotification(_ notif: Notification) {
-        guard let appID = notif.userInfo?[UIApplication.DidOpenURLKey.appID] as? NSString else { return }
         guard let magnetURL = notif.userInfo?[UIApplication.DidOpenURLKey.magnetURL] as? URL else { return }
-        
-        SYAddMagnetPopupVC.show(in: self, withMagnet: magnetURL, orResult: nil, appToGoBackTo: appID.parsedSYApp())
+        let appID = notif.userInfo?[UIApplication.DidOpenURLKey.appID] as? String
+
+        openTorrentPopup(with: magnetURL, or: nil, sourceApp: SYSourceApp(bundleId: appID))
     }
     
 }
@@ -135,7 +135,7 @@ extension SYMainVC {
         }
     }
     
-    fileprivate func openTorrentPopup(with magnetURL: URL?, or result: SYResultModel?) {
+    fileprivate func openTorrentPopup(with magnetURL: URL?, or result: SYResultModel?, sourceApp: SYSourceApp?) {
         guard !computers.isEmpty else {
             let alert = UIAlertController(
                 title: "Cannot add torent",
@@ -147,7 +147,7 @@ extension SYMainVC {
             return
         }
         
-        SYAddMagnetPopupVC.show(in: self, withMagnet: magnetURL, orResult: result, appToGoBackTo: SYAppUnknown)
+        SYAddMagnetPopupVC.show(in: self, magnet: magnetURL, result: result, sourceApp: sourceApp)
     }
     
     fileprivate func removeComputer(_ computer: SYComputerModel, at indexPath: IndexPath) {
@@ -269,7 +269,7 @@ extension SYMainVC : UITableViewDelegate {
             present(vc, animated: true, completion: nil)
 
         case .results:
-            self.openTorrentPopup(with: nil, or: searchResults[indexPath.row])
+            self.openTorrentPopup(with: nil, or: searchResults[indexPath.row], sourceApp: nil)
         }
     }
     

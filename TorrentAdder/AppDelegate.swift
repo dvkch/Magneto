@@ -69,9 +69,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK: Public methods
 extension AppDelegate {
-    func openApp(_ app: SYApp?) {
-        guard let app = app else { return }
-        UIApplication.shared.openURL(NSURLToLaunchSYApp(app))
+    func openApp(_ app: SYSourceApp?) {
+        guard let url = app?.launchURL else { return }
+        UIApplication.shared.openURL(url)
     }
 }
 

@@ -13,11 +13,14 @@
 #import "UIColor+SY.h"
 #import "SYNetworkManager.h"
 #import "UIView+Glow.h"
-#import "SYAddMagnetPopupVC.h"
-#import "NSString+SYApp.h"
 #import "SYWebAPI.h"
 #import "SYNavigationController.h"
 
 #import "NSString+SY.h"
 #import "SYBonjourClient.h"
 #import "NSURLRequest+SY.h"
+
+
+#import "SYClientAPI.h"
+#import "SYWebAPI.h"
+#import "SYComputerCell.h"
