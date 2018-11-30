@@ -3,17 +3,14 @@
 //
 
 #import "SYComputerModel.h"
-#import "SYWebAPI.h"
 #import "SYDatabase.h"
 #import "UIColor+SY.h"
-#import "SYWebAPI.h"
 
 #import "NSString+SY.h"
 #import "NSURLRequest+SY.h"
 
 #import "SYResultModel.h"
 #import "SYClientAPI.h"
-#import "SYWebAPI.h"
 
 #import "SYComputerModel.h"
 #import "SYNetworkModel.h"

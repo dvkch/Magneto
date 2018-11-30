@@ -97,7 +97,7 @@
         }
     }
     
-    [self setMagnet:magnetURL];
+    [self setMagnet:[NSURL URLWithString:magnetURL]];
 }
 
 - (NSURL *)fullURL

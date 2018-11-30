@@ -94,24 +94,20 @@ class SYAddMagnetPopupVC: UIViewController {
     private func fetchMagnetURLAndAdd(to computer: SYComputerModel) {
         updateForMode(.loading, animated: true)
         
-        if let magnetURL = magnetURL {
+        if let magnetURL = (magnetURL ?? result?.magnet) {
             addMagnetToComputer(magnetURL: magnetURL, computer: computer)
             return
         }
         
         guard let result = result else { return }
         
-        SYWebAPI.shared.getMagnetForResult(result) { [weak self] (magnet, error) in
-            guard let self = self else { return }
-            if let error = error {
-                self.updateForMode(.failure(error.localizedDescription), animated: true)
-                return
+        _ = SYWebAPI.shared.getMagnet(for: result)
+            .onSuccess { [weak self] (magnetURL) in
+                self?.addMagnetToComputer(magnetURL: magnetURL, computer: computer)
             }
-            if let magnet = magnet, let magnetURL = URL(string: magnet) {
-                self.magnetURL = magnetURL // keep it in case adding fails and we retry
-                self.addMagnetToComputer(magnetURL: magnetURL, computer: computer)
+            .onFailure { [weak self] (error) in
+                self?.updateForMode(.failure(error.localizedDescription), animated: true)
             }
-        }
     }
     
     private func addMagnetToComputer(magnetURL: URL, computer: SYComputerModel) {
@@ -119,12 +115,7 @@ class SYAddMagnetPopupVC: UIViewController {
         
         SYClientAPI.shared()?.addMagnet(magnetURL, toComputer: computer, completion: { (message, error) in
             if let error = error {
-                var errorMessage = error.localizedDescription
-                // TODO: extension
-                let offlineCodes = [NSURLErrorCannotFindHost, NSURLErrorCannotConnectToHost, NSURLErrorNetworkConnectionLost, NSURLErrorNotConnectedToInternet]
-                if (error as NSError).domain == NSURLErrorDomain, offlineCodes.contains((error as NSError).code) {
-                    errorMessage = "Computer unavailable"
-                }
+                let errorMessage = error.isOfflineError ? "Computer unavailble" : error.localizedDescription
                 self.updateForMode(.failure(errorMessage), animated: true)
                 return
             }

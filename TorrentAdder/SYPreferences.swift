@@ -35,7 +35,9 @@ class SYPreferences: NSObject {
     
     // MARK: Properties
     private static let computersPrefKey = "computers_ids"
-    private var computers: [SYComputerModel] = [] {
+    private static let savedAvailableMirrorsPrefKey = "available_mirrors"
+    
+    var computers: [SYComputerModel] = [] {
         didSet {
             if computers != oldValue {
                 updateUserDefaults()
@@ -44,13 +46,22 @@ class SYPreferences: NSObject {
             }
         }
     }
+    var savedAvailableMirrors: [URL] = [] {
+        didSet {
+            if savedAvailableMirrors != oldValue {
+                updateUserDefaults()
+            }
+        }
+    }
     
     // MARK: Preferences
     private func updateUserDefaults() {
+        UserDefaults.standard.set(savedAvailableMirrors, forKey: SYPreferences.savedAvailableMirrorsPrefKey)
         // guard let json = try JSONEncoder().encode(computers) else { return }
         // UserDefaults.standard.set(json, forKey: SYPreferences.computersPrefKey)
     }
     private func loadFromUserDefaults() {
+        savedAvailableMirrors = UserDefaults.standard.array(forKey: SYPreferences.savedAvailableMirrorsPrefKey) as? [URL] ?? []
         // guard let json = UserDefaults.standard.data(forKey: SYPreferences.computersPrefKey) else { return }
         // guard let parsed = try? JSONDecoder().decode([SYComputerModel], from: json) else { return }
         // computers = parsed

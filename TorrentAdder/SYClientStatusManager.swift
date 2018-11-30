@@ -62,6 +62,8 @@ class SYClientStatusManager: NSObject {
     func startStatusUpdate(for computer: SYComputerModel) {
         if isComputerLoading(computer) { return }
         
+        setComputerLoading(computer, loading: true)
+        
         guard let url = computer.webURL() else { return }
         let request = NSMutableURLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 4)
         request.computerID = computer.identifier
@@ -71,6 +73,7 @@ class SYClientStatusManager: NSObject {
         
         let task = urlSession.dataTask(with: request as URLRequest) { (data, response, error) in
             self.setStatus(error == nil ? .online : .offline, for: computer)
+            self.setComputerLoading(computer, loading: false)
         }
         task.resume()
     }
@@ -97,6 +100,27 @@ class SYClientStatusManager: NSObject {
             NotificationCenter.default.post(name: .clientStatusChanged, object: computer)
             delegate?.clientStatusManager(self, changedStatusFor: computer)
         }
+    }
+
+    func setComputerLoading(_ computer: SYComputerModel?, loading: Bool) {
+        guard Thread.isMainThread else {
+            DispatchQueue.main.async {
+                self.setComputerLoading(computer, loading: loading)
+            }
+            return
+        }
+        
+        guard let computer = computer, loading != isComputerLoading(computer) else { return }
+        
+        if loading {
+            loadingComputers.append(computer.identifier)
+        }
+        else {
+            loadingComputers.remove(computer.identifier)
+        }
+        
+        NotificationCenter.default.post(name: .clientStatusChanged, object: computer)
+        delegate?.clientStatusManager(self, changedStatusFor: computer)
     }
 }
 

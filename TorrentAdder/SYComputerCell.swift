@@ -74,7 +74,8 @@ class SYComputerCell: UITableViewCell {
             loading = true
         }
         
-        if loading {
+        // show loading only if previous status is unknown, else show last status
+        if loading && status == .unknown {
             statusImageView.image = nil
             activityIndicator.startAnimating()
             return

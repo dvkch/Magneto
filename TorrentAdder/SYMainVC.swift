@@ -119,20 +119,24 @@ extension SYMainVC {
         }
         
         searchField.showLoadingIndicator(true)
-        SYWebAPI.shared.look(for: text) { [weak self] items, error in
-            guard let self = self else { return }
-            guard self.searchQuery == text else { return }
-            
-            self.searchField.showLoadingIndicator(false)
-            self.searchResults = items ?? []
-            self.tableView.reloadData()
-            self.tableView.contentOffset.y = 0
-            
-            if let error = error {
-                let alert = UIAlertController(title: "Cannot load results", message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
+        _ = SYWebAPI.shared.getResults(query: text)
+            .andThen { [weak self] result in
+                
+                guard let self = self else { return }
+                guard self.searchQuery == text else { return }
+                
+                self.searchField.showLoadingIndicator(false)
+                switch result {
+                case .success(let items):
+                    self.searchResults = items
+                    self.tableView.reloadData()
+                    self.tableView.contentOffset.y = 0
+                    
+                case .failure(let error):
+                    let alert = UIAlertController(title: "Cannot load results", message: error.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
         }
     }
     
