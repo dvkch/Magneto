@@ -18,6 +18,9 @@ target 'TorrentAdder' do
 	pod 'hpple'
 	pod "JRSwizzle"
 	pod "NSDate+TimeAgo"
+    pod 'Alamofire'
+    pod 'Fuzi'
+    pod 'BrightFutures'
 end
 
 post_install do |pi|
