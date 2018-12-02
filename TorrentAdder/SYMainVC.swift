@@ -58,7 +58,7 @@ class SYMainVC: UIViewController {
     // MARK: Properties
     private var timerRefreshComputers: Timer?
     private var computers: [SYComputerModel] = []
-    private var searchResults: [SYResultModel] = []
+    private var searchResults: [SYSearchResult] = []
     private var searchQuery: String = ""
     private var constraintBlueHeaderHeightOriginalValue: CGFloat = 0
     private var isVisible: Bool = false
@@ -133,22 +133,14 @@ extension SYMainVC {
                     self.tableView.contentOffset.y = 0
                     
                 case .failure(let error):
-                    let alert = UIAlertController(title: "Cannot load results", message: error.localizedDescription, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                    self.showError(error, title: "Cannot load results")
                 }
         }
     }
     
-    fileprivate func openTorrentPopup(with magnetURL: URL?, or result: SYResultModel?, sourceApp: SYSourceApp?) {
+    fileprivate func openTorrentPopup(with magnetURL: URL?, or result: SYSearchResult?, sourceApp: SYSourceApp?) {
         guard !computers.isEmpty else {
-            let alert = UIAlertController(
-                title: "Cannot add torent",
-                message: "No computer saved in your settings, please add one before trying to download this item",
-                preferredStyle: .alert
-            )
-            alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
-            present(alert, animated: true, completion: nil)
+            showError(SYError.noComputersSaved, title: "Cannot add torrent")
             return
         }
         
@@ -168,14 +160,19 @@ extension SYMainVC {
         tableView.endUpdates()
     }
     
-    fileprivate func shareResult(_ result: SYResultModel, from cell: UITableViewCell?) {
-        let vc = UIActivityViewController(activityItems: [result.fullURL], applicationActivities: nil)
-        vc.popoverPresentationController?.sourceRect = cell?.frame ?? .zero
-        vc.popoverPresentationController?.sourceView = self.view
-        
-        // TODO: use better sourceRect (centered ?) and arrowDirection
-        self.present(vc, animated: true, completion: nil)
-        self.tableView.setEditing(false, animated: true)
+    fileprivate func shareResult(_ result: SYSearchResult, from cell: UITableViewCell?) {
+        SYWebAPI.shared.getResultPageURL(result)
+            .onFailure { (error) in self.showError(error) }
+            .onSuccess { (fullURL) in
+                
+                let vc = UIActivityViewController(activityItems: [fullURL], applicationActivities: nil)
+                vc.popoverPresentationController?.sourceRect = cell?.frame ?? .zero
+                vc.popoverPresentationController?.sourceView = self.view
+                
+                // TODO: use better sourceRect (centered ?) and arrowDirection
+                self.present(vc, animated: true, completion: nil)
+                self.tableView.setEditing(false, animated: true)
+        }
     }
 }
 

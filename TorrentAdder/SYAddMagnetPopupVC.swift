@@ -12,7 +12,7 @@ import SYPopoverController
 class SYAddMagnetPopupVC: UIViewController {
 
     // MARK: Presentation
-    static func show(in viewController: UIViewController, magnet: URL?, result: SYResultModel?, sourceApp: SYSourceApp?) {
+    static func show(in viewController: UIViewController, magnet: URL?, result: SYSearchResult?, sourceApp: SYSourceApp?) {
         let popupVC = SYAddMagnetPopupVC()
         popupVC.sourceApp = sourceApp
         popupVC.result = result
@@ -63,7 +63,7 @@ class SYAddMagnetPopupVC: UIViewController {
     // MARK: Properties
     private var sourceApp: SYSourceApp?
     private var magnetURL: URL?
-    private var result: SYResultModel?
+    private var result: SYSearchResult?
     private var computers = [SYComputerModel]()
     private var canClose: Bool = false
 
@@ -94,7 +94,7 @@ class SYAddMagnetPopupVC: UIViewController {
     private func fetchMagnetURLAndAdd(to computer: SYComputerModel) {
         updateForMode(.loading, animated: true)
         
-        if let magnetURL = (magnetURL ?? result?.magnet) {
+        if let magnetURL = (magnetURL ?? result?.magnetURL) {
             addMagnetToComputer(magnetURL: magnetURL, computer: computer)
             return
         }
@@ -136,9 +136,9 @@ class SYAddMagnetPopupVC: UIViewController {
     
     private func updateForMode(_ mode: Mode, animated: Bool) {
         if animated {
-            UIView.animate(withDuration: 0.3) {
+            UIView.transition(with: view, duration: 0.3, options: [.transitionCrossDissolve, .layoutSubviews], animations: {
                 self.updateForMode(mode, animated: false)
-            }
+            }, completion: nil)
             return
         }
         

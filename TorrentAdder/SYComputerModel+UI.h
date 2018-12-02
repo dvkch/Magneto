@@ -6,6 +6,7 @@
 //  Copyright © 2015 Syan. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "SYComputerModel.h"
 
 typedef enum : NSInteger {

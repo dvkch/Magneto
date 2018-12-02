@@ -16,3 +16,9 @@ extension Array where Element : Equatable {
     }
 }
 
+extension Array {
+    func element(at index: Index) -> Element? {
+        return index < count ? self[index] : nil
+    }
+}
+

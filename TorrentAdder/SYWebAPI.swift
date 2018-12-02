@@ -28,9 +28,10 @@ class SYWebAPI: NSObject {
             print("Using \(availableMirrorURLs.count) mirrors")
         }
     }
+    private var magnetCache: [String: URL] = [:]
     
     // MARK: Methods
-    private func getMirror() -> Future <URL, SYError> {
+    private func getMirror() -> Future<URL, SYError> {
         if let mirrorURL = availableMirrorURLs.first {
             return .init(value: mirrorURL)
         }
@@ -64,15 +65,12 @@ class SYWebAPI: NSObject {
         return try! urlComponents.asURL()
     }
     
-    func getResults(query: String) -> Future<[SYResultModel], SYError> {
+    func getResults(query: String) -> Future<[SYSearchResult], SYError> {
         return getMirror()
             .map { mirror in self.getQueryURL(mirrorURL: mirror, query: query) }
             .flatMap { url in Alamofire.request(url).responseFutureHTML() }
-            .map { html in
-                // let results = SYResultModel.results(fromWebData: response.data!, rootURL: mirrorURL)
-                return []
-            }
-            .recoverWith { (error) -> Future<[SYResultModel], SYError> in
+            .map { html in SYSearchResult.parseModels(html: html)  }
+            .recoverWith { (error) -> Future<[SYSearchResult], SYError> in
                 if case let .alamofire(request) = error {
                     if request.isNotFoundError {
                         return .init(value: [])
@@ -86,17 +84,21 @@ class SYWebAPI: NSObject {
             }
     }
     
-    func getMagnet(for result: SYResultModel) -> Future<URL, SYError> {
-        if let magnet = result.magnet {
-            return .init(value: magnet)
+    func getResultPageURL(_ result: SYSearchResult) -> Future<URL, SYError> {
+        return getMirror()
+            .map { $0.appendingPathComponent(result.pagePath) }
+    }
+    
+    func getMagnet(for result: SYSearchResult) -> Future<URL, SYError> {
+        if let url = magnetCache[result.pagePath] {
+            return .init(value: url)
         }
 
-        return getMirror()
-            .map { mirror in mirror.appendingPathComponent(result.pageURL) }
+        return getResultPageURL(result)
             .flatMap { url in Alamofire.request(url).responseFutureHTML() }
             .flatMap { (html) -> BrightResult<URL, SYError> in
-                result.updateMagnetURL(fromWebData: Data())
-                if let url = result.magnet {
+                if let url = SYSearchResult.parseMagnetURL(html: html) {
+                    self.magnetCache[result.pagePath] = url
                     return .init(value: url)
                 }
                 return .init(error: SYError.noMagnetFound)

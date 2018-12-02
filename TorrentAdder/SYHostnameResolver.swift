@@ -1,5 +1,5 @@
 //
-//  SYBonjourClient.swift
+//  SYHostnameResolver.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -9,14 +9,14 @@
 import UIKit
 
 extension Notification.Name {
-    static let bonjourClientUpdated = Notification.Name.init("SYBonjourClient.bonjourClientUpdated")
+    static let hostnameResolverUpdated = Notification.Name.init("SYHostnameResolver.bonjourClientUpdated")
 }
 
 /// Used to resolve hostnames from IP addresses
-class SYBonjourClient: NSObject {
+class SYHostnameResolver: NSObject {
     
     // MARK: Init
-    static let shared = SYBonjourClient()
+    static let shared = SYHostnameResolver()
     
     override init() {
         super.init()
@@ -54,7 +54,7 @@ class SYBonjourClient: NSObject {
     
 }
 
-extension SYBonjourClient: NetServiceBrowserDelegate {
+extension SYHostnameResolver: NetServiceBrowserDelegate {
     func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
         services.append(service)
         service.delegate = self
@@ -64,15 +64,15 @@ extension SYBonjourClient: NetServiceBrowserDelegate {
     func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
         services.remove(service)
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .bonjourClientUpdated, object: nil)
+            NotificationCenter.default.post(name: .hostnameResolverUpdated, object: nil)
         }
     }
 }
 
-extension SYBonjourClient: NetServiceDelegate {
+extension SYHostnameResolver: NetServiceDelegate {
     func netServiceDidResolveAddress(_ sender: NetService) {
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .bonjourClientUpdated, object: nil)
+            NotificationCenter.default.post(name: .hostnameResolverUpdated, object: nil)
         }
     }
 }

@@ -23,11 +23,11 @@ class SYListComputersVC: UIViewController {
         tableView.registerCell(name: SYComputerCell.className)
         tableView.tableFooterView = UIView()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.bonjourClientUpdatedNotification), name: .bonjourClientUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.hostnameResolverUpdatedNotification), name: .hostnameResolverUpdated, object: nil)
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: .bonjourClientUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .hostnameResolverUpdated, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,7 +48,7 @@ class SYListComputersVC: UIViewController {
     }
     
     // MARK: Notifications
-    @objc private func bonjourClientUpdatedNotification() {
+    @objc private func hostnameResolverUpdatedNotification() {
         reload()
     }
     
@@ -75,7 +75,7 @@ class SYListComputersVC: UIViewController {
     private func startPinging() {
         guard pinger == nil else { return }
         
-        pinger = SYPinger(networks: SYNetworkModel.myNetworks(true))
+        pinger = SYPinger(networks: SYIPv4Interface.deviceNetworks(filterLocalInterfaces: true))
         pinger?.progressBlock = { [weak self] (progress) in
             self?.progressView.setProgress(Float(progress), animated: true)
         }

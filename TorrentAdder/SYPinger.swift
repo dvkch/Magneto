@@ -12,13 +12,13 @@ import SPLPing
 class SYPinger: NSObject {
     
     // MARK: Init
-    init(networks: [SYNetworkModel]) {
+    init(networks: [SYIPv4Interface]) {
         self.networks = networks
         super.init()
     }
     
     // MARK: Properties
-    private let networks: [SYNetworkModel]
+    private let networks: [SYIPv4Interface]
     private let pingConfig = SPLPingConfiguration(pingInterval: 0.1, timeoutInterval: 1)
     private var totalCount: Int = 0
     private var queuedIPs: [String] = []
@@ -35,7 +35,11 @@ class SYPinger: NSObject {
     func start() {
         guard queuedIPs.isEmpty else { return }
         
-        queuedIPs = networks.map { $0.allIPs(onNetwork: false) }.reduce([], +)
+        queuedIPs = networks
+            .map { $0.addressesOnSubnet(ignoringMine: true) }
+            .reduce([], +)
+            .map { $0.stringRepresentation }
+        
         totalCount = queuedIPs.count
         
         executeQueue()

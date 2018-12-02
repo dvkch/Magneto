@@ -12,6 +12,7 @@ import Alamofire
 enum SYError {
     case noMirrorsFound
     case noMagnetFound
+    case noComputersSaved
     case alamofire(_ request: AlamoDataResponseProtocol)
 }
 
@@ -22,6 +23,8 @@ extension SYError : LocalizedError {
             return "No mirrors found"
         case .noMagnetFound:
             return "No magnet found"
+        case .noComputersSaved:
+            return "No computer saved in your settings, please add one before trying to download this item"
         case .alamofire(let response):
             return response.error?.localizedDescription ?? "Unknown error"
         }

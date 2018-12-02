@@ -20,9 +20,12 @@
 
 + (SYClientAPI *)shared
 {
-    DEFINE_SHARED_INSTANCE_USING_BLOCK(^{
-        return [[self alloc] init];
+    static dispatch_once_t onceToken;
+    static SYClientAPI *instance;
+    dispatch_once(&onceToken, ^{
+        instance = [[self alloc] init];
     });
+    return instance;
 }
 
 - (id)init

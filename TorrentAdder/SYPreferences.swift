@@ -56,12 +56,14 @@ class SYPreferences: NSObject {
     
     // MARK: Preferences
     private func updateUserDefaults() {
-        UserDefaults.standard.set(savedAvailableMirrors, forKey: SYPreferences.savedAvailableMirrorsPrefKey)
+        UserDefaults.standard.set(savedAvailableMirrors.map { $0.absoluteString }, forKey: SYPreferences.savedAvailableMirrorsPrefKey)
         // guard let json = try JSONEncoder().encode(computers) else { return }
         // UserDefaults.standard.set(json, forKey: SYPreferences.computersPrefKey)
     }
     private func loadFromUserDefaults() {
-        savedAvailableMirrors = UserDefaults.standard.array(forKey: SYPreferences.savedAvailableMirrorsPrefKey) as? [URL] ?? []
+        if let urlStrings = UserDefaults.standard.array(forKey: SYPreferences.savedAvailableMirrorsPrefKey) as? [String] {
+            savedAvailableMirrors = urlStrings.compactMap { URL(string: $0) }
+        }
         // guard let json = UserDefaults.standard.data(forKey: SYPreferences.computersPrefKey) else { return }
         // guard let parsed = try? JSONDecoder().decode([SYComputerModel], from: json) else { return }
         // computers = parsed

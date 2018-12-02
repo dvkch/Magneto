@@ -21,9 +21,12 @@ NSString * const SYDatabaseTableComputers = @"computers";
 
 + (SYDatabase *)shared
 {
-    DEFINE_SHARED_INSTANCE_USING_BLOCK(^{
-        return [[self alloc] init];
+    static dispatch_once_t onceToken;
+    static SYDatabase *instance;
+    dispatch_once(&onceToken, ^{
+        instance = [[self alloc] init];
     });
+    return instance;
 }
 
 - (instancetype)init
