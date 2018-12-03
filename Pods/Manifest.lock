@@ -14,6 +14,7 @@ PODS:
   - "NSDate+TimeAgo (1.0.6)"
   - Result (4.0.0)
   - SPLPing (1.1.8)
+  - SVProgressHUD (2.2.5)
   - SYKit (0.0.38):
     - JGMethodSwizzler
   - SYPopoverController (2.2.4)
@@ -88,6 +89,7 @@ DEPENDENCIES:
   - JRSwizzle
   - "NSDate+TimeAgo"
   - SPLPing
+  - SVProgressHUD
   - SYKit
   - SYPopoverController
   - YapDatabase
@@ -103,6 +105,7 @@ SPEC REPOS:
     - "NSDate+TimeAgo"
     - Result
     - SPLPing
+    - SVProgressHUD
     - SYKit
     - SYPopoverController
     - YapDatabase
@@ -117,10 +120,11 @@ SPEC CHECKSUMS:
   "NSDate+TimeAgo": 35601c619b2d59290055e4fe76e61d97677a2360
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
   SPLPing: 420837fae1e19bba0a8360e91e7a384f22509663
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SYKit: d580d3aa388fdb4ada8d255ae7eba1614c629cd0
   SYPopoverController: 6e6af6e9168e5e89a02f352034490412996087e1
   YapDatabase: b418a4baa6906e8028748938f9159807fd039af4
 
-PODFILE CHECKSUM: a76e5276f1aebdba89322a0060021222893129aa
+PODFILE CHECKSUM: b5b1deb93f8239ca105fb75a8184058e093df18d
 
 COCOAPODS: 1.6.0.beta.2

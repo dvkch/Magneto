@@ -14,6 +14,7 @@ target 'TorrentAdder' do
     pod "NSDate+TimeAgo"
     #pod 'SparkInspector', :configurations => ['Debug']
     pod 'SPLPing'
+    pod 'SVProgressHUD'
 	pod 'SYKit'
 	pod 'SYPopoverController'
     pod 'YapDatabase'
