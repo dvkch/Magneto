@@ -22,6 +22,7 @@
 		974D373221B1DF8600C0FDDE /* SYIPv4Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373121B1DF8600C0FDDE /* SYIPv4Address.swift */; };
 		974D373421B1E2DA00C0FDDE /* SYIPv4Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373321B1E2DA00C0FDDE /* SYIPv4Interface.swift */; };
 		974D373921B4999E00C0FDDE /* Sockets+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 974D373821B4999E00C0FDDE /* Sockets+SY.m */; };
+		974D373B21B49D4800C0FDDE /* SYClientAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373A21B49D4800C0FDDE /* SYClientAPI.swift */; };
 		9771AB1321AEC919005DE97D /* SYMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1221AEC919005DE97D /* SYMainVC.swift */; };
 		9771AB1621AECB95005DE97D /* UITableView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1521AECB95005DE97D /* UITableView+SY.swift */; };
 		9771AB1821AECBC3005DE97D /* NSObject+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1721AECBC3005DE97D /* NSObject+SY.swift */; };
@@ -62,7 +63,6 @@
 		97F911481BC2C45C00BF1848 /* SYEditComputerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* SYEditComputerVC.xib */; };
 		97F9114D1BC2C73D00BF1848 /* SYComputerFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */; };
 		97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */; };
-		F83FFA3F192BE7440034A95B /* SYClientAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = F83FFA3E192BE7440034A95B /* SYClientAPI.m */; };
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
 		F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675C192A317C00735175 /* CoreGraphics.framework */; };
 		F898675F192A317C00735175 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675E192A317C00735175 /* UIKit.framework */; };
@@ -103,6 +103,7 @@
 		974D373321B1E2DA00C0FDDE /* SYIPv4Interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYIPv4Interface.swift; sourceTree = "<group>"; };
 		974D373521B4965700C0FDDE /* Sockets+SY.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sockets+SY.h"; sourceTree = "<group>"; };
 		974D373821B4999E00C0FDDE /* Sockets+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Sockets+SY.m"; sourceTree = "<group>"; };
+		974D373A21B49D4800C0FDDE /* SYClientAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYClientAPI.swift; sourceTree = "<group>"; };
 		9771AB1121AEC918005DE97D /* TorrentAdder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TorrentAdder-Bridging-Header.h"; sourceTree = "<group>"; };
 		9771AB1221AEC919005DE97D /* SYMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMainVC.swift; sourceTree = "<group>"; };
 		9771AB1521AECB95005DE97D /* UITableView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+SY.swift"; sourceTree = "<group>"; };
@@ -150,8 +151,6 @@
 		97F9114E1BC3071F00BF1848 /* SYComputerModel+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SYComputerModel+UI.h"; sourceTree = "<group>"; };
 		97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SYComputerModel+UI.m"; sourceTree = "<group>"; };
 		ECB5BC1A5208F37710432FDC /* Pods-TorrentAdder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TorrentAdder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder.debug.xcconfig"; sourceTree = "<group>"; };
-		F83FFA3D192BE7440034A95B /* SYClientAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYClientAPI.h; sourceTree = "<group>"; };
-		F83FFA3E192BE7440034A95B /* SYClientAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYClientAPI.m; sourceTree = "<group>"; };
 		F8986757192A317C00735175 /* TorrentAdder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TorrentAdder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F898675A192A317C00735175 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F898675C192A317C00735175 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -245,8 +244,7 @@
 		97EACC011BC2C31B00382614 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				F83FFA3D192BE7440034A95B /* SYClientAPI.h */,
-				F83FFA3E192BE7440034A95B /* SYClientAPI.m */,
+				974D373A21B49D4800C0FDDE /* SYClientAPI.swift */,
 				970130DF21B07EC000E7CFEC /* SYWebAPI.swift */,
 			);
 			name = API;
@@ -581,6 +579,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				979D4A9621AF4335000BFDF0 /* NetService+SY.swift in Sources */,
+				974D373B21B49D4800C0FDDE /* SYClientAPI.swift in Sources */,
 				9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */,
 				974D373221B1DF8600C0FDDE /* SYIPv4Address.swift in Sources */,
 				97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */,
@@ -601,7 +600,6 @@
 				9771AB2721AEF5E6005DE97D /* SYSourceApp.swift in Sources */,
 				971378211BBB09360060C5B6 /* SYDatabase.m in Sources */,
 				9771AB2921AEF898005DE97D /* SYNavigationController.swift in Sources */,
-				F83FFA3F192BE7440034A95B /* SYClientAPI.m in Sources */,
 				9771AB2F21AF0356005DE97D /* SYComputersCell.swift in Sources */,
 				974D372A21B150FC00C0FDDE /* SYSearchResult.swift in Sources */,
 				9771AB3321AF08E4005DE97D /* SYResultCell.swift in Sources */,

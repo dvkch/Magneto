@@ -10,8 +10,39 @@ import Alamofire
 import Fuzi
 import BrightFutures
 
+extension URLRequest {
+    var computer: SYComputerModel? {
+        guard let requestURL = self.url else { return nil }
+        for computer in SYDatabase.shared.computers() {
+            if let apiURL = computer.apiURL(), requestURL.absoluteString.hasPrefix(apiURL.absoluteString) {
+                return computer
+            }
+            if let webURL = computer.webURL(), requestURL.absoluteString.hasPrefix(webURL.absoluteString) {
+                return computer
+            }
+        }
+        return nil
+    }
+}
+
 extension DataRequest {
     
+    @discardableResult
+    func responseCodable<T: Decodable>(queue: DispatchQueue? = .main, type: T.Type, completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
+        return responseData(queue: queue) { (responseData) in
+            let responseCodable = responseData.flatMap { try JSONDecoder().decode(T.self, from: $0) }
+            completionHandler(responseCodable)
+        }
+    }
+    
+    @discardableResult
+    func responseXML(queue: DispatchQueue? = .main, completionHandler: @escaping (DataResponse<XMLDocument>) -> Void) -> Self {
+        return responseData(queue: queue) { (responseData) in
+            let responseXML = responseData.flatMap { try XMLDocument(data: $0) }
+            completionHandler(responseXML)
+        }
+    }
+
     @discardableResult
     func responseHTML(queue: DispatchQueue? = .main, completionHandler: @escaping (DataResponse<HTMLDocument>) -> Void) -> Self {
         return responseData(queue: queue) { (responseData) in
@@ -19,7 +50,7 @@ extension DataRequest {
             completionHandler(responseHTML)
         }
     }
-    
+
     @discardableResult
     func responseHTML(queue: DispatchQueue? = .main, XPathQuery: String, completionHandler: @escaping (DataResponse<NodeSet>) -> Void) -> Self {
         return responseData(queue: queue) { (responseData) in
@@ -44,6 +75,45 @@ extension DataRequest {
         }
     }
     
+    func responseFutureJSON(queue: DispatchQueue? = .main) -> Future<Any, SYError> {
+        return Future<Any, SYError> { resolver in
+            self.responseJSON(queue: queue, completionHandler: { (response) in
+                switch response.result {
+                case .success(let value):
+                    resolver(.success(value))
+                case .failure:
+                    resolver(.failure(SYError.alamofire(response)))
+                }
+            })
+        }
+    }
+    
+    func responseFutureCodable<T: Decodable>(queue: DispatchQueue? = .main, type: T.Type) -> Future<T, SYError> {
+        return Future<T, SYError> { resolver in
+            self.responseCodable(queue: queue, type: T.self, completionHandler: { (response) in
+                switch response.result {
+                case .success(let value):
+                    resolver(.success(value))
+                case .failure:
+                    resolver(.failure(SYError.alamofire(response)))
+                }
+            })
+        }
+    }
+    
+    func responseFutureXML(queue: DispatchQueue? = .main) -> Future<XMLDocument, SYError> {
+        return Future<XMLDocument, SYError> { resolver in
+            self.responseXML(queue: queue, completionHandler: { (response) in
+                switch response.result {
+                case .success(let value):
+                    resolver(.success(value))
+                case .failure:
+                    resolver(.failure(SYError.alamofire(response)))
+                }
+            })
+        }
+    }
+    
     func responseFutureHTML(queue: DispatchQueue? = .main) -> Future<HTMLDocument, SYError> {
         return Future<HTMLDocument, SYError> { resolver in
             self.responseHTML(queue: queue, completionHandler: { (response) in
@@ -56,7 +126,7 @@ extension DataRequest {
             })
         }
     }
-    
+
     func responseFutureHTML(queue: DispatchQueue? = .main, XPathQuery: String) -> Future<NodeSet, SYError> {
         return Future<NodeSet, SYError> { resolver in
             self.responseHTML(queue: queue, XPathQuery: XPathQuery, completionHandler: { (response) in

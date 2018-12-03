@@ -72,6 +72,7 @@ class SYAddMagnetPopupVC: UIViewController {
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var statusLabel: UILabel!
     @IBOutlet private var spinner: UIActivityIndicatorView!
+    @IBOutlet private var buttonsStackView: UIStackView!
     @IBOutlet private var backToAppButton: UIButton!
     @IBOutlet private var closeButton: UIButton!
     @IBOutlet private var cancelButton: UIButton!
@@ -113,20 +114,18 @@ class SYAddMagnetPopupVC: UIViewController {
     private func addMagnetToComputer(magnetURL: URL, computer: SYComputerModel) {
         updateForMode(.loading, animated: true)
         
-        SYClientAPI.shared()?.addMagnet(magnetURL, toComputer: computer, completion: { (message, error) in
-            if let error = error {
+        SYClientAPI.shared.addMagnet(magnetURL, to: computer)
+            .onSuccess { message in
+                var successMessage = "Success!"
+                if let message = message, !message.isEmpty {
+                    successMessage += "\n\n" + "Message from " + computer.name + ": " + message
+                }
+                self.updateForMode(.success(successMessage), animated: true)
+            }
+            .onFailure { error in
                 let errorMessage = error.isOfflineError ? "Computer unavailble" : error.localizedDescription
                 self.updateForMode(.failure(errorMessage), animated: true)
-                return
             }
-            
-            var successMessage = "Success!"
-            if let message = message {
-                successMessage = successMessage.appendingFormat("\n\nMessage from %@: %@", computer.name, message)
-            }
-            self.updateForMode(.success(successMessage), animated: true)
-            
-        })
     }
     
     // MARK: Content
@@ -136,8 +135,11 @@ class SYAddMagnetPopupVC: UIViewController {
     
     private func updateForMode(_ mode: Mode, animated: Bool) {
         if animated {
+            view.layoutIfNeeded()
             UIView.transition(with: view, duration: 0.3, options: [.transitionCrossDissolve, .layoutSubviews], animations: {
                 self.updateForMode(mode, animated: false)
+                self.buttonsStackView.layoutIfNeeded()
+                self.buttonsStackView.arrangedSubviews.forEach { $0.layoutIfNeeded() }
             }, completion: nil)
             return
         }

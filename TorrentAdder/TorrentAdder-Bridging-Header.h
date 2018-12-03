@@ -8,8 +8,6 @@
 
 #import "NSURLRequest+SY.h"
 
-#import "SYClientAPI.h"
-
 #import "SYComputerModel.h"
 #import "UIColor+SY.h"
 

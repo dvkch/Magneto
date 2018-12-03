@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SYAddMagnetPopupVC" customModule="TorrentAdder" customModuleProvider="target">
             <connections>
                 <outlet property="backToAppButton" destination="moF-1g-zSy" id="Mgs-Uu-ekh"/>
+                <outlet property="buttonsStackView" destination="IHV-7N-h76" id="qjU-un-JCs"/>
                 <outlet property="cancelButton" destination="jOD-09-ucu" id="Dsy-1G-lPh"/>
                 <outlet property="closeButton" destination="XT7-bT-yLK" id="IBQ-gM-NdK"/>
                 <outlet property="spinner" destination="28A-Un-vvX" id="hUR-PN-ZzM"/>
@@ -65,7 +66,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="IHV-7N-h76">
                     <rect key="frame" x="0.0" y="547" width="375" height="120"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jOD-09-ucu">
+                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jOD-09-ucu">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" priority="750" constant="40" id="GTS-5x-JHg"/>
@@ -75,7 +76,7 @@
                                 <action selector="cancelButtonTap" destination="-1" eventType="touchUpInside" id="K3R-wq-miN"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XT7-bT-yLK">
+                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XT7-bT-yLK">
                             <rect key="frame" x="0.0" y="40" width="375" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" priority="750" constant="40" id="roJ-jJ-nso"/>
@@ -85,7 +86,7 @@
                                 <action selector="closeButtonTap" destination="-1" eventType="touchUpInside" id="FEP-VT-wQg"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="moF-1g-zSy">
+                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="moF-1g-zSy">
                             <rect key="frame" x="0.0" y="80" width="375" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" priority="750" constant="40" id="8XP-bV-VNR"/>

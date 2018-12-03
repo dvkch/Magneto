@@ -64,7 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.post(name: .didOpenURL, object: nil, userInfo: userInfo)
         return true
     }
-
 }
 
 // MARK: Public methods
@@ -73,9 +72,65 @@ extension AppDelegate {
         guard let url = app?.launchURL else { return }
         UIApplication.shared.openURL(url)
     }
+    
+    var topViewController: UIViewController? {
+        var viewController = window?.rootViewController
+        while true {
+            if let nc = viewController as? UINavigationController {
+                viewController = nc.viewControllers.last
+            }
+            else if let tc = viewController as? UITabBarController {
+                viewController = tc.selectedViewController
+            }
+            else if let pc = viewController?.presentedViewController {
+                viewController = pc
+            }
+            else {
+                break
+            }
+        }
+        return viewController
+    }
 }
 
-
+// MARK: Authentication
+extension AppDelegate {
+    func promptAuthenticationUpdate(for computer: SYComputerModel, completion: @escaping (_ cancelled: Bool) -> Void) {
+        if isShowingAuthAlertView {
+            completion(true)
+            return
+        }
+        
+        isShowingAuthAlertView = true
+        
+        let alert = UIAlertController(title: "Authentication needed", message: String(format: "%@ requires a user and a password", computer.name), preferredStyle: .alert)
+        alert.addTextField { field in
+            field.placeholder = "Username"
+            if #available(iOS 11.0, *) {
+                field.textContentType = .username
+            }
+        }
+        alert.addTextField { field in
+            field.placeholder = "Password"
+            if #available(iOS 11.0, *) {
+                field.textContentType = .password
+            }
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
+            self.isShowingAuthAlertView = false
+            completion(true)
+        }))
+        alert.addAction(UIAlertAction(title: "Login", style: .default, handler: { (_) in
+            computer.username = alert.textFields?.first?.text
+            computer.password = alert.textFields?.last?.text
+            SYDatabase.shared.addComputer(computer)
+            self.isShowingAuthAlertView = false
+            completion(false)
+        }))
+        
+        topViewController?.present(alert, animated: true, completion: nil)
+    }
+}
 // MARK: JAHPAuthenticatingHTTPProtocolDelegate
 
 extension AppDelegate : JAHPAuthenticatingHTTPProtocolDelegate {
@@ -147,20 +202,8 @@ extension AppDelegate : JAHPAuthenticatingHTTPProtocolDelegate {
             canceled = true
         }
     }
+    
+    func authenticatingHTTPProtocol(_ authenticatingHTTPProtocol: JAHPAuthenticatingHTTPProtocol?, logMessage message: String) {
+        print(message)
+    }
 }
-/*
-    - (nullable JAHPDidCancelAuthenticationChallengeHandler)authenticatingHTTPProtocol:(nonnull JAHPAuthenticatingHTTPProtocol *)authenticatingHTTPProtocol
-didReceiveAuthenticationChallenge:(nonnull NSURLAuthenticationChallenge *)challenge
-{
-}
-
-/*
- - (void)authenticatingHTTPProtocol:(nullable JAHPAuthenticatingHTTPProtocol *)authenticatingHTTPProtocol logWithFormat:(nonnull NSString *)format
- arguments:(va_list)arguments
- {
- NSLog(@"%@", [[NSString alloc] initWithFormat:format arguments:arguments]);
- }
- */
-
-@end
-*/
