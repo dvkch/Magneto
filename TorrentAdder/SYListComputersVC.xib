@@ -1,8 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9052" systemVersion="15B22c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SYListComputersVC">
@@ -14,36 +19,39 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="25g-WW-uzj">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="R4Y-vo-kqf">
+                    <rect key="frame" x="0.0" y="64" width="375" height="5"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="4" id="n2A-cj-BR9"/>
+                    </constraints>
+                    <color key="progressTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="trackTintColor" red="0.95999997854232788" green="0.95999997854232788" blue="0.95999997854232788" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </progressView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gje-ii-Iwr">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <progressView key="tableHeaderView" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" id="R4Y-vo-kqf">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="3"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <animations/>
-                        <color key="progressTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="trackTintColor" white="0.95999999999999996" alpha="1" colorSpace="calibratedWhite"/>
-                    </progressView>
+                    <rect key="frame" x="0.0" y="68" width="375" height="599"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="h7L-pK-hxa"/>
                         <outlet property="delegate" destination="-1" id="i1c-YS-cXW"/>
                     </connections>
                 </tableView>
             </subviews>
-            <animations/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="gje-ii-Iwr" firstAttribute="top" secondItem="25g-WW-uzj" secondAttribute="top" id="5iV-bL-605"/>
                 <constraint firstAttribute="trailing" secondItem="gje-ii-Iwr" secondAttribute="trailing" id="cbM-wU-AIx"/>
                 <constraint firstItem="gje-ii-Iwr" firstAttribute="leading" secondItem="25g-WW-uzj" secondAttribute="leading" id="hEG-sk-j9s"/>
+                <constraint firstAttribute="trailing" secondItem="R4Y-vo-kqf" secondAttribute="trailing" id="lmk-ul-BQZ"/>
+                <constraint firstItem="gje-ii-Iwr" firstAttribute="top" secondItem="R4Y-vo-kqf" secondAttribute="bottom" id="m5s-Ah-fdw"/>
                 <constraint firstAttribute="bottom" secondItem="gje-ii-Iwr" secondAttribute="bottom" id="mPr-4X-hqF"/>
+                <constraint firstItem="R4Y-vo-kqf" firstAttribute="top" secondItem="vx2-eI-EEd" secondAttribute="top" id="pu0-nc-GxR"/>
+                <constraint firstItem="R4Y-vo-kqf" firstAttribute="leading" secondItem="25g-WW-uzj" secondAttribute="leading" id="uHx-EF-mq3"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-            <point key="canvasLocation" x="418" y="262"/>
+            <viewLayoutGuide key="safeArea" id="vx2-eI-EEd"/>
+            <point key="canvasLocation" x="668" y="235.23238380809596"/>
         </view>
     </objects>
 </document>

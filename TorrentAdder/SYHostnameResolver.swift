@@ -26,7 +26,7 @@ extension Notification.Name {
     
     // MARK: Properties
     private var isRunning: Bool = false
-    private let servicesTypes = ["_smb._tcp", "_afpovertcp._tcp", "_daap._tcp", "_home-sharing._tcp", "_rfb._tcp"]
+    private let servicesTypes = ["_smb._tcp", "_afpovertcp._tcp", "_daap._tcp", "_home-sharing._tcp", "_rfb._tcp", "_companion-link._tcp", "_raop._tcp", "_sleep-proxy._udp"]
     private var browsers: [NetServiceBrowser] = []
     private var services: [NetService] = []
 

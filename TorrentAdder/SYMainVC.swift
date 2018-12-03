@@ -93,7 +93,7 @@ extension SYMainVC {
     @objc private func refreshComputersTimerTick() {
         if view.window == nil { return }
         computers.forEach {
-            SYClientStatusManager.shared.startStatusUpdate(for: $0)
+            SYClientStatusManager.shared.startStatusUpdateIfNeeded(for: $0)
         }
     }
 }

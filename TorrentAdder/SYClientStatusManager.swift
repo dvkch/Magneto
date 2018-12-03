@@ -45,21 +45,23 @@ class SYClientStatusManager: NSObject {
     
     func lastStatusForComputer(_ computer: SYComputerModel?) -> ClientStatus {
         guard let computer = computer else { return .unknown }
-        
+        return lastStatuses[computer.identifier]?.1 ?? .unknown
+    }
+    
+    func startStatusUpdateIfNeeded(for computer: SYComputerModel) {
         let status = lastStatuses[computer.identifier]
         let date = status?.0 ?? Date(timeIntervalSince1970: 0)
-
+        
         // refresh if it's unknown or old
         if status == nil || date.timeIntervalSinceNow < -10 {
             DispatchQueue.main.async {
                 self.startStatusUpdate(for: computer)
             }
         }
-        
-        return status?.1 ?? .unknown
     }
     
-    func startStatusUpdate(for computer: SYComputerModel) {
+    // MARK: Private
+    private func startStatusUpdate(for computer: SYComputerModel) {
         if isComputerLoading(computer) { return }
         
         setComputerLoading(computer, loading: true)
@@ -71,7 +73,6 @@ class SYClientStatusManager: NSObject {
         }
     }
     
-    // MARK: Private
     private func setStatus(_ status: ClientStatus, for computer: SYComputerModel) {
         guard Thread.isMainThread else {
             DispatchQueue.main.async {
