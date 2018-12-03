@@ -36,7 +36,7 @@ class SYListComputersVC: UIViewController {
     }
     
     // MARK: Properties
-    private var computers: [SYComputerModel] = []
+    private var availableIPs: [String] = []
     private var pinger: SYPinger?
     // MARK: View
     @IBOutlet private var tableView: UITableView!
@@ -57,18 +57,21 @@ class SYListComputersVC: UIViewController {
         tableView.reloadData()
     }
     
-    private func addComputer(with ip: String?) {
+    private func addAvailableIP(_ ip: String?) {
         guard let ip = ip else { return }
-        let computer = SYComputerModel(name: nil, andHost: ip)!
-        computers.append(computer)
-        computers.sort { (c1, c2) -> Bool in
-            return c1.host.compare(c2.host, options: .numeric) == .orderedAscending
+        availableIPs.append(ip)
+        availableIPs.sort { (ip1, ip2) -> Bool in
+            return ip1.compare(ip2, options: .numeric) == .orderedAscending
         }
         
-        let index = computers.index(of: computer)!
-        tableView.beginUpdates()
-        tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-        tableView.endUpdates()
+        if let index = availableIPs.index(of: ip) {
+            tableView.beginUpdates()
+            tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+            tableView.endUpdates()
+        }
+        else {
+            tableView.reloadData()
+        }
     }
     
     // MARK: Ping
@@ -80,7 +83,7 @@ class SYListComputersVC: UIViewController {
             self?.progressView.setProgress(Float(progress), animated: true)
         }
         pinger?.ipFoundBlock = { [weak self] (ip) in
-            self?.addComputer(with: ip)
+            self?.addAvailableIP(ip)
         }
         pinger?.finishedBlock = { [weak self] (finished) in
             self?.progressView?.setProgress(1, animated: true)
@@ -93,10 +96,12 @@ class SYListComputersVC: UIViewController {
 
 extension SYListComputersVC : UITableViewDataSource {
     func computer(at indexPath: IndexPath) -> SYComputerModel? {
-        return indexPath.row >= computers.count ? nil : computers[indexPath.row]
+        guard indexPath.row < availableIPs.count else { return  nil }
+        return SYComputerModel(name: nil, andHost: availableIPs[indexPath.row])
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return computers.count + 1
+        return availableIPs.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

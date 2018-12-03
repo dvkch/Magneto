@@ -64,15 +64,8 @@ class SYComputerCell: UITableViewCell {
     }
     
     @objc private func updateStatus() {
-        var loading = SYClientStatusManager.shared.isComputerLoading(computer)
-        var status = SYClientStatusManager.shared.lastStatusForComputer(computer)
-        
-        if isAvailableComputersList && computer != nil {
-            status = .online
-        }
-        if isAvailableComputersList && computer == nil {
-            loading = true
-        }
+        let loading = (isAvailableComputersList && computer == nil) ? true    : SYClientStatusManager.shared.isComputerLoading(computer)
+        let status  = (isAvailableComputersList && computer != nil) ? .online : SYClientStatusManager.shared.lastStatusForComputer(computer)
         
         // show loading only if previous status is unknown, else show last status
         if loading && status == .unknown {

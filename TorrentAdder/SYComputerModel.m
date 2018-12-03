@@ -7,8 +7,7 @@
 //
 
 #import "SYComputerModel.h"
-#import "NSHost+SY.h"
-// #import "SYBonjourClient.h"
+#import "TorrentAdder-Swift.h"
 
 @interface SYComputerModel ()
 @property (readwrite, strong, atomic) NSString *identifier;
@@ -36,11 +35,7 @@
         self.host = host;
         
         if (!self.name)
-            self.name = [NSHost hostWithAddress:self.host].name;
-        // TODO: monitor
-        
-        // if (!self.name)
-        // TODO:    self.name = [[SYBonjourClient shared] hostnameForIP:self.host];
+            self.name = [[SYHostnameResolver shared] hostnameForIP:self.host];
         
         if (!self.name)
             self.name = host;
