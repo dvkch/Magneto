@@ -1,5 +1,5 @@
 //
-//  SYAddComputerCell.swift
+//  SYAddClientCell.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import SYKit
 
-class SYAddComputerCell : UITableViewCell {
+class SYAddClientCell : UITableViewCell {
     
     // MARK: Init
     override func awakeFromNib() {
@@ -38,7 +38,7 @@ class SYAddComputerCell : UITableViewCell {
     private func updateContent() {
         switch clientsCount {
         case 0:
-            label.text = String(format: "No clients")
+            label.text = String(format: "Add a client")
         case 1:
             label.text = String(format: "1 client")
         default:

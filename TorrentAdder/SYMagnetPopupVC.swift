@@ -1,5 +1,5 @@
 //
-//  SYAddMagnetPopupVC.swift
+//  SYMagnetPopupVC.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -9,11 +9,11 @@
 import UIKit
 import SYPopoverController
 
-class SYAddMagnetPopupVC: UIViewController {
+class SYMagnetPopupVC: UIViewController {
 
     // MARK: Presentation
     static func show(in viewController: UIViewController, magnet: URL?, result: SYSearchResult?, sourceApp: SYSourceApp?) {
-        let popupVC = SYAddMagnetPopupVC()
+        let popupVC = SYMagnetPopupVC()
         popupVC.sourceApp = sourceApp
         popupVC.result = result
         popupVC.magnetURL = magnet
@@ -30,7 +30,7 @@ class SYAddMagnetPopupVC: UIViewController {
         
         preferredContentSize = CGSize(width: 300, height: 250)
         
-        tableView.registerCell(name: SYComputerCell.className)
+        tableView.registerCell(name: SYClientCell.className)
         tableView.tableFooterView = UIView()
         
         cancelButton.setTitle("Cancel", for: .normal)
@@ -123,7 +123,7 @@ class SYAddMagnetPopupVC: UIViewController {
                 self.updateForMode(.success(successMessage), animated: true)
             }
             .onFailure { error in
-                let errorMessage = error.isOfflineError ? "Computer unavailble" : error.localizedDescription
+                let errorMessage = error.isOfflineError ? "Client unavailble" : error.localizedDescription
                 self.updateForMode(.failure(errorMessage), animated: true)
             }
     }
@@ -203,13 +203,13 @@ class SYAddMagnetPopupVC: UIViewController {
     }
 }
 
-extension SYAddMagnetPopupVC : UITableViewDataSource {
+extension SYMagnetPopupVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return clients.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SYComputerCell.className, for: indexPath) as! SYComputerCell
+        let cell = tableView.dequeueCell(SYClientCell.self, for: indexPath)
         cell.client = clients[indexPath.row]
         cell.isDiscoveredClient = false
         return cell
@@ -220,7 +220,7 @@ extension SYAddMagnetPopupVC : UITableViewDataSource {
     }
 }
 
-extension SYAddMagnetPopupVC : UITableViewDelegate {
+extension SYMagnetPopupVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
@@ -231,7 +231,7 @@ extension SYAddMagnetPopupVC : UITableViewDelegate {
     }
 }
 
-extension SYAddMagnetPopupVC : SYPopoverContentViewDelegate {
+extension SYMagnetPopupVC : SYPopoverContentViewDelegate {
     func popoverControllerShouldDismiss(onBackgroundTap popoverController: SYPopoverController!) -> Bool {
         return canClose
     }

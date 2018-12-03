@@ -1,5 +1,5 @@
 //
-//  SYComputerCell.swift
+//  SYClientCell.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -8,8 +8,7 @@
 
 import UIKit
 
-class SYComputerCell: UITableViewCell {
-    // TODO: cleanup computer everywhere!
+class SYClientCell: UITableViewCell {
     
     // MARK: Init
     override func awakeFromNib() {
@@ -54,7 +53,7 @@ class SYComputerCell: UITableViewCell {
         }
         else if isDiscoveredClient
         {
-            nameLabel.text = "Add a custom computer"
+            nameLabel.text = "Add a custom client"
             hostLabel.text = "in case yours wasn't detected"
         }
         else

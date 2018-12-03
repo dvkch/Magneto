@@ -1,5 +1,5 @@
 //
-//  SYListComputersVC.swift
+//  SYDiscoverClientsVC.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SYListComputersVC: UIViewController {
+class SYDiscoverClientsVC: UIViewController {
 
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -20,7 +20,7 @@ class SYListComputersVC: UIViewController {
         let closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
         navigationItem.leftBarButtonItem = closeButton
         
-        tableView.registerCell(name: SYComputerCell.className)
+        tableView.registerCell(name: SYClientCell.className)
         tableView.tableFooterView = UIView()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.hostnameResolverUpdatedNotification), name: .hostnameResolverUpdated, object: nil)
@@ -94,7 +94,7 @@ class SYListComputersVC: UIViewController {
     }
 }
 
-extension SYListComputersVC : UITableViewDataSource {
+extension SYDiscoverClientsVC : UITableViewDataSource {
     func client(at indexPath: IndexPath) -> SYClient? {
         guard indexPath.row < availableIPs.count else { return  nil }
         let host = availableIPs[indexPath.row]
@@ -107,7 +107,7 @@ extension SYListComputersVC : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueCell(type: SYComputerCell.self, indexPath: indexPath)
+        let cell = tableView.dequeueCell(SYClientCell.self, for: indexPath)
         cell.isDiscoveredClient = true
         cell.client = client(at: indexPath)
         return cell
@@ -118,11 +118,11 @@ extension SYListComputersVC : UITableViewDataSource {
     }
 }
 
-extension SYListComputersVC : UITableViewDelegate {
+extension SYDiscoverClientsVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let vc = SYEditComputerVC()
+        let vc = SYEditClientVC()
         vc.client = client(at: indexPath) ?? SYClient(host: "", name: nil)
         navigationController?.pushViewController(vc, animated: true)
     }

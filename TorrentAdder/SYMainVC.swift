@@ -30,8 +30,8 @@ class SYMainVC: UIViewController {
         searchField.textField.rightViewMode = .always
         searchField.textField.clearButtonMode = .always
         
-        tableView.registerCell(name: SYAddComputerCell.className)
-        tableView.registerCell(name: SYComputerCell.className)
+        tableView.registerCell(name: SYAddClientCell.className)
+        tableView.registerCell(name: SYClientCell.className)
         tableView.registerCell(name: SYResultCell.className)
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
@@ -147,7 +147,7 @@ extension SYMainVC {
             return
         }
         
-        SYAddMagnetPopupVC.show(in: self, magnet: magnetURL, result: result, sourceApp: sourceApp)
+        SYMagnetPopupVC.show(in: self, magnet: magnetURL, result: result, sourceApp: sourceApp)
     }
     
     fileprivate func removeClient(_ client: SYClient, at indexPath: IndexPath) {
@@ -221,21 +221,21 @@ extension SYMainVC : UITableViewDataSource {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return UITableViewCell() }
         switch tableSection {
         case .buttons:
-            let cell = tableView.dequeueCell(type: SYAddComputerCell.self, indexPath: indexPath)
+            let cell = tableView.dequeueCell(SYAddClientCell.self, for: indexPath)
             cell.clientsCount = clients.count
             cell.addButtonTapBlock = { [weak self] in
-                let vc = SYListComputersVC()
+                let vc = SYDiscoverClientsVC()
                 let nc = SYNavigationController(rootViewController: vc)
                 self?.present(nc, animated: true, completion: nil)
             }
             return cell
         case .clients:
-            let cell = tableView.dequeueCell(type: SYComputerCell.self, indexPath: indexPath)
+            let cell = tableView.dequeueCell(SYClientCell.self, for: indexPath)
             cell.client = clients[indexPath.row]
             cell.isDiscoveredClient = false
             return cell
         case .results:
-            let cell = tableView.dequeueCell(type: SYResultCell.self, indexPath: indexPath)
+            let cell = tableView.dequeueCell(SYResultCell.self, for: indexPath)
             cell.result = searchResults[indexPath.row]
             return cell
         }
@@ -266,7 +266,7 @@ extension SYMainVC : UITableViewDelegate {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return }
         switch tableSection {
         case .buttons:
-            let vc = SYListComputersVC()
+            let vc = SYDiscoverClientsVC()
             let nc = SYNavigationController(rootViewController: vc)
             present(nc, animated: true, completion: nil)
 
@@ -292,7 +292,7 @@ extension SYMainVC : UITableViewDelegate {
         case .clients:
             let client = clients[indexPath.row]
             let editAction = UITableViewRowAction(style: .normal, title: "Edit") { [weak self] (_, _) in
-                let vc = SYEditComputerVC()
+                let vc = SYEditClientVC()
                 vc.client = client
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
