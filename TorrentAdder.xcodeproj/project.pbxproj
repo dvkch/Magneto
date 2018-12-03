@@ -11,7 +11,6 @@
 		970130E021B07EC000E7CFEC /* SYWebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130DF21B07EC000E7CFEC /* SYWebAPI.swift */; };
 		970130E221B084E500E7CFEC /* Alamofire+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130E121B084E500E7CFEC /* Alamofire+SY.swift */; };
 		970130E421B08E1000E7CFEC /* Error+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130E321B08E1000E7CFEC /* Error+SY.swift */; };
-		971378211BBB09360060C5B6 /* SYDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 971378201BBB09360060C5B6 /* SYDatabase.m */; };
 		972589AD21B0AD6D00FCE9D5 /* SYError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972589AC21B0AD6D00FCE9D5 /* SYError.swift */; };
 		973784321BD40649001AD487 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973784311BD40649001AD487 /* Launch.storyboard */; };
 		9748F4CB21B0B305008CE0D1 /* BrightFutures+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9748F4CA21B0B305008CE0D1 /* BrightFutures+SY.swift */; };
@@ -24,6 +23,8 @@
 		974D373921B4999E00C0FDDE /* Sockets+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 974D373821B4999E00C0FDDE /* Sockets+SY.m */; };
 		974D373B21B49D4800C0FDDE /* SYClientAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373A21B49D4800C0FDDE /* SYClientAPI.swift */; };
 		9768CA6321B55838000AA7C2 /* UIColor+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6221B55838000AA7C2 /* UIColor+SY.swift */; };
+		9768CA6521B5770B000AA7C2 /* SYClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6421B5770B000AA7C2 /* SYClient.swift */; };
+		9768CA6721B57B33000AA7C2 /* SYClient+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6621B57B33000AA7C2 /* SYClient+UI.swift */; };
 		9771AB1321AEC919005DE97D /* SYMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1221AEC919005DE97D /* SYMainVC.swift */; };
 		9771AB1621AECB95005DE97D /* UITableView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1521AECB95005DE97D /* UITableView+SY.swift */; };
 		9771AB1821AECBC3005DE97D /* NSObject+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1721AECBC3005DE97D /* NSObject+SY.swift */; };
@@ -61,13 +62,11 @@
 		97EC446321AF37330034C861 /* SYPinger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC446221AF37330034C861 /* SYPinger.swift */; };
 		97F911481BC2C45C00BF1848 /* SYEditComputerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* SYEditComputerVC.xib */; };
 		97F9114D1BC2C73D00BF1848 /* SYComputerFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */; };
-		97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */; };
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
 		F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675C192A317C00735175 /* CoreGraphics.framework */; };
 		F898675F192A317C00735175 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675E192A317C00735175 /* UIKit.framework */; };
 		F8986765192A317C00735175 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F8986763192A317C00735175 /* InfoPlist.strings */; };
 		F8986776192A317C00735175 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8986775192A317C00735175 /* Images.xcassets */; };
-		F89867AE192A4E4C00735175 /* SYComputerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F89867AD192A4E4C00735175 /* SYComputerModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,8 +88,6 @@
 		970130DF21B07EC000E7CFEC /* SYWebAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYWebAPI.swift; sourceTree = "<group>"; };
 		970130E121B084E500E7CFEC /* Alamofire+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+SY.swift"; sourceTree = "<group>"; };
 		970130E321B08E1000E7CFEC /* Error+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+SY.swift"; sourceTree = "<group>"; };
-		9713781F1BBB09360060C5B6 /* SYDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYDatabase.h; sourceTree = "<group>"; };
-		971378201BBB09360060C5B6 /* SYDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYDatabase.m; sourceTree = "<group>"; };
 		972589AC21B0AD6D00FCE9D5 /* SYError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYError.swift; sourceTree = "<group>"; };
 		973784311BD40649001AD487 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		9748F4CA21B0B305008CE0D1 /* BrightFutures+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrightFutures+SY.swift"; sourceTree = "<group>"; };
@@ -104,6 +101,8 @@
 		974D373821B4999E00C0FDDE /* Sockets+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Sockets+SY.m"; sourceTree = "<group>"; };
 		974D373A21B49D4800C0FDDE /* SYClientAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYClientAPI.swift; sourceTree = "<group>"; };
 		9768CA6221B55838000AA7C2 /* UIColor+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SY.swift"; sourceTree = "<group>"; };
+		9768CA6421B5770B000AA7C2 /* SYClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYClient.swift; sourceTree = "<group>"; };
+		9768CA6621B57B33000AA7C2 /* SYClient+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYClient+UI.swift"; sourceTree = "<group>"; };
 		9771AB1121AEC918005DE97D /* TorrentAdder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TorrentAdder-Bridging-Header.h"; sourceTree = "<group>"; };
 		9771AB1221AEC919005DE97D /* SYMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMainVC.swift; sourceTree = "<group>"; };
 		9771AB1521AECB95005DE97D /* UITableView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+SY.swift"; sourceTree = "<group>"; };
@@ -144,8 +143,6 @@
 		97EC446221AF37330034C861 /* SYPinger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYPinger.swift; sourceTree = "<group>"; };
 		97F911461BC2C45C00BF1848 /* SYEditComputerVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYEditComputerVC.xib; sourceTree = "<group>"; };
 		97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYComputerFormCell.xib; sourceTree = "<group>"; };
-		97F9114E1BC3071F00BF1848 /* SYComputerModel+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SYComputerModel+UI.h"; sourceTree = "<group>"; };
-		97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SYComputerModel+UI.m"; sourceTree = "<group>"; };
 		ECB5BC1A5208F37710432FDC /* Pods-TorrentAdder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TorrentAdder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder.debug.xcconfig"; sourceTree = "<group>"; };
 		F8986757192A317C00735175 /* TorrentAdder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TorrentAdder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F898675A192A317C00735175 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -155,8 +152,6 @@
 		F8986764192A317C00735175 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F8986775192A317C00735175 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F898677C192A317D00735175 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		F89867AC192A4E4C00735175 /* SYComputerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYComputerModel.h; sourceTree = "<group>"; };
-		F89867AD192A4E4C00735175 /* SYComputerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYComputerModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,8 +245,6 @@
 		97EACC021BC2C32700382614 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				9713781F1BBB09360060C5B6 /* SYDatabase.h */,
-				971378201BBB09360060C5B6 /* SYDatabase.m */,
 				9771AB3621AF2BA4005DE97D /* SYPreferences.swift */,
 			);
 			name = Storage;
@@ -336,10 +329,8 @@
 		F89867BF192BA8DC00735175 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F89867AC192A4E4C00735175 /* SYComputerModel.h */,
-				F89867AD192A4E4C00735175 /* SYComputerModel.m */,
-				97F9114E1BC3071F00BF1848 /* SYComputerModel+UI.h */,
-				97F9114F1BC3071F00BF1848 /* SYComputerModel+UI.m */,
+				9768CA6421B5770B000AA7C2 /* SYClient.swift */,
+				9768CA6621B57B33000AA7C2 /* SYClient+UI.swift */,
 				972589AC21B0AD6D00FCE9D5 /* SYError.swift */,
 				974D373121B1DF8600C0FDDE /* SYIPv4Address.swift */,
 				974D373321B1E2DA00C0FDDE /* SYIPv4Interface.swift */,
@@ -559,12 +550,13 @@
 				974D373B21B49D4800C0FDDE /* SYClientAPI.swift in Sources */,
 				9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */,
 				974D373221B1DF8600C0FDDE /* SYIPv4Address.swift in Sources */,
-				97F911501BC3071F00BF1848 /* SYComputerModel+UI.m in Sources */,
 				9771AB1821AECBC3005DE97D /* NSObject+SY.swift in Sources */,
 				97EC446321AF37330034C861 /* SYPinger.swift in Sources */,
 				974D372C21B157CE00C0FDDE /* Fuzi+SY.swift in Sources */,
+				9768CA6721B57B33000AA7C2 /* SYClient+UI.swift in Sources */,
 				970130E021B07EC000E7CFEC /* SYWebAPI.swift in Sources */,
 				9768CA6321B55838000AA7C2 /* UIColor+SY.swift in Sources */,
+				9768CA6521B5770B000AA7C2 /* SYClient.swift in Sources */,
 				9771AB2521AEF3CE005DE97D /* UIView+SY.swift in Sources */,
 				9771AB1F21AEE457005DE97D /* SYAddMagnetPopupVC.swift in Sources */,
 				974D373921B4999E00C0FDDE /* Sockets+SY.m in Sources */,
@@ -576,7 +568,6 @@
 				9771AB2D21AEFF09005DE97D /* SYEditComputerVC.swift in Sources */,
 				974D373421B1E2DA00C0FDDE /* SYIPv4Interface.swift in Sources */,
 				9771AB2721AEF5E6005DE97D /* SYSourceApp.swift in Sources */,
-				971378211BBB09360060C5B6 /* SYDatabase.m in Sources */,
 				9771AB2921AEF898005DE97D /* SYNavigationController.swift in Sources */,
 				9771AB2F21AF0356005DE97D /* SYAddComputerCell.swift in Sources */,
 				974D372A21B150FC00C0FDDE /* SYSearchResult.swift in Sources */,
@@ -586,7 +577,6 @@
 				974D372E21B1D87300C0FDDE /* Calendar+SY.swift in Sources */,
 				9771AB3C21AF34F5005DE97D /* Array+SY.swift in Sources */,
 				979D4A9821AF4614000BFDF0 /* SYClientStatusManager.swift in Sources */,
-				F89867AE192A4E4C00735175 /* SYComputerModel.m in Sources */,
 				970130E221B084E500E7CFEC /* Alamofire+SY.swift in Sources */,
 				9771AB3721AF2BA4005DE97D /* SYPreferences.swift in Sources */,
 				9771AB1621AECB95005DE97D /* UITableView+SY.swift in Sources */,

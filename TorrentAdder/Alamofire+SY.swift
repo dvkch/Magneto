@@ -11,13 +11,13 @@ import Fuzi
 import BrightFutures
 
 extension URLRequest {
-    var computer: SYComputerModel? {
+    var computer: SYClient? {
         guard let requestURL = self.url else { return nil }
-        for computer in SYDatabase.shared.computers() {
-            if requestURL.absoluteString.hasPrefix(computer.apiURL().absoluteString) {
+        for computer in SYPreferences.shared.computers {
+            if requestURL.absoluteString.hasPrefix(computer.apiURL.absoluteString) {
                 return computer
             }
-            if requestURL.absoluteString.hasPrefix(computer.webURL(withAuth: false).absoluteString) {
+            if requestURL.absoluteString.hasPrefix(computer.webURL.absoluteString) {
                 return computer
             }
         }

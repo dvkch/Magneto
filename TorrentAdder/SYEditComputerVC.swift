@@ -14,7 +14,7 @@ class SYEditComputerVC: UIViewController {
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        isCreation = SYDatabase.shared.computer(withID: computer?.identifier) == nil
+        isCreation = SYPreferences.shared.computerWithIdentifier(computer.id) == nil
         title = isCreation ? "New computer" : "Edit computer"
         
         tableView.registerCell(name: SYComputerFormCell.className)
@@ -56,7 +56,7 @@ class SYEditComputerVC: UIViewController {
     }
     
     // MARK: Properties
-    var computer: SYComputerModel!
+    var computer: SYClient!
     private var isCreation: Bool = false
     
     // MARK: Views
@@ -73,28 +73,28 @@ class SYEditComputerVC: UIViewController {
     @discardableResult
     private func saveComputer(force: Bool) -> Bool {
         if computer == nil { return true }
-        if computer.port == 0 {
-            computer.port = SYComputerModel.defaultPort(forClient: computer.client)
+        if computer.port == nil || computer.port == 0 {
+            computer.port = computer.software.defaultPort
         }
         
-        if !computer.isValid() && !force {
+        if !computer.isValid && !force {
             return false
         }
         
-        SYDatabase.shared.addComputer(computer)
+        SYPreferences.shared.addComputer(computer)
         return true
     }
 }
 
 extension SYEditComputerVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SYComputerModel.numberOfFields()
+        return SYClient.FormField.allCases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(type: SYComputerFormCell.self, indexPath: indexPath)
         cell.computer = computer
-        cell.formField = SYComputerModelField(indexPath.row)
+        cell.formField = SYClient.FormField.allCases[indexPath.row]
         return cell
     }
 }

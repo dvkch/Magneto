@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SYClientStatusManagerDelegate : NSObjectProtocol {
-    func clientStatusManager(_ manager: SYClientStatusManager, changedStatusFor computer: SYComputerModel)
+    func clientStatusManager(_ manager: SYClientStatusManager, changedStatusFor computer: SYClient)
 }
 
 extension Notification.Name {
@@ -38,18 +38,18 @@ class SYClientStatusManager: NSObject {
     private var lastStatuses: [String: (Date, ClientStatus)] = [:]
 
     // MARK: Public methods
-    func isComputerLoading(_ computer: SYComputerModel?) -> Bool {
+    func isComputerLoading(_ computer: SYClient?) -> Bool {
         guard let computer = computer else { return false }
-        return loadingComputers.contains(computer.identifier)
+        return loadingComputers.contains(computer.id)
     }
     
-    func lastStatusForComputer(_ computer: SYComputerModel?) -> ClientStatus {
+    func lastStatusForComputer(_ computer: SYClient?) -> ClientStatus {
         guard let computer = computer else { return .unknown }
-        return lastStatuses[computer.identifier]?.1 ?? .unknown
+        return lastStatuses[computer.id]?.1 ?? .unknown
     }
     
-    func startStatusUpdateIfNeeded(for computer: SYComputerModel) {
-        let status = lastStatuses[computer.identifier]
+    func startStatusUpdateIfNeeded(for computer: SYClient) {
+        let status = lastStatuses[computer.id]
         let date = status?.0 ?? Date(timeIntervalSince1970: 0)
         
         // refresh if it's unknown or old
@@ -61,7 +61,7 @@ class SYClientStatusManager: NSObject {
     }
     
     // MARK: Private
-    private func startStatusUpdate(for computer: SYComputerModel) {
+    private func startStatusUpdate(for computer: SYClient) {
         if isComputerLoading(computer) { return }
         
         setComputerLoading(computer, loading: true)
@@ -73,7 +73,7 @@ class SYClientStatusManager: NSObject {
         }
     }
     
-    private func setStatus(_ status: ClientStatus, for computer: SYComputerModel) {
+    private func setStatus(_ status: ClientStatus, for computer: SYClient) {
         guard Thread.isMainThread else {
             DispatchQueue.main.async {
                 self.setStatus(status, for: computer)
@@ -81,14 +81,8 @@ class SYClientStatusManager: NSObject {
             return
         }
         
-        // TODO: clean up
-        guard computer.identifier != nil else {
-            print("invalid id")
-            return
-        }
-        
         let prevStatus = lastStatusForComputer(computer)
-        lastStatuses[computer.identifier] = (Date(), status)
+        lastStatuses[computer.id] = (Date(), status)
         
         if prevStatus != status {
             NotificationCenter.default.post(name: .clientStatusChanged, object: computer)
@@ -96,7 +90,7 @@ class SYClientStatusManager: NSObject {
         }
     }
 
-    func setComputerLoading(_ computer: SYComputerModel?, loading: Bool) {
+    func setComputerLoading(_ computer: SYClient?, loading: Bool) {
         guard Thread.isMainThread else {
             DispatchQueue.main.async {
                 self.setComputerLoading(computer, loading: loading)
@@ -107,10 +101,10 @@ class SYClientStatusManager: NSObject {
         guard let computer = computer, loading != isComputerLoading(computer) else { return }
         
         if loading {
-            loadingComputers.append(computer.identifier)
+            loadingComputers.append(computer.id)
         }
         else {
-            loadingComputers.remove(computer.identifier)
+            loadingComputers.remove(computer.id)
         }
         
         NotificationCenter.default.post(name: .clientStatusChanged, object: computer)

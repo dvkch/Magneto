@@ -9,6 +9,7 @@
 import UIKit
 
 class SYComputerCell: UITableViewCell {
+    // TODO: cleanup computer everywhere!
     
     // MARK: Init
     override func awakeFromNib() {
@@ -26,7 +27,7 @@ class SYComputerCell: UITableViewCell {
             updateStatus()
         }
     }
-    var computer: SYComputerModel? {
+    var computer: SYClient? {
         didSet {
             updateContent()
             updateStatus()
@@ -48,7 +49,7 @@ class SYComputerCell: UITableViewCell {
                 hostLabel.text = computer.host
             }
             else {
-                hostLabel.text = [computer.host ?? "", String(computer.port)].joined(separator: ":")
+                hostLabel.text = [computer.host, String(computer.port ?? 0)].joined(separator: ":")
             }
         }
         else if isAvailableComputersList
@@ -64,8 +65,8 @@ class SYComputerCell: UITableViewCell {
     }
     
     @objc private func updateStatus() {
-        let loading = (isAvailableComputersList && computer == nil) ? true    : SYClientStatusManager.shared.isComputerLoading(computer)
-        let status  = (isAvailableComputersList && computer != nil) ? .online : SYClientStatusManager.shared.lastStatusForComputer(computer)
+        let loading: Bool = (isAvailableComputersList && computer == nil) ? true    : SYClientStatusManager.shared.isComputerLoading(computer)
+        let status: SYClientStatusManager.ClientStatus  = (isAvailableComputersList && computer != nil) ? .online : SYClientStatusManager.shared.lastStatusForComputer(computer)
         
         // show loading only if previous status is unknown, else show last status
         if loading && status == .unknown {

@@ -56,7 +56,7 @@ class SYAddMagnetPopupVC: UIViewController {
         statusLabel.font = UIFont.systemFont(ofSize: 15)
         spinner.color = .gray
         
-        computers = SYDatabase.shared.computers()
+        computers = SYPreferences.shared.computers
         updateForMode(.computers, animated: false)
     }
     
@@ -64,7 +64,7 @@ class SYAddMagnetPopupVC: UIViewController {
     private var sourceApp: SYSourceApp?
     private var magnetURL: URL?
     private var result: SYSearchResult?
-    private var computers = [SYComputerModel]()
+    private var computers = [SYClient]()
     private var canClose: Bool = false
 
     // MARK: Views
@@ -92,7 +92,7 @@ class SYAddMagnetPopupVC: UIViewController {
     }
     
     // MARK: API
-    private func fetchMagnetURLAndAdd(to computer: SYComputerModel) {
+    private func fetchMagnetURLAndAdd(to computer: SYClient) {
         updateForMode(.loading, animated: true)
         
         if let magnetURL = (magnetURL ?? result?.magnetURL) {
@@ -111,14 +111,14 @@ class SYAddMagnetPopupVC: UIViewController {
             }
     }
     
-    private func addMagnetToComputer(magnetURL: URL, computer: SYComputerModel) {
+    private func addMagnetToComputer(magnetURL: URL, computer: SYClient) {
         updateForMode(.loading, animated: true)
         
         SYClientAPI.shared.addMagnet(magnetURL, to: computer)
             .onSuccess { message in
                 var successMessage = "Success!"
                 if let message = message, !message.isEmpty {
-                    successMessage += "\n\n" + "Message from " + computer.name + ": " + message
+                    successMessage += "\n\n" + "Message from " + (computer.name ?? computer.host) + ": " + message
                 }
                 self.updateForMode(.success(successMessage), animated: true)
             }

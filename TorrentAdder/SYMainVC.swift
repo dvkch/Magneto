@@ -44,7 +44,7 @@ class SYMainVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        computers = SYDatabase.shared.computers()
+        computers = SYPreferences.shared.computers
         tableView.reloadData()
     }
     
@@ -59,7 +59,7 @@ class SYMainVC: UIViewController {
     
     // MARK: Properties
     private var timerRefreshComputers: Timer?
-    private var computers: [SYComputerModel] = []
+    private var computers: [SYClient] = []
     private var searchResults: [SYSearchResult] = []
     private var searchQuery: String = ""
     private var constraintHeaderHeightOriginalValue: CGFloat = 0
@@ -150,8 +150,8 @@ extension SYMainVC {
         SYAddMagnetPopupVC.show(in: self, magnet: magnetURL, result: result, sourceApp: sourceApp)
     }
     
-    fileprivate func removeComputer(_ computer: SYComputerModel, at indexPath: IndexPath) {
-        SYDatabase.shared.removeComputer(computer)
+    fileprivate func removeComputer(_ computer: SYClient, at indexPath: IndexPath) {
+        SYPreferences.shared.removeComputer(computer)
         
         if let index = self.computers.index(of: computer) {
             self.computers.remove(at: index)
@@ -192,13 +192,12 @@ extension SYMainVC : UIScrollViewDelegate {
 }
 
 extension SYMainVC : UITableViewDataSource {
-    enum TableSection : Int {
+    enum TableSection : Int, CaseIterable {
         case buttons, computers, results
-        static let all: [TableSection] = [.buttons, .computers, .results]
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return TableSection.all.count
+        return TableSection.allCases.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -275,8 +274,7 @@ extension SYMainVC : UITableViewDelegate {
             present(nc, animated: true, completion: nil)
 
         case .computers:
-            // TODO: go back to WKWebView to handle auth?
-            let url = computers[indexPath.row].webURL(withAuth: true)
+            let url = computers[indexPath.row].webURL
             let vc = SFSafariViewController(url: url)
             if #available(iOS 10, *) {
                 vc.preferredBarTintColor = .lightBlue
@@ -304,7 +302,7 @@ extension SYMainVC : UITableViewDelegate {
             let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { [weak self] (_, indexPath) in
                 self?.removeComputer(computer, at: indexPath)
             }
-            return [editAction, deleteAction]
+            return [deleteAction, editAction]
             
         case .results:
             let result = searchResults[indexPath.row]

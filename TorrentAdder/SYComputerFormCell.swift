@@ -17,12 +17,12 @@ class SYComputerFormCell: UITableViewCell {
     }
 
     // MARK: Properties
-    var formField: SYComputerModelField = SYComputerModelField_Host {
+    var formField: SYClient.FormField = .host {
         didSet {
             updateContent()
         }
     }
-    var computer: SYComputerModel? {
+    var computer: SYClient? {
         didSet {
             updateContent()
         }
@@ -39,37 +39,40 @@ class SYComputerFormCell: UITableViewCell {
     }
     
     @IBAction private func textFieldEditingChanged() {
-        computer?.setValue(textField.text, for: formField)
+        computer?.setValue(textField.text ?? "", for: formField)
     }
     
     // MARK: Content
     private func updateContent() {
         guard let computer = computer else { return }
         
-        iconView.image = computer.image(for: formField)?.sy_imageMasked(with: .lightBlue)
-        textField.keyboardType = computer.keyboardType(for: formField)
-        
-        if let options = computer.options(forEnumField: formField) {
+        iconView.image = formField.image?.sy_imageMasked(with: .lightBlue)
+        textField.keyboardType = formField.keyboardType
+        if #available(iOS 11.0, *) {
+            textField.textContentType = formField.textContentType
+        }
+
+        if let options = formField.options, !options.isEmpty {
             textField.isHidden = true
             segmentedControl.isHidden = false
             segmentedControl.removeAllSegments()
-            options.forEach { (option) in
-                segmentedControl.insertSegment(withTitle: option, at: segmentedControl.numberOfSegments, animated: false)
+            options.keys.sorted().forEach { (index) in
+                segmentedControl.insertSegment(withTitle: options[index], at: index, animated: false)
             }
-            segmentedControl.selectedSegmentIndex = (computer.value(for: formField) as? Int) ?? 0
+            segmentedControl.selectedSegmentIndex = computer.intValue(for: formField) ?? 0
         }
         else {
             textField.isHidden = false
             segmentedControl.isHidden = true
-            textField.placeholder = computer.name(for: formField)
-            textField.text = computer.value(for: formField) as? String
+            textField.placeholder = formField.name
+            textField.text = computer.stringValue(for: formField)
         }
     }
 }
 
 extension SYComputerFormCell : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        computer?.setValue(textField.text, for: formField)
+        computer?.setValue(textField.text ?? "", for: formField)
         textField.resignFirstResponder()
         return false
     }

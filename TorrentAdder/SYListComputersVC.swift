@@ -95,9 +95,11 @@ class SYListComputersVC: UIViewController {
 }
 
 extension SYListComputersVC : UITableViewDataSource {
-    func computer(at indexPath: IndexPath) -> SYComputerModel? {
+    func computer(at indexPath: IndexPath) -> SYClient? {
         guard indexPath.row < availableIPs.count else { return  nil }
-        return SYComputerModel(name: nil, andHost: availableIPs[indexPath.row])
+        let host = availableIPs[indexPath.row]
+        let name = SYHostnameResolver.shared.hostnameForIP(host) ?? host
+        return SYClient.init(host: host, name: name)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -106,8 +108,8 @@ extension SYListComputersVC : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(type: SYComputerCell.self, indexPath: indexPath)
-        cell.computer = computer(at: indexPath)
         cell.isAvailableComputersList = true
+        cell.computer = computer(at: indexPath)
         return cell
     }
     
@@ -121,7 +123,7 @@ extension SYListComputersVC : UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let vc = SYEditComputerVC()
-        vc.computer = computer(at: indexPath) ?? SYComputerModel(name: nil, andHost: nil)
+        vc.computer = computer(at: indexPath) ?? SYClient(host: "", name: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

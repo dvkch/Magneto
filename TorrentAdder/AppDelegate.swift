@@ -91,7 +91,7 @@ extension AppDelegate {
 
 // MARK: Authentication
 extension AppDelegate {
-    func promptAuthenticationUpdate(for computer: SYComputerModel, completion: @escaping (_ cancelled: Bool) -> Void) {
+    func promptAuthenticationUpdate(for computer: SYClient, completion: @escaping (_ cancelled: Bool) -> Void) {
         if isShowingAuthAlertView {
             completion(true)
             return
@@ -99,27 +99,36 @@ extension AppDelegate {
         
         isShowingAuthAlertView = true
         
-        let alert = UIAlertController(title: "Authentication needed", message: String(format: "%@ requires a user and a password", computer.name), preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: "Authentication needed",
+            message: String(format: "%@ requires a user and a password", computer.name ?? computer.host),
+            preferredStyle: .alert
+        )
+        
         alert.addTextField { field in
             field.placeholder = "Username"
             if #available(iOS 11.0, *) {
                 field.textContentType = .username
             }
         }
+        
         alert.addTextField { field in
             field.placeholder = "Password"
+            field.isSecureTextEntry = true
             if #available(iOS 11.0, *) {
                 field.textContentType = .password
             }
         }
+        
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
             self.isShowingAuthAlertView = false
             completion(true)
         }))
+        
         alert.addAction(UIAlertAction(title: "Login", style: .default, handler: { (_) in
             computer.username = alert.textFields?.first?.text
             computer.password = alert.textFields?.last?.text
-            SYDatabase.shared.addComputer(computer)
+            SYPreferences.shared.addComputer(computer)
             self.isShowingAuthAlertView = false
             completion(false)
         }))

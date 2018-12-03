@@ -20,7 +20,8 @@ class SYPreferences: NSObject {
     
     override init() {
         super.init()
-        loadFromUserDefaults()
+        loadComputers()
+        loadMirrors()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.ubiquitousStoreChanged(notification:)),
                                                name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
@@ -33,63 +34,70 @@ class SYPreferences: NSObject {
         NSUbiquitousKeyValueStore.default.synchronize()
     }
     
-    // MARK: Properties
+    // MARK: Computers
     private static let computersPrefKey = "computers_ids"
-    private static let savedAvailableMirrorsPrefKey = "available_mirrors"
-    
-    var computers: [SYComputerModel] = [] {
+    private(set) var computers: [SYClient] = [] {
         didSet {
-            if computers != oldValue {
-                updateUserDefaults()
-                updateUbiquitousStore()
-                NotificationCenter.default.post(name: .computersChanged, object: self)
-            }
+            saveComputers()
+            NotificationCenter.default.post(name: .computersChanged, object: self)
         }
     }
+    
+    private func saveComputers() {
+        do {
+            let json = try JSONEncoder().encode(computers)
+            UserDefaults.standard.set(json, forKey: SYPreferences.computersPrefKey)
+            NSUbiquitousKeyValueStore.default.set(json, forKey: SYPreferences.computersPrefKey)
+            print("Saved: \(computers)")
+        }
+        catch {
+            print("Couldn't encode to JSON: \(error)")
+        }
+    }
+    
+    private func loadComputers() {
+        do {
+            let jsonUserDefaults = UserDefaults.standard.data(forKey: SYPreferences.computersPrefKey)
+            let jsonUbiquitous = NSUbiquitousKeyValueStore.default.data(forKey: SYPreferences.computersPrefKey)
+            guard let json = jsonUserDefaults ?? jsonUbiquitous else { return }
+            let parsed = try JSONDecoder().decode([SYClient].self, from: json)
+            computers = parsed
+            print("Loaded: \(computers)")
+       }
+        catch {
+            print("Couldn't decode JSON: \(error)")
+        }
+
+    }
+
+    // MARK: Mirrors
+    private static let savedAvailableMirrorsPrefKey = "available_mirrors"
     var savedAvailableMirrors: [URL] = [] {
         didSet {
             if savedAvailableMirrors != oldValue {
-                updateUserDefaults()
+                saveMirrors()
             }
         }
     }
     
-    // MARK: Preferences
-    private func updateUserDefaults() {
+    private func saveMirrors() {
         UserDefaults.standard.set(savedAvailableMirrors.map { $0.absoluteString }, forKey: SYPreferences.savedAvailableMirrorsPrefKey)
-        // guard let json = try JSONEncoder().encode(computers) else { return }
-        // UserDefaults.standard.set(json, forKey: SYPreferences.computersPrefKey)
     }
-    private func loadFromUserDefaults() {
+    
+    private func loadMirrors() {
         if let urlStrings = UserDefaults.standard.array(forKey: SYPreferences.savedAvailableMirrorsPrefKey) as? [String] {
             savedAvailableMirrors = urlStrings.compactMap { URL(string: $0) }
         }
-        // guard let json = UserDefaults.standard.data(forKey: SYPreferences.computersPrefKey) else { return }
-        // guard let parsed = try? JSONDecoder().decode([SYComputerModel], from: json) else { return }
-        // computers = parsed
     }
     
     // MARK: Ubiquitous KV Store
-    private func updateUbiquitousStore() {
-        // guard let json = try JSONEncoder().encode(computers) else { return }
-        // NSUbiquitousKeyValueStore.default.set(json, forKey: SYPreferences.computersPrefKey)
-    }
-    
-    private func loadFromUbiquitousStore() {
-        // guard let json = NSUbiquitousKeyValueStore.default.data(forKey: SYPreferences.computersPrefKey) else { return }
-        // guard let parsed = try? JSONDecoder().decode([SYComputerModel], from: json) else { return }
-        // computers = parsed
-    }
-    
     @objc private func ubiquitousStoreChanged(notification: Notification) {
         guard let reason = notification.userInfo?[NSUbiquitousKeyValueStoreChangeReasonKey] as? Int else { return }
         switch reason {
         case NSUbiquitousKeyValueStoreQuotaViolationChange:
             print("Over quota")
-            break
             
         case NSUbiquitousKeyValueStoreAccountChange:
-            loadFromUbiquitousStore()
             print("Account changed")
             
         case NSUbiquitousKeyValueStoreInitialSyncChange, NSUbiquitousKeyValueStoreServerChange:
@@ -111,27 +119,26 @@ class SYPreferences: NSObject {
                 }
             }
             
-            loadFromUserDefaults()
+            loadComputers()
+            
         default:
             print("Unknown reason:", reason)
-            break
         }
     }
     
     // MARK: Public methods
-    func computerWithIdentifier(_ identifier: String) -> SYComputerModel? {
-        return computers.first { $0.identifier == identifier }
+    func computerWithIdentifier(_ identifier: String) -> SYClient? {
+        return computers.first { $0.id == identifier }
     }
     
-    func addComputer(_ computer: SYComputerModel) {
-        var computers = self.computers.filter { $0.identifier != computer.identifier }
+    func addComputer(_ computer: SYClient) {
+        var computers = self.computers.filter { $0.id != computer.id }
         computers.append(computer)
-        // TODO: computers.sort()
         self.computers = computers
     }
     
-    func removeComputer(_ computer: SYComputerModel) {
-        computers = computers.filter { $0.identifier != computer.identifier }
+    func removeComputer(_ computer: SYClient) {
+        computers = computers.filter { $0.id != computer.id }
     }
     
     // MARK: UIApplication notifications
