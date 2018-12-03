@@ -66,8 +66,6 @@ class SYClientStatusManager: NSObject {
         
         guard let url = computer.webURL() else { return }
         let request = NSMutableURLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 4)
-        request.computerID = computer.identifier
-        request.isIsUpRequest = true
         
         // TODO: could be better with Alamofire + authentication handler instead of auth URL protocol & custom request type
         

@@ -6,8 +6,6 @@
 #import "SYDatabase.h"
 #import "UIColor+SY.h"
 
-#import "NSURLRequest+SY.h"
-
 #import "SYComputerModel.h"
 #import "UIColor+SY.h"
 

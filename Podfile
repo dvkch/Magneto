@@ -7,20 +7,16 @@ inhibit_all_warnings!
 use_frameworks!
 
 target 'TorrentAdder' do
-	pod 'AFNetworking'
-	pod 'YapDatabase'
+    pod 'Alamofire'
+    pod 'BrightFutures'
+    pod 'Fuzi'
+    pod "JRSwizzle"
+    pod "NSDate+TimeAgo"
+    #pod 'SparkInspector', :configurations => ['Debug']
+    pod 'SPLPing'
 	pod 'SYKit'
 	pod 'SYPopoverController'
-	pod 'SPLPing'
-	pod 'JiveAuthenticatingHTTPProtocol'
-	#pod 'SparkInspector', :configurations => ['Debug']
-	pod 'XMLDictionary'
-	pod 'hpple'
-	pod "JRSwizzle"
-	pod "NSDate+TimeAgo"
-    pod 'Alamofire'
-    pod 'Fuzi'
-    pod 'BrightFutures'
+    pod 'YapDatabase'
 end
 
 post_install do |pi|

@@ -8,7 +8,6 @@
 
 import UIKit
 import SYKit
-import JiveAuthenticatingHTTPProtocol
 
 extension Notification.Name {
     static let didOpenURL = Notification.Name(rawValue: "UIAppDidOpenURLNotification")
@@ -32,9 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         SYHostnameResolver.shared.start()
-        
-        JAHPAuthenticatingHTTPProtocol.setDelegate(self)
-        JAHPAuthenticatingHTTPProtocol.start()
         
         let vc = SYMainVC()
         let nc = SYNavigationController(rootViewController: vc)
@@ -129,81 +125,5 @@ extension AppDelegate {
         }))
         
         topViewController?.present(alert, animated: true, completion: nil)
-    }
-}
-// MARK: JAHPAuthenticatingHTTPProtocolDelegate
-
-extension AppDelegate : JAHPAuthenticatingHTTPProtocolDelegate {
-    func authenticatingHTTPProtocol(_ authenticatingHTTPProtocol: JAHPAuthenticatingHTTPProtocol, canAuthenticateAgainstProtectionSpace protectionSpace: URLProtectionSpace) -> Bool {
-        return protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic
-    }
-    
-    func authenticatingHTTPProtocol(_ authenticatingHTTPProtocol: JAHPAuthenticatingHTTPProtocol, didReceive challenge: URLAuthenticationChallenge) -> JAHPDidCancelAuthenticationChallengeHandler? {
-        
-        guard let request = authenticatingHTTPProtocol.request as? NSMutableURLRequest,
-            let computerID = request.computerID,
-            let computer = SYDatabase.shared.computer(withID: computerID) else {
-
-            authenticatingHTTPProtocol.cancelPendingAuthenticationChallenge()
-            return nil
-        }
-        
-        request.numberOfAuthTries += 1;
-        
-        if (request.numberOfAuthTries < 2)
-        {
-            let credential = URLCredential(user: computer.username, password: computer.password, persistence: .forSession)
-            authenticatingHTTPProtocol.resolvePendingAuthenticationChallenge(with: credential)
-            return nil;
-        }
-        
-        if isShowingAuthAlertView {
-            authenticatingHTTPProtocol.cancelPendingAuthenticationChallenge()
-            return nil
-        }
-        
-        var canceled = false
-        
-        let alert = UIAlertController(title: "Authentication needed", message: String(format: "%@ requires a user and a password", computer.name), preferredStyle: .alert)
-        alert.addTextField { field in
-            field.placeholder = "Username"
-            if #available(iOS 11.0, *) {
-                field.textContentType = .username
-            }
-        }
-        alert.addTextField { field in
-            field.placeholder = "Password"
-            if #available(iOS 11.0, *) {
-                field.textContentType = .password
-            }
-        }
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
-            self.isShowingAuthAlertView = false
-            if canceled {
-                return
-            }
-            authenticatingHTTPProtocol.cancelPendingAuthenticationChallenge()
-        }))
-        alert.addAction(UIAlertAction(title: "Login", style: .default, handler: { (_) in
-            computer.username = alert.textFields?.first?.text
-            computer.password = alert.textFields?.last?.text
-            SYDatabase.shared.addComputer(computer)
-            if canceled {
-                return
-            }
-            let credential = URLCredential(user: computer.username, password: computer.password, persistence: .forSession)
-            authenticatingHTTPProtocol.resolvePendingAuthenticationChallenge(with: credential)
-        }))
-        
-        isShowingAuthAlertView = true
-        window?.rootViewController?.present(alert, animated: true, completion: nil)
-        
-        return { _, _ in
-            canceled = true
-        }
-    }
-    
-    func authenticatingHTTPProtocol(_ authenticatingHTTPProtocol: JAHPAuthenticatingHTTPProtocol?, logMessage message: String) {
-        print(message)
     }
 }

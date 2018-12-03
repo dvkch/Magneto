@@ -1,6 +1,0 @@
-framework module JiveAuthenticatingHTTPProtocol {
-  umbrella header "JiveAuthenticatingHTTPProtocol-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -122,7 +122,7 @@ extension SYClientAPI : RequestAdapter {
 
 extension SYClientAPI : RequestRetrier {
     func should(_ manager: SessionManager, retry request: Request, with error: Error, completion: @escaping RequestRetryCompletion) {
-        guard let computer = request.request?.computer else {
+        guard let computer = request.request?.computer, request.retryCount < 5 else {
             completion(false, 0)
             return
         }

@@ -58,7 +58,6 @@
 		97A18E101BBC017000F33AF5 /* SYComputersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E0F1BBC017000F33AF5 /* SYComputersCell.xib */; };
 		97A18E121BBC017500F33AF5 /* SYResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E111BBC017500F33AF5 /* SYResultCell.xib */; };
 		97A18E141BBC017C00F33AF5 /* SYListComputersVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E131BBC017C00F33AF5 /* SYListComputersVC.xib */; };
-		97BDF8521BCD909C00D77892 /* NSURLRequest+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */; };
 		97EC446321AF37330034C861 /* SYPinger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC446221AF37330034C861 /* SYPinger.swift */; };
 		97F911481BC2C45C00BF1848 /* SYEditComputerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* SYEditComputerVC.xib */; };
 		97F9114D1BC2C73D00BF1848 /* SYComputerFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */; };
@@ -143,8 +142,6 @@
 		97A18E0F1BBC017000F33AF5 /* SYComputersCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYComputersCell.xib; sourceTree = "<group>"; };
 		97A18E111BBC017500F33AF5 /* SYResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYResultCell.xib; sourceTree = "<group>"; };
 		97A18E131BBC017C00F33AF5 /* SYListComputersVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYListComputersVC.xib; sourceTree = "<group>"; };
-		97BDF8501BCD909C00D77892 /* NSURLRequest+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+SY.h"; sourceTree = "<group>"; };
-		97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+SY.m"; sourceTree = "<group>"; };
 		97EC446221AF37330034C861 /* SYPinger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYPinger.swift; sourceTree = "<group>"; };
 		97F911461BC2C45C00BF1848 /* SYEditComputerVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYEditComputerVC.xib; sourceTree = "<group>"; };
 		97F9114B1BC2C73D00BF1848 /* SYComputerFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYComputerFormCell.xib; sourceTree = "<group>"; };
@@ -340,8 +337,6 @@
 		F89867BE192BA8D500735175 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				97BDF8501BCD909C00D77892 /* NSURLRequest+SY.h */,
-				97BDF8511BCD909C00D77892 /* NSURLRequest+SY.m */,
 				97A0C54D1BC31BA100DC4EEC /* UIColor+SY.h */,
 				97A0C54E1BC31BA100DC4EEC /* UIColor+SY.m */,
 			);
@@ -530,41 +525,33 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
 				"${BUILT_PRODUCTS_DIR}/JGMethodSwizzler/JGMethodSwizzler.framework",
 				"${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework",
-				"${BUILT_PRODUCTS_DIR}/JiveAuthenticatingHTTPProtocol/JiveAuthenticatingHTTPProtocol.framework",
 				"${BUILT_PRODUCTS_DIR}/NSDate+TimeAgo/NSDate_TimeAgo.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SPLPing/SPLPing.framework",
 				"${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SYPopoverController/SYPopoverController.framework",
-				"${BUILT_PRODUCTS_DIR}/XMLDictionary/XMLDictionary.framework",
 				"${BUILT_PRODUCTS_DIR}/YapDatabase/YapDatabase.framework",
-				"${BUILT_PRODUCTS_DIR}/hpple/hpple.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightFutures.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGMethodSwizzler.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JRSwizzle.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JiveAuthenticatingHTTPProtocol.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSDate_TimeAgo.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SPLPing.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYPopoverController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XMLDictionary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YapDatabase.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hpple.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -606,7 +593,6 @@
 				9771AB3121AF0534005DE97D /* SYComputerCell.swift in Sources */,
 				972589AD21B0AD6D00FCE9D5 /* SYError.swift in Sources */,
 				974D372E21B1D87300C0FDDE /* Calendar+SY.swift in Sources */,
-				97BDF8521BCD909C00D77892 /* NSURLRequest+SY.m in Sources */,
 				97A0C54F1BC31BA100DC4EEC /* UIColor+SY.m in Sources */,
 				9771AB3C21AF34F5005DE97D /* Array+SY.swift in Sources */,
 				979D4A9821AF4614000BFDF0 /* SYClientStatusManager.swift in Sources */,
