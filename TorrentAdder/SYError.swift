@@ -14,6 +14,7 @@ enum SYError {
     case noMagnetFound
     case noClientsSaved
     case noUTorrentToken
+    case invalidUTorrentPayload
     case alamofire(_ request: AlamoDataResponseProtocol)
 }
 
@@ -28,6 +29,8 @@ extension SYError : LocalizedError {
             return "No client saved in your settings, please add one before trying to download this item"
         case .noUTorrentToken:
             return "Couldn't connect to the uTorrent client"
+        case .invalidUTorrentPayload:
+            return "Invalid uTorrent payload"
         case .alamofire(let response):
             return response.error?.localizedDescription ?? "Unknown error"
         }

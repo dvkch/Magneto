@@ -8,6 +8,7 @@
 
 import UIKit
 import SYKit
+import SVProgressHUD
 
 extension Notification.Name {
     static let didOpenURL = Notification.Name(rawValue: "UIAppDidOpenURLNotification")
@@ -22,7 +23,7 @@ extension UIApplication {
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    var window: SYWindow?
+    @objc var window: UIWindow?
     var isShowingAuthAlertView: Bool = false
 
     static var obtain: AppDelegate {
@@ -32,10 +33,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         SYHostnameResolver.shared.start()
         
+        SVProgressHUD.setBackgroundColor(.lightBlue)
+        SVProgressHUD.setForegroundColor(.white)
+        
         let vc = SYMainVC()
         let nc = SYNavigationController(rootViewController: vc)
         window = SYWindow.mainWindow(withRootViewController: nc)
-        window?.preventSlowAnimationsOnShake = false
+        (window as? SYWindow)?.preventSlowAnimationsOnShake = false
         
         #if DEBUG_POPUP
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

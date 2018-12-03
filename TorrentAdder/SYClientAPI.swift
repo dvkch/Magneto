@@ -32,7 +32,7 @@ class SYClientAPI: NSObject {
     private var pendingAuthentications = [String: [RequestRetryCompletion]]()
     private var transmissionSessionIDs = [String: String]()
     
-    // MARK: Online status methods
+    // MARK: Public methods
     func getClientStatus(_ client: SYClient) -> Future<Bool, NoError> {
         return manager.request(client.apiURL)
             .validate()
@@ -46,7 +46,6 @@ class SYClientAPI: NSObject {
         }
     }
     
-    // MARK: Magnet methods
     func addMagnet(_ magnetURL: URL, to client: SYClient) -> Future<String?, SYError> {
         switch client.software {
         case .transmission:
@@ -58,13 +57,57 @@ class SYClientAPI: NSObject {
         }
     }
     
-    // MARK: Private methods
+    func removeCompletedTorrents(in client: SYClient) -> Future<Int, SYError> {
+        switch client.software {
+        case .transmission:
+            return self
+                .listEndedTorrents(inTransmission: client)
+                .flatMap { ids in self.removeTorrents(ids: ids, fromTransmission: client) }
+            
+        case .uTorrent:
+            var token: String = ""
+            return self
+                .getUTorrentToken(client)
+                .onSuccess { t in token = t }
+                .map { t -> String in token = t; return t }
+                .flatMap { _ in self.listEndedTorrents(inUTorrent: client, token: token) }
+                .flatMap { hashes in self.removeTorrent(hashes: hashes, fromUTorrent: client, token: token) }
+        }
+    }
+}
 
+private extension SYClientAPI {
+    // MARK: Transmission
+    // https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
+    // https://github.com/transmission/transmission/blob/1.70/doc/rpc-spec.txt
+    
     private struct SYTransmissionResponse: Decodable {
+        struct Item : Decodable {
+            let id: Int
+            let doneDate: Int
+            let name: String
+        }
+        
         let result: String
+        let items: [Item]
+        
+        private enum CodingKeys: String, CodingKey {
+            case result = "result", arguments = "arguments"
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            result = try container.decode(String.self, forKey: .result)
+            
+            if let arguments = try? container.decode([String: [Item]].self, forKey: .arguments) {
+                items = arguments["torrents"] ?? []
+            }
+            else {
+                items = []
+            }
+        }
     }
 
-    // https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
     private func addMagnet(_ magnetURL: URL, toTransmission client: SYClient) -> Future<String?, SYError> {
         let parameters: Parameters = [
             "method":"torrent-add",
@@ -78,9 +121,76 @@ class SYClientAPI: NSObject {
             .map { $0.result }
     }
     
+    private func listEndedTorrents(inTransmission client: SYClient) -> Future<[Int], SYError> {
+        let parameters: Parameters = [
+            "method":"torrent-get",
+            "arguments": ["fields": ["id", "doneDate", "name"]]
+        ]
+        
+        return manager
+            .request(client.apiURL, method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: nil)
+            .validate()
+            .responseFutureCodable(type: SYTransmissionResponse.self)
+            .map { response in response.items.filter { $0.doneDate > 0 }.map { $0.id } }
+    }
+    
+    private func removeTorrents(ids: [Int], fromTransmission client: SYClient) -> Future<Int, SYError> {
+        guard !ids.isEmpty else { return Future<Int, SYError>(value: 0) }
+        
+        let parameters: Parameters = [
+            "method":"torrent-remove",
+            "arguments": ["ids": ids, "delete-local-data": false]
+        ]
+        
+        return manager
+            .request(client.apiURL, method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: nil)
+            .validate()
+            .responseFutureCodable(type: SYTransmissionResponse.self)
+            .map { _ in ids.count }
+    }
+}
+
+private extension SYClientAPI {
+    // MARK: uTorrent
     // http://stackoverflow.com/questions/22079581/utorrent-api-add-url-giving-400-invalid-request
     // http://forum.utorrent.com/topic/21814-web-ui-api/#entry207447
     // http://forum.utorrent.com/topic/49588-%C2%B5torrent-webui/
+    
+    private struct SYUTorretResponse: Decodable {
+        struct Item: Decodable {
+            let hash: String
+            let name: String
+            let permils: Int
+            let remainingBytes: Int
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.singleValueContainer()
+                let array = try container.decode([JSONValue].self)
+                let anyArray = array.map { $0.value }
+                
+                // http://help.utorrent.com/customer/en/portal/articles/1573947-torrent-labels-list---webapi
+                guard let hash           = anyArray.element(at:  0) as? String else { throw SYError.invalidUTorrentPayload }
+                guard let name           = anyArray.element(at:  2) as? String else { throw SYError.invalidUTorrentPayload }
+                guard let permils        = anyArray.element(at:  4) as? Int    else { throw SYError.invalidUTorrentPayload }
+                guard let remainingBytes = anyArray.element(at: 18) as? Int    else { throw SYError.invalidUTorrentPayload }
+
+                self.hash = hash
+                self.name = name
+                self.permils = permils
+                self.remainingBytes = remainingBytes
+            }
+            
+            var isFinished: Bool { return permils == 1000 && remainingBytes == 0 }
+        }
+        
+        let torrents: [Item]
+        
+        private enum CodingKeys: String, CodingKey {
+            case torrents = "torrents"
+        }
+    }
+    
+
     private func getUTorrentToken(_ client: SYClient) -> Future<String, SYError> {
         return manager
             .request(client.apiURL.appendingPathComponent("token.html"))
@@ -93,14 +203,56 @@ class SYClientAPI: NSObject {
                 return BrightResult(error: SYError.noUTorrentToken)
         }
     }
+    
     private func addMagnet(_ magnetURL: URL, toUTorrent client: SYClient, token: String) -> Future<String?, SYError> {
+        let parameters: Parameters = [
+            "token": token,
+            "action": "add-url",
+            "s": magnetURL.absoluteString
+        ]
+        
         return manager
-            .request(client.apiURL, parameters: ["token": token, "action": "add-url", "s": magnetURL.absoluteString], encoding: URLEncoding(), headers: nil)
+            .request(client.apiURL, parameters: parameters, encoding: URLEncoding(), headers: nil)
             .validate()
             .responseFutureJSON()
             .map { json in nil }
     }
     
+    private func listEndedTorrents(inUTorrent client: SYClient, token: String) -> Future<[String], SYError> {
+        let parameters: Parameters = [
+            "token": token,
+            "list": 1
+        ]
+        
+        return manager
+            .request(client.apiURL, parameters: parameters, encoding: URLEncoding(), headers: nil)
+            .validate()
+            .responseFutureCodable(type: SYUTorretResponse.self)
+            .map { response in response.torrents.filter { $0.isFinished }.map { $0.hash } }
+    }
+    
+    private func removeTorrent(hashes: [String], fromUTorrent client: SYClient, token: String) -> Future<Int, SYError> {
+        guard !hashes.isEmpty else { return Future<Int, SYError>(value: 0) }
+        
+        return hashes
+            .map { self.removeTorrent(hash: $0, fromUTorrent: client, token: token) }
+            .sequence()
+            .map { _ in hashes.count }
+    }
+
+    private func removeTorrent(hash: String, fromUTorrent client: SYClient, token: String) -> Future<(), SYError> {
+        let parameters: Parameters = [
+            "token": token,
+            "action": "remove",
+            "hash": hash
+        ]
+
+        return manager
+            .request(client.apiURL, parameters: parameters, encoding: URLEncoding(), headers: nil)
+            .validate()
+            .responseFutureJSON()
+            .map { _ in () }
+    }
 }
 
 extension SYClientAPI : RequestAdapter {

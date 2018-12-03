@@ -7,7 +7,6 @@
 //
 
 import UIKit
-// TODO: remove YapDatabase pod
 
 extension NSNotification.Name {
     static let clientsChanged = Notification.Name("SYPreferences.clientsChanged")

@@ -10,6 +10,7 @@ import UIKit
 import SYKit
 import SYPopoverController
 import SafariServices
+import SVProgressHUD
 
 class SYMainVC: UIViewController {
 
@@ -46,6 +47,11 @@ class SYMainVC: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         clients = SYPreferences.shared.clients
         tableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        timerRefreshClientsStatusTick()
     }
     
     deinit {
@@ -133,7 +139,7 @@ extension SYMainVC {
                 case .success(let items):
                     self.searchResults = items
                     self.tableView.reloadData()
-                    self.tableView.contentOffset.y = 0
+                    self.tableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false)
                     
                 case .failure(let error):
                     self.showError(error, title: "Cannot load results")
@@ -150,6 +156,14 @@ extension SYMainVC {
         SYMagnetPopupVC.show(in: self, magnet: magnetURL, result: result, sourceApp: sourceApp)
     }
     
+    fileprivate func removeFinished(in client: SYClient) {
+        SVProgressHUD.show()
+        SYClientAPI.shared.removeCompletedTorrents(in: client)
+            .andThen { _ in SVProgressHUD.dismiss() }
+            .onSuccess { (count) in SVProgressHUD.showSuccess(withStatus: "Removed \(count) finished items") }
+            .onFailure { error in self.showError(error) }
+    }
+    
     fileprivate func removeClient(_ client: SYClient, at indexPath: IndexPath) {
         SYPreferences.shared.removeClient(client)
         clients = SYPreferences.shared.clients
@@ -161,7 +175,9 @@ extension SYMainVC {
     }
     
     fileprivate func shareResult(_ result: SYSearchResult, from cell: UITableViewCell?) {
+        SVProgressHUD.show()
         SYWebAPI.shared.getResultPageURL(result)
+            .andThen { _ in SVProgressHUD.dismiss() }
             .onFailure { (error) in self.showError(error) }
             .onSuccess { (fullURL) in
                 
@@ -291,15 +307,19 @@ extension SYMainVC : UITableViewDelegate {
             
         case .clients:
             let client = clients[indexPath.row]
+            let removeFinishedAction = UITableViewRowAction(style: .normal, title: "Remove finished") { [weak self] (_, _) in
+                self?.removeFinished(in: client)
+            }
             let editAction = UITableViewRowAction(style: .normal, title: "Edit") { [weak self] (_, _) in
                 let vc = SYEditClientVC()
                 vc.client = client
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
+            editAction.backgroundColor = .lightBlue
             let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { [weak self] (_, indexPath) in
                 self?.removeClient(client, at: indexPath)
             }
-            return [deleteAction, editAction]
+            return [deleteAction, editAction, removeFinishedAction]
             
         case .results:
             let result = searchResults[indexPath.row]

@@ -44,6 +44,7 @@
 		9771AB3721AF2BA4005DE97D /* SYPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3621AF2BA4005DE97D /* SYPreferences.swift */; };
 		9771AB3A21AF319E005DE97D /* SYHostnameResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3921AF319E005DE97D /* SYHostnameResolver.swift */; };
 		9771AB3C21AF34F5005DE97D /* Array+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3B21AF34F5005DE97D /* Array+SY.swift */; };
+		97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97888C9E21B5A745004EB144 /* Codable+SY.swift */; };
 		979D4A9621AF4335000BFDF0 /* NetService+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979D4A9521AF4335000BFDF0 /* NetService+SY.swift */; };
 		979D4A9821AF4614000BFDF0 /* SYClientStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979D4A9721AF4614000BFDF0 /* SYClientStatusManager.swift */; };
 		97A0C55D1BC3271300DC4EEC /* blue_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5551BC3271300DC4EEC /* blue_background.png */; };
@@ -124,6 +125,7 @@
 		9771AB3821AF2D7C005DE97D /* TorrentAdder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TorrentAdder.entitlements; sourceTree = "<group>"; };
 		9771AB3921AF319E005DE97D /* SYHostnameResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYHostnameResolver.swift; sourceTree = "<group>"; };
 		9771AB3B21AF34F5005DE97D /* Array+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SY.swift"; sourceTree = "<group>"; };
+		97888C9E21B5A745004EB144 /* Codable+SY.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+SY.swift"; sourceTree = "<group>"; };
 		979D4A9521AF4335000BFDF0 /* NetService+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetService+SY.swift"; sourceTree = "<group>"; };
 		979D4A9721AF4614000BFDF0 /* SYClientStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYClientStatusManager.swift; sourceTree = "<group>"; };
 		979D4A9C21AF4764000BFDF0 /* NSHost+SY.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSHost+SY.h"; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 				9771AB3B21AF34F5005DE97D /* Array+SY.swift */,
 				9748F4CA21B0B305008CE0D1 /* BrightFutures+SY.swift */,
 				974D372D21B1D87300C0FDDE /* Calendar+SY.swift */,
+				97888C9E21B5A745004EB144 /* Codable+SY.swift */,
 				970130E321B08E1000E7CFEC /* Error+SY.swift */,
 				974D372B21B157CE00C0FDDE /* Fuzi+SY.swift */,
 				979D4A9521AF4335000BFDF0 /* NetService+SY.swift */,
@@ -576,6 +579,7 @@
 				9771AB3321AF08E4005DE97D /* SYResultCell.swift in Sources */,
 				9771AB3121AF0534005DE97D /* SYClientCell.swift in Sources */,
 				972589AD21B0AD6D00FCE9D5 /* SYError.swift in Sources */,
+				97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */,
 				974D372E21B1D87300C0FDDE /* Calendar+SY.swift in Sources */,
 				9771AB3C21AF34F5005DE97D /* Array+SY.swift in Sources */,
 				979D4A9821AF4614000BFDF0 /* SYClientStatusManager.swift in Sources */,
