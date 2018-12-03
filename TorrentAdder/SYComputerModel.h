@@ -33,8 +33,8 @@ typedef enum : int {
 
 - (instancetype)initWithName:(NSString*)name andHost:(NSString *)host;
 
-- (NSURL *)webURL;
-- (NSURL *)apiURL;
+- (nonnull NSURL *)webURLWithAuth:(BOOL)auth;
+- (nonnull NSURL *)apiURL;
 
 - (BOOL)isValid;
 

@@ -30,13 +30,15 @@ class SYMainVC: UIViewController {
         searchField.textField.rightViewMode = .always
         searchField.textField.clearButtonMode = .always
         
-        tableView.registerCell(name: SYComputersCell.className)
+        tableView.registerCell(name: SYAddComputerCell.className)
         tableView.registerCell(name: SYComputerCell.className)
         tableView.registerCell(name: SYResultCell.className)
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
         
-        constraintBlueHeaderHeightOriginalValue = constraintBlueHeaderHeight.constant
+        helpButton.tintColor = .lightBlue
+        
+        constraintHeaderHeightOriginalValue = constraintHeaderHeight.constant
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,16 +62,17 @@ class SYMainVC: UIViewController {
     private var computers: [SYComputerModel] = []
     private var searchResults: [SYSearchResult] = []
     private var searchQuery: String = ""
-    private var constraintBlueHeaderHeightOriginalValue: CGFloat = 0
+    private var constraintHeaderHeightOriginalValue: CGFloat = 0
     private var isVisible: Bool = false
     private var showingSearch: Bool { return !searchQuery.isEmpty }
     
     // MARK: Views
-    @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var headerView: UIView!
+    @IBOutlet private var constraintHeaderHeight: NSLayoutConstraint!
+    @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var searchField: SYSearchField!
     @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var constraintBlueHeaderHeight: NSLayoutConstraint!
+    @IBOutlet private var helpButton: SYButton!
 }
 
 // MARK: Notifications
@@ -184,7 +187,7 @@ extension SYMainVC : SYSearchFieldDelegate {
 
 extension SYMainVC : UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        constraintBlueHeaderHeight.constant = constraintBlueHeaderHeightOriginalValue - min(0, scrollView.contentOffset.y)
+        constraintHeaderHeight.constant = constraintHeaderHeightOriginalValue - min(0, scrollView.contentOffset.y)
     }
 }
 
@@ -222,7 +225,7 @@ extension SYMainVC : UITableViewDataSource {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return UITableViewCell() }
         switch tableSection {
         case .buttons:
-            let cell = tableView.dequeueReusableCell(withIdentifier: SYComputersCell.className, for: indexPath) as! SYComputersCell
+            let cell = tableView.dequeueCell(type: SYAddComputerCell.self, indexPath: indexPath)
             cell.computersCount = computers.count
             cell.addButtonTapBlock = { [weak self] in
                 let vc = SYListComputersVC()
@@ -231,12 +234,12 @@ extension SYMainVC : UITableViewDataSource {
             }
             return cell
         case .computers:
-            let cell = tableView.dequeueReusableCell(withIdentifier: SYComputerCell.className, for: indexPath) as! SYComputerCell
+            let cell = tableView.dequeueCell(type: SYComputerCell.self, indexPath: indexPath)
             cell.computer = computers[indexPath.row]
             cell.isAvailableComputersList = false
             return cell
         case .results:
-            let cell = tableView.dequeueReusableCell(withIdentifier: SYResultCell.className, for: indexPath) as! SYResultCell
+            let cell = tableView.dequeueCell(type: SYResultCell.self, indexPath: indexPath)
             cell.result = searchResults[indexPath.row]
             return cell
         }
@@ -272,10 +275,11 @@ extension SYMainVC : UITableViewDelegate {
             present(nc, animated: true, completion: nil)
 
         case .computers:
-            guard let url = computers[indexPath.row].webURL() else { return }
+            // TODO: go back to WKWebView to handle auth?
+            let url = computers[indexPath.row].webURL(withAuth: true)
             let vc = SFSafariViewController(url: url)
             if #available(iOS 10, *) {
-                vc.preferredBarTintColor = .lightBlue()
+                vc.preferredBarTintColor = .lightBlue
             }
             present(vc, animated: true, completion: nil)
 

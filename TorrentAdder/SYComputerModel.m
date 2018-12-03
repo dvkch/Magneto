@@ -83,28 +83,26 @@
     return [[(SYComputerModel*)object identifier] isEqualToString:self.identifier];
 }
 
-- (NSURL *)baseURL
+- (NSURL *)baseURLWithAuth:(BOOL)auth
 {
     NSString *url;
     
-    /*if (self.password.length)
+    if (auth && self.password.length && self.username.length)
         url = [NSString stringWithFormat:@"http://%@:%@@%@:%d/", self.username, self.password, self.host, self.port];
-    else if (self.username.length)
-        url = [NSString stringWithFormat:@"http://%@@%@:%d/", self.username, self.host, self.port];
-    else*/
+    else
         url = [NSString stringWithFormat:@"http://%@:%d/", self.host, self.port];
     
     return [NSURL URLWithString:url];
 }
 
-- (NSURL *)webURL
+- (NSURL *)webURLWithAuth:(BOOL)auth;
 {
     switch (self.client)
     {
         case SYClientSoftware_Transmission:
-            return [NSURL URLWithString:@"transmission/web/" relativeToURL:self.baseURL];
+            return [NSURL URLWithString:@"transmission/web/" relativeToURL:[self baseURLWithAuth:auth]];
         case SYClientSoftware_uTorrent:
-            return [NSURL URLWithString:@"gui/" relativeToURL:self.baseURL];
+            return [NSURL URLWithString:@"gui/" relativeToURL:[self baseURLWithAuth:auth]];
     }
 }
 
@@ -113,9 +111,9 @@
     switch (self.client)
     {
         case SYClientSoftware_Transmission:
-            return [NSURL URLWithString:@"transmission/rpc/" relativeToURL:self.baseURL];
+            return [NSURL URLWithString:@"transmission/rpc/" relativeToURL:[self baseURLWithAuth:NO]];
         case SYClientSoftware_uTorrent:
-            return [NSURL URLWithString:@"gui/" relativeToURL:self.baseURL];
+            return [NSURL URLWithString:@"gui/" relativeToURL:[self baseURLWithAuth:NO]];
     }
 }
 

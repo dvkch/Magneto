@@ -64,16 +64,11 @@ class SYClientStatusManager: NSObject {
         
         setComputerLoading(computer, loading: true)
         
-        guard let url = computer.webURL() else { return }
-        let request = NSMutableURLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 4)
-        
-        // TODO: could be better with Alamofire + authentication handler instead of auth URL protocol & custom request type
-        
-        let task = urlSession.dataTask(with: request as URLRequest) { (data, response, error) in
-            self.setStatus(error == nil ? .online : .offline, for: computer)
-            self.setComputerLoading(computer, loading: false)
+        SYClientAPI.shared.getClientStatus(computer)
+            .onSuccess { (online) in
+                self.setStatus(online ? .online : .offline, for: computer)
+                self.setComputerLoading(computer, loading: false)
         }
-        task.resume()
     }
     
     // MARK: Private

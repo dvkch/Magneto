@@ -4,17 +4,7 @@
 
 #import "SYComputerModel.h"
 #import "SYDatabase.h"
-#import "UIColor+SY.h"
-
-#import "SYComputerModel.h"
-#import "UIColor+SY.h"
-
-#import "SYDatabase.h"
-
-#import "UIColor+SY.h"
 #import "SYComputerModel+UI.h"
-
-
 
 
 #import "NSHost+SY.h"

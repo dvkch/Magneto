@@ -14,10 +14,10 @@ extension URLRequest {
     var computer: SYComputerModel? {
         guard let requestURL = self.url else { return nil }
         for computer in SYDatabase.shared.computers() {
-            if let apiURL = computer.apiURL(), requestURL.absoluteString.hasPrefix(apiURL.absoluteString) {
+            if requestURL.absoluteString.hasPrefix(computer.apiURL().absoluteString) {
                 return computer
             }
-            if let webURL = computer.webURL(), requestURL.absoluteString.hasPrefix(webURL.absoluteString) {
+            if requestURL.absoluteString.hasPrefix(computer.webURL(withAuth: false).absoluteString) {
                 return computer
             }
         }

@@ -1,5 +1,5 @@
 //
-//  SYComputersCell.swift
+//  SYAddComputerCell.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -9,7 +9,13 @@
 import UIKit
 import SYKit
 
-class SYComputersCell : UITableViewCell {
+class SYAddComputerCell : UITableViewCell {
+    
+    // MARK: Init
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        addButton.backColor = .lightBlue
+    }
     
     // MARK: Views
     @IBOutlet private var addButton: SYButton!

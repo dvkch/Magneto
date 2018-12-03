@@ -12,8 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SYMainVC">
             <connections>
-                <outlet property="constraintBlueHeaderHeight" destination="ayq-Dc-e7k" id="Osl-vO-QR4"/>
+                <outlet property="constraintHeaderHeight" destination="ayq-Dc-e7k" id="ZII-ag-2O7"/>
                 <outlet property="headerView" destination="SlC-Su-ftz" id="a4t-0f-HSx"/>
+                <outlet property="helpButton" destination="8B6-pO-siO" id="gaa-5x-KbN"/>
                 <outlet property="searchField" destination="PoE-uH-CVm" id="zAx-xt-46y"/>
                 <outlet property="tableView" destination="o4O-Tf-fV3" id="i8M-yT-gJm"/>
                 <outlet property="titleLabel" destination="ebA-QW-uAb" id="lb2-kk-7zs"/>
@@ -98,7 +99,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="helpButtonClick:" destination="-1" eventType="touchUpInside" id="rTY-hX-5pv"/>
+                        <action selector="helpButtonTap" destination="-1" eventType="touchUpInside" id="qNQ-DH-U8U"/>
                     </connections>
                 </view>
             </subviews>

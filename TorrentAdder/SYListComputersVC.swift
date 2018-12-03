@@ -15,7 +15,7 @@ class SYListComputersVC: UIViewController {
         super.viewDidLoad()
         title = "Add a computer"
 
-        progressView.progressTintColor = .lightBlue()
+        progressView.progressTintColor = .lightBlue
         
         let closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
         navigationItem.leftBarButtonItem = closeButton
@@ -100,7 +100,7 @@ extension SYListComputersVC : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SYComputerCell.className, for: indexPath) as! SYComputerCell
+        let cell = tableView.dequeueCell(type: SYComputerCell.self, indexPath: indexPath)
         cell.computer = computer(at: indexPath)
         cell.isAvailableComputersList = true
         return cell

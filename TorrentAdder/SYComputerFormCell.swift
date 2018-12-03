@@ -9,6 +9,12 @@
 import UIKit
 
 class SYComputerFormCell: UITableViewCell {
+    
+    // MARK: Init
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        segmentedControl.tintColor = .lightBlue
+    }
 
     // MARK: Properties
     var formField: SYComputerModelField = SYComputerModelField_Host {
@@ -40,7 +46,7 @@ class SYComputerFormCell: UITableViewCell {
     private func updateContent() {
         guard let computer = computer else { return }
         
-        iconView.image = computer.image(for: formField)?.sy_imageMasked(with: .lightBlue())
+        iconView.image = computer.image(for: formField)?.sy_imageMasked(with: .lightBlue)
         textField.keyboardType = computer.keyboardType(for: formField)
         
         if let options = computer.options(forEnumField: formField) {

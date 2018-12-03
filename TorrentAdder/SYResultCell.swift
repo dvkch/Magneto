@@ -51,7 +51,7 @@ class SYResultCell: UITableViewCell {
         }
         string.sy_appendString(dateString + ", ", font: dateFont, color: .gray)
         // TODO: add color in extension
-        string.sy_appendString(String(result.seed), font: UIFont.systemFont(ofSize: 14), color: UIColor(red: 0, green: 0.56, blue: 0.06, alpha: 1))
+        string.sy_appendString(String(result.seed), font: UIFont.systemFont(ofSize: 14), color: .seedGreen)
         string.sy_appendString("/", font: UIFont.systemFont(ofSize: 14), color: .gray)
         string.sy_appendString(String(result.leech), font: UIFont.systemFont(ofSize: 14), color: .red)
         if result.verified {

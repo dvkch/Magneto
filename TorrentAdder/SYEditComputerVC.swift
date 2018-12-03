@@ -14,7 +14,7 @@ class SYEditComputerVC: UIViewController {
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        isCreation = SYDatabase.shared.computer(withID: computer?.identifier) != nil
+        isCreation = SYDatabase.shared.computer(withID: computer?.identifier) == nil
         title = isCreation ? "New computer" : "Edit computer"
         
         tableView.registerCell(name: SYComputerFormCell.className)
@@ -26,6 +26,7 @@ class SYEditComputerVC: UIViewController {
             let addButton = SYButton()
             addButton.translatesAutoresizingMaskIntoConstraints = false
             addButton.tintColor = .white
+            addButton.backColor = .lightBlue
             addButton.text = "+"
             addButton.textOffset = .init(width: 0, height: -2)
             addButton.fontSize = 30
@@ -91,7 +92,7 @@ extension SYEditComputerVC : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SYComputerFormCell.className, for: indexPath) as! SYComputerFormCell
+        let cell = tableView.dequeueCell(type: SYComputerFormCell.self, indexPath: indexPath)
         cell.computer = computer
         cell.formField = SYComputerModelField(indexPath.row)
         return cell

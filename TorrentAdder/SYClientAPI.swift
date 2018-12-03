@@ -29,19 +29,28 @@ class SYClientAPI: NSObject {
     
     // MARK: Properties
     private let manager: SessionManager
-    private var pendingAuthentications = [SYComputerModel:[RequestRetryCompletion]]()
+    private var pendingAuthentications = [String: [RequestRetryCompletion]]()
+    private var transmissionSessionIDs = [String: String]()
     
     // MARK: Online status methods
     func getClientStatus(_ computer: SYComputerModel) -> Future<Bool, NoError> {
-        // TODO: implement
-        return Future<Bool, NoError>.init(value: false)
+        return manager.request(computer.apiURL())
+            .validate()
+            .responseFutureData()
+            .map { _ in true }
+            .recover { error in
+                if case let .alamofire(afError) = error, afError.response != nil {
+                    return true
+                }
+                return false
+        }
     }
     
     // MARK: Magnet methods
     func addMagnet(_ magnetURL: URL, to computer: SYComputerModel) -> Future<String?, SYError> {
         switch computer.client {
         case SYClientSoftware_Transmission:
-            return self.addMagnet(magnetURL, toTransmission: computer, sessionID: nil)
+            return self.addMagnet(magnetURL, toTransmission: computer)
         case SYClientSoftware_uTorrent:
             return self
                 .getUTorrentToken(computer: computer)
@@ -60,28 +69,17 @@ class SYClientAPI: NSObject {
     }
 
     // https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
-    private func addMagnet(_ magnetURL: URL, toTransmission computer: SYComputerModel, sessionID: String?) -> Future<String?, SYError> {
+    private func addMagnet(_ magnetURL: URL, toTransmission computer: SYComputerModel) -> Future<String?, SYError> {
         let parameters: Parameters = [
             "method":"torrent-add",
             "arguments": ["filename": magnetURL.absoluteString]
             ]
             
-        var headers: HTTPHeaders = [:]
-        if let sessionID = sessionID {
-            headers["X-Transmission-Session-Id"] = sessionID
-        }
-        
         return manager
-            .request(computer.apiURL()!, method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: headers)
+            .request(computer.apiURL(), method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: nil)
             .validate()
             .responseFutureCodable(type: SYTransmissionResponse.self)
             .map { $0.result }
-            .recoverWith { error in
-                if error.isTransmissionMissingSessionID, let newSessionID = error.transmissionSessionID {
-                    return self.addMagnet(magnetURL, toTransmission: computer, sessionID: newSessionID)
-                }
-                return Future<String?, SYError>(error: error)
-            }
     }
     
     // http://stackoverflow.com/questions/22079581/utorrent-api-add-url-giving-400-invalid-request
@@ -89,7 +87,7 @@ class SYClientAPI: NSObject {
     // http://forum.utorrent.com/topic/49588-%C2%B5torrent-webui/
     private func getUTorrentToken(computer: SYComputerModel) -> Future<String, SYError> {
         return manager
-            .request(computer.apiURL()!.appendingPathComponent("token.html"))
+            .request(computer.apiURL().appendingPathComponent("token.html"))
             .validate()
             .responseFutureHTML()
             .flatMap { html -> BrightResult<String, SYError> in
@@ -101,7 +99,7 @@ class SYClientAPI: NSObject {
     }
     private func addMagnet(_ magnetURL: URL, toUTorrent computer: SYComputerModel, token: String) -> Future<String?, SYError> {
         return manager
-            .request(computer.apiURL()!, parameters: ["token": token, "action": "add-url", "s": magnetURL.absoluteString], encoding: URLEncoding(), headers: nil)
+            .request(computer.apiURL(), parameters: ["token": token, "action": "add-url", "s": magnetURL.absoluteString], encoding: URLEncoding(), headers: nil)
             .validate()
             .responseFutureJSON()
             .map { json in nil }
@@ -111,12 +109,15 @@ class SYClientAPI: NSObject {
 
 extension SYClientAPI : RequestAdapter {
     func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
-        if let computer = urlRequest.computer, let u = computer.username, let p = computer.password, let base64 = "\(u):\(p)".data(using: .utf8)?.base64EncodedString() {
-            var request = urlRequest
-            request.addValue("Basic " + base64, forHTTPHeaderField: "Authorization")
-            return request
+        guard let computer = urlRequest.computer else { return urlRequest }
+        var request = urlRequest
+        if let u = computer.username, let p = computer.password, let base64 = "\(u):\(p)".data(using: .utf8)?.base64EncodedString() {
+            request.setValue("Basic " + base64, forHTTPHeaderField: "Authorization")
         }
-        return urlRequest
+        if let sessionID = transmissionSessionIDs[computer.identifier] {
+            request.setValue(sessionID, forHTTPHeaderField: "X-Transmission-Session-Id")
+        }
+        return request
     }
 }
 
@@ -127,24 +128,32 @@ extension SYClientAPI : RequestRetrier {
             return
         }
         
+        if computer.client == SYClientSoftware_Transmission, request.response?.statusCode == 409,
+            let sessionID = request.response?.allHeaderFields["X-Transmission-Session-Id"] as? String
+        {
+            transmissionSessionIDs[computer.identifier] = sessionID
+            completion(true, 0.1)
+            return
+        }
+
         if request.response?.statusCode == 401 {
-            if pendingAuthentications.keys.contains(computer) {
-                pendingAuthentications[computer]?.append(completion)
+            if pendingAuthentications.keys.contains(computer.identifier) {
+                pendingAuthentications[computer.identifier]?.append(completion)
                 return
             }
             
-            pendingAuthentications[computer] = [completion]
+            pendingAuthentications[computer.identifier] = [completion]
 
             DispatchQueue.main.async {
                 AppDelegate.obtain.promptAuthenticationUpdate(for: computer) { (cancelled) in
-                    let completions = self.pendingAuthentications[computer] ?? []
-                    self.pendingAuthentications.removeValue(forKey: computer)
+                    let completions = self.pendingAuthentications[computer.identifier] ?? []
+                    self.pendingAuthentications.removeValue(forKey: computer.identifier)
                     
                     if cancelled {
                         completions.forEach { $0(false, 0) }
                     }
                     else {
-                        completions.forEach { $0(true, 1) }
+                        completions.forEach { $0(true, 0.1) }
                     }
                 }
             }
@@ -152,23 +161,6 @@ extension SYClientAPI : RequestRetrier {
         }
         
         completion(false, 0)
-    }
-}
-
-
-private extension SYError {
-    var isTransmissionMissingSessionID: Bool {
-        if case let .alamofire(afError) = self, afError.response?.statusCode == 409 {
-            return true
-        }
-        return false
-    }
-    
-    var transmissionSessionID: String? {
-        if case let .alamofire(afError) = self, let newSessionID = afError.response?.allHeaderFields["X-Transmission-Session-Id"] as? String, !newSessionID.isEmpty {
-            return newSessionID
-        }
-        return nil
     }
 }
 
