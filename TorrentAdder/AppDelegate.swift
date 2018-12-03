@@ -91,7 +91,7 @@ extension AppDelegate {
 
 // MARK: Authentication
 extension AppDelegate {
-    func promptAuthenticationUpdate(for computer: SYClient, completion: @escaping (_ cancelled: Bool) -> Void) {
+    func promptAuthenticationUpdate(for client: SYClient, completion: @escaping (_ cancelled: Bool) -> Void) {
         if isShowingAuthAlertView {
             completion(true)
             return
@@ -101,7 +101,7 @@ extension AppDelegate {
         
         let alert = UIAlertController(
             title: "Authentication needed",
-            message: String(format: "%@ requires a user and a password", computer.name ?? computer.host),
+            message: String(format: "%@ requires a user and a password", client.name ?? client.host),
             preferredStyle: .alert
         )
         
@@ -126,9 +126,9 @@ extension AppDelegate {
         }))
         
         alert.addAction(UIAlertAction(title: "Login", style: .default, handler: { (_) in
-            computer.username = alert.textFields?.first?.text
-            computer.password = alert.textFields?.last?.text
-            SYPreferences.shared.addComputer(computer)
+            client.username = alert.textFields?.first?.text
+            client.password = alert.textFields?.last?.text
+            SYPreferences.shared.addClient(client)
             self.isShowingAuthAlertView = false
             completion(false)
         }))

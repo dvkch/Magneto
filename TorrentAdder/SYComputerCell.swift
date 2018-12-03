@@ -21,13 +21,13 @@ class SYComputerCell: UITableViewCell {
     }
     
     // MARK: Properties
-    var isAvailableComputersList: Bool = false {
+    var isDiscoveredClient: Bool = false {
         didSet {
             updateContent()
             updateStatus()
         }
     }
-    var computer: SYClient? {
+    var client: SYClient? {
         didSet {
             updateContent()
             updateStatus()
@@ -42,17 +42,17 @@ class SYComputerCell: UITableViewCell {
     
     // MARK: Content
     private func updateContent() {
-        accessoryType = isAvailableComputersList ? .disclosureIndicator : .none
-        if let computer = computer {
-            nameLabel.text = computer.name
-            if isAvailableComputersList {
-                hostLabel.text = computer.host
+        accessoryType = isDiscoveredClient ? .disclosureIndicator : .none
+        if let client = client {
+            nameLabel.text = client.name
+            if isDiscoveredClient {
+                hostLabel.text = client.host
             }
             else {
-                hostLabel.text = [computer.host, String(computer.port ?? 0)].joined(separator: ":")
+                hostLabel.text = [client.host, String(client.port ?? 0)].joined(separator: ":")
             }
         }
-        else if isAvailableComputersList
+        else if isDiscoveredClient
         {
             nameLabel.text = "Add a custom computer"
             hostLabel.text = "in case yours wasn't detected"
@@ -65,8 +65,15 @@ class SYComputerCell: UITableViewCell {
     }
     
     @objc private func updateStatus() {
-        let loading: Bool = (isAvailableComputersList && computer == nil) ? true    : SYClientStatusManager.shared.isComputerLoading(computer)
-        let status: SYClientStatusManager.ClientStatus  = (isAvailableComputersList && computer != nil) ? .online : SYClientStatusManager.shared.lastStatusForComputer(computer)
+        var loading = SYClientStatusManager.shared.isClientLoading(client)
+        var status  = SYClientStatusManager.shared.lastStatusForClient(client)
+        
+        if isDiscoveredClient && client == nil {
+            loading = true
+        }
+        if isDiscoveredClient && client != nil {
+            status = .online
+        }
         
         // show loading only if previous status is unknown, else show last status
         if loading && status == .unknown {

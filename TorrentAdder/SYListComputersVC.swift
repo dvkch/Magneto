@@ -13,7 +13,7 @@ class SYListComputersVC: UIViewController {
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Add a computer"
+        title = "Add a client"
 
         progressView.progressTintColor = .lightBlue
         
@@ -95,11 +95,11 @@ class SYListComputersVC: UIViewController {
 }
 
 extension SYListComputersVC : UITableViewDataSource {
-    func computer(at indexPath: IndexPath) -> SYClient? {
+    func client(at indexPath: IndexPath) -> SYClient? {
         guard indexPath.row < availableIPs.count else { return  nil }
         let host = availableIPs[indexPath.row]
         let name = SYHostnameResolver.shared.hostnameForIP(host) ?? host
-        return SYClient.init(host: host, name: name)
+        return SYClient(host: host, name: name)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -108,13 +108,13 @@ extension SYListComputersVC : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(type: SYComputerCell.self, indexPath: indexPath)
-        cell.isAvailableComputersList = true
-        cell.computer = computer(at: indexPath)
+        cell.isDiscoveredClient = true
+        cell.client = client(at: indexPath)
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Available computers"
+        return "Available clients"
     }
 }
 
@@ -123,7 +123,7 @@ extension SYListComputersVC : UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let vc = SYEditComputerVC()
-        vc.computer = computer(at: indexPath) ?? SYClient(host: "", name: nil)
+        vc.client = client(at: indexPath) ?? SYClient(host: "", name: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

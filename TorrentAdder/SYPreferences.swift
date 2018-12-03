@@ -10,7 +10,7 @@ import UIKit
 // TODO: remove YapDatabase pod
 
 extension NSNotification.Name {
-    static let computersChanged = Notification.Name("SYPreferences.computersChanged")
+    static let clientsChanged = Notification.Name("SYPreferences.clientsChanged")
 }
 
 class SYPreferences: NSObject {
@@ -20,7 +20,7 @@ class SYPreferences: NSObject {
     
     override init() {
         super.init()
-        loadComputers()
+        loadClients()
         loadMirrors()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.ubiquitousStoreChanged(notification:)),
@@ -34,35 +34,33 @@ class SYPreferences: NSObject {
         NSUbiquitousKeyValueStore.default.synchronize()
     }
     
-    // MARK: Computers
-    private static let computersPrefKey = "computers_ids"
-    private(set) var computers: [SYClient] = [] {
+    // MARK: Clients
+    private static let clientsPrefKey = "clients_ids"
+    private(set) var clients: [SYClient] = [] {
         didSet {
-            saveComputers()
-            NotificationCenter.default.post(name: .computersChanged, object: self)
+            saveClients()
+            NotificationCenter.default.post(name: .clientsChanged, object: self)
         }
     }
     
-    private func saveComputers() {
+    private func saveClients() {
         do {
-            let json = try JSONEncoder().encode(computers)
-            UserDefaults.standard.set(json, forKey: SYPreferences.computersPrefKey)
-            NSUbiquitousKeyValueStore.default.set(json, forKey: SYPreferences.computersPrefKey)
-            print("Saved: \(computers)")
+            let json = try JSONEncoder().encode(clients)
+            UserDefaults.standard.set(json, forKey: SYPreferences.clientsPrefKey)
+            NSUbiquitousKeyValueStore.default.set(json, forKey: SYPreferences.clientsPrefKey)
         }
         catch {
             print("Couldn't encode to JSON: \(error)")
         }
     }
     
-    private func loadComputers() {
+    private func loadClients() {
         do {
-            let jsonUserDefaults = UserDefaults.standard.data(forKey: SYPreferences.computersPrefKey)
-            let jsonUbiquitous = NSUbiquitousKeyValueStore.default.data(forKey: SYPreferences.computersPrefKey)
+            let jsonUserDefaults = UserDefaults.standard.data(forKey: SYPreferences.clientsPrefKey)
+            let jsonUbiquitous = NSUbiquitousKeyValueStore.default.data(forKey: SYPreferences.clientsPrefKey)
             guard let json = jsonUserDefaults ?? jsonUbiquitous else { return }
             let parsed = try JSONDecoder().decode([SYClient].self, from: json)
-            computers = parsed
-            print("Loaded: \(computers)")
+            clients = parsed
        }
         catch {
             print("Couldn't decode JSON: \(error)")
@@ -104,8 +102,8 @@ class SYPreferences: NSObject {
             guard let keys = notification.userInfo?[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String] else { return }
             let store = NSUbiquitousKeyValueStore.default
             for key in keys {
-                if key != SYPreferences.computersPrefKey {
-                    print("unknown key changed", key)
+                if key != SYPreferences.clientsPrefKey {
+                    print("unsupported key changed", key)
                 }
                 
                 let value = store.object(forKey: key)
@@ -119,7 +117,7 @@ class SYPreferences: NSObject {
                 }
             }
             
-            loadComputers()
+            loadClients()
             
         default:
             print("Unknown reason:", reason)
@@ -127,18 +125,18 @@ class SYPreferences: NSObject {
     }
     
     // MARK: Public methods
-    func computerWithIdentifier(_ identifier: String) -> SYClient? {
-        return computers.first { $0.id == identifier }
+    func clientWithIdentifier(_ identifier: String) -> SYClient? {
+        return clients.first { $0.id == identifier }
     }
     
-    func addComputer(_ computer: SYClient) {
-        var computers = self.computers.filter { $0.id != computer.id }
-        computers.append(computer)
-        self.computers = computers
+    func addClient(_ client: SYClient) {
+        var clients = self.clients.filter { $0.id != client.id }
+        clients.append(client)
+        self.clients = clients
     }
     
-    func removeComputer(_ computer: SYClient) {
-        computers = computers.filter { $0.id != computer.id }
+    func removeClient(_ client: SYClient) {
+        clients = clients.filter { $0.id != client.id }
     }
     
     // MARK: UIApplication notifications

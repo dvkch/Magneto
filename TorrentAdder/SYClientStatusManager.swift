@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SYClientStatusManagerDelegate : NSObjectProtocol {
-    func clientStatusManager(_ manager: SYClientStatusManager, changedStatusFor computer: SYClient)
+    func clientStatusManager(_ manager: SYClientStatusManager, changedStatusFor client: SYClient)
 }
 
 extension Notification.Name {
@@ -34,81 +34,81 @@ class SYClientStatusManager: NSObject {
     // MARK: Properties
     weak var delegate: SYClientStatusManagerDelegate?
     private let urlSession = URLSession(configuration: .ephemeral)
-    private var loadingComputers: [String] = []
+    private var loadingClients: [String] = []
     private var lastStatuses: [String: (Date, ClientStatus)] = [:]
 
     // MARK: Public methods
-    func isComputerLoading(_ computer: SYClient?) -> Bool {
-        guard let computer = computer else { return false }
-        return loadingComputers.contains(computer.id)
+    func isClientLoading(_ client: SYClient?) -> Bool {
+        guard let client = client else { return false }
+        return loadingClients.contains(client.id)
     }
     
-    func lastStatusForComputer(_ computer: SYClient?) -> ClientStatus {
-        guard let computer = computer else { return .unknown }
-        return lastStatuses[computer.id]?.1 ?? .unknown
+    func lastStatusForClient(_ client: SYClient?) -> ClientStatus {
+        guard let client = client else { return .unknown }
+        return lastStatuses[client.id]?.1 ?? .unknown
     }
     
-    func startStatusUpdateIfNeeded(for computer: SYClient) {
-        let status = lastStatuses[computer.id]
+    func startStatusUpdateIfNeeded(for client: SYClient) {
+        let status = lastStatuses[client.id]
         let date = status?.0 ?? Date(timeIntervalSince1970: 0)
         
         // refresh if it's unknown or old
         if status == nil || date.timeIntervalSinceNow < -10 {
             DispatchQueue.main.async {
-                self.startStatusUpdate(for: computer)
+                self.startStatusUpdate(for: client)
             }
         }
     }
     
     // MARK: Private
-    private func startStatusUpdate(for computer: SYClient) {
-        if isComputerLoading(computer) { return }
+    private func startStatusUpdate(for client: SYClient) {
+        if isClientLoading(client) { return }
         
-        setComputerLoading(computer, loading: true)
+        setClientLoading(client, loading: true)
         
-        SYClientAPI.shared.getClientStatus(computer)
+        SYClientAPI.shared.getClientStatus(client)
             .onSuccess { (online) in
-                self.setStatus(online ? .online : .offline, for: computer)
-                self.setComputerLoading(computer, loading: false)
+                self.setStatus(online ? .online : .offline, for: client)
+                self.setClientLoading(client, loading: false)
         }
     }
     
-    private func setStatus(_ status: ClientStatus, for computer: SYClient) {
+    private func setStatus(_ status: ClientStatus, for client: SYClient) {
         guard Thread.isMainThread else {
             DispatchQueue.main.async {
-                self.setStatus(status, for: computer)
+                self.setStatus(status, for: client)
             }
             return
         }
         
-        let prevStatus = lastStatusForComputer(computer)
-        lastStatuses[computer.id] = (Date(), status)
+        let prevStatus = lastStatusForClient(client)
+        lastStatuses[client.id] = (Date(), status)
         
         if prevStatus != status {
-            NotificationCenter.default.post(name: .clientStatusChanged, object: computer)
-            delegate?.clientStatusManager(self, changedStatusFor: computer)
+            NotificationCenter.default.post(name: .clientStatusChanged, object: client)
+            delegate?.clientStatusManager(self, changedStatusFor: client)
         }
     }
 
-    func setComputerLoading(_ computer: SYClient?, loading: Bool) {
+    func setClientLoading(_ client: SYClient?, loading: Bool) {
         guard Thread.isMainThread else {
             DispatchQueue.main.async {
-                self.setComputerLoading(computer, loading: loading)
+                self.setClientLoading(client, loading: loading)
             }
             return
         }
         
-        guard let computer = computer, loading != isComputerLoading(computer) else { return }
+        guard let client = client, loading != isClientLoading(client) else { return }
         
         if loading {
-            loadingComputers.append(computer.id)
+            loadingClients.append(client.id)
         }
         else {
-            loadingComputers.remove(computer.id)
+            loadingClients.remove(client.id)
         }
         
-        NotificationCenter.default.post(name: .clientStatusChanged, object: computer)
-        delegate?.clientStatusManager(self, changedStatusFor: computer)
+        NotificationCenter.default.post(name: .clientStatusChanged, object: client)
+        delegate?.clientStatusManager(self, changedStatusFor: client)
     }
 }
 

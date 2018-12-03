@@ -14,8 +14,8 @@ class SYEditComputerVC: UIViewController {
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        isCreation = SYPreferences.shared.computerWithIdentifier(computer.id) == nil
-        title = isCreation ? "New computer" : "Edit computer"
+        isCreation = SYPreferences.shared.clientWithIdentifier(client.id) == nil
+        title = isCreation ? "New client" : "Edit client"
         
         tableView.registerCell(name: SYComputerFormCell.className)
         
@@ -51,12 +51,12 @@ class SYEditComputerVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if !isCreation {
-            saveComputer(force: true)
+            saveClient(force: true)
         }
     }
     
     // MARK: Properties
-    var computer: SYClient!
+    var client: SYClient!
     private var isCreation: Bool = false
     
     // MARK: Views
@@ -64,24 +64,24 @@ class SYEditComputerVC: UIViewController {
 
     // MARK: Actions
     @objc private func addButtonTap() {
-        if saveComputer(force: false) {
+        if saveClient(force: false) {
             dismiss(animated: true, completion: nil)
         }
     }
     
     // MARK: Content
     @discardableResult
-    private func saveComputer(force: Bool) -> Bool {
-        if computer == nil { return true }
-        if computer.port == nil || computer.port == 0 {
-            computer.port = computer.software.defaultPort
+    private func saveClient(force: Bool) -> Bool {
+        if client == nil { return true }
+        if client.port == nil || client.port == 0 {
+            client.port = client.software.defaultPort
         }
         
-        if !computer.isValid && !force {
+        if !client.isValid && !force {
             return false
         }
         
-        SYPreferences.shared.addComputer(computer)
+        SYPreferences.shared.addClient(client)
         return true
     }
 }
@@ -93,7 +93,7 @@ extension SYEditComputerVC : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(type: SYComputerFormCell.self, indexPath: indexPath)
-        cell.computer = computer
+        cell.client = client
         cell.formField = SYClient.FormField.allCases[indexPath.row]
         return cell
     }

@@ -22,7 +22,7 @@ class SYComputerFormCell: UITableViewCell {
             updateContent()
         }
     }
-    var computer: SYClient? {
+    var client: SYClient? {
         didSet {
             updateContent()
         }
@@ -35,16 +35,16 @@ class SYComputerFormCell: UITableViewCell {
 
     // MARK: Actions
     @IBAction private func segmentedControlChanged() {
-        computer?.setValue(segmentedControl.selectedSegmentIndex, for: formField)
+        client?.setValue(segmentedControl.selectedSegmentIndex, for: formField)
     }
     
     @IBAction private func textFieldEditingChanged() {
-        computer?.setValue(textField.text ?? "", for: formField)
+        client?.setValue(textField.text ?? "", for: formField)
     }
     
     // MARK: Content
     private func updateContent() {
-        guard let computer = computer else { return }
+        guard let client = client else { return }
         
         iconView.image = formField.image?.sy_imageMasked(with: .lightBlue)
         textField.keyboardType = formField.keyboardType
@@ -59,20 +59,20 @@ class SYComputerFormCell: UITableViewCell {
             options.keys.sorted().forEach { (index) in
                 segmentedControl.insertSegment(withTitle: options[index], at: index, animated: false)
             }
-            segmentedControl.selectedSegmentIndex = computer.intValue(for: formField) ?? 0
+            segmentedControl.selectedSegmentIndex = client.intValue(for: formField) ?? 0
         }
         else {
             textField.isHidden = false
             segmentedControl.isHidden = true
             textField.placeholder = formField.name
-            textField.text = computer.stringValue(for: formField)
+            textField.text = client.stringValue(for: formField)
         }
     }
 }
 
 extension SYComputerFormCell : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        computer?.setValue(textField.text ?? "", for: formField)
+        client?.setValue(textField.text ?? "", for: formField)
         textField.resignFirstResponder()
         return false
     }

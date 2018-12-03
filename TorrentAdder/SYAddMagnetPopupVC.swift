@@ -56,15 +56,15 @@ class SYAddMagnetPopupVC: UIViewController {
         statusLabel.font = UIFont.systemFont(ofSize: 15)
         spinner.color = .gray
         
-        computers = SYPreferences.shared.computers
-        updateForMode(.computers, animated: false)
+        clients = SYPreferences.shared.clients
+        updateForMode(.clients, animated: false)
     }
     
     // MARK: Properties
     private var sourceApp: SYSourceApp?
     private var magnetURL: URL?
     private var result: SYSearchResult?
-    private var computers = [SYClient]()
+    private var clients = [SYClient]()
     private var canClose: Bool = false
 
     // MARK: Views
@@ -92,11 +92,11 @@ class SYAddMagnetPopupVC: UIViewController {
     }
     
     // MARK: API
-    private func fetchMagnetURLAndAdd(to computer: SYClient) {
+    private func fetchMagnetURLAndAdd(to client: SYClient) {
         updateForMode(.loading, animated: true)
         
         if let magnetURL = (magnetURL ?? result?.magnetURL) {
-            addMagnetToComputer(magnetURL: magnetURL, computer: computer)
+            addMagnetToClient(magnetURL: magnetURL, client: client)
             return
         }
         
@@ -104,21 +104,21 @@ class SYAddMagnetPopupVC: UIViewController {
         
         _ = SYWebAPI.shared.getMagnet(for: result)
             .onSuccess { [weak self] (magnetURL) in
-                self?.addMagnetToComputer(magnetURL: magnetURL, computer: computer)
+                self?.addMagnetToClient(magnetURL: magnetURL, client: client)
             }
             .onFailure { [weak self] (error) in
                 self?.updateForMode(.failure(error.localizedDescription), animated: true)
             }
     }
     
-    private func addMagnetToComputer(magnetURL: URL, computer: SYClient) {
+    private func addMagnetToClient(magnetURL: URL, client: SYClient) {
         updateForMode(.loading, animated: true)
         
-        SYClientAPI.shared.addMagnet(magnetURL, to: computer)
+        SYClientAPI.shared.addMagnet(magnetURL, to: client)
             .onSuccess { message in
                 var successMessage = "Success!"
                 if let message = message, !message.isEmpty {
-                    successMessage += "\n\n" + "Message from " + (computer.name ?? computer.host) + ": " + message
+                    successMessage += "\n\n" + "Message from " + (client.name ?? client.host) + ": " + message
                 }
                 self.updateForMode(.success(successMessage), animated: true)
             }
@@ -130,7 +130,7 @@ class SYAddMagnetPopupVC: UIViewController {
     
     // MARK: Content
     enum Mode {
-        case computers, loading, success(_ message: String), failure(_ error: String)
+        case clients, loading, success(_ message: String), failure(_ error: String)
     }
     
     private func updateForMode(_ mode: Mode, animated: Bool) {
@@ -145,7 +145,7 @@ class SYAddMagnetPopupVC: UIViewController {
         }
         
         switch mode {
-        case .computers:
+        case .clients:
             canClose = true
             tableView.alpha = 1
             statusContainerView.alpha = 0
@@ -197,7 +197,7 @@ class SYAddMagnetPopupVC: UIViewController {
             closeButton.sy_isHidden = true
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                self.updateForMode(.computers, animated: true)
+                self.updateForMode(.clients, animated: true)
             }
         }
     }
@@ -205,13 +205,13 @@ class SYAddMagnetPopupVC: UIViewController {
 
 extension SYAddMagnetPopupVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return computers.count
+        return clients.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SYComputerCell.className, for: indexPath) as! SYComputerCell
-        cell.computer = computers[indexPath.row]
-        cell.isAvailableComputersList = false
+        cell.client = clients[indexPath.row]
+        cell.isDiscoveredClient = false
         return cell
     }
     
@@ -227,7 +227,7 @@ extension SYAddMagnetPopupVC : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        fetchMagnetURLAndAdd(to: computers[indexPath.row])
+        fetchMagnetURLAndAdd(to: clients[indexPath.row])
     }
 }
 

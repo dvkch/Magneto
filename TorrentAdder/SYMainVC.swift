@@ -18,8 +18,8 @@ class SYMainVC: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.appDidOpenURLNotification(_:)), name: .didOpenURL, object: nil)
         
-        timerRefreshComputers = Timer(timeInterval: 5, target: self, selector: #selector(self.refreshComputersTimerTick), userInfo: nil, repeats: true)
-        RunLoop.main.add(timerRefreshComputers!, forMode: .common)
+        timerRefreshClientsStatus = Timer(timeInterval: 5, target: self, selector: #selector(self.timerRefreshClientsStatusTick), userInfo: nil, repeats: true)
+        RunLoop.main.add(timerRefreshClientsStatus!, forMode: .common)
 
         titleLabel.addGlow(color: .lightGray, size: 4)
 
@@ -44,13 +44,13 @@ class SYMainVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        computers = SYPreferences.shared.computers
+        clients = SYPreferences.shared.clients
         tableView.reloadData()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: .didOpenURL, object: nil)
-        timerRefreshComputers?.invalidate()
+        timerRefreshClientsStatus?.invalidate()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -58,8 +58,8 @@ class SYMainVC: UIViewController {
     }
     
     // MARK: Properties
-    private var timerRefreshComputers: Timer?
-    private var computers: [SYClient] = []
+    private var timerRefreshClientsStatus: Timer?
+    private var clients: [SYClient] = []
     private var searchResults: [SYSearchResult] = []
     private var searchQuery: String = ""
     private var constraintHeaderHeightOriginalValue: CGFloat = 0
@@ -90,9 +90,9 @@ extension SYMainVC {
 // MARK: Timer
 extension SYMainVC {
     
-    @objc private func refreshComputersTimerTick() {
+    @objc private func timerRefreshClientsStatusTick() {
         if view.window == nil { return }
-        computers.forEach {
+        clients.forEach {
             SYClientStatusManager.shared.startStatusUpdateIfNeeded(for: $0)
         }
     }
@@ -103,7 +103,7 @@ extension SYMainVC {
     @IBAction private func helpButtonTap() {
         let alert = UIAlertController(
             title: "Help",
-            message: "To add a torrent you need to open this app with a magnet. Go to Safari, open a page with a magnet link in it, click the magnet to open this app, and then select a computer to start downloading the torrent.",
+            message: "To add a torrent you need to open this app with a magnet. Go to Safari, open a page with a magnet link in it, click the magnet to open this app, and then select a client to start downloading the torrent.",
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
@@ -142,20 +142,17 @@ extension SYMainVC {
     }
     
     fileprivate func openTorrentPopup(with magnetURL: URL?, or result: SYSearchResult?, sourceApp: SYSourceApp?) {
-        guard !computers.isEmpty else {
-            showError(SYError.noComputersSaved, title: "Cannot add torrent")
+        guard !clients.isEmpty else {
+            showError(SYError.noClientsSaved, title: "Cannot add torrent")
             return
         }
         
         SYAddMagnetPopupVC.show(in: self, magnet: magnetURL, result: result, sourceApp: sourceApp)
     }
     
-    fileprivate func removeComputer(_ computer: SYClient, at indexPath: IndexPath) {
-        SYPreferences.shared.removeComputer(computer)
-        
-        if let index = self.computers.index(of: computer) {
-            self.computers.remove(at: index)
-        }
+    fileprivate func removeClient(_ client: SYClient, at indexPath: IndexPath) {
+        SYPreferences.shared.removeClient(client)
+        clients = SYPreferences.shared.clients
         
         tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -193,7 +190,7 @@ extension SYMainVC : UIScrollViewDelegate {
 
 extension SYMainVC : UITableViewDataSource {
     enum TableSection : Int, CaseIterable {
-        case buttons, computers, results
+        case buttons, clients, results
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -203,17 +200,17 @@ extension SYMainVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let tableSection = TableSection(rawValue: section) else { return 0 }
         switch tableSection {
-        case .buttons:      return showingSearch ? 0 : 1
-        case .computers:    return showingSearch ? 0 : computers.count
-        case .results:      return searchResults.count
+        case .buttons: return showingSearch ? 0 : 1
+        case .clients: return showingSearch ? 0 : clients.count
+        case .results: return searchResults.count
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let tableSection = TableSection(rawValue: section) else { return nil }
         switch tableSection {
-        case .buttons:      return showingSearch ? nil : "Available computers"
-        case .computers:    return nil
+        case .buttons: return showingSearch ? nil : "Available clients"
+        case .clients: return nil
         case .results:
             if !showingSearch { return nil }
             return searchResults.isEmpty ? "No results" : "Results"
@@ -225,17 +222,17 @@ extension SYMainVC : UITableViewDataSource {
         switch tableSection {
         case .buttons:
             let cell = tableView.dequeueCell(type: SYAddComputerCell.self, indexPath: indexPath)
-            cell.computersCount = computers.count
+            cell.clientsCount = clients.count
             cell.addButtonTapBlock = { [weak self] in
                 let vc = SYListComputersVC()
                 let nc = SYNavigationController(rootViewController: vc)
                 self?.present(nc, animated: true, completion: nil)
             }
             return cell
-        case .computers:
+        case .clients:
             let cell = tableView.dequeueCell(type: SYComputerCell.self, indexPath: indexPath)
-            cell.computer = computers[indexPath.row]
-            cell.isAvailableComputersList = false
+            cell.client = clients[indexPath.row]
+            cell.isDiscoveredClient = false
             return cell
         case .results:
             let cell = tableView.dequeueCell(type: SYResultCell.self, indexPath: indexPath)
@@ -250,7 +247,7 @@ extension SYMainVC : UITableViewDelegate {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return 0 }
         switch tableSection {
         case .buttons: return 60
-        case .computers: return 60
+        case .clients: return 60
         case .results: return 80
         }
     }
@@ -259,7 +256,7 @@ extension SYMainVC : UITableViewDelegate {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return 0 }
         switch tableSection {
         case .buttons: return 60
-        case .computers: return 60
+        case .clients: return 60
         case .results: return UITableView.automaticDimension
         }
     }
@@ -273,8 +270,8 @@ extension SYMainVC : UITableViewDelegate {
             let nc = SYNavigationController(rootViewController: vc)
             present(nc, animated: true, completion: nil)
 
-        case .computers:
-            let url = computers[indexPath.row].webURL
+        case .clients:
+            let url = clients[indexPath.row].webURL
             let vc = SFSafariViewController(url: url)
             if #available(iOS 10, *) {
                 vc.preferredBarTintColor = .lightBlue
@@ -292,15 +289,15 @@ extension SYMainVC : UITableViewDelegate {
         case .buttons:
             return nil
             
-        case .computers:
-            let computer = computers[indexPath.row]
+        case .clients:
+            let client = clients[indexPath.row]
             let editAction = UITableViewRowAction(style: .normal, title: "Edit") { [weak self] (_, _) in
                 let vc = SYEditComputerVC()
-                vc.computer = computer
+                vc.client = client
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
             let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { [weak self] (_, indexPath) in
-                self?.removeComputer(computer, at: indexPath)
+                self?.removeClient(client, at: indexPath)
             }
             return [deleteAction, editAction]
             

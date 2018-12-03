@@ -23,7 +23,7 @@ class SYAddComputerCell : UITableViewCell {
     
     // MARK: Properties
     var addButtonTapBlock: (() -> Void)?
-    var computersCount: Int = 0 {
+    var clientsCount: Int = 0 {
         didSet {
             updateContent()
         }
@@ -36,13 +36,13 @@ class SYAddComputerCell : UITableViewCell {
     
     // MARK: Content
     private func updateContent() {
-        switch computersCount {
+        switch clientsCount {
         case 0:
-            label.text = String(format: "No computers")
+            label.text = String(format: "No clients")
         case 1:
-            label.text = String(format: "1 computer")
+            label.text = String(format: "1 client")
         default:
-            label.text = String(format: "%d computers", computersCount)
+            label.text = String(format: "%d clients", clientsCount)
         }
     }
 }

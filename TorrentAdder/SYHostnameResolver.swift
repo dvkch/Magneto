@@ -12,13 +12,11 @@ extension Notification.Name {
     static let hostnameResolverUpdated = Notification.Name.init("SYHostnameResolver.bonjourClientUpdated")
 }
 
-// TODO: remove @objc
-
 /// Used to resolve hostnames from IP addresses
-@objc class SYHostnameResolver: NSObject {
+class SYHostnameResolver: NSObject {
     
     // MARK: Init
-    @objc static let shared = SYHostnameResolver()
+    static let shared = SYHostnameResolver()
     
     override init() {
         super.init()
@@ -44,7 +42,7 @@ extension Notification.Name {
         }
     }
     
-    @objc func hostnameForIP(_ ip: String) -> String? {
+    func hostnameForIP(_ ip: String) -> String? {
         let names = services
             .filter { $0.addressesStrings.contains(ip) }
             .compactMap { $0.hostName?.replacingOccurrences(of: "." + $0.domain, with: "") }
