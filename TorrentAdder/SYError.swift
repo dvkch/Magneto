@@ -47,15 +47,17 @@ extension DataResponse : AlamoDataResponseProtocol { }
 
 extension AlamoDataResponseProtocol {
     var isUnreachable: Bool {
-        return
-            response?.statusCode == 500 ||
-                response?.statusCode == 502 ||
-                error?.isNSError(domain: NSURLErrorDomain, code: NSURLErrorTimedOut) == true
+        if (response?.statusCode ?? 0) >= 500 {
+            return true
+        }
+        if error?.isNSError(domain: NSURLErrorDomain, codes: [NSURLErrorTimedOut, NSURLErrorCannotFindHost]) == true {
+            return true
+        }
+        return false
     }
     
     var isNotFoundError: Bool {
         return response?.statusCode == 404
     }
-
 }
 
