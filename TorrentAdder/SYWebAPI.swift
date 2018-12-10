@@ -63,7 +63,7 @@ class SYWebAPI: NSObject {
     
     private func getQueryURL(mirrorURL: URL, query: String) -> URL {
         var urlComponents = URLComponents(url: mirrorURL, resolvingAgainstBaseURL: true)!
-        urlComponents.path = "/s"
+        urlComponents.path = "/s/"
         urlComponents.queryItems = [
             URLQueryItem(name: "q", value: query),
             URLQueryItem(name: "page", value: String(0)),
@@ -90,7 +90,7 @@ class SYWebAPI: NSObject {
                         else {
                             // report the error, but next time we will reload mirrors
                             self.availableMirrorURLs = []
-                            return .init(error: error)
+                            return .init(error: .noMirrorAnswered)
                         }
                     }
                 }

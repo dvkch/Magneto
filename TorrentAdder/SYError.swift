@@ -15,11 +15,12 @@ enum SYError {
     case noClientsSaved
     case noUTorrentToken
     case invalidUTorrentPayload
+    case noMirrorAnswered
     case alamofire(_ request: AlamoDataResponseProtocol)
 }
 
 extension SYError : LocalizedError {
-    var localizedDescription: String {
+    var errorDescription: String? {
         switch self {
         case .noMirrorsFound:
             return "No mirrors found"
@@ -31,6 +32,8 @@ extension SYError : LocalizedError {
             return "Couldn't connect to the uTorrent client"
         case .invalidUTorrentPayload:
             return "Invalid uTorrent payload"
+        case .noMirrorAnswered:
+            return "No available mirror could respond to the request"
         case .alamofire(let response):
             return response.error?.localizedDescription ?? "Unknown error"
         }
