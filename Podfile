@@ -10,14 +10,12 @@ target 'TorrentAdder' do
     pod 'Alamofire'
     pod 'BrightFutures'
     pod 'Fuzi'
-    pod "JRSwizzle"
     pod "NSDate+TimeAgo"
     #pod 'SparkInspector', :configurations => ['Debug']
     pod 'SPLPing'
     pod 'SVProgressHUD'
 	pod 'SYKit'
 	pod 'SYPopoverController'
-    pod 'YapDatabase'
 end
 
 post_install do |pi|

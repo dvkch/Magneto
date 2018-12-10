@@ -155,32 +155,26 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/JGMethodSwizzler/JGMethodSwizzler.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/NSDate+TimeAgo/NSDate_TimeAgo.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Result/Result.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SPLPing/SPLPing.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYPopoverController/SYPopoverController.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/YapDatabase/YapDatabase.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/JGMethodSwizzler/JGMethodSwizzler.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/NSDate+TimeAgo/NSDate_TimeAgo.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Result/Result.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SPLPing/SPLPing.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYPopoverController/SYPopoverController.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/YapDatabase/YapDatabase.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
