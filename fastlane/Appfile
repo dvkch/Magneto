@@ -1,7 +1,1 @@
-app_identifier "me.syan.TorrentAdder"
-apple_id "develop2k@gmail.com"
-team_id "79RY8264V4"
-
-
-# you can even provide different app identifiers, Apple IDs and team names per lane:
-# https://github.com/KrauseFx/fastlane/blob/master/docs/Appfile.md
+apple_id "contact@stanislaschevallier.fr"
