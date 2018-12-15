@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KQ6-2K-u3T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KQ6-2K-u3T">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,10 +19,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fqI-Ga-kml">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blue_background" translatesAutoresizingMaskIntoConstraints="NO" id="RgX-6U-54I">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Torrent Adder" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jd-pq-XDo">
                                         <rect key="frame" x="15" y="25" width="212.5" height="53"/>
@@ -31,24 +31,28 @@
                                         <nil key="highlightedColor"/>
                                         <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     </label>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w8F-Lc-YBb">
-                                        <rect key="frame" x="8" y="92" width="359" height="30"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="n1J-JY-rze"/>
-                                        </constraints>
-                                    </view>
+                                    <searchBar hidden="YES" opaque="NO" contentMode="redraw" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" searchBarStyle="prominent" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="T3x-Xc-x5h">
+                                        <rect key="frame" x="0.0" y="84" width="375" height="56"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <scopeButtonTitles>
+                                            <string>Title</string>
+                                            <string>Title</string>
+                                        </scopeButtonTitles>
+                                    </searchBar>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="0jd-pq-XDo" firstAttribute="leading" secondItem="jXr-Je-30D" secondAttribute="leading" constant="15" id="0kv-ra-Lzb"/>
                                     <constraint firstItem="RgX-6U-54I" firstAttribute="leading" secondItem="fqI-Ga-kml" secondAttribute="leading" id="3lW-6d-UR9"/>
-                                    <constraint firstAttribute="bottom" secondItem="w8F-Lc-YBb" secondAttribute="bottom" constant="8" id="4z7-f9-yGx"/>
-                                    <constraint firstItem="w8F-Lc-YBb" firstAttribute="top" secondItem="0jd-pq-XDo" secondAttribute="bottom" constant="14" id="8KA-kt-WMt"/>
+                                    <constraint firstItem="T3x-Xc-x5h" firstAttribute="trailing" secondItem="jXr-Je-30D" secondAttribute="trailing" id="6Ka-e7-XH7"/>
                                     <constraint firstAttribute="trailing" secondItem="RgX-6U-54I" secondAttribute="trailing" id="AH9-Mb-aRu"/>
-                                    <constraint firstItem="w8F-Lc-YBb" firstAttribute="leading" secondItem="jXr-Je-30D" secondAttribute="leading" constant="8" id="FHf-KI-OP2"/>
-                                    <constraint firstItem="jXr-Je-30D" firstAttribute="trailing" secondItem="w8F-Lc-YBb" secondAttribute="trailing" constant="8" id="aXS-bh-z9p"/>
-                                    <constraint firstAttribute="height" constant="130" id="eqd-Mh-eH0"/>
+                                    <constraint firstItem="jXr-Je-30D" firstAttribute="bottom" secondItem="T3x-Xc-x5h" secondAttribute="bottom" id="XBd-bV-cci"/>
+                                    <constraint firstAttribute="height" constant="140" id="eqd-Mh-eH0"/>
+                                    <constraint firstItem="T3x-Xc-x5h" firstAttribute="top" secondItem="0jd-pq-XDo" secondAttribute="bottom" constant="6" id="hZ9-qW-vfT"/>
+                                    <constraint firstItem="T3x-Xc-x5h" firstAttribute="leading" secondItem="jXr-Je-30D" secondAttribute="leading" id="kDJ-Ah-mF5"/>
                                     <constraint firstItem="RgX-6U-54I" firstAttribute="top" secondItem="fqI-Ga-kml" secondAttribute="top" id="qZS-Qz-gwg"/>
                                     <constraint firstAttribute="bottom" secondItem="RgX-6U-54I" secondAttribute="bottom" id="uuH-xG-uC8"/>
                                     <constraint firstItem="0jd-pq-XDo" firstAttribute="top" secondItem="jXr-Je-30D" secondAttribute="top" constant="5" id="zW6-zs-Ciz"/>

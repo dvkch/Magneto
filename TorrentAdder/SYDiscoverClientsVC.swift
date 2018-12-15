@@ -20,7 +20,7 @@ class SYDiscoverClientsVC: UIViewController {
         let closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
         navigationItem.leftBarButtonItem = closeButton
         
-        tableView.registerCell(name: SYClientCell.className)
+        tableView.registerCell(SYClientCell.self)
         tableView.tableFooterView = UIView()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.hostnameResolverUpdatedNotification), name: .hostnameResolverUpdated, object: nil)

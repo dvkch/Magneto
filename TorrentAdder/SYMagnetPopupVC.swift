@@ -30,7 +30,7 @@ class SYMagnetPopupVC: UIViewController {
         
         preferredContentSize = CGSize(width: 300, height: 250)
         
-        tableView.registerCell(name: SYClientCell.className)
+        tableView.registerCell(SYClientCell.self)
         tableView.tableFooterView = UIView()
         
         cancelButton.setTitle("Cancel", for: .normal)

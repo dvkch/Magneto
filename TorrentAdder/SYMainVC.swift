@@ -24,16 +24,19 @@ class SYMainVC: UIViewController {
 
         titleLabel.addGlow(color: .lightGray, size: 4)
 
-        searchField.backgroundColor = UIColor(white: 1, alpha: 0.3)
-        searchField.activityIndicatorView.color = .black
-        searchField.textField.keyboardType = .default
-        searchField.textField.placeholder = "Search"
-        searchField.textField.rightViewMode = .always
-        searchField.textField.clearButtonMode = .always
+        spinner.radius = 13
+        spinner.strokeColor = .white
+        spinner.strokeThickness = 3
+        spinner.isHidden = true
+
+        searchField.sy_textField?.backgroundColor = .init(white: 1, alpha: 0.4)
+        searchField.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
+        searchField.keyboardType = .default
+        searchField.placeholder = "Search"
         
-        tableView.registerCell(name: SYAddClientCell.className)
-        tableView.registerCell(name: SYClientCell.className)
-        tableView.registerCell(name: SYResultCell.className)
+        tableView.registerCell(SYAddClientCell.self)
+        tableView.registerCell(SYClientCell.self)
+        tableView.registerCell(SYResultCell.self)
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
         
@@ -76,7 +79,8 @@ class SYMainVC: UIViewController {
     @IBOutlet private var headerView: UIView!
     @IBOutlet private var constraintHeaderHeight: NSLayoutConstraint!
     @IBOutlet private var titleLabel: UILabel!
-    @IBOutlet private var searchField: SYSearchField!
+    @IBOutlet private var spinner: SVIndefiniteAnimatedView!
+    @IBOutlet private var searchField: UISearchBar!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var helpButton: SYButton!
 }
@@ -118,23 +122,24 @@ extension SYMainVC {
     
     fileprivate func updateSearch(_ text: String) {
         searchQuery = text
-        searchField.titleText = text
         
         guard !searchQuery.isEmpty else {
             searchResults = []
-            searchField.showLoadingIndicator(false)
             tableView.reloadData()
+            spinner.isHidden = true
             return
         }
         
-        searchField.showLoadingIndicator(true)
+        spinner.isHidden = false
+        
         _ = SYWebAPI.shared.getResults(query: text)
             .andThen { [weak self] result in
                 
                 guard let self = self else { return }
                 guard self.searchQuery == text else { return }
                 
-                self.searchField.showLoadingIndicator(false)
+                self.spinner.isHidden = true
+
                 switch result {
                 case .success(let items):
                     self.searchResults = items
@@ -192,9 +197,22 @@ extension SYMainVC {
     }
 }
 
-extension SYMainVC : SYSearchFieldDelegate {
-    func searchFieldDidReturn(_ searchField: SYSearchField!, withText text: String!) {
-        updateSearch(text)
+extension SYMainVC : UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        updateSearch(searchBar.text ?? "")
+        searchBar.resignFirstResponder()
     }
 }
 

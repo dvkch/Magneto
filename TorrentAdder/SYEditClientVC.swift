@@ -17,7 +17,7 @@ class SYEditClientVC: UIViewController {
         isCreation = SYPreferences.shared.clientWithIdentifier(client.id) == nil
         title = isCreation ? "New client" : "Edit client"
         
-        tableView.registerCell(name: SYClientFormCell.className)
+        tableView.registerCell(SYClientFormCell.self)
         
         if isCreation {
             let footer = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 60))
