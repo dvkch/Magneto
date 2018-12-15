@@ -1,15 +1,13 @@
 PODS:
-  - Alamofire (4.7.3)
+  - Alamofire (4.8.0)
   - BrightFutures (7.0.0):
     - Result (~> 4.0.0)
   - Fuzi (2.1.0)
-  - JGMethodSwizzler (2.0.1)
   - "NSDate+TimeAgo (1.0.6)"
   - Result (4.0.0)
   - SPLPing (1.1.8)
   - SVProgressHUD (2.2.5)
-  - SYKit (0.0.38):
-    - JGMethodSwizzler
+  - SYKit (0.0.43)
   - SYPopoverController (2.2.4)
 
 DEPENDENCIES:
@@ -27,7 +25,6 @@ SPEC REPOS:
     - Alamofire
     - BrightFutures
     - Fuzi
-    - JGMethodSwizzler
     - "NSDate+TimeAgo"
     - Result
     - SPLPing
@@ -36,17 +33,16 @@ SPEC REPOS:
     - SYPopoverController
 
 SPEC CHECKSUMS:
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
   BrightFutures: 7d7436e937dfc83d814c11920f157fc2a53f5bd5
   Fuzi: 8c57344debff6d3a0c76a9e0f549152defdaaa48
-  JGMethodSwizzler: e0ea5c1c6c55304ec4ef3f54e441400c6735c899
   "NSDate+TimeAgo": 35601c619b2d59290055e4fe76e61d97677a2360
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
   SPLPing: 420837fae1e19bba0a8360e91e7a384f22509663
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SYKit: d580d3aa388fdb4ada8d255ae7eba1614c629cd0
+  SYKit: 81cc2aebc1498acaf0a02b3dd8105b336db342b7
   SYPopoverController: 6e6af6e9168e5e89a02f352034490412996087e1
 
-PODFILE CHECKSUM: e76baae32286921f7127084c78b2772944fd0444
+PODFILE CHECKSUM: 75c6f8d3aa14521c59c8c5b5470eea53d5278b09
 
 COCOAPODS: 1.6.0.beta.2
