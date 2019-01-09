@@ -49,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         #endif
         
+        vc.loadViewIfNeeded() // make sure the didOpenURL notification is properly registered before continuing
         return true
     }
     

@@ -43,6 +43,9 @@ class SYMainVC: UIViewController {
         helpButton.tintColor = .lightBlue
         
         constraintHeaderHeightOriginalValue = constraintHeaderHeight.constant
+        
+        // make sure the list has an initial value at init time, in case the app is opened from a magnet
+        clients = SYPreferences.shared.clients
     }
     
     override func viewWillAppear(_ animated: Bool) {
