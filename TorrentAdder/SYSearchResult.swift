@@ -116,7 +116,7 @@ extension SYSearchResult {
         }
         else {
             let formatter = DateFormatter()
-            formatter.dateFormat = "MM-dd' 'YYYY"
+            formatter.dateFormat = "MM-dd' 'yyyy"
             return formatter.date(from: age)
         }
     }
