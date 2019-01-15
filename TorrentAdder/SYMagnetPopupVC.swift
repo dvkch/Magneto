@@ -17,7 +17,14 @@ class SYMagnetPopupVC: UIViewController {
         popupVC.sourceApp = sourceApp
         popupVC.result = result
         popupVC.magnetURL = magnet
-        viewController.sy_presentPopover(popupVC, animated: true, completion: nil)
+        
+        let blur: UIBlurEffect.Style
+        if #available(iOS 10.0, *) {
+            blur = .prominent
+        } else {
+            blur = .light
+        }
+        viewController.sy_presentPopover(popupVC, backgroundEffect: UIBlurEffect(style: blur), animated: true, completion: nil)
     }
     
     // MARK: UIViewController
@@ -237,7 +244,7 @@ extension SYMagnetPopupVC : SYPopoverContentViewDelegate {
     }
     
     func popoverControllerBackgroundColor(_ popoverController: SYPopoverController!) -> UIColor! {
-        return UIColor(white: 0.7, alpha: 0.7)
+        return nil
     }
 }
 
