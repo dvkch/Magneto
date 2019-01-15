@@ -9,7 +9,7 @@
 import UIKit
 
 public extension UICollectionView {
-    func registerCell<T: UITableViewCell>(_ type: T.Type, xib: Bool = true) {
+    func registerCell<T: UICollectionViewCell>(_ type: T.Type, xib: Bool = true) {
         let className = NSStringFromClass(type).components(separatedBy: ".").last!
         if xib {
             register(UINib(nibName: className, bundle: nil), forCellWithReuseIdentifier: className)
