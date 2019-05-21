@@ -64,7 +64,7 @@ class SYDiscoverClientsVC: UIViewController {
             return ip1.compare(ip2, options: .numeric) == .orderedAscending
         }
         
-        if let index = availableIPs.index(of: ip) {
+        if let index = availableIPs.firstIndex(of: ip) {
             tableView.beginUpdates()
             tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             tableView.endUpdates()

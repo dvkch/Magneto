@@ -12,8 +12,8 @@
 + (void)flushHostCache;
 + (void)setHostCacheEnabled:(BOOL)arg1;
 + (BOOL)isHostCacheEnabled;
-+ (nullable NSHost *)hostWithAddress:(id)arg1;
-+ (nullable NSHost *)hostWithName:(id)arg1;
++ (nullable NSHost *)hostWithAddress:(_Nullable id)arg1;
++ (nullable NSHost *)hostWithName:(_Nullable id)arg1;
 + (nullable NSHost *)currentHost;
 - (nullable NSString *)localizedName;
 - (nullable NSArray <NSString *> *)names;

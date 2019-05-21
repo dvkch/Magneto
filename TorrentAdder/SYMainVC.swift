@@ -204,11 +204,14 @@ extension SYMainVC : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // when tapping the clear button it also makes the searchBar firstResponder, even if it wasn't. this
         // is definitely not got UX for this app, so we make sure to keep the state as it was
+        // TODO: cleanup
+        /*
         if searchText.isEmpty && !searchBar.isFirstResponder{
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
         }
+ */
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

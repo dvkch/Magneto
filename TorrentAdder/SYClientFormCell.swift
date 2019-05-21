@@ -46,7 +46,7 @@ class SYClientFormCell: UITableViewCell {
     private func updateContent() {
         guard let client = client else { return }
         
-        iconView.image = formField.image?.sy_imageMasked(with: .lightBlue)
+        iconView.image = formField.image?.masking(with: .lightBlue)
         textField.keyboardType = formField.keyboardType
         if #available(iOS 11.0, *) {
             textField.textContentType = formField.textContentType

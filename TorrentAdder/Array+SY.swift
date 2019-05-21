@@ -10,7 +10,7 @@ import UIKit
 
 extension Array where Element : Equatable {
     mutating func remove(_ element: Element) {
-        while let index = index(of: element) {
+        while let index = firstIndex(of: element) {
             remove(at: index)
         }
     }

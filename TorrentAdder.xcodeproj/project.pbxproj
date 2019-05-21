@@ -13,7 +13,6 @@
 		970130E421B08E1000E7CFEC /* Error+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130E321B08E1000E7CFEC /* Error+SY.swift */; };
 		972589AD21B0AD6D00FCE9D5 /* SYError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972589AC21B0AD6D00FCE9D5 /* SYError.swift */; };
 		973784321BD40649001AD487 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973784311BD40649001AD487 /* Launch.storyboard */; };
-		9748F4CB21B0B305008CE0D1 /* BrightFutures+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9748F4CA21B0B305008CE0D1 /* BrightFutures+SY.swift */; };
 		974D372A21B150FC00C0FDDE /* SYSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372921B150FC00C0FDDE /* SYSearchResult.swift */; };
 		974D372C21B157CE00C0FDDE /* Fuzi+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372B21B157CE00C0FDDE /* Fuzi+SY.swift */; };
 		974D372E21B1D87300C0FDDE /* Calendar+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372D21B1D87300C0FDDE /* Calendar+SY.swift */; };
@@ -90,7 +89,6 @@
 		970130E321B08E1000E7CFEC /* Error+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+SY.swift"; sourceTree = "<group>"; };
 		972589AC21B0AD6D00FCE9D5 /* SYError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYError.swift; sourceTree = "<group>"; };
 		973784311BD40649001AD487 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
-		9748F4CA21B0B305008CE0D1 /* BrightFutures+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrightFutures+SY.swift"; sourceTree = "<group>"; };
 		974D372921B150FC00C0FDDE /* SYSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYSearchResult.swift; sourceTree = "<group>"; };
 		974D372B21B157CE00C0FDDE /* Fuzi+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fuzi+SY.swift"; sourceTree = "<group>"; };
 		974D372D21B1D87300C0FDDE /* Calendar+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+SY.swift"; sourceTree = "<group>"; };
@@ -205,7 +203,6 @@
 			children = (
 				970130E121B084E500E7CFEC /* Alamofire+SY.swift */,
 				9771AB3B21AF34F5005DE97D /* Array+SY.swift */,
-				9748F4CA21B0B305008CE0D1 /* BrightFutures+SY.swift */,
 				974D372D21B1D87300C0FDDE /* Calendar+SY.swift */,
 				97888C9E21B5A745004EB144 /* Codable+SY.swift */,
 				970130E321B08E1000E7CFEC /* Error+SY.swift */,
@@ -395,7 +392,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SY;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					F8986756192A317C00735175 = {
@@ -417,7 +414,7 @@
 			};
 			buildConfigurationList = F8986752192A317C00735175 /* Build configuration list for PBXProject "TorrentAdder" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -573,7 +570,6 @@
 				970130E221B084E500E7CFEC /* Alamofire+SY.swift in Sources */,
 				9771AB3721AF2BA4005DE97D /* SYPreferences.swift in Sources */,
 				974D373021B1DDEE00C0FDDE /* UIViewController+SY.swift in Sources */,
-				9748F4CB21B0B305008CE0D1 /* BrightFutures+SY.swift in Sources */,
 				9771AB2B21AEF901005DE97D /* SYDiscoverClientsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -643,6 +639,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -690,6 +687,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -714,7 +713,6 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TorrentAdder/TorrentAdder-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -737,7 +735,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TorrentAdder/TorrentAdder-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

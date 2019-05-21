@@ -10,7 +10,6 @@ import UIKit
 import BrightFutures
 import Alamofire
 import Fuzi
-import Result
 
 class SYClientAPI: NSObject {
 
@@ -33,7 +32,7 @@ class SYClientAPI: NSObject {
     private var transmissionSessionIDs = [String: String]()
     
     // MARK: Public methods
-    func getClientStatus(_ client: SYClient) -> Future<Bool, NoError> {
+    func getClientStatus(_ client: SYClient) -> Future<Bool, Never> {
         return manager.request(client.apiURL)
             .validate()
             .responseFutureData()
@@ -196,11 +195,11 @@ private extension SYClientAPI {
             .request(client.apiURL.appendingPathComponent("token.html"))
             .validate()
             .responseFutureHTML()
-            .flatMap { html -> BrightResult<String, SYError> in
+            .flatMap { html -> Future<String, SYError> in
                 if let token = html.firstChild(css: "div#token")?.text {
-                    return BrightResult(value: token)
+                    return Future(value: token)
                 }
-                return BrightResult(error: SYError.noUTorrentToken)
+                return Future(error: SYError.noUTorrentToken)
         }
     }
     

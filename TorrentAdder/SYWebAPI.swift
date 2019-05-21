@@ -46,7 +46,7 @@ class SYWebAPI: NSObject {
             .request("https://thepiratebay-proxylist.se/")
             .validate()
             .responseFutureHTML(XPathQuery: "//td[@title='URL']")
-            .flatMap { (elements) -> BrightResult<URL, SYError> in
+            .flatMap { (elements) -> Future<URL, SYError> in
                 let URLs = elements
                     .compactMap { $0.attr("data-href") }
                     .compactMap { URL(string: $0) }
@@ -110,7 +110,7 @@ class SYWebAPI: NSObject {
 
         return getResultPageURL(result)
             .flatMap { url in self.manager.request(url).validate().responseFutureHTML() }
-            .flatMap { (html) -> BrightResult<URL, SYError> in
+            .flatMap { (html) -> Future<URL, SYError> in
                 if let url = SYSearchResult.parseMagnetURL(html: html) {
                     self.magnetCache[result.pagePath] = url
                     return .init(value: url)
