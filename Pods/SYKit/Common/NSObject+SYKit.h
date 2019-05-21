@@ -10,9 +10,9 @@
 
 @interface NSObject (SYKit)
 
-- (void)sy_performBlock:(void(^)(void))block onThread:(NSThread *)thread;
-+ (void)sy_swizzleSelector:(SEL)originalSelector withSelector:(SEL)swizzledSelector;
-+ (BOOL)sy_instance:(id)instance overridesSelector:(SEL)selector;
+- (void)sy_performBlock:(void(^_Nonnull)(void))block onThread:(NSThread * _Nonnull)thread;
++ (void)sy_swizzleSelector:(_Nonnull SEL)originalSelector withSelector:(_Nonnull SEL)swizzledSelector;
++ (BOOL)sy_instance:(_Nonnull id)instance overridesSelector:(_Nonnull SEL)selector;
 
 @property (class, nonnull, readonly) NSString *sy_className;
 @property (nonnull, readonly) NSString *sy_className;

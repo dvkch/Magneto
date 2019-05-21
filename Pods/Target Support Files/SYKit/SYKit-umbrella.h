@@ -24,11 +24,11 @@
 #import "SYWindow.h"
 #import "UIButton+SYKit.h"
 #import "UIDevice+SYKit.h"
-#import "UIImage+SYKit.h"
 #import "UIScreen+SYKit.h"
 #import "UISearchBar+SYKit.h"
 #import "UITableViewCell+SYKit.h"
 #import "UIView+SYKit.h"
+#import "UIViewController+SYKit.h"
 
 FOUNDATION_EXPORT double SYKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char SYKitVersionString[];
