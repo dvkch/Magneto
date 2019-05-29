@@ -93,9 +93,7 @@ extension SYMainVC {
     
     @objc private func appDidOpenURLNotification(_ notif: Notification) {
         guard let magnetURL = notif.userInfo?[UIApplication.DidOpenURLKey.magnetURL] as? URL else { return }
-        let appID = notif.userInfo?[UIApplication.DidOpenURLKey.appID] as? String
-
-        openTorrentPopup(with: magnetURL, or: nil, sourceApp: SYSourceApp(bundleId: appID))
+        openTorrentPopup(with: magnetURL, or: nil)
     }
     
 }
@@ -155,13 +153,13 @@ extension SYMainVC {
         }
     }
     
-    fileprivate func openTorrentPopup(with magnetURL: URL?, or result: SYSearchResult?, sourceApp: SYSourceApp?) {
+    fileprivate func openTorrentPopup(with magnetURL: URL?, or result: SYSearchResult?) {
         guard !clients.isEmpty else {
             showError(SYError.noClientsSaved, title: "Cannot add torrent")
             return
         }
         
-        SYMagnetPopupVC.show(in: self, magnet: magnetURL, result: result, sourceApp: sourceApp)
+        SYMagnetPopupVC.show(in: self, magnet: magnetURL, result: result)
     }
     
     fileprivate func removeFinished(in client: SYClient) {
@@ -321,7 +319,7 @@ extension SYMainVC : UITableViewDelegate {
             present(vc, animated: true, completion: nil)
 
         case .results:
-            self.openTorrentPopup(with: nil, or: searchResults[indexPath.row], sourceApp: nil)
+            self.openTorrentPopup(with: nil, or: searchResults[indexPath.row])
         }
     }
     

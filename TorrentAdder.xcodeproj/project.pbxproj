@@ -31,7 +31,6 @@
 		9771AB2121AEE679005DE97D /* SYMagnetPopupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9771AB2021AEE679005DE97D /* SYMagnetPopupVC.xib */; };
 		9771AB2321AEF1A5005DE97D /* URL+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2221AEF1A5005DE97D /* URL+SY.swift */; };
 		9771AB2521AEF3CE005DE97D /* UIView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2421AEF3CE005DE97D /* UIView+SY.swift */; };
-		9771AB2721AEF5E6005DE97D /* SYSourceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2621AEF5E6005DE97D /* SYSourceApp.swift */; };
 		9771AB2921AEF898005DE97D /* SYNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2821AEF898005DE97D /* SYNavigationController.swift */; };
 		9771AB2B21AEF901005DE97D /* SYDiscoverClientsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2A21AEF901005DE97D /* SYDiscoverClientsVC.swift */; };
 		9771AB2D21AEFF09005DE97D /* SYEditClientVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2C21AEFF09005DE97D /* SYEditClientVC.swift */; };
@@ -109,7 +108,6 @@
 		9771AB2021AEE679005DE97D /* SYMagnetPopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SYMagnetPopupVC.xib; sourceTree = "<group>"; };
 		9771AB2221AEF1A5005DE97D /* URL+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+SY.swift"; sourceTree = "<group>"; };
 		9771AB2421AEF3CE005DE97D /* UIView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SY.swift"; sourceTree = "<group>"; };
-		9771AB2621AEF5E6005DE97D /* SYSourceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYSourceApp.swift; sourceTree = "<group>"; };
 		9771AB2821AEF898005DE97D /* SYNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYNavigationController.swift; sourceTree = "<group>"; };
 		9771AB2A21AEF901005DE97D /* SYDiscoverClientsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYDiscoverClientsVC.swift; sourceTree = "<group>"; };
 		9771AB2C21AEFF09005DE97D /* SYEditClientVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYEditClientVC.swift; sourceTree = "<group>"; };
@@ -332,7 +330,6 @@
 				974D373121B1DF8600C0FDDE /* SYIPv4Address.swift */,
 				974D373321B1E2DA00C0FDDE /* SYIPv4Interface.swift */,
 				974D372921B150FC00C0FDDE /* SYSearchResult.swift */,
-				9771AB2621AEF5E6005DE97D /* SYSourceApp.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -556,7 +553,6 @@
 				9771AB3521AF0C59005DE97D /* SYClientFormCell.swift in Sources */,
 				9771AB2D21AEFF09005DE97D /* SYEditClientVC.swift in Sources */,
 				974D373421B1E2DA00C0FDDE /* SYIPv4Interface.swift in Sources */,
-				9771AB2721AEF5E6005DE97D /* SYSourceApp.swift in Sources */,
 				9771AB2921AEF898005DE97D /* SYNavigationController.swift in Sources */,
 				9771AB2F21AF0356005DE97D /* SYAddClientCell.swift in Sources */,
 				974D372A21B150FC00C0FDDE /* SYSearchResult.swift in Sources */,

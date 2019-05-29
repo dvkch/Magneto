@@ -12,9 +12,8 @@ import SYPopoverController
 class SYMagnetPopupVC: UIViewController {
 
     // MARK: Presentation
-    static func show(in viewController: UIViewController, magnet: URL?, result: SYSearchResult?, sourceApp: SYSourceApp?) {
+    static func show(in viewController: UIViewController, magnet: URL?, result: SYSearchResult?) {
         let popupVC = SYMagnetPopupVC()
-        popupVC.sourceApp = sourceApp
         popupVC.result = result
         popupVC.magnetURL = magnet
         
@@ -42,9 +41,8 @@ class SYMagnetPopupVC: UIViewController {
         
         cancelButton.setTitle("Cancel", for: .normal)
         closeButton.setTitle("Close", for: .normal)
-        backToAppButton.setTitle("Go back to app", for: .normal)
         
-        for button in [cancelButton!, closeButton!, backToAppButton!] {
+        for button in [cancelButton!, closeButton!] {
             button.backgroundColor = .clear
             button.setTitleColor(.darkText, for: .normal)
             button.setTitleColor(.gray, for: .highlighted)
@@ -68,7 +66,6 @@ class SYMagnetPopupVC: UIViewController {
     }
     
     // MARK: Properties
-    private var sourceApp: SYSourceApp?
     private var magnetURL: URL?
     private var result: SYSearchResult?
     private var clients = [SYClient]()
@@ -80,16 +77,10 @@ class SYMagnetPopupVC: UIViewController {
     @IBOutlet private var statusLabel: UILabel!
     @IBOutlet private var spinner: UIActivityIndicatorView!
     @IBOutlet private var buttonsStackView: UIStackView!
-    @IBOutlet private var backToAppButton: UIButton!
     @IBOutlet private var closeButton: UIButton!
     @IBOutlet private var cancelButton: UIButton!
     
     // MARK: Actions
-    @IBAction private func backToAppButtonTap() {
-        AppDelegate.obtain.openApp(sourceApp)
-        dismiss(animated: true, completion: nil)
-    }
-    
     @IBAction private func closeButtonTap() {
         dismiss(animated: true, completion: nil)
     }
@@ -160,7 +151,6 @@ class SYMagnetPopupVC: UIViewController {
                 tableView.deselectRow(at: indexPath, animated: false)
             }
             
-            backToAppButton.sy_isHidden = true
             cancelButton.sy_isHidden = false
             closeButton.sy_isHidden = true
 
@@ -173,7 +163,6 @@ class SYMagnetPopupVC: UIViewController {
             spinner.sy_isHidden = false
             spinner.startAnimating()
             
-            backToAppButton.sy_isHidden = true
             cancelButton.sy_isHidden = true
             closeButton.sy_isHidden = true
 
@@ -186,7 +175,6 @@ class SYMagnetPopupVC: UIViewController {
             spinner.sy_isHidden = true
             statusLabel.text = message
             
-            backToAppButton.sy_isHidden = sourceApp == nil
             cancelButton.sy_isHidden = true
             closeButton.sy_isHidden = false
 
@@ -199,7 +187,6 @@ class SYMagnetPopupVC: UIViewController {
             spinner.sy_isHidden = true
             statusLabel.text = error
             
-            backToAppButton.sy_isHidden = true
             cancelButton.sy_isHidden = true
             closeButton.sy_isHidden = true
             

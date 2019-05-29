@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SYMagnetPopupVC" customModule="TorrentAdder" customModuleProvider="target">
             <connections>
-                <outlet property="backToAppButton" destination="moF-1g-zSy" id="Mgs-Uu-ekh"/>
                 <outlet property="buttonsStackView" destination="IHV-7N-h76" id="qjU-un-JCs"/>
                 <outlet property="cancelButton" destination="jOD-09-ucu" id="Dsy-1G-lPh"/>
                 <outlet property="closeButton" destination="XT7-bT-yLK" id="IBQ-gM-NdK"/>
@@ -29,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="74k-40-ZGF">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="547"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="587"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="tG9-cy-2kW"/>
@@ -37,10 +36,10 @@
                     </connections>
                 </tableView>
                 <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QMZ-Vj-3bQ">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="547"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="587"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="t9P-Xt-l5o">
-                            <rect key="frame" x="0.0" y="235" width="375" height="77.5"/>
+                            <rect key="frame" x="0.0" y="255" width="375" height="77.5"/>
                             <subviews>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="28A-Un-vvX">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="37"/>
@@ -64,7 +63,7 @@
                     <viewLayoutGuide key="safeArea" id="1YQ-jR-gqx"/>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="IHV-7N-h76">
-                    <rect key="frame" x="0.0" y="547" width="375" height="120"/>
+                    <rect key="frame" x="0.0" y="587" width="375" height="80"/>
                     <subviews>
                         <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jOD-09-ucu">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
@@ -84,16 +83,6 @@
                             <state key="normal" title="Close"/>
                             <connections>
                                 <action selector="closeButtonTap" destination="-1" eventType="touchUpInside" id="FEP-VT-wQg"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="moF-1g-zSy">
-                            <rect key="frame" x="0.0" y="80" width="375" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="height" priority="750" constant="40" id="8XP-bV-VNR"/>
-                            </constraints>
-                            <state key="normal" title="Go back to app"/>
-                            <connections>
-                                <action selector="backToAppButtonTap" destination="-1" eventType="touchUpInside" id="A1S-xF-r0Y"/>
                             </connections>
                         </button>
                     </subviews>
