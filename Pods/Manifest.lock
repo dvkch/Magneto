@@ -5,7 +5,7 @@ PODS:
   - "NSDate+TimeAgo (1.0.6)"
   - SPLPing (1.1.8)
   - SVProgressHUD (2.2.5)
-  - SYKit (0.1.1)
+  - SYKit (0.1.4)
   - SYPopoverController (2.2.6)
 
 DEPENDENCIES:
@@ -36,7 +36,7 @@ SPEC CHECKSUMS:
   "NSDate+TimeAgo": 35601c619b2d59290055e4fe76e61d97677a2360
   SPLPing: 420837fae1e19bba0a8360e91e7a384f22509663
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SYKit: 787118dc805d25701a6a85fbb0fdb42bbe7e726b
+  SYKit: 97d04ade4fb755dacda58a2ea6abf885ffa18153
   SYPopoverController: a48f3eac2ff080476798b32e8ad12298c88fd4a1
 
 PODFILE CHECKSUM: 75c6f8d3aa14521c59c8c5b5470eea53d5278b09

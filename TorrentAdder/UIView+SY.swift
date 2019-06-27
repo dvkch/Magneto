@@ -9,16 +9,6 @@
 import UIKit
 
 extension UIView {
-    
-    // hiding an item in a UIStackView that is already hidden breaks in UIKit and prevents us to ever make this item visible again
-    var sy_isHidden: Bool {
-        get { return isHidden }
-        set {
-            if newValue == isHidden { return }
-            isHidden = newValue
-        }
-    }
-
     func addGlow(color: UIColor?, size: CGFloat) {
         layer.shadowColor = (color ?? tintColor)?.cgColor
         layer.shadowRadius = size

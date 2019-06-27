@@ -1,8 +1,9 @@
 //
 //  SYWindow.swift
-//  Pods-SYKitExample
+//  SYKit
 //
 //  Created by Stanislas Chevallier on 27/06/2019.
+//  Copyright © 2019 Syan. All rights reserved.
 //
 
 import UIKit
@@ -11,8 +12,8 @@ import UIKit
 public class SYWindow: UIWindow {
     
     public var alternateAnimationSpeed: Float = 0.05
-    public var enableSlowAnimationsOnShake: Bool = true
-    
+    public var enableSlowAnimationsOnShake: Bool = false
+
     public func toggleAnimations() {
         if layer.speed == 1 {
             print("SYWindow: enabling slow animations")

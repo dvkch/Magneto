@@ -25,7 +25,6 @@
 		9768CA6521B5770B000AA7C2 /* SYClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6421B5770B000AA7C2 /* SYClient.swift */; };
 		9768CA6721B57B33000AA7C2 /* SYClient+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6621B57B33000AA7C2 /* SYClient+UI.swift */; };
 		9771AB1321AEC919005DE97D /* SYMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1221AEC919005DE97D /* SYMainVC.swift */; };
-		9771AB1821AECBC3005DE97D /* NSObject+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1721AECBC3005DE97D /* NSObject+SY.swift */; };
 		9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1A21AEDC92005DE97D /* AppDelegate.swift */; };
 		9771AB1F21AEE457005DE97D /* SYMagnetPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1E21AEE457005DE97D /* SYMagnetPopupVC.swift */; };
 		9771AB2121AEE679005DE97D /* SYMagnetPopupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9771AB2021AEE679005DE97D /* SYMagnetPopupVC.xib */; };
@@ -40,7 +39,6 @@
 		9771AB3521AF0C59005DE97D /* SYClientFormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3421AF0C59005DE97D /* SYClientFormCell.swift */; };
 		9771AB3721AF2BA4005DE97D /* SYPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3621AF2BA4005DE97D /* SYPreferences.swift */; };
 		9771AB3A21AF319E005DE97D /* SYHostnameResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3921AF319E005DE97D /* SYHostnameResolver.swift */; };
-		9771AB3C21AF34F5005DE97D /* Array+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3B21AF34F5005DE97D /* Array+SY.swift */; };
 		97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97888C9E21B5A745004EB144 /* Codable+SY.swift */; };
 		979D4A9621AF4335000BFDF0 /* NetService+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979D4A9521AF4335000BFDF0 /* NetService+SY.swift */; };
 		979D4A9821AF4614000BFDF0 /* SYClientStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979D4A9721AF4614000BFDF0 /* SYClientStatusManager.swift */; };
@@ -103,7 +101,6 @@
 		9768CA6621B57B33000AA7C2 /* SYClient+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYClient+UI.swift"; sourceTree = "<group>"; };
 		9771AB1121AEC918005DE97D /* TorrentAdder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TorrentAdder-Bridging-Header.h"; sourceTree = "<group>"; };
 		9771AB1221AEC919005DE97D /* SYMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMainVC.swift; sourceTree = "<group>"; };
-		9771AB1721AECBC3005DE97D /* NSObject+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+SY.swift"; sourceTree = "<group>"; };
 		9771AB1A21AEDC92005DE97D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9771AB1E21AEE457005DE97D /* SYMagnetPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMagnetPopupVC.swift; sourceTree = "<group>"; };
 		9771AB2021AEE679005DE97D /* SYMagnetPopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SYMagnetPopupVC.xib; sourceTree = "<group>"; };
@@ -119,7 +116,6 @@
 		9771AB3621AF2BA4005DE97D /* SYPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYPreferences.swift; sourceTree = "<group>"; };
 		9771AB3821AF2D7C005DE97D /* TorrentAdder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TorrentAdder.entitlements; sourceTree = "<group>"; };
 		9771AB3921AF319E005DE97D /* SYHostnameResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYHostnameResolver.swift; sourceTree = "<group>"; };
-		9771AB3B21AF34F5005DE97D /* Array+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SY.swift"; sourceTree = "<group>"; };
 		97888C9E21B5A745004EB144 /* Codable+SY.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+SY.swift"; sourceTree = "<group>"; };
 		979D4A9521AF4335000BFDF0 /* NetService+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetService+SY.swift"; sourceTree = "<group>"; };
 		979D4A9721AF4614000BFDF0 /* SYClientStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYClientStatusManager.swift; sourceTree = "<group>"; };
@@ -202,14 +198,12 @@
 			isa = PBXGroup;
 			children = (
 				970130E121B084E500E7CFEC /* Alamofire+SY.swift */,
-				9771AB3B21AF34F5005DE97D /* Array+SY.swift */,
 				974D372D21B1D87300C0FDDE /* Calendar+SY.swift */,
 				97888C9E21B5A745004EB144 /* Codable+SY.swift */,
 				970130E321B08E1000E7CFEC /* Error+SY.swift */,
 				974D372B21B157CE00C0FDDE /* Fuzi+SY.swift */,
 				979D4A9521AF4335000BFDF0 /* NetService+SY.swift */,
 				979D4A9C21AF4764000BFDF0 /* NSHost+SY.h */,
-				9771AB1721AECBC3005DE97D /* NSObject+SY.swift */,
 				974D373521B4965700C0FDDE /* Sockets+SY.h */,
 				974D373821B4999E00C0FDDE /* Sockets+SY.m */,
 				9771AB2421AEF3CE005DE97D /* UIView+SY.swift */,
@@ -548,7 +542,6 @@
 				9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */,
 				97B4041522C5274F00C7A684 /* IconButtons.swift in Sources */,
 				974D373221B1DF8600C0FDDE /* SYIPv4Address.swift in Sources */,
-				9771AB1821AECBC3005DE97D /* NSObject+SY.swift in Sources */,
 				97EC446321AF37330034C861 /* SYPinger.swift in Sources */,
 				974D372C21B157CE00C0FDDE /* Fuzi+SY.swift in Sources */,
 				9768CA6721B57B33000AA7C2 /* SYClient+UI.swift in Sources */,
@@ -573,7 +566,6 @@
 				972589AD21B0AD6D00FCE9D5 /* SYError.swift in Sources */,
 				97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */,
 				974D372E21B1D87300C0FDDE /* Calendar+SY.swift in Sources */,
-				9771AB3C21AF34F5005DE97D /* Array+SY.swift in Sources */,
 				979D4A9821AF4614000BFDF0 /* SYClientStatusManager.swift in Sources */,
 				970130E221B084E500E7CFEC /* Alamofire+SY.swift in Sources */,
 				9771AB3721AF2BA4005DE97D /* SYPreferences.swift in Sources */,
