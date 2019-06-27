@@ -13,8 +13,8 @@ class SYNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationBar.setBackgroundImage(UIImage.imageWithColor(.lightBlue), for: .default)
-        navigationBar.setBackgroundImage(UIImage.imageWithColor(.lightBlue), for: .compact)
+        navigationBar.setBackgroundImage(UIImage(color: .lightBlue), for: .default)
+        navigationBar.setBackgroundImage(UIImage(color: .lightBlue), for: .compact)
         navigationBar.tintColor = .white
         navigationBar.barStyle = .blackOpaque
         navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]

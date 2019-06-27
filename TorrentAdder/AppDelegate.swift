@@ -38,8 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let vc = SYMainVC()
         let nc = SYNavigationController(rootViewController: vc)
-        window = SYWindow.mainWindow(withRootViewController: nc)
-        (window as? SYWindow)?.preventSlowAnimationsOnShake = false
+        window = SYWindow.mainWindow(rootViewController: nc)
+        #if DEBUG
+        (window as? SYWindow)?.enableSlowAnimationsOnShake = true
+        #endif
         
         #if DEBUG_POPUP
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

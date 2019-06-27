@@ -11,14 +11,8 @@ import SYKit
 
 class SYAddClientCell : UITableViewCell {
     
-    // MARK: Init
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        addButton.backColor = .lightBlue
-    }
-    
     // MARK: Views
-    @IBOutlet private var addButton: SYButton!
+    @IBOutlet private var addButton: AddButton!
     @IBOutlet private var label: UILabel!
     
     // MARK: Properties

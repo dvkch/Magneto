@@ -1,11 +1,11 @@
 PODS:
   - Alamofire (4.8.2)
   - BrightFutures (8.0.0)
-  - Fuzi (3.1.0)
+  - Fuzi (3.1.1)
   - "NSDate+TimeAgo (1.0.6)"
   - SPLPing (1.1.8)
   - SVProgressHUD (2.2.5)
-  - SYKit (0.0.59)
+  - SYKit (0.1.1)
   - SYPopoverController (2.2.6)
 
 DEPENDENCIES:
@@ -32,13 +32,13 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   BrightFutures: f8427b46feabaf73c5e71ace7d86d65dfbb47696
-  Fuzi: 92082746c28d36ae0943079e03008f4d4c8b49b0
+  Fuzi: bcc5694488dd6e672e126cbf3c5471d7a79506d1
   "NSDate+TimeAgo": 35601c619b2d59290055e4fe76e61d97677a2360
   SPLPing: 420837fae1e19bba0a8360e91e7a384f22509663
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SYKit: 03830134cc2d3d812142e2c63b75edd42cbd4efc
+  SYKit: 787118dc805d25701a6a85fbb0fdb42bbe7e726b
   SYPopoverController: a48f3eac2ff080476798b32e8ad12298c88fd4a1
 
 PODFILE CHECKSUM: 75c6f8d3aa14521c59c8c5b5470eea53d5278b09
 
-COCOAPODS: 1.7.0
+COCOAPODS: 1.7.2

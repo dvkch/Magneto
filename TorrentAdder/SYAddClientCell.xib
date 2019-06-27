@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,50 +28,37 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Okb-FY-2Z9" customClass="SYButton">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4u-qh-rUb" customClass="AddButton" customModule="TorrentAdder" customModuleProvider="target">
                         <rect key="frame" x="262" y="5" width="50" height="50"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="50" id="Nhg-c4-G6J"/>
-                            <constraint firstAttribute="width" constant="50" id="e6E-2C-Kcm"/>
+                            <constraint firstAttribute="width" constant="50" id="gB9-NZ-AZH"/>
+                            <constraint firstAttribute="height" constant="50" id="zGE-cP-AKt"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="+"/>
-                            <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
-                                <real key="value" value="30"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="contentInset">
-                                <real key="value" value="0.0"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="backColor">
-                                <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="selectedBackColor">
-                                <color key="value" red="0.2901960784" green="0.52941176469999995" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="size" keyPath="textOffset">
-                                <size key="value" width="0.0" height="-2"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
+                        <state key="normal" image="button_add">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
                         <connections>
-                            <action selector="addButtonTap" destination="Itn-gR-1kO" eventType="touchUpInside" id="LPM-Vs-h1x"/>
+                            <action selector="addButtonTap" destination="Itn-gR-1kO" eventType="touchUpInside" id="x9n-4D-WNi"/>
                         </connections>
-                    </view>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
-                    <constraint firstItem="Okb-FY-2Z9" firstAttribute="centerY" secondItem="sCd-D4-a3R" secondAttribute="centerY" id="CWx-6q-bAJ"/>
-                    <constraint firstAttribute="trailing" secondItem="Okb-FY-2Z9" secondAttribute="trailing" constant="8" id="PNn-rY-aic"/>
+                    <constraint firstItem="j4u-qh-rUb" firstAttribute="centerY" secondItem="sCd-D4-a3R" secondAttribute="centerY" id="gmL-eQ-pxl"/>
                     <constraint firstItem="qbD-Oq-uQS" firstAttribute="centerY" secondItem="sCd-D4-a3R" secondAttribute="centerY" id="kQH-oF-VvS"/>
+                    <constraint firstItem="j4u-qh-rUb" firstAttribute="trailing" secondItem="sCd-D4-a3R" secondAttribute="trailingMargin" constant="8" id="mN3-TP-XGr"/>
                     <constraint firstItem="qbD-Oq-uQS" firstAttribute="leading" secondItem="sCd-D4-a3R" secondAttribute="leading" constant="15" id="n4i-kQ-JlS"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
-                <outlet property="addButton" destination="Okb-FY-2Z9" id="Osp-5q-rXO"/>
+                <outlet property="addButton" destination="j4u-qh-rUb" id="3S2-Pg-2TM"/>
                 <outlet property="label" destination="qbD-Oq-uQS" id="98f-li-1ur"/>
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="button_add" width="16" height="16"/>
+    </resources>
 </document>

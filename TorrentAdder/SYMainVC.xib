@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,7 +14,7 @@
             <connections>
                 <outlet property="constraintHeaderHeight" destination="ayq-Dc-e7k" id="ZII-ag-2O7"/>
                 <outlet property="headerView" destination="SlC-Su-ftz" id="a4t-0f-HSx"/>
-                <outlet property="helpButton" destination="8B6-pO-siO" id="gaa-5x-KbN"/>
+                <outlet property="helpButton" destination="Fys-rs-gN2" id="SOs-k4-jRS"/>
                 <outlet property="searchField" destination="u41-HF-Y9v" id="8Ck-Ie-Wvw"/>
                 <outlet property="spinner" destination="pq8-f7-YQe" id="eNu-39-15c"/>
                 <outlet property="tableView" destination="o4O-Tf-fV3" id="i8M-yT-gJm"/>
@@ -88,41 +88,32 @@
                         <outlet property="delegate" destination="-1" id="RE3-ku-lkf"/>
                     </connections>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8B6-pO-siO" customClass="SYButton">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fys-rs-gN2" customClass="HelpButton" customModule="TorrentAdder" customModuleProvider="target">
                     <rect key="frame" x="315" y="607" width="50" height="50"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="5qF-ov-tCf"/>
-                        <constraint firstAttribute="height" constant="50" id="Tbg-we-W8r"/>
+                        <constraint firstAttribute="height" constant="50" id="cZx-jZ-ghw"/>
+                        <constraint firstAttribute="width" constant="50" id="hPO-1h-xMg"/>
                     </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="text" value="?"/>
-                        <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
-                            <real key="value" value="25"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="backColor">
-                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="selectedBackColor">
-                            <color key="value" red="0.80784313730000001" green="0.80784313730000001" blue="0.80784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
+                    <state key="normal" image="button_help">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
                     <connections>
-                        <action selector="helpButtonTap" destination="-1" eventType="touchUpInside" id="qNQ-DH-U8U"/>
+                        <action selector="helpButtonTap" destination="-1" eventType="touchUpInside" id="2zv-4Q-1D2"/>
                     </connections>
-                </view>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="o4O-Tf-fV3" firstAttribute="top" secondItem="KTm-qJ-gVZ" secondAttribute="top" constant="140" id="2NY-jI-oDS"/>
                 <constraint firstAttribute="trailing" secondItem="SlC-Su-ftz" secondAttribute="trailing" id="3EX-dA-pG4"/>
-                <constraint firstItem="Lbr-DV-gq5" firstAttribute="bottom" secondItem="8B6-pO-siO" secondAttribute="bottom" constant="10" id="6vG-iB-1LW"/>
+                <constraint firstItem="Lbr-DV-gq5" firstAttribute="trailing" secondItem="Fys-rs-gN2" secondAttribute="trailing" constant="10" id="GWZ-Ol-I2N"/>
                 <constraint firstItem="SlC-Su-ftz" firstAttribute="top" secondItem="KTm-qJ-gVZ" secondAttribute="top" id="ONm-SF-f2S"/>
                 <constraint firstAttribute="trailing" secondItem="o4O-Tf-fV3" secondAttribute="trailing" id="RcT-Io-vF5"/>
                 <constraint firstItem="o4O-Tf-fV3" firstAttribute="bottom" secondItem="KTm-qJ-gVZ" secondAttribute="bottom" id="Uns-nQ-g11"/>
                 <constraint firstItem="SlC-Su-ftz" firstAttribute="leading" secondItem="KTm-qJ-gVZ" secondAttribute="leading" id="gjY-zL-tjt"/>
-                <constraint firstItem="Lbr-DV-gq5" firstAttribute="trailing" secondItem="8B6-pO-siO" secondAttribute="trailing" constant="10" id="lig-b1-A8K"/>
                 <constraint firstItem="o4O-Tf-fV3" firstAttribute="leading" secondItem="KTm-qJ-gVZ" secondAttribute="leading" id="nJs-DM-4Ar"/>
+                <constraint firstItem="Lbr-DV-gq5" firstAttribute="bottom" secondItem="Fys-rs-gN2" secondAttribute="bottom" constant="10" id="tOB-Zn-mtq"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Lbr-DV-gq5"/>
             <point key="canvasLocation" x="34.399999999999999" y="54.422788605697157"/>
@@ -130,5 +121,6 @@
     </objects>
     <resources>
         <image name="blue_background" width="1024" height="1024"/>
+        <image name="button_help" width="9.5" height="16"/>
     </resources>
 </document>

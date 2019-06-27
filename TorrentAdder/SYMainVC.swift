@@ -29,7 +29,7 @@ class SYMainVC: UIViewController {
         spinner.strokeThickness = 3
         spinner.isHidden = true
 
-        searchField.sy_textField?.backgroundColor = .init(white: 1, alpha: 0.4)
+        searchField.textField?.backgroundColor = .init(white: 1, alpha: 0.4)
         searchField.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         searchField.keyboardType = .default
         searchField.placeholder = "Search"
@@ -39,8 +39,6 @@ class SYMainVC: UIViewController {
         tableView.registerCell(SYResultCell.self)
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
-        
-        helpButton.tintColor = .lightBlue
         
         constraintHeaderHeightOriginalValue = constraintHeaderHeight.constant
         
@@ -85,7 +83,13 @@ class SYMainVC: UIViewController {
     @IBOutlet private var spinner: SVIndefiniteAnimatedView!
     @IBOutlet private var searchField: UISearchBar!
     @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var helpButton: SYButton!
+    @IBOutlet private var helpButton: HelpButton!
+    
+    // MARK: Layout
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        helpButton.layer.cornerRadius = helpButton.bounds.height / 2
+    }
 }
 
 // MARK: Notifications
@@ -200,16 +204,10 @@ extension SYMainVC {
 
 extension SYMainVC : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // when tapping the clear button it also makes the searchBar firstResponder, even if it wasn't. this
-        // is definitely not got UX for this app, so we make sure to keep the state as it was
-        // TODO: cleanup
-        /*
-        if searchText.isEmpty && !searchBar.isFirstResponder{
-            DispatchQueue.main.async {
-                searchBar.resignFirstResponder()
-            }
+        // when tapping the clear button we need to make sure the search results are also reset
+        if searchText.isEmpty {
+            updateSearch("")
         }
- */
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

@@ -45,16 +45,16 @@ class SYResultCell: UITableViewCell {
         
         let string = NSMutableAttributedString()
         
-        string.sy_appendString(result.name + "\n", font: UIFont.systemFont(ofSize: 16), color: .darkText)
+        string.append(result.name + "\n", font: UIFont.systemFont(ofSize: 16), color: .darkText)
         if let size = result.size {
-            string.sy_appendString(size + ", ", font: UIFont.systemFont(ofSize: 15), color: .gray)
+            string.append(size + ", ", font: UIFont.systemFont(ofSize: 15), color: .gray)
         }
-        string.sy_appendString(dateString + ", ", font: dateFont, color: .gray)
-        string.sy_appendString(String(result.seed), font: UIFont.systemFont(ofSize: 14), color: .seedGreen)
-        string.sy_appendString("/", font: UIFont.systemFont(ofSize: 14), color: .gray)
-        string.sy_appendString(String(result.leech), font: UIFont.systemFont(ofSize: 14), color: .red)
+        string.append(dateString + ", ", font: dateFont, color: .gray)
+        string.append(String(result.seed), font: UIFont.systemFont(ofSize: 14), color: .seedGreen)
+        string.append("/", font: UIFont.systemFont(ofSize: 14), color: .gray)
+        string.append(String(result.leech), font: UIFont.systemFont(ofSize: 14), color: .red)
         if result.verified {
-            string.sy_appendString(" ✔️", font: UIFont.systemFont(ofSize: 12), color: .blue)
+            string.append(" ✔️", font: UIFont.systemFont(ofSize: 12), color: .blue)
         }
         
         label.attributedText = string

@@ -57,6 +57,7 @@
 		97A18E101BBC017000F33AF5 /* SYAddClientCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E0F1BBC017000F33AF5 /* SYAddClientCell.xib */; };
 		97A18E121BBC017500F33AF5 /* SYResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E111BBC017500F33AF5 /* SYResultCell.xib */; };
 		97A18E141BBC017C00F33AF5 /* SYDiscoverClientsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E131BBC017C00F33AF5 /* SYDiscoverClientsVC.xib */; };
+		97B4041522C5274F00C7A684 /* IconButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B4041422C5274F00C7A684 /* IconButtons.swift */; };
 		97EC446321AF37330034C861 /* SYPinger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC446221AF37330034C861 /* SYPinger.swift */; };
 		97F911481BC2C45C00BF1848 /* SYEditClientVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* SYEditClientVC.xib */; };
 		97F9114D1BC2C73D00BF1848 /* SYClientFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* SYClientFormCell.xib */; };
@@ -136,6 +137,7 @@
 		97A18E0F1BBC017000F33AF5 /* SYAddClientCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYAddClientCell.xib; sourceTree = "<group>"; };
 		97A18E111BBC017500F33AF5 /* SYResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYResultCell.xib; sourceTree = "<group>"; };
 		97A18E131BBC017C00F33AF5 /* SYDiscoverClientsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYDiscoverClientsVC.xib; sourceTree = "<group>"; };
+		97B4041422C5274F00C7A684 /* IconButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtons.swift; sourceTree = "<group>"; };
 		97EC446221AF37330034C861 /* SYPinger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYPinger.swift; sourceTree = "<group>"; };
 		97F911461BC2C45C00BF1848 /* SYEditClientVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYEditClientVC.xib; sourceTree = "<group>"; };
 		97F9114B1BC2C73D00BF1848 /* SYClientFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYClientFormCell.xib; sourceTree = "<group>"; };
@@ -216,6 +218,14 @@
 				9768CA6221B55838000AA7C2 /* UIColor+SY.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		97B4041622C5275700C7A684 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				97B4041422C5274F00C7A684 /* IconButtons.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		97EACC001BC2C31300382614 /* Network */ = {
@@ -338,6 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				973AFF811BB41CFC00BA4B8B /* VCs */,
+				97B4041622C5275700C7A684 /* Views */,
 				973AFF821BB41D0700BA4B8B /* Cells */,
 			);
 			name = UI;
@@ -535,6 +546,7 @@
 				979D4A9621AF4335000BFDF0 /* NetService+SY.swift in Sources */,
 				974D373B21B49D4800C0FDDE /* SYClientAPI.swift in Sources */,
 				9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */,
+				97B4041522C5274F00C7A684 /* IconButtons.swift in Sources */,
 				974D373221B1DF8600C0FDDE /* SYIPv4Address.swift in Sources */,
 				9771AB1821AECBC3005DE97D /* NSObject+SY.swift in Sources */,
 				97EC446321AF37330034C861 /* SYPinger.swift in Sources */,

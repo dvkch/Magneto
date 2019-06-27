@@ -23,13 +23,8 @@ class SYEditClientVC: UIViewController {
             let footer = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 60))
             tableView.tableFooterView = footer
             
-            let addButton = SYButton()
+            let addButton = AddButton()
             addButton.translatesAutoresizingMaskIntoConstraints = false
-            addButton.tintColor = .white
-            addButton.backColor = .lightBlue
-            addButton.text = "+"
-            addButton.textOffset = .init(width: 0, height: -2)
-            addButton.fontSize = 30
             addButton.addTarget(self, action: #selector(self.addButtonTap), for: .touchUpInside)
             footer.addSubview(addButton)
             
