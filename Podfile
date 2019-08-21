@@ -15,6 +15,7 @@ target 'TorrentAdder' do
     pod 'SVProgressHUD'
 	pod 'SYKit'
 	pod 'SYPopoverController'
+    pod 'TPKeyboardAvoiding'
     #pod 'SparkInspector', :configurations => ['Debug']
 end
 
