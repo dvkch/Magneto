@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @objc var window: UIWindow?
     var isShowingAuthAlertView: Bool = false
+    private let mainVC = SYMainVC()
 
     static var obtain: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -36,8 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SVProgressHUD.setBackgroundColor(.lightBlue)
         SVProgressHUD.setForegroundColor(.white)
         
-        let vc = SYMainVC()
-        let nc = SYNavigationController(rootViewController: vc)
+        let nc = SYNavigationController(rootViewController: mainVC)
         window = SYWindow.mainWindow(rootViewController: nc)
         #if DEBUG
         (window as? SYWindow)?.enableSlowAnimationsOnShake = true
@@ -51,7 +51,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         #endif
         
-        vc.loadViewIfNeeded() // make sure the didOpenURL notification is properly registered before continuing
+        mainVC.loadViewIfNeeded() // make sure the didOpenURL notification is properly registered before continuing
+        
+        #if os(iOS)
+        checkUpdates()
+        #endif
+
         return true
     }
     
@@ -67,6 +72,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.post(name: .didOpenURL, object: nil, userInfo: userInfo)
         return true
     }
+}
+
+// MARK: Update
+extension AppDelegate {
+    private func checkUpdates() {
+        let currentBuild = Int(Bundle.main.buildVersion) ?? 0
+        SYWebAPI.shared.getLatestBuildNumber()
+            .onSuccess { (value) in
+                guard let distBuildNumber = value else { return }
+                guard distBuildNumber > currentBuild else { return }
+                
+                let alert = UIAlertController(title: "alert.update.title".localized, message: "alert.update.message".localized, preferredStyle: .alert)
+                alert.addAction(title: "action.update".localized, style: .default) { _ in
+                    UIApplication.shared.openURL(URL(string: "https://ota.syan.me/")!)
+                }
+                alert.addAction(title: "action.cancel".localized, style: .cancel, handler: nil)
+                self.mainVC.present(alert, animated: true, completion: nil)
+            }
+            .onFailure { (error) in
+                print("Couldn't download dist plist:", error)
+            }
+    }
+
 }
 
 // MARK: Public methods

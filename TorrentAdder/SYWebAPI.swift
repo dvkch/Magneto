@@ -36,6 +36,18 @@ class SYWebAPI: NSObject {
     }
     private var magnetCache: [String: URL] = [:]
     
+    // MARK: Update
+    func getLatestBuildNumber() -> Future<Int?, SYError> {
+        return manager
+            .request("https://ota.syan.me/TorrentAdder.plist")
+            .responseFutureData()
+            .map { (data) -> Int? in
+                guard let dic = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any] else { return nil }
+                guard let buildNumberString = dic["CFBundleVersion"] as? String else { return nil }
+                return Int(buildNumberString)
+            }
+    }
+    
     // MARK: Methods
     private func getMirror() -> Future<URL, SYError> {
         if let mirrorURL = availableMirrorURLs.first {
