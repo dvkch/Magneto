@@ -16,17 +16,37 @@ platform :ios do
         system "rm ../*.certSigningRequest"
     end
 
+    def promptIncrementBuild
+        if UI.confirm("Do you want to increase the build number before building the apps?")
+            increment_build_number
+        end
+    end
+
+    def copyFile(src, dest)
+        File.write(dest, File.read(src))
+    end
 
     desc "Submit a new Beta Build using FTP"
     desc "This will also make sure the profile is up to date"
     lane :ota do
-        gym(export_method: "adhoc")
+        promptIncrementBuild
+        gym(export_method: "ad-hoc")
+
+        copyFile("../TorrentAdder/TorrentAdder-Info.plist", "../build/TorrentAdder.plist")
+
         ftp(host: "ftp.stanislaschevallier.fr",
             username: 'stanislaw',
             upload: {
-            src: 'build/TorrentAdder.ipa',
-            dest: '/www/ota/'
-        }
-    )
+                src: 'build/TorrentAdder.ipa',
+                dest: '/www_ota/'
+            }
+        )
+        ftp(host: "ftp.stanislaschevallier.fr",
+            username: 'stanislaw',
+            upload: {
+                src: 'build/TorrentAdder.plist',
+                dest: '/www_ota/'
+            }
+        )
   end
 end

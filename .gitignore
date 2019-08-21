@@ -5,6 +5,7 @@
 build/
 *.mobileprovision
 *.cer
+fastlane/report.xml
 
 # Xcode
 #
