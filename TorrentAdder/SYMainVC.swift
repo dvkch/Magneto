@@ -309,10 +309,17 @@ extension SYMainVC : UITableViewDelegate {
             present(nc, animated: true, completion: nil)
 
         case .clients:
-            let url = clients[indexPath.row].webURL
+            let client = clients[indexPath.row]
+            var url = client.webURL
+            if let username = client.username?.nilIfEmpty, let password = client.password?.nilIfEmpty, var components = URLComponents(url: url, resolvingAgainstBaseURL: true) {
+                components.user = username
+                components.password = password
+                url = components.url ?? url
+            }
             let vc = SFSafariViewController(url: url)
             if #available(iOS 10, *) {
                 vc.preferredBarTintColor = .lightBlue
+                vc.preferredControlTintColor = .white
             }
             present(vc, animated: true, completion: nil)
 
