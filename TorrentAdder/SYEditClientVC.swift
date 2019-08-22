@@ -15,7 +15,7 @@ class SYEditClientVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         isCreation = SYPreferences.shared.clientWithIdentifier(client.id) == nil
-        title = isCreation ? "New client" : "Edit client"
+        title = isCreation ? "client.title.new".localized : "client.title.edit".localized
         
         tableView.registerCell(SYClientFormCell.self)
         

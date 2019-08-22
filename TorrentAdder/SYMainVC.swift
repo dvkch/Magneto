@@ -32,7 +32,7 @@ class SYMainVC: UIViewController {
         searchField.textField?.backgroundColor = .init(white: 1, alpha: 0.4)
         searchField.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         searchField.keyboardType = .default
-        searchField.placeholder = "Search"
+        searchField.placeholder = "placeholder.search".localized
         
         tableView.registerCell(SYAddClientCell.self)
         tableView.registerCell(SYClientCell.self)
@@ -117,11 +117,11 @@ extension SYMainVC {
 extension SYMainVC {
     @IBAction private func helpButtonTap() {
         let alert = UIAlertController(
-            title: "Help",
-            message: "To add a torrent you need to open this app with a magnet. Go to Safari, open a page with a magnet link in it, click the magnet to open this app, and then select a client to start downloading the torrent.",
+            title: "alert.help.title".localized,
+            message: "alert.help.message".localized,
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+        alert.addAction(title: "action.close".localized, style: .cancel, handler: nil)
         present(alert, animated: true, completion: nil)
     }
     
@@ -152,14 +152,14 @@ extension SYMainVC {
                     self.tableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false)
                     
                 case .failure(let error):
-                    self.showError(error, title: "Cannot load results")
+                    self.showError(error, title: "error.title.cannotLoadResults".localized)
                 }
         }
     }
     
     fileprivate func openTorrentPopup(with magnetURL: URL?, or result: SYSearchResult?) {
         guard !clients.isEmpty else {
-            showError(SYError.noClientsSaved, title: "Cannot add torrent")
+            showError(SYError.noClientsSaved, title: "error.title.cannotAddTorrent".localized)
             return
         }
         
@@ -170,7 +170,7 @@ extension SYMainVC {
         SVProgressHUD.show()
         SYClientAPI.shared.removeCompletedTorrents(in: client)
             .andThen { _ in SVProgressHUD.dismiss() }
-            .onSuccess { (count) in SVProgressHUD.showSuccess(withStatus: "Removed \(count) finished items") }
+            .onSuccess { (count) in SVProgressHUD.showSuccess(withStatus: String(format: "torrent.removed.%d".localized, count)) }
             .onFailure { error in self.showError(error) }
     }
     
@@ -247,11 +247,11 @@ extension SYMainVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let tableSection = TableSection(rawValue: section) else { return nil }
         switch tableSection {
-        case .buttons: return showingSearch ? nil : "Available clients"
+        case .buttons: return showingSearch ? nil : "clients.section.clients".localized
         case .clients: return nil
         case .results:
             if !showingSearch { return nil }
-            return searchResults.isEmpty ? "No results" : "Results"
+            return searchResults.isEmpty ? "clients.section.noresults".localized : "clients.section.results".localized
         }
     }
     
@@ -329,23 +329,23 @@ extension SYMainVC : UITableViewDelegate {
             
         case .clients:
             let client = clients[indexPath.row]
-            let removeFinishedAction = UITableViewRowAction(style: .normal, title: "Remove finished") { [weak self] (_, _) in
+            let removeFinishedAction = UITableViewRowAction(style: .normal, title: "action.removefinished".localized) { [weak self] (_, _) in
                 self?.removeFinished(in: client)
             }
-            let editAction = UITableViewRowAction(style: .normal, title: "Edit") { [weak self] (_, _) in
+            let editAction = UITableViewRowAction(style: .normal, title: "action.edit".localized) { [weak self] (_, _) in
                 let vc = SYEditClientVC()
                 vc.client = client
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
             editAction.backgroundColor = .lightBlue
-            let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { [weak self] (_, indexPath) in
+            let deleteAction = UITableViewRowAction(style: .destructive, title: "action.delete".localized) { [weak self] (_, indexPath) in
                 self?.removeClient(client, at: indexPath)
             }
             return [deleteAction, editAction, removeFinishedAction]
             
         case .results:
             let result = searchResults[indexPath.row]
-            let shareAction = UITableViewRowAction(style: .normal, title: "Share page link") { [weak self] (_, indexPath) in
+            let shareAction = UITableViewRowAction(style: .normal, title: "action.sharelink".localized) { [weak self] (_, indexPath) in
                 self?.shareResult(result, from: tableView.cellForRow(at: indexPath))
             }
             shareAction.backgroundColor = UIColor(red: 14/255, green: 162/255, blue: 1, alpha: 1)

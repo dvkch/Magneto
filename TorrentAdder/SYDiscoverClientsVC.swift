@@ -13,7 +13,7 @@ class SYDiscoverClientsVC: UIViewController {
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Add a client"
+        title = "discovery.title".localized
 
         progressView.progressTintColor = .lightBlue
         
@@ -114,7 +114,7 @@ extension SYDiscoverClientsVC : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Available clients"
+        return "discovery.section.found".localized
     }
 }
 

@@ -14,12 +14,12 @@ extension SYClient {
         
         var name: String {
             switch self {
-            case .name:     return "Name"
-            case .host:     return "Host"
-            case .port:     return "Port"
-            case .software: return "Software"
-            case .username: return "Username"
-            case .password: return "Password"
+            case .name:     return "client.name".localized
+            case .host:     return "client.host".localized
+            case .port:     return "client.port".localized
+            case .software: return "client.software".localized
+            case .username: return "client.username".localized
+            case .password: return "client.password".localized
             }
         }
         

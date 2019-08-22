@@ -31,12 +31,9 @@ class SYAddClientCell : UITableViewCell {
     // MARK: Content
     private func updateContent() {
         switch clientsCount {
-        case 0:
-            label.text = String(format: "Add a client")
-        case 1:
-            label.text = String(format: "1 client")
-        default:
-            label.text = String(format: "%d clients", clientsCount)
+        case 0: label.text = "clients.count.add".localized
+        case 1: label.text = "clients.count.1".localized
+        default:label.text = String(format: "clients.count.%d".localized, clientsCount)
         }
     }
 }

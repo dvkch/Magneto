@@ -53,8 +53,8 @@ class SYClientCell: UITableViewCell {
         }
         else if isDiscoveredClient
         {
-            nameLabel.text = "Add a custom client"
-            hostLabel.text = "in case yours wasn't detected"
+            nameLabel.text = "clients.addcustom.line1".localized
+            hostLabel.text = "clients.addcustom.line2".localized
         }
         else
         {

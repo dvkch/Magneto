@@ -39,8 +39,8 @@ class SYMagnetPopupVC: UIViewController {
         tableView.registerCell(SYClientCell.self)
         tableView.tableFooterView = UIView()
         
-        cancelButton.setTitle("Cancel", for: .normal)
-        closeButton.setTitle("Close", for: .normal)
+        cancelButton.setTitle("action.cancel".localized, for: .normal)
+        closeButton.setTitle("action.close".localized, for: .normal)
         
         for button in [cancelButton!, closeButton!] {
             button.backgroundColor = .clear
@@ -114,14 +114,14 @@ class SYMagnetPopupVC: UIViewController {
         
         SYClientAPI.shared.addMagnet(magnetURL, to: client)
             .onSuccess { message in
-                var successMessage = "Success!"
+                var successMessage = "torrent.success".localized
                 if let message = message, !message.isEmpty {
-                    successMessage += "\n\n" + "Message from " + (client.name ?? client.host) + ": " + message
+                    successMessage += "\n\n" + String(format: "torrent.success.messagefrom %@".localized, (client.name ?? client.host)) + message
                 }
                 self.updateForMode(.success(successMessage), animated: true)
             }
             .onFailure { error in
-                let errorMessage = error.isOfflineError ? "Client unavailble" : error.localizedDescription
+                let errorMessage = (error.isOfflineError ? SYError.clientOffline : error).localizedDescription
                 self.updateForMode(.failure(errorMessage), animated: true)
             }
     }
@@ -159,7 +159,7 @@ class SYMagnetPopupVC: UIViewController {
             tableView.alpha = 0
             statusContainerView.alpha = 1
             
-            statusLabel.text = "Loading..."
+            statusLabel.text = "torrent.loading".localized
             spinner.sy_isHidden = false
             spinner.startAnimating()
             

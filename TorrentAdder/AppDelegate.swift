@@ -130,38 +130,38 @@ extension AppDelegate {
         isShowingAuthAlertView = true
         
         let alert = UIAlertController(
-            title: "Authentication needed",
-            message: String(format: "%@ requires a user and a password", client.name ?? client.host),
+            title: "alert.auth.title".localized,
+            message: String(format: "alert.auth.message %@".localized, client.name ?? client.host),
             preferredStyle: .alert
         )
         
         alert.addTextField { field in
-            field.placeholder = "Username"
+            field.placeholder = "client.username".localized
             if #available(iOS 11.0, *) {
                 field.textContentType = .username
             }
         }
         
         alert.addTextField { field in
-            field.placeholder = "Password"
+            field.placeholder = "client.password".localized
             field.isSecureTextEntry = true
             if #available(iOS 11.0, *) {
                 field.textContentType = .password
             }
         }
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
+        alert.addAction(title: "action.cancel".localized, style: .cancel) { (_) in
             self.isShowingAuthAlertView = false
             completion(true)
-        }))
+        }
         
-        alert.addAction(UIAlertAction(title: "Login", style: .default, handler: { (_) in
+        alert.addAction(title: "action.login".localized, style: .default) { (_) in
             client.username = alert.textFields?.first?.text
             client.password = alert.textFields?.last?.text
             SYPreferences.shared.addClient(client)
             self.isShowingAuthAlertView = false
             completion(false)
-        }))
+        }
         
         topViewController?.present(alert, animated: true, completion: nil)
     }
