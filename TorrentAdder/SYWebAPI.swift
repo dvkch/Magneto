@@ -20,6 +20,8 @@ class SYWebAPI: NSObject {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 20
         configuration.timeoutIntervalForResource = 20
+        // ignore cache for update management
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         manager = Alamofire.SessionManager(configuration: configuration)
         
         super.init()
