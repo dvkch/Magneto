@@ -29,7 +29,7 @@ class SYMainVC: ViewController {
         spinner.strokeThickness = 3
         spinner.isHidden = true
 
-        searchField.textField?.backgroundColor = UIColor.textOverAccent.withAlphaComponent(0.4)
+        searchField.textField?.backgroundColor = .fieldBackground
         searchField.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         searchField.keyboardType = .default
         searchField.placeholder = "placeholder.search".localized

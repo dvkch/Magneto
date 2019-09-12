@@ -39,6 +39,10 @@ extension UIColor {
         return UIColor(light: .darkGray, dark: .darkGray)
     }
     
+    static var fieldBackground: UIColor {
+        return background.withAlphaComponent(0.6)
+    }
+    
     static var textOverAccent: UIColor {
         return .white
     }
