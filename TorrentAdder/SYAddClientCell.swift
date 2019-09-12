@@ -11,6 +11,11 @@ import SYKit
 
 class SYAddClientCell : UITableViewCell {
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        label.textColor = .text
+    }
+    
     // MARK: Views
     @IBOutlet private var addButton: AddButton!
     @IBOutlet private var label: UILabel!

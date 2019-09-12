@@ -8,8 +8,7 @@
 
 import UIKit
 
-class AddButton: UIButton {
-    
+class IconButton: UIButton {
     // MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,13 +21,21 @@ class AddButton: UIButton {
     }
     
     private func setup() {
-        backgroundColor = .lightBlue
-        setImage(UIImage(named: "button_add")?.masking(with: .white), for: .normal)
-        
         layer.shadowColor = UIColor.gray.cgColor
-        layer.shadowOffset = .init(width: 3, height: 3)
+        layer.shadowOffset = .init(width: 2, height: 2)
         layer.shadowRadius = 6
         layer.shadowOpacity = 1
+        
+        updateStyle()
+    }
+    
+    // MARK: Style
+    func updateStyle() {
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateStyle()
     }
     
     // MARK: Layout
@@ -38,32 +45,20 @@ class AddButton: UIButton {
     }
 }
 
-class HelpButton: UIButton {
-    
-    // MARK: Init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
+class AddButton: IconButton {
+    // MARK: Style
+    override func updateStyle() {
+        super.updateStyle()
+        backgroundColor = .accent
+        setImage(UIImage(named: "button_add")?.masking(with: .textOverAccent), for: .normal)
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    private func setup() {
-        backgroundColor = .white
-        setImage(UIImage(named: "button_help")?.masking(with: .lightBlue), for: .normal)
+}
 
-        layer.shadowColor = UIColor.gray.cgColor
-        layer.shadowOffset = .init(width: 3, height: 3)
-        layer.shadowRadius = 6
-        layer.shadowOpacity = 1
-    }
-    
-    // MARK: Layout
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layer.cornerRadius = bounds.height / 2
+class HelpButton: IconButton {
+    // MARK: Style
+    override func updateStyle() {
+        super.updateStyle()
+        backgroundColor = .textOverAccent
+        setImage(UIImage(named: "button_help")?.masking(with: .accent), for: .normal)
     }
 }

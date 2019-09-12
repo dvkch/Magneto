@@ -8,11 +8,11 @@
 
 import UIKit
 import SYKit
-import SYPopoverController
 import SafariServices
 import SVProgressHUD
+import SYPopoverController
 
-class SYMainVC: UIViewController {
+class SYMainVC: ViewController {
 
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -23,13 +23,13 @@ class SYMainVC: UIViewController {
         RunLoop.main.add(timerRefreshClientsStatus!, forMode: .common)
 
         titleLabel.addGlow(color: .lightGray, size: 4)
-
+        
+        spinner.strokeColor = .textOverAccent
         spinner.radius = 13
-        spinner.strokeColor = .white
         spinner.strokeThickness = 3
         spinner.isHidden = true
 
-        searchField.textField?.backgroundColor = .init(white: 1, alpha: 0.4)
+        searchField.textField?.backgroundColor = UIColor.textOverAccent.withAlphaComponent(0.4)
         searchField.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         searchField.keyboardType = .default
         searchField.placeholder = "placeholder.search".localized
@@ -317,9 +317,12 @@ extension SYMainVC : UITableViewDelegate {
                 url = components.url ?? url
             }
             let vc = SFSafariViewController(url: url)
-            if #available(iOS 10, *) {
-                vc.preferredBarTintColor = .lightBlue
-                vc.preferredControlTintColor = .white
+            if #available(iOS 13.0, *) {
+                vc.preferredBarTintColor = UIColor.accent.resolvedColor(with: traitCollection)
+                vc.preferredControlTintColor = UIColor.text.resolvedColor(with: traitCollection)
+            } else if #available(iOS 10, *) {
+                vc.preferredBarTintColor = UIColor.accent
+                vc.preferredControlTintColor = UIColor.text
             }
             present(vc, animated: true, completion: nil)
 
@@ -329,25 +332,27 @@ extension SYMainVC : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        guard let tableSection = TableSection(rawValue: indexPath.section) else { return nil }
+        guard let tableSection = TableSection(rawValue: indexPath.section) else { return [] }
         switch tableSection {
         case .buttons:
-            return nil
+            return []
             
         case .clients:
             let client = clients[indexPath.row]
             let removeFinishedAction = UITableViewRowAction(style: .normal, title: "action.removefinished".localized) { [weak self] (_, _) in
                 self?.removeFinished(in: client)
             }
+            removeFinishedAction.backgroundColor = .basicAction
             let editAction = UITableViewRowAction(style: .normal, title: "action.edit".localized) { [weak self] (_, _) in
                 let vc = SYEditClientVC()
                 vc.client = client
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
-            editAction.backgroundColor = .lightBlue
+            editAction.backgroundColor = .accent
             let deleteAction = UITableViewRowAction(style: .destructive, title: "action.delete".localized) { [weak self] (_, indexPath) in
                 self?.removeClient(client, at: indexPath)
             }
+            deleteAction.backgroundColor = .destructiveAction
             return [deleteAction, editAction, removeFinishedAction]
             
         case .results:
@@ -355,7 +360,7 @@ extension SYMainVC : UITableViewDelegate {
             let shareAction = UITableViewRowAction(style: .normal, title: "action.sharelink".localized) { [weak self] (_, indexPath) in
                 self?.shareResult(result, from: tableView.cellForRow(at: indexPath))
             }
-            shareAction.backgroundColor = UIColor(red: 14/255, green: 162/255, blue: 1, alpha: 1)
+            shareAction.backgroundColor = .accent
             return [shareAction]
         }
     }

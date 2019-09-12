@@ -13,7 +13,8 @@ class SYClientFormCell: UITableViewCell {
     // MARK: Init
     override func awakeFromNib() {
         super.awakeFromNib()
-        segmentedControl.tintColor = .lightBlue
+        textField.textColor = .text
+        segmentedControl.tintColor = .accent
     }
 
     // MARK: Properties
@@ -46,7 +47,7 @@ class SYClientFormCell: UITableViewCell {
     private func updateContent() {
         guard let client = client else { return }
         
-        iconView.image = formField.image?.masking(with: .lightBlue)
+        iconView.image = formField.image?.masking(with: .accent)
         textField.keyboardType = formField.keyboardType
         if #available(iOS 11.0, *) {
             textField.textContentType = formField.textContentType
@@ -67,6 +68,12 @@ class SYClientFormCell: UITableViewCell {
             textField.placeholder = formField.name
             textField.text = client.stringValue(for: formField)
         }
+    }
+    
+    // MARK: Style
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateContent()
     }
 }
 

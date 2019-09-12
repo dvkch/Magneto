@@ -12,11 +12,19 @@ class SYNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationBar.setBackgroundImage(UIImage(color: .lightBlue), for: .default)
-        navigationBar.setBackgroundImage(UIImage(color: .lightBlue), for: .compact)
-        navigationBar.tintColor = .white
+        navigationBar.tintColor = .textOverAccent
         navigationBar.barStyle = .blackOpaque
-        navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationBar.titleTextAttributes = [.foregroundColor: UIColor.textOverAccent]
+        updateColors()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateColors()
+    }
+    
+    private func updateColors() {
+        navigationBar.setBackgroundImage(UIImage(color: .accent), for: .default)
+        navigationBar.setBackgroundImage(UIImage(color: .accent), for: .compact)
     }
 }

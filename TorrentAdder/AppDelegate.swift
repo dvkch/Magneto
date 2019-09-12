@@ -34,9 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         SYHostnameResolver.shared.start()
         
-        SVProgressHUD.setBackgroundColor(.lightBlue)
-        SVProgressHUD.setForegroundColor(.white)
-        
+        SVProgressHUD.setBackgroundColor(.accent)
+        SVProgressHUD.setForegroundColor(.background)
+
         let nc = SYNavigationController(rootViewController: mainVC)
         window = SYWindow.mainWindow(rootViewController: nc)
         #if DEBUG

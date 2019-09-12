@@ -9,7 +9,7 @@
 import UIKit
 import SYPopoverController
 
-class SYMagnetPopupVC: UIViewController {
+class SYMagnetPopupVC: ViewController {
 
     // MARK: Presentation
     static func show(in viewController: UIViewController, magnet: URL?, result: SYSearchResult?) {
@@ -30,11 +30,12 @@ class SYMagnetPopupVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
         view.layer.cornerRadius = 6
         view.layer.masksToBounds = true
         
         preferredContentSize = CGSize(width: 300, height: 250)
+        
+        spinner.color = .accent
         
         tableView.registerCell(SYClientCell.self)
         tableView.tableFooterView = UIView()
@@ -43,13 +44,14 @@ class SYMagnetPopupVC: UIViewController {
         closeButton.setTitle("action.close".localized, for: .normal)
         
         for button in [cancelButton!, closeButton!] {
-            button.backgroundColor = .clear
-            button.setTitleColor(.darkText, for: .normal)
-            button.setTitleColor(.gray, for: .highlighted)
+            button.titleLabel?.font = .boldSystemFont(ofSize: button.titleLabel?.font.pointSize ?? 16)
+            button.backgroundColor = .background
+            button.setTitleColor(.accent, for: .normal)
+            button.setTitleColor(.text, for: .highlighted)
             
             let separator = UIView()
             separator.translatesAutoresizingMaskIntoConstraints = false
-            separator.backgroundColor = UIColor(white: 0.9, alpha: 1)
+            separator.backgroundColor = .basicAction
             button.addSubview(separator)
             
             separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
@@ -59,7 +61,6 @@ class SYMagnetPopupVC: UIViewController {
         }
         
         statusLabel.font = UIFont.systemFont(ofSize: 15)
-        spinner.color = .gray
         
         clients = SYPreferences.shared.clients
         updateForMode(.clients, animated: false)

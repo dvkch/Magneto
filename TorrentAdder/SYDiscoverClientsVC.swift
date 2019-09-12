@@ -8,17 +8,18 @@
 
 import UIKit
 
-class SYDiscoverClientsVC: UIViewController {
+class SYDiscoverClientsVC: ViewController {
 
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "discovery.title".localized
 
-        progressView.progressTintColor = .lightBlue
-        
         let closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
         navigationItem.leftBarButtonItem = closeButton
+        
+        progressView.trackTintColor = .background
+        progressView.progressTintColor = .accent
         
         tableView.registerCell(SYClientCell.self)
         tableView.tableFooterView = UIView()

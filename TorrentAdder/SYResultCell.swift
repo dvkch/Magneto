@@ -45,16 +45,16 @@ class SYResultCell: UITableViewCell {
         
         let string = NSMutableAttributedString()
         
-        string.append(result.name + "\n", font: UIFont.systemFont(ofSize: 16), color: .darkText)
+        string.append(result.name + "\n", font: UIFont.systemFont(ofSize: 16), color: .text)
         if let size = result.size {
-            string.append(size + ", ", font: UIFont.systemFont(ofSize: 15), color: .gray)
+            string.append(size + ", ", font: UIFont.systemFont(ofSize: 15), color: .subtext)
         }
-        string.append(dateString + ", ", font: dateFont, color: .gray)
-        string.append(String(result.seed), font: UIFont.systemFont(ofSize: 14), color: .seedGreen)
+        string.append(dateString + ", ", font: dateFont, color: .subtext)
+        string.append(String(result.seed), font: UIFont.systemFont(ofSize: 14), color: .seeder)
         string.append("/", font: UIFont.systemFont(ofSize: 14), color: .gray)
-        string.append(String(result.leech), font: UIFont.systemFont(ofSize: 14), color: .red)
+        string.append(String(result.leech), font: UIFont.systemFont(ofSize: 14), color: .leechers)
         if result.verified {
-            string.append(" ✔️", font: UIFont.systemFont(ofSize: 12), color: .blue)
+            string.append(" ✔️", font: UIFont.systemFont(ofSize: 12), color: nil)
         }
         
         label.attributedText = string

@@ -9,7 +9,7 @@
 import UIKit
 import SYKit
 
-class SYEditClientVC: UIViewController {
+class SYEditClientVC: ViewController {
 
     // MARK: UIViewController
     override func viewDidLoad() {

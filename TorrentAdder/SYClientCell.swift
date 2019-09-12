@@ -12,7 +12,11 @@ class SYClientCell: UITableViewCell {
     
     // MARK: Init
     override func awakeFromNib() {
+        super.awakeFromNib()
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateStatus), name: .clientStatusChanged, object: nil)
+        activityIndicator.color = .text
+        nameLabel.textColor = .text
+        hostLabel.textColor = .subtext
     }
     
     deinit {
