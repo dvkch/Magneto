@@ -13,7 +13,7 @@ import SYKit
 class SYResultCell: UITableViewCell {
 
     // MARK: Properties
-    var result: SYSearchResult? {
+    var result: SearchResult? {
         didSet {
             updateContent()
         }

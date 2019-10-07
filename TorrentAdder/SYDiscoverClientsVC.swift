@@ -38,7 +38,7 @@ class SYDiscoverClientsVC: ViewController {
     
     // MARK: Properties
     private var availableIPs: [String] = []
-    private var pinger: SYPinger?
+    private var pinger: Pinger?
     // MARK: View
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var progressView: UIProgressView!
@@ -79,7 +79,7 @@ class SYDiscoverClientsVC: ViewController {
     private func startPinging() {
         guard pinger == nil else { return }
         
-        pinger = SYPinger(networks: SYIPv4Interface.deviceNetworks(filterLocalInterfaces: true))
+        pinger = Pinger(networks: IPv4Interface.deviceNetworks(filterLocalInterfaces: true))
         pinger?.progressBlock = { [weak self] (progress) in
             self?.progressView.setProgress(Float(progress), animated: true)
         }
@@ -96,11 +96,11 @@ class SYDiscoverClientsVC: ViewController {
 }
 
 extension SYDiscoverClientsVC : UITableViewDataSource {
-    func client(at indexPath: IndexPath) -> SYClient? {
+    func client(at indexPath: IndexPath) -> Client? {
         guard indexPath.row < availableIPs.count else { return  nil }
         let host = availableIPs[indexPath.row]
-        let name = SYHostnameResolver.shared.hostnameForIP(host) ?? host
-        return SYClient(host: host, name: name)
+        let name = HostnameResolver.shared.hostnameForIP(host) ?? host
+        return Client(host: host, name: name)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -124,7 +124,7 @@ extension SYDiscoverClientsVC : UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let vc = SYEditClientVC()
-        vc.client = client(at: indexPath) ?? SYClient(host: "", name: nil)
+        vc.client = client(at: indexPath) ?? Client(host: "", name: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

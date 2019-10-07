@@ -1,5 +1,5 @@
 //
-//  SYSearchResult.swift
+//  SearchResult.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 30/11/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import Fuzi
 
-struct SYSearchResult {
+struct SearchResult {
 
     // MARK: Properties
     let name: String
@@ -24,16 +24,16 @@ struct SYSearchResult {
 
 }
 
-extension SYSearchResult : CustomStringConvertible {
+extension SearchResult : CustomStringConvertible {
     var description: String {
         return "Result: \(name), \(size ?? ""), \(age ?? ""), \(seed)/\(leech), vip=\(verified)"
     }
 }
 
 // MARK: Parsing
-extension SYSearchResult {
+extension SearchResult {
     
-    static func parseModels(html: HTMLDocument) -> [SYSearchResult] {
+    static func parseModels(html: HTMLDocument) -> [SearchResult] {
         var elements = html.xpath("//table[@id='searchResult']/tr")
         if elements.isEmpty {
             elements = html.xpath("//table[@id='searchResult']/tbody/tr")
@@ -41,7 +41,7 @@ extension SYSearchResult {
         return elements.compactMap { parseModel(html: $0) }
     }
     
-    private static func parseModel(html: XMLElement) -> SYSearchResult? {
+    private static func parseModel(html: XMLElement) -> SearchResult? {
         let tds = html.children(tag: "td")
         let tdDetails = tds.element(at: 1)
         let seed      = tds.element(at: 2)?.text.map { Int($0) } ?? 0
@@ -73,7 +73,7 @@ extension SYSearchResult {
         
         let verified = tdDetails?.rawXML.contains("VIP") ?? false
         
-        return SYSearchResult(
+        return SearchResult(
             name: name,
             size: size,
             age: age,

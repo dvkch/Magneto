@@ -43,13 +43,13 @@ class SYMainVC: ViewController {
         constraintHeaderHeightOriginalValue = constraintHeaderHeight.constant
         
         // make sure the list has an initial value at init time, in case the app is opened from a magnet
-        clients = SYPreferences.shared.clients
+        clients = Preferences.shared.clients
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        clients = SYPreferences.shared.clients
+        clients = Preferences.shared.clients
         tableView.reloadData()
     }
     
@@ -69,8 +69,8 @@ class SYMainVC: ViewController {
     
     // MARK: Properties
     private var timerRefreshClientsStatus: Timer?
-    private var clients: [SYClient] = []
-    private var searchResults: [SYSearchResult] = []
+    private var clients: [Client] = []
+    private var searchResults: [SearchResult] = []
     private var searchQuery: String = ""
     private var constraintHeaderHeightOriginalValue: CGFloat = 0
     private var isVisible: Bool = false
@@ -108,7 +108,7 @@ extension SYMainVC {
     @objc private func timerRefreshClientsStatusTick() {
         if view.window == nil { return }
         clients.forEach {
-            SYClientStatusManager.shared.startStatusUpdateIfNeeded(for: $0)
+            ClientStatusManager.shared.startStatusUpdateIfNeeded(for: $0)
         }
     }
 }
@@ -137,7 +137,7 @@ extension SYMainVC {
         
         spinner.isHidden = false
         
-        _ = SYWebAPI.shared.getResults(query: text)
+        _ = WebAPI.shared.getResults(query: text)
             .andThen { [weak self] result in
                 
                 guard let self = self else { return }
@@ -157,26 +157,26 @@ extension SYMainVC {
         }
     }
     
-    fileprivate func openTorrentPopup(with magnetURL: URL?, or result: SYSearchResult?) {
+    fileprivate func openTorrentPopup(with magnetURL: URL?, or result: SearchResult?) {
         guard !clients.isEmpty else {
-            showError(SYError.noClientsSaved, title: "error.title.cannotAddTorrent".localized)
+            showError(AppError.noClientsSaved, title: "error.title.cannotAddTorrent".localized)
             return
         }
         
         SYMagnetPopupVC.show(in: self, magnet: magnetURL, result: result)
     }
     
-    fileprivate func removeFinished(in client: SYClient) {
+    fileprivate func removeFinished(in client: Client) {
         SVProgressHUD.show()
-        SYClientAPI.shared.removeCompletedTorrents(in: client)
+        ClientAPI.shared.removeCompletedTorrents(in: client)
             .andThen { _ in SVProgressHUD.dismiss() }
             .onSuccess { (count) in SVProgressHUD.showSuccess(withStatus: String(format: "torrent.removed.%d".localized, count)) }
             .onFailure { error in self.showError(error) }
     }
     
-    fileprivate func removeClient(_ client: SYClient, at indexPath: IndexPath) {
-        SYPreferences.shared.removeClient(client)
-        clients = SYPreferences.shared.clients
+    fileprivate func removeClient(_ client: Client, at indexPath: IndexPath) {
+        Preferences.shared.removeClient(client)
+        clients = Preferences.shared.clients
         
         tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -184,9 +184,9 @@ extension SYMainVC {
         tableView.endUpdates()
     }
     
-    fileprivate func shareResult(_ result: SYSearchResult, from cell: UITableViewCell?) {
+    fileprivate func shareResult(_ result: SearchResult, from cell: UITableViewCell?) {
         SVProgressHUD.show()
-        SYWebAPI.shared.getResultPageURL(result)
+        WebAPI.shared.getResultPageURL(result)
             .andThen { _ in SVProgressHUD.dismiss() }
             .onFailure { (error) in self.showError(error) }
             .onSuccess { (fullURL) in

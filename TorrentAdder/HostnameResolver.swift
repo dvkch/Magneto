@@ -1,5 +1,5 @@
 //
-//  SYHostnameResolver.swift
+//  HostnameResolver.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -9,14 +9,14 @@
 import UIKit
 
 extension Notification.Name {
-    static let hostnameResolverUpdated = Notification.Name.init("SYHostnameResolver.bonjourClientUpdated")
+    static let hostnameResolverUpdated = Notification.Name.init("HostnameResolver.bonjourClientUpdated")
 }
 
 /// Used to resolve hostnames from IP addresses
-class SYHostnameResolver: NSObject {
+class HostnameResolver: NSObject {
     
     // MARK: Init
-    static let shared = SYHostnameResolver()
+    static let shared = HostnameResolver()
     
     override init() {
         super.init()
@@ -54,7 +54,7 @@ class SYHostnameResolver: NSObject {
     
 }
 
-extension SYHostnameResolver: NetServiceBrowserDelegate {
+extension HostnameResolver: NetServiceBrowserDelegate {
     func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
         services.append(service)
         service.delegate = self
@@ -69,7 +69,7 @@ extension SYHostnameResolver: NetServiceBrowserDelegate {
     }
 }
 
-extension SYHostnameResolver: NetServiceDelegate {
+extension HostnameResolver: NetServiceDelegate {
     func netServiceDidResolveAddress(_ sender: NetService) {
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: .hostnameResolverUpdated, object: nil)

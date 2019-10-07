@@ -1,5 +1,5 @@
 //
-//  SYClient.swift
+//  Client.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 03/12/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SYClient : Codable {
+class Client : Codable {
     let id: String          = UUID().uuidString
     var name: String?       = nil
     var host: String        = "127.0.0.1"
@@ -28,7 +28,7 @@ class SYClient : Codable {
     }
 }
 
-extension SYClient {
+extension Client {
     var isValid: Bool {
         if host.isEmpty {
             return false
@@ -43,13 +43,13 @@ extension SYClient {
     }
 }
 
-extension SYClient : CustomStringConvertible {
+extension Client : CustomStringConvertible {
     var description: String {
-        return "SYClient: \(name ?? "<no name>") -> \(host):\(port ?? 0), auth: \(username ?? "<none>")"
+        return "Client: \(name ?? "<no name>") -> \(host):\(port ?? 0), auth: \(username ?? "<none>")"
     }
 }
 
-extension SYClient {
+extension Client {
     convenience init(host: String, name: String?) {
         self.init()
         self.host       = host
@@ -78,13 +78,13 @@ extension SYClient {
     }
 }
 
-extension SYClient : Equatable {
-    static func == (lhs: SYClient, rhs: SYClient) -> Bool {
+extension Client : Equatable {
+    static func == (lhs: Client, rhs: Client) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
-extension SYClient {
+extension Client {
     enum Software: Int, Codable {
         case transmission = 0, uTorrent = 1
         

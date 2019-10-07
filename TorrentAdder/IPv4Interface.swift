@@ -1,5 +1,5 @@
 //
-//  SYIPv4Interface.swift
+//  IPv4Interface.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 30/11/2018.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-struct SYIPv4Interface {
+struct IPv4Interface {
     // MARK: Init
-    init(address: SYIPv4Address, netmask: SYIPv4Address, name: String?) {
+    init(address: IPv4Address, netmask: IPv4Address, name: String?) {
         self.address = address
         self.netmask = netmask
         self.name = name
@@ -18,19 +18,19 @@ struct SYIPv4Interface {
     
     init?(addressString: String?, netmaskString: String?, name: String?) {
         guard let addressString = addressString, let netmaskString = netmaskString else { return nil }
-        guard let address = SYIPv4Address(string: addressString), let netmask = SYIPv4Address(string: netmaskString) else { return nil }
+        guard let address = IPv4Address(string: addressString), let netmask = IPv4Address(string: netmaskString) else { return nil }
         self.address = address
         self.netmask = netmask
         self.name = name
     }
     
     // MARK: Properties
-    let address: SYIPv4Address
-    let netmask: SYIPv4Address
+    let address: IPv4Address
+    let netmask: IPv4Address
     let name: String?
     
     // MARK: IPv4 methods
-    func addressesOnSubnet(ignoringMine: Bool) -> [SYIPv4Address] {
+    func addressesOnSubnet(ignoringMine: Bool) -> [IPv4Address] {
         
         let decimalIP   = address.decimalRepresentation
         let decimalMask = netmask.decimalRepresentation
@@ -39,7 +39,7 @@ struct SYIPv4Interface {
         let count   = ~decimalMask;
 
         var IPs = (0..<count)
-            .compactMap { SYIPv4Address(decimal: $0 + firstIP) }
+            .compactMap { IPv4Address(decimal: $0 + firstIP) }
             .filter { $0.isValidIP }
         
         if ignoringMine {
@@ -50,14 +50,14 @@ struct SYIPv4Interface {
     }
 }
 
-extension SYIPv4Interface : CustomStringConvertible {
+extension IPv4Interface : CustomStringConvertible {
     var description: String {
-        return "SYIPv4Interface: if=\(name ?? ""), ip=\(address.stringRepresentation), sub=\(netmask.stringRepresentation)"
+        return "IPv4Interface: if=\(name ?? ""), ip=\(address.stringRepresentation), sub=\(netmask.stringRepresentation)"
     }
 }
 
-extension SYIPv4Interface {
-    static func deviceNetworks(filterLocalInterfaces: Bool) -> [SYIPv4Interface] {
+extension IPv4Interface {
+    static func deviceNetworks(filterLocalInterfaces: Bool) -> [IPv4Interface] {
         
         // Get list of all interfaces on the local machine
         var ifaddr : UnsafeMutablePointer<ifaddrs>?
@@ -67,7 +67,7 @@ extension SYIPv4Interface {
         
         // Iterate over interfaces
         let nativeInterfaces = sequence(first: firstAddr, next: { $0.pointee.ifa_next })
-        var interfaces = nativeInterfaces.compactMap { interface -> SYIPv4Interface? in
+        var interfaces = nativeInterfaces.compactMap { interface -> IPv4Interface? in
             
             // Check for running IPv4, IPv6 interfaces. Skip the loopback interface.
             let flags = Int32(interface.pointee.ifa_flags)
@@ -87,7 +87,7 @@ extension SYIPv4Interface {
             // Retreive name
             let name = String(utf8String: interface.pointee.ifa_name)
             
-            return SYIPv4Interface(addressString: addressString, netmaskString: netmaskString, name: name)
+            return IPv4Interface(addressString: addressString, netmaskString: netmaskString, name: name)
         }
         
         if filterLocalInterfaces {

@@ -14,7 +14,7 @@ class SYEditClientVC: ViewController {
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        isCreation = SYPreferences.shared.clientWithIdentifier(client.id) == nil
+        isCreation = Preferences.shared.clientWithIdentifier(client.id) == nil
         title = isCreation ? "client.title.new".localized : "client.title.edit".localized
         
         tableView.registerCell(SYClientFormCell.self)
@@ -51,7 +51,7 @@ class SYEditClientVC: ViewController {
     }
     
     // MARK: Properties
-    var client: SYClient!
+    var client: Client!
     private var isCreation: Bool = false
     
     // MARK: Views
@@ -76,20 +76,20 @@ class SYEditClientVC: ViewController {
             return false
         }
         
-        SYPreferences.shared.addClient(client)
+        Preferences.shared.addClient(client)
         return true
     }
 }
 
 extension SYEditClientVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SYClient.FormField.allCases.count
+        return Client.FormField.allCases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(SYClientFormCell.self, for: indexPath)
         cell.client = client
-        cell.formField = SYClient.FormField.allCases[indexPath.row]
+        cell.formField = Client.FormField.allCases[indexPath.row]
         return cell
     }
 }

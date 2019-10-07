@@ -18,12 +18,12 @@ class SYClientFormCell: UITableViewCell {
     }
 
     // MARK: Properties
-    var formField: SYClient.FormField = .host {
+    var formField: Client.FormField = .host {
         didSet {
             updateContent()
         }
     }
-    var client: SYClient? {
+    var client: Client? {
         didSet {
             updateContent()
         }

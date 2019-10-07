@@ -30,7 +30,7 @@ class SYClientCell: UITableViewCell {
             updateStatus()
         }
     }
-    var client: SYClient? {
+    var client: Client? {
         didSet {
             updateContent()
             updateStatus()
@@ -68,8 +68,8 @@ class SYClientCell: UITableViewCell {
     }
     
     @objc private func updateStatus() {
-        var loading = SYClientStatusManager.shared.isClientLoading(client)
-        var status  = SYClientStatusManager.shared.lastStatusForClient(client)
+        var loading = ClientStatusManager.shared.isClientLoading(client)
+        var status  = ClientStatusManager.shared.lastStatusForClient(client)
         
         if isDiscoveredClient && client == nil {
             loading = true

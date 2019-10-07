@@ -12,7 +12,7 @@ import SYPopoverController
 class SYMagnetPopupVC: ViewController {
 
     // MARK: Presentation
-    static func show(in viewController: UIViewController, magnet: URL?, result: SYSearchResult?) {
+    static func show(in viewController: UIViewController, magnet: URL?, result: SearchResult?) {
         let popupVC = SYMagnetPopupVC()
         popupVC.result = result
         popupVC.magnetURL = magnet
@@ -62,14 +62,14 @@ class SYMagnetPopupVC: ViewController {
         
         statusLabel.font = UIFont.systemFont(ofSize: 15)
         
-        clients = SYPreferences.shared.clients
+        clients = Preferences.shared.clients
         updateForMode(.clients, animated: false)
     }
     
     // MARK: Properties
     private var magnetURL: URL?
-    private var result: SYSearchResult?
-    private var clients = [SYClient]()
+    private var result: SearchResult?
+    private var clients = [Client]()
     private var canClose: Bool = false
 
     // MARK: Views
@@ -91,7 +91,7 @@ class SYMagnetPopupVC: ViewController {
     }
     
     // MARK: API
-    private func fetchMagnetURLAndAdd(to client: SYClient) {
+    private func fetchMagnetURLAndAdd(to client: Client) {
         updateForMode(.loading, animated: true)
         
         if let magnetURL = (magnetURL ?? result?.magnetURL) {
@@ -101,7 +101,7 @@ class SYMagnetPopupVC: ViewController {
         
         guard let result = result else { return }
         
-        _ = SYWebAPI.shared.getMagnet(for: result)
+        _ = WebAPI.shared.getMagnet(for: result)
             .onSuccess { [weak self] (magnetURL) in
                 self?.addMagnetToClient(magnetURL: magnetURL, client: client)
             }
@@ -110,10 +110,10 @@ class SYMagnetPopupVC: ViewController {
             }
     }
     
-    private func addMagnetToClient(magnetURL: URL, client: SYClient) {
+    private func addMagnetToClient(magnetURL: URL, client: Client) {
         updateForMode(.loading, animated: true)
         
-        SYClientAPI.shared.addMagnet(magnetURL, to: client)
+        ClientAPI.shared.addMagnet(magnetURL, to: client)
             .onSuccess { message in
                 var successMessage = "torrent.success".localized
                 if let message = message, !message.isEmpty {
@@ -122,7 +122,7 @@ class SYMagnetPopupVC: ViewController {
                 self.updateForMode(.success(successMessage), animated: true)
             }
             .onFailure { error in
-                let errorMessage = (error.isOfflineError ? SYError.clientOffline : error).localizedDescription
+                let errorMessage = (error.isOfflineError ? AppError.clientOffline : error).localizedDescription
                 self.updateForMode(.failure(errorMessage), animated: true)
             }
     }

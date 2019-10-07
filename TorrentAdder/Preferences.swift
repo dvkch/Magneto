@@ -1,5 +1,5 @@
 //
-//  SYPreferences.swift
+//  Preferences.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -9,14 +9,13 @@
 import UIKit
 
 extension NSNotification.Name {
-    static let clientsChanged = Notification.Name("SYPreferences.clientsChanged")
+    static let clientsChanged = Notification.Name("Preferences.clientsChanged")
 }
 
-class SYPreferences: NSObject {
+class Preferences: NSObject {
     // MARK: Init
-    static let shared = SYPreferences()
-    
-    
+    static let shared = Preferences()
+        
     override init() {
         super.init()
         loadClients()
@@ -35,7 +34,7 @@ class SYPreferences: NSObject {
     
     // MARK: Clients
     private static let clientsPrefKey = "clients_ids"
-    private(set) var clients: [SYClient] = [] {
+    private(set) var clients: [Client] = [] {
         didSet {
             saveClients()
             NotificationCenter.default.post(name: .clientsChanged, object: self)
@@ -45,8 +44,8 @@ class SYPreferences: NSObject {
     private func saveClients() {
         do {
             let json = try JSONEncoder().encode(clients)
-            UserDefaults.standard.set(json, forKey: SYPreferences.clientsPrefKey)
-            NSUbiquitousKeyValueStore.default.set(json, forKey: SYPreferences.clientsPrefKey)
+            UserDefaults.standard.set(json, forKey: Self.clientsPrefKey)
+            NSUbiquitousKeyValueStore.default.set(json, forKey: Self.clientsPrefKey)
         }
         catch {
             print("Couldn't encode to JSON: \(error)")
@@ -55,10 +54,10 @@ class SYPreferences: NSObject {
     
     private func loadClients() {
         do {
-            let jsonUserDefaults = UserDefaults.standard.data(forKey: SYPreferences.clientsPrefKey)
-            let jsonUbiquitous = NSUbiquitousKeyValueStore.default.data(forKey: SYPreferences.clientsPrefKey)
+            let jsonUserDefaults = UserDefaults.standard.data(forKey: Self.clientsPrefKey)
+            let jsonUbiquitous = NSUbiquitousKeyValueStore.default.data(forKey: Self.clientsPrefKey)
             guard let json = jsonUserDefaults ?? jsonUbiquitous else { return }
-            let parsed = try JSONDecoder().decode([SYClient].self, from: json)
+            let parsed = try JSONDecoder().decode([Client].self, from: json)
             clients = parsed
        }
         catch {
@@ -78,11 +77,11 @@ class SYPreferences: NSObject {
     }
     
     private func saveMirrors() {
-        UserDefaults.standard.set(savedAvailableMirrors.map { $0.absoluteString }, forKey: SYPreferences.savedAvailableMirrorsPrefKey)
+        UserDefaults.standard.set(savedAvailableMirrors.map { $0.absoluteString }, forKey: Self.savedAvailableMirrorsPrefKey)
     }
     
     private func loadMirrors() {
-        if let urlStrings = UserDefaults.standard.array(forKey: SYPreferences.savedAvailableMirrorsPrefKey) as? [String] {
+        if let urlStrings = UserDefaults.standard.array(forKey: Self.savedAvailableMirrorsPrefKey) as? [String] {
             savedAvailableMirrors = urlStrings.compactMap { URL(string: $0) }
         }
     }
@@ -101,7 +100,7 @@ class SYPreferences: NSObject {
             guard let keys = notification.userInfo?[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String] else { return }
             let store = NSUbiquitousKeyValueStore.default
             for key in keys {
-                if key != SYPreferences.clientsPrefKey {
+                if key != Self.clientsPrefKey {
                     print("unsupported key changed", key)
                 }
                 
@@ -124,17 +123,17 @@ class SYPreferences: NSObject {
     }
     
     // MARK: Public methods
-    func clientWithIdentifier(_ identifier: String) -> SYClient? {
+    func clientWithIdentifier(_ identifier: String) -> Client? {
         return clients.first { $0.id == identifier }
     }
     
-    func addClient(_ client: SYClient) {
+    func addClient(_ client: Client) {
         var clients = self.clients.filter { $0.id != client.id }
         clients.append(client)
         self.clients = clients
     }
     
-    func removeClient(_ client: SYClient) {
+    func removeClient(_ client: Client) {
         clients = clients.filter { $0.id != client.id }
     }
     

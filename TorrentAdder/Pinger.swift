@@ -1,5 +1,5 @@
 //
-//  SYPinger.swift
+//  Pinger.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -9,16 +9,16 @@
 import UIKit
 import SPLPing
 
-class SYPinger: NSObject {
+class Pinger: NSObject {
     
     // MARK: Init
-    init(networks: [SYIPv4Interface]) {
+    init(networks: [IPv4Interface]) {
         self.networks = networks
         super.init()
     }
     
     // MARK: Properties
-    private let networks: [SYIPv4Interface]
+    private let networks: [IPv4Interface]
     private let pingConfig = SPLPingConfiguration(pingInterval: 0.1, timeoutInterval: 1)
     private var totalCount: Int = 0
     private var queuedIPs: [String] = []

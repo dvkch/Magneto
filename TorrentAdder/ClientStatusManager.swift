@@ -1,5 +1,5 @@
 //
-//  SYClientStatusManager.swift
+//  ClientStatusManager.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-protocol SYClientStatusManagerDelegate : NSObjectProtocol {
-    func clientStatusManager(_ manager: SYClientStatusManager, changedStatusFor client: SYClient)
+protocol ClientStatusManagerDelegate : NSObjectProtocol {
+    func clientStatusManager(_ manager: ClientStatusManager, changedStatusFor client: Client)
 }
 
 extension Notification.Name {
-    static let clientStatusChanged = Notification.Name("SYClientStatusManager.clientStatusChanged")
+    static let clientStatusChanged = Notification.Name("ClientStatusManager.clientStatusChanged")
 }
 
-class SYClientStatusManager: NSObject {
+class ClientStatusManager: NSObject {
 
     // MARK: Init
-    static let shared = SYClientStatusManager()
+    static let shared = ClientStatusManager()
     
     override init() {
         super.init()
@@ -32,23 +32,23 @@ class SYClientStatusManager: NSObject {
     }
     
     // MARK: Properties
-    weak var delegate: SYClientStatusManagerDelegate?
+    weak var delegate: ClientStatusManagerDelegate?
     private let urlSession = URLSession(configuration: .ephemeral)
     private var loadingClients: [String] = []
     private var lastStatuses: [String: (Date, ClientStatus)] = [:]
 
     // MARK: Public methods
-    func isClientLoading(_ client: SYClient?) -> Bool {
+    func isClientLoading(_ client: Client?) -> Bool {
         guard let client = client else { return false }
         return loadingClients.contains(client.id)
     }
     
-    func lastStatusForClient(_ client: SYClient?) -> ClientStatus {
+    func lastStatusForClient(_ client: Client?) -> ClientStatus {
         guard let client = client else { return .unknown }
         return lastStatuses[client.id]?.1 ?? .unknown
     }
     
-    func startStatusUpdateIfNeeded(for client: SYClient) {
+    func startStatusUpdateIfNeeded(for client: Client) {
         let status = lastStatuses[client.id]
         let date = status?.0 ?? Date(timeIntervalSince1970: 0)
         
@@ -61,19 +61,19 @@ class SYClientStatusManager: NSObject {
     }
     
     // MARK: Private
-    private func startStatusUpdate(for client: SYClient) {
+    private func startStatusUpdate(for client: Client) {
         if isClientLoading(client) { return }
         
         setClientLoading(client, loading: true)
         
-        SYClientAPI.shared.getClientStatus(client)
+        ClientAPI.shared.getClientStatus(client)
             .onSuccess { (online) in
                 self.setStatus(online ? .online : .offline, for: client)
                 self.setClientLoading(client, loading: false)
         }
     }
     
-    private func setStatus(_ status: ClientStatus, for client: SYClient) {
+    private func setStatus(_ status: ClientStatus, for client: Client) {
         guard Thread.isMainThread else {
             DispatchQueue.main.async {
                 self.setStatus(status, for: client)
@@ -90,7 +90,7 @@ class SYClientStatusManager: NSObject {
         }
     }
 
-    func setClientLoading(_ client: SYClient?, loading: Bool) {
+    func setClientLoading(_ client: Client?, loading: Bool) {
         guard Thread.isMainThread else {
             DispatchQueue.main.async {
                 self.setClientLoading(client, loading: loading)

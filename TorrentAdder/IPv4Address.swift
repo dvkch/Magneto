@@ -1,5 +1,5 @@
 //
-//  SYIPv4Address.swift
+//  IPv4Address.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 30/11/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct SYIPv4Address {
+struct IPv4Address {
 
     // MARK: Init
     init?(string: String) {

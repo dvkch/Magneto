@@ -8,23 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		6628422579BAE3C1A2B8B69A /* Pods_TorrentAdder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C49869784A7E738760973F /* Pods_TorrentAdder.framework */; };
-		970130E021B07EC000E7CFEC /* SYWebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130DF21B07EC000E7CFEC /* SYWebAPI.swift */; };
+		970130E021B07EC000E7CFEC /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130DF21B07EC000E7CFEC /* WebAPI.swift */; };
 		970130E221B084E500E7CFEC /* Alamofire+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130E121B084E500E7CFEC /* Alamofire+SY.swift */; };
 		970130E421B08E1000E7CFEC /* Error+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130E321B08E1000E7CFEC /* Error+SY.swift */; };
-		972589AD21B0AD6D00FCE9D5 /* SYError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972589AC21B0AD6D00FCE9D5 /* SYError.swift */; };
+		972589AD21B0AD6D00FCE9D5 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972589AC21B0AD6D00FCE9D5 /* AppError.swift */; };
 		973784321BD40649001AD487 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973784311BD40649001AD487 /* Launch.storyboard */; };
 		9747560A232AB4DA0038698E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97475609232AB4DA0038698E /* ViewController.swift */; };
-		974D372A21B150FC00C0FDDE /* SYSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372921B150FC00C0FDDE /* SYSearchResult.swift */; };
+		974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372921B150FC00C0FDDE /* SearchResult.swift */; };
 		974D372C21B157CE00C0FDDE /* Fuzi+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372B21B157CE00C0FDDE /* Fuzi+SY.swift */; };
 		974D372E21B1D87300C0FDDE /* Calendar+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372D21B1D87300C0FDDE /* Calendar+SY.swift */; };
 		974D373021B1DDEE00C0FDDE /* UIViewController+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372F21B1DDEE00C0FDDE /* UIViewController+SY.swift */; };
-		974D373221B1DF8600C0FDDE /* SYIPv4Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373121B1DF8600C0FDDE /* SYIPv4Address.swift */; };
-		974D373421B1E2DA00C0FDDE /* SYIPv4Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373321B1E2DA00C0FDDE /* SYIPv4Interface.swift */; };
+		974D373221B1DF8600C0FDDE /* IPv4Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373121B1DF8600C0FDDE /* IPv4Address.swift */; };
+		974D373421B1E2DA00C0FDDE /* IPv4Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373321B1E2DA00C0FDDE /* IPv4Interface.swift */; };
 		974D373921B4999E00C0FDDE /* Sockets+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 974D373821B4999E00C0FDDE /* Sockets+SY.m */; };
-		974D373B21B49D4800C0FDDE /* SYClientAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373A21B49D4800C0FDDE /* SYClientAPI.swift */; };
+		974D373B21B49D4800C0FDDE /* ClientAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373A21B49D4800C0FDDE /* ClientAPI.swift */; };
 		9768CA6321B55838000AA7C2 /* UIColor+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6221B55838000AA7C2 /* UIColor+SY.swift */; };
-		9768CA6521B5770B000AA7C2 /* SYClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6421B5770B000AA7C2 /* SYClient.swift */; };
-		9768CA6721B57B33000AA7C2 /* SYClient+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6621B57B33000AA7C2 /* SYClient+UI.swift */; };
+		9768CA6521B5770B000AA7C2 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6421B5770B000AA7C2 /* Client.swift */; };
+		9768CA6721B57B33000AA7C2 /* Client+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6621B57B33000AA7C2 /* Client+UI.swift */; };
 		976D5EF9230E0E3600573E0D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 976D5EFB230E0E3600573E0D /* Localizable.strings */; };
 		9771AB1321AEC919005DE97D /* SYMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1221AEC919005DE97D /* SYMainVC.swift */; };
 		9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1A21AEDC92005DE97D /* AppDelegate.swift */; };
@@ -39,11 +39,11 @@
 		9771AB3121AF0534005DE97D /* SYClientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3021AF0534005DE97D /* SYClientCell.swift */; };
 		9771AB3321AF08E4005DE97D /* SYResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3221AF08E4005DE97D /* SYResultCell.swift */; };
 		9771AB3521AF0C59005DE97D /* SYClientFormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3421AF0C59005DE97D /* SYClientFormCell.swift */; };
-		9771AB3721AF2BA4005DE97D /* SYPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3621AF2BA4005DE97D /* SYPreferences.swift */; };
-		9771AB3A21AF319E005DE97D /* SYHostnameResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3921AF319E005DE97D /* SYHostnameResolver.swift */; };
+		9771AB3721AF2BA4005DE97D /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3621AF2BA4005DE97D /* Preferences.swift */; };
+		9771AB3A21AF319E005DE97D /* HostnameResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3921AF319E005DE97D /* HostnameResolver.swift */; };
 		97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97888C9E21B5A745004EB144 /* Codable+SY.swift */; };
 		979D4A9621AF4335000BFDF0 /* NetService+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979D4A9521AF4335000BFDF0 /* NetService+SY.swift */; };
-		979D4A9821AF4614000BFDF0 /* SYClientStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979D4A9721AF4614000BFDF0 /* SYClientStatusManager.swift */; };
+		979D4A9821AF4614000BFDF0 /* ClientStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979D4A9721AF4614000BFDF0 /* ClientStatusManager.swift */; };
 		97A0C55D1BC3271300DC4EEC /* blue_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5551BC3271300DC4EEC /* blue_background.png */; };
 		97A0C55E1BC3271300DC4EEC /* form_bookmark_org.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5561BC3271300DC4EEC /* form_bookmark_org.png */; };
 		97A0C55F1BC3271300DC4EEC /* form_cmd_org.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C5571BC3271300DC4EEC /* form_cmd_org.png */; };
@@ -58,7 +58,7 @@
 		97A18E121BBC017500F33AF5 /* SYResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E111BBC017500F33AF5 /* SYResultCell.xib */; };
 		97A18E141BBC017C00F33AF5 /* SYDiscoverClientsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E131BBC017C00F33AF5 /* SYDiscoverClientsVC.xib */; };
 		97B4041522C5274F00C7A684 /* IconButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B4041422C5274F00C7A684 /* IconButtons.swift */; };
-		97EC446321AF37330034C861 /* SYPinger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC446221AF37330034C861 /* SYPinger.swift */; };
+		97EC446321AF37330034C861 /* Pinger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC446221AF37330034C861 /* Pinger.swift */; };
 		97F911481BC2C45C00BF1848 /* SYEditClientVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* SYEditClientVC.xib */; };
 		97F9114D1BC2C73D00BF1848 /* SYClientFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* SYClientFormCell.xib */; };
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
@@ -83,24 +83,24 @@
 /* Begin PBXFileReference section */
 		0B69C8AE8CFDA1E82A1EF6EC /* Pods-TorrentAdder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TorrentAdder.release.xcconfig"; path = "Pods/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder.release.xcconfig"; sourceTree = "<group>"; };
 		28C49869784A7E738760973F /* Pods_TorrentAdder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TorrentAdder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		970130DF21B07EC000E7CFEC /* SYWebAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYWebAPI.swift; sourceTree = "<group>"; };
+		970130DF21B07EC000E7CFEC /* WebAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
 		970130E121B084E500E7CFEC /* Alamofire+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+SY.swift"; sourceTree = "<group>"; };
 		970130E321B08E1000E7CFEC /* Error+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+SY.swift"; sourceTree = "<group>"; };
-		972589AC21B0AD6D00FCE9D5 /* SYError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYError.swift; sourceTree = "<group>"; };
+		972589AC21B0AD6D00FCE9D5 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		973784311BD40649001AD487 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		97475609232AB4DA0038698E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		974D372921B150FC00C0FDDE /* SYSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYSearchResult.swift; sourceTree = "<group>"; };
+		974D372921B150FC00C0FDDE /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		974D372B21B157CE00C0FDDE /* Fuzi+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fuzi+SY.swift"; sourceTree = "<group>"; };
 		974D372D21B1D87300C0FDDE /* Calendar+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+SY.swift"; sourceTree = "<group>"; };
 		974D372F21B1DDEE00C0FDDE /* UIViewController+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SY.swift"; sourceTree = "<group>"; };
-		974D373121B1DF8600C0FDDE /* SYIPv4Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYIPv4Address.swift; sourceTree = "<group>"; };
-		974D373321B1E2DA00C0FDDE /* SYIPv4Interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYIPv4Interface.swift; sourceTree = "<group>"; };
+		974D373121B1DF8600C0FDDE /* IPv4Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPv4Address.swift; sourceTree = "<group>"; };
+		974D373321B1E2DA00C0FDDE /* IPv4Interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPv4Interface.swift; sourceTree = "<group>"; };
 		974D373521B4965700C0FDDE /* Sockets+SY.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sockets+SY.h"; sourceTree = "<group>"; };
 		974D373821B4999E00C0FDDE /* Sockets+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Sockets+SY.m"; sourceTree = "<group>"; };
-		974D373A21B49D4800C0FDDE /* SYClientAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYClientAPI.swift; sourceTree = "<group>"; };
+		974D373A21B49D4800C0FDDE /* ClientAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientAPI.swift; sourceTree = "<group>"; };
 		9768CA6221B55838000AA7C2 /* UIColor+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SY.swift"; sourceTree = "<group>"; };
-		9768CA6421B5770B000AA7C2 /* SYClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYClient.swift; sourceTree = "<group>"; };
-		9768CA6621B57B33000AA7C2 /* SYClient+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYClient+UI.swift"; sourceTree = "<group>"; };
+		9768CA6421B5770B000AA7C2 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		9768CA6621B57B33000AA7C2 /* Client+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Client+UI.swift"; sourceTree = "<group>"; };
 		976D5EFA230E0E3600573E0D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		976D5EFD230E0E4400573E0D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9771AB1121AEC918005DE97D /* TorrentAdder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TorrentAdder-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -117,12 +117,12 @@
 		9771AB3021AF0534005DE97D /* SYClientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYClientCell.swift; sourceTree = "<group>"; };
 		9771AB3221AF08E4005DE97D /* SYResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYResultCell.swift; sourceTree = "<group>"; };
 		9771AB3421AF0C59005DE97D /* SYClientFormCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYClientFormCell.swift; sourceTree = "<group>"; };
-		9771AB3621AF2BA4005DE97D /* SYPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYPreferences.swift; sourceTree = "<group>"; };
+		9771AB3621AF2BA4005DE97D /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		9771AB3821AF2D7C005DE97D /* TorrentAdder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TorrentAdder.entitlements; sourceTree = "<group>"; };
-		9771AB3921AF319E005DE97D /* SYHostnameResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYHostnameResolver.swift; sourceTree = "<group>"; };
+		9771AB3921AF319E005DE97D /* HostnameResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostnameResolver.swift; sourceTree = "<group>"; };
 		97888C9E21B5A745004EB144 /* Codable+SY.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+SY.swift"; sourceTree = "<group>"; };
 		979D4A9521AF4335000BFDF0 /* NetService+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetService+SY.swift"; sourceTree = "<group>"; };
-		979D4A9721AF4614000BFDF0 /* SYClientStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYClientStatusManager.swift; sourceTree = "<group>"; };
+		979D4A9721AF4614000BFDF0 /* ClientStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientStatusManager.swift; sourceTree = "<group>"; };
 		979D4A9C21AF4764000BFDF0 /* NSHost+SY.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSHost+SY.h"; sourceTree = "<group>"; };
 		97A0C5551BC3271300DC4EEC /* blue_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_background.png; sourceTree = "<group>"; };
 		97A0C5561BC3271300DC4EEC /* form_bookmark_org.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_bookmark_org.png; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 		97A18E111BBC017500F33AF5 /* SYResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYResultCell.xib; sourceTree = "<group>"; };
 		97A18E131BBC017C00F33AF5 /* SYDiscoverClientsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYDiscoverClientsVC.xib; sourceTree = "<group>"; };
 		97B4041422C5274F00C7A684 /* IconButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtons.swift; sourceTree = "<group>"; };
-		97EC446221AF37330034C861 /* SYPinger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYPinger.swift; sourceTree = "<group>"; };
+		97EC446221AF37330034C861 /* Pinger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pinger.swift; sourceTree = "<group>"; };
 		97F911461BC2C45C00BF1848 /* SYEditClientVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYEditClientVC.xib; sourceTree = "<group>"; };
 		97F9114B1BC2C73D00BF1848 /* SYClientFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SYClientFormCell.xib; sourceTree = "<group>"; };
 		ECB5BC1A5208F37710432FDC /* Pods-TorrentAdder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TorrentAdder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder.debug.xcconfig"; sourceTree = "<group>"; };
@@ -229,9 +229,9 @@
 		97EACC001BC2C31300382614 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				979D4A9721AF4614000BFDF0 /* SYClientStatusManager.swift */,
-				9771AB3921AF319E005DE97D /* SYHostnameResolver.swift */,
-				97EC446221AF37330034C861 /* SYPinger.swift */,
+				979D4A9721AF4614000BFDF0 /* ClientStatusManager.swift */,
+				9771AB3921AF319E005DE97D /* HostnameResolver.swift */,
+				97EC446221AF37330034C861 /* Pinger.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -239,8 +239,8 @@
 		97EACC011BC2C31B00382614 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				974D373A21B49D4800C0FDDE /* SYClientAPI.swift */,
-				970130DF21B07EC000E7CFEC /* SYWebAPI.swift */,
+				974D373A21B49D4800C0FDDE /* ClientAPI.swift */,
+				970130DF21B07EC000E7CFEC /* WebAPI.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -248,7 +248,7 @@
 		97EACC021BC2C32700382614 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				9771AB3621AF2BA4005DE97D /* SYPreferences.swift */,
+				9771AB3621AF2BA4005DE97D /* Preferences.swift */,
 			);
 			name = Storage;
 			sourceTree = "<group>";
@@ -332,12 +332,12 @@
 		F89867BF192BA8DC00735175 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9768CA6421B5770B000AA7C2 /* SYClient.swift */,
-				9768CA6621B57B33000AA7C2 /* SYClient+UI.swift */,
-				972589AC21B0AD6D00FCE9D5 /* SYError.swift */,
-				974D373121B1DF8600C0FDDE /* SYIPv4Address.swift */,
-				974D373321B1E2DA00C0FDDE /* SYIPv4Interface.swift */,
-				974D372921B150FC00C0FDDE /* SYSearchResult.swift */,
+				972589AC21B0AD6D00FCE9D5 /* AppError.swift */,
+				9768CA6421B5770B000AA7C2 /* Client.swift */,
+				9768CA6621B57B33000AA7C2 /* Client+UI.swift */,
+				974D373121B1DF8600C0FDDE /* IPv4Address.swift */,
+				974D373321B1E2DA00C0FDDE /* IPv4Interface.swift */,
+				974D372921B150FC00C0FDDE /* SearchResult.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -546,38 +546,38 @@
 			buildActionMask = 2147483647;
 			files = (
 				979D4A9621AF4335000BFDF0 /* NetService+SY.swift in Sources */,
-				974D373B21B49D4800C0FDDE /* SYClientAPI.swift in Sources */,
+				974D373B21B49D4800C0FDDE /* ClientAPI.swift in Sources */,
 				9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */,
 				97B4041522C5274F00C7A684 /* IconButtons.swift in Sources */,
-				974D373221B1DF8600C0FDDE /* SYIPv4Address.swift in Sources */,
-				97EC446321AF37330034C861 /* SYPinger.swift in Sources */,
+				974D373221B1DF8600C0FDDE /* IPv4Address.swift in Sources */,
+				97EC446321AF37330034C861 /* Pinger.swift in Sources */,
 				974D372C21B157CE00C0FDDE /* Fuzi+SY.swift in Sources */,
-				9768CA6721B57B33000AA7C2 /* SYClient+UI.swift in Sources */,
-				970130E021B07EC000E7CFEC /* SYWebAPI.swift in Sources */,
+				9768CA6721B57B33000AA7C2 /* Client+UI.swift in Sources */,
+				970130E021B07EC000E7CFEC /* WebAPI.swift in Sources */,
 				9768CA6321B55838000AA7C2 /* UIColor+SY.swift in Sources */,
-				9768CA6521B5770B000AA7C2 /* SYClient.swift in Sources */,
+				9768CA6521B5770B000AA7C2 /* Client.swift in Sources */,
 				9771AB2521AEF3CE005DE97D /* UIView+SY.swift in Sources */,
 				9771AB1F21AEE457005DE97D /* SYMagnetPopupVC.swift in Sources */,
 				974D373921B4999E00C0FDDE /* Sockets+SY.m in Sources */,
 				970130E421B08E1000E7CFEC /* Error+SY.swift in Sources */,
-				9771AB3A21AF319E005DE97D /* SYHostnameResolver.swift in Sources */,
+				9771AB3A21AF319E005DE97D /* HostnameResolver.swift in Sources */,
 				9771AB1321AEC919005DE97D /* SYMainVC.swift in Sources */,
 				9771AB2321AEF1A5005DE97D /* URL+SY.swift in Sources */,
 				9771AB3521AF0C59005DE97D /* SYClientFormCell.swift in Sources */,
 				9771AB2D21AEFF09005DE97D /* SYEditClientVC.swift in Sources */,
-				974D373421B1E2DA00C0FDDE /* SYIPv4Interface.swift in Sources */,
+				974D373421B1E2DA00C0FDDE /* IPv4Interface.swift in Sources */,
 				9771AB2921AEF898005DE97D /* SYNavigationController.swift in Sources */,
 				9771AB2F21AF0356005DE97D /* SYAddClientCell.swift in Sources */,
-				974D372A21B150FC00C0FDDE /* SYSearchResult.swift in Sources */,
+				974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */,
 				9771AB3321AF08E4005DE97D /* SYResultCell.swift in Sources */,
 				9747560A232AB4DA0038698E /* ViewController.swift in Sources */,
 				9771AB3121AF0534005DE97D /* SYClientCell.swift in Sources */,
-				972589AD21B0AD6D00FCE9D5 /* SYError.swift in Sources */,
+				972589AD21B0AD6D00FCE9D5 /* AppError.swift in Sources */,
 				97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */,
 				974D372E21B1D87300C0FDDE /* Calendar+SY.swift in Sources */,
-				979D4A9821AF4614000BFDF0 /* SYClientStatusManager.swift in Sources */,
+				979D4A9821AF4614000BFDF0 /* ClientStatusManager.swift in Sources */,
 				970130E221B084E500E7CFEC /* Alamofire+SY.swift in Sources */,
-				9771AB3721AF2BA4005DE97D /* SYPreferences.swift in Sources */,
+				9771AB3721AF2BA4005DE97D /* Preferences.swift in Sources */,
 				974D373021B1DDEE00C0FDDE /* UIViewController+SY.swift in Sources */,
 				9771AB2B21AEF901005DE97D /* SYDiscoverClientsVC.swift in Sources */,
 			);

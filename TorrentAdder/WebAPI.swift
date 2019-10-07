@@ -1,5 +1,5 @@
 //
-//  SYWebAPI.swift
+//  WebAPI.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 29/11/2018.
@@ -11,10 +11,10 @@ import Alamofire
 import Fuzi
 import BrightFutures
 
-class SYWebAPI: NSObject {
+class WebAPI: NSObject {
     
     // MARK: Init
-    static let shared = SYWebAPI()
+    static let shared = WebAPI()
     
     override init() {
         let configuration = URLSessionConfiguration.default
@@ -25,21 +25,21 @@ class SYWebAPI: NSObject {
         manager = Alamofire.SessionManager(configuration: configuration)
         
         super.init()
-        availableMirrorURLs = SYPreferences.shared.savedAvailableMirrors
+        availableMirrorURLs = Preferences.shared.savedAvailableMirrors
     }
     
     // MARK: Properties
     private var manager: SessionManager
     private var availableMirrorURLs = [URL]() {
         didSet {
-            SYPreferences.shared.savedAvailableMirrors = availableMirrorURLs
+            Preferences.shared.savedAvailableMirrors = availableMirrorURLs
             print("Using \(availableMirrorURLs.count) mirrors")
         }
     }
     private var magnetCache: [String: URL] = [:]
     
     // MARK: Update
-    func getLatestBuildNumber() -> Future<Int?, SYError> {
+    func getLatestBuildNumber() -> Future<Int?, AppError> {
         return manager
             .request("https://ota.syan.me/TorrentAdder.plist")
             .responseFutureData()
@@ -51,7 +51,7 @@ class SYWebAPI: NSObject {
     }
     
     // MARK: Methods
-    private func getMirror() -> Future<URL, SYError> {
+    private func getMirror() -> Future<URL, AppError> {
         if let mirrorURL = availableMirrorURLs.first {
             return .init(value: mirrorURL)
         }
@@ -60,7 +60,7 @@ class SYWebAPI: NSObject {
             .request("https://thepiratebay-proxylist.se/")
             .validate()
             .responseFutureHTML(XPathQuery: "//td[@title='URL']")
-            .flatMap { (elements) -> Future<URL, SYError> in
+            .flatMap { (elements) -> Future<URL, AppError> in
                 let URLs = elements
                     .compactMap { $0.attr("data-href") }
                     .compactMap { URL(string: $0) }
@@ -70,7 +70,7 @@ class SYWebAPI: NSObject {
                     return .init(value: mirrorURL)
                 }
                 else {
-                    return .init(error: SYError.noMirrorsFound)
+                    return .init(error: AppError.noMirrorsFound)
                 }
             }
     }
@@ -86,12 +86,12 @@ class SYWebAPI: NSObject {
         return try! urlComponents.asURL()
     }
     
-    func getResults(query: String) -> Future<[SYSearchResult], SYError> {
+    func getResults(query: String) -> Future<[SearchResult], AppError> {
         return getMirror()
             .map { mirror in self.getQueryURL(mirrorURL: mirror, query: query) }
             .flatMap { url in self.manager.request(url).validate().responseFutureHTML() }
-            .map { html in SYSearchResult.parseModels(html: html)  }
-            .recoverWith { (error) -> Future<[SYSearchResult], SYError> in
+            .map { html in SearchResult.parseModels(html: html)  }
+            .recoverWith { (error) -> Future<[SearchResult], AppError> in
                 if case let .alamofire(request) = error {
                     if request.isNotFoundError {
                         return .init(value: [])
@@ -112,24 +112,24 @@ class SYWebAPI: NSObject {
             }
     }
     
-    func getResultPageURL(_ result: SYSearchResult) -> Future<URL, SYError> {
+    func getResultPageURL(_ result: SearchResult) -> Future<URL, AppError> {
         return getMirror()
             .map { $0.appendingPathComponent(result.pagePath) }
     }
     
-    func getMagnet(for result: SYSearchResult) -> Future<URL, SYError> {
+    func getMagnet(for result: SearchResult) -> Future<URL, AppError> {
         if let url = magnetCache[result.pagePath] {
             return .init(value: url)
         }
 
         return getResultPageURL(result)
             .flatMap { url in self.manager.request(url).validate().responseFutureHTML() }
-            .flatMap { (html) -> Future<URL, SYError> in
-                if let url = SYSearchResult.parseMagnetURL(html: html) {
+            .flatMap { (html) -> Future<URL, AppError> in
+                if let url = SearchResult.parseMagnetURL(html: html) {
                     self.magnetCache[result.pagePath] = url
                     return .init(value: url)
                 }
-                return .init(error: SYError.noMagnetFound)
+                return .init(error: AppError.noMagnetFound)
         }
     }
 }

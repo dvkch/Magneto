@@ -1,5 +1,5 @@
 //
-//  SYError.swift
+//  AppError.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 30/11/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-enum SYError {
+enum AppError {
     case noMirrorsFound
     case noMagnetFound
     case noClientsSaved
@@ -20,7 +20,7 @@ enum SYError {
     case alamofire(_ request: AlamoDataResponseProtocol)
 }
 
-extension SYError : LocalizedError {
+extension AppError : LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noMirrorsFound:               return "error.noMirrorsFound".localized

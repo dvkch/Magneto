@@ -11,9 +11,9 @@ import Fuzi
 import BrightFutures
 
 extension URLRequest {
-    var client: SYClient? {
+    var client: Client? {
         guard let requestURL = self.url else { return nil }
-        for client in SYPreferences.shared.clients {
+        for client in Preferences.shared.clients {
             if requestURL.absoluteString.hasPrefix(client.apiURL.absoluteString) {
                 return client
             }
@@ -62,79 +62,79 @@ extension DataRequest {
 
 extension DataRequest {
     
-    func responseFutureData(queue: DispatchQueue? = .main) -> Future<Data, SYError> {
-        return Future<Data, SYError> { resolver in
+    func responseFutureData(queue: DispatchQueue? = .main) -> Future<Data, AppError> {
+        return Future<Data, AppError> { resolver in
             self.responseData(queue: queue, completionHandler: { (response) in
                 switch response.result {
                 case .success(let value):
                     resolver(.success(value))
                 case .failure:
-                    resolver(.failure(SYError.alamofire(response)))
+                    resolver(.failure(AppError.alamofire(response)))
                 }
             })
         }
     }
     
-    func responseFutureJSON(queue: DispatchQueue? = .main) -> Future<Any, SYError> {
-        return Future<Any, SYError> { resolver in
+    func responseFutureJSON(queue: DispatchQueue? = .main) -> Future<Any, AppError> {
+        return Future<Any, AppError> { resolver in
             self.responseJSON(queue: queue, completionHandler: { (response) in
                 switch response.result {
                 case .success(let value):
                     resolver(.success(value))
                 case .failure:
-                    resolver(.failure(SYError.alamofire(response)))
+                    resolver(.failure(AppError.alamofire(response)))
                 }
             })
         }
     }
     
-    func responseFutureCodable<T: Decodable>(queue: DispatchQueue? = .main, type: T.Type) -> Future<T, SYError> {
-        return Future<T, SYError> { resolver in
+    func responseFutureCodable<T: Decodable>(queue: DispatchQueue? = .main, type: T.Type) -> Future<T, AppError> {
+        return Future<T, AppError> { resolver in
             self.responseCodable(queue: queue, type: T.self, completionHandler: { (response) in
                 switch response.result {
                 case .success(let value):
                     resolver(.success(value))
                 case .failure:
-                    resolver(.failure(SYError.alamofire(response)))
+                    resolver(.failure(AppError.alamofire(response)))
                 }
             })
         }
     }
     
-    func responseFutureXML(queue: DispatchQueue? = .main) -> Future<XMLDocument, SYError> {
-        return Future<XMLDocument, SYError> { resolver in
+    func responseFutureXML(queue: DispatchQueue? = .main) -> Future<XMLDocument, AppError> {
+        return Future<XMLDocument, AppError> { resolver in
             self.responseXML(queue: queue, completionHandler: { (response) in
                 switch response.result {
                 case .success(let value):
                     resolver(.success(value))
                 case .failure:
-                    resolver(.failure(SYError.alamofire(response)))
+                    resolver(.failure(AppError.alamofire(response)))
                 }
             })
         }
     }
     
-    func responseFutureHTML(queue: DispatchQueue? = .main) -> Future<HTMLDocument, SYError> {
-        return Future<HTMLDocument, SYError> { resolver in
+    func responseFutureHTML(queue: DispatchQueue? = .main) -> Future<HTMLDocument, AppError> {
+        return Future<HTMLDocument, AppError> { resolver in
             self.responseHTML(queue: queue, completionHandler: { (response) in
                 switch response.result {
                 case .success(let value):
                     resolver(.success(value))
                 case .failure:
-                    resolver(.failure(SYError.alamofire(response)))
+                    resolver(.failure(AppError.alamofire(response)))
                 }
             })
         }
     }
 
-    func responseFutureHTML(queue: DispatchQueue? = .main, XPathQuery: String) -> Future<NodeSet, SYError> {
-        return Future<NodeSet, SYError> { resolver in
+    func responseFutureHTML(queue: DispatchQueue? = .main, XPathQuery: String) -> Future<NodeSet, AppError> {
+        return Future<NodeSet, AppError> { resolver in
             self.responseHTML(queue: queue, XPathQuery: XPathQuery, completionHandler: { (response) in
                 switch response.result {
                 case .success(let value):
                     resolver(.success(value))
                 case .failure:
-                    resolver(.failure(SYError.alamofire(response)))
+                    resolver(.failure(AppError.alamofire(response)))
                 }
             })
         }

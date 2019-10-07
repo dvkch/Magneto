@@ -1,5 +1,5 @@
 //
-//  SYClient+UI.swift
+//  Client+UI.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 03/12/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension SYClient {
+extension Client {
     enum FormField : CaseIterable {
         case name, host, port, software, username, password
         
@@ -66,7 +66,7 @@ extension SYClient {
     }
 }
 
-extension SYClient {
+extension Client {
     func stringValue(for field: FormField) -> String? {
         switch field {
         case .name:     return name

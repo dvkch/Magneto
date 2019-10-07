@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        SYHostnameResolver.shared.start()
+        HostnameResolver.shared.start()
         
         SVProgressHUD.setBackgroundColor(.accent)
         SVProgressHUD.setForegroundColor(.textOverAccent)
@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     private func checkUpdates() {
         let currentBuild = Int(Bundle.main.buildVersion) ?? 0
-        SYWebAPI.shared.getLatestBuildNumber()
+        WebAPI.shared.getLatestBuildNumber()
             .onSuccess { (value) in
                 guard let distBuildNumber = value else { return }
                 guard distBuildNumber > currentBuild else { return }
@@ -121,7 +121,7 @@ extension AppDelegate {
 
 // MARK: Authentication
 extension AppDelegate {
-    func promptAuthenticationUpdate(for client: SYClient, completion: @escaping (_ cancelled: Bool) -> Void) {
+    func promptAuthenticationUpdate(for client: Client, completion: @escaping (_ cancelled: Bool) -> Void) {
         if isShowingAuthAlertView {
             completion(true)
             return
@@ -158,7 +158,7 @@ extension AppDelegate {
         alert.addAction(title: "action.login".localized, style: .default) { (_) in
             client.username = alert.textFields?.first?.text
             client.password = alert.textFields?.last?.text
-            SYPreferences.shared.addClient(client)
+            Preferences.shared.addClient(client)
             self.isShowingAuthAlertView = false
             completion(false)
         }
