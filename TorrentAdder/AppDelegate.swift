@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SYHostnameResolver.shared.start()
         
         SVProgressHUD.setBackgroundColor(.accent)
-        SVProgressHUD.setForegroundColor(.background)
+        SVProgressHUD.setForegroundColor(.textOverAccent)
 
         let nc = SYNavigationController(rootViewController: mainVC)
         window = SYWindow.mainWindow(rootViewController: nc)
