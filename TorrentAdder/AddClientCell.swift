@@ -1,5 +1,5 @@
 //
-//  SYAddClientCell.swift
+//  AddClientCell.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import SYKit
 
-class SYAddClientCell : UITableViewCell {
+class AddClientCell : UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()

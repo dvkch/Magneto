@@ -1,5 +1,5 @@
 //
-//  SYMainVC.swift
+//  MainVC.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -12,7 +12,7 @@ import SafariServices
 import SVProgressHUD
 import SYPopoverController
 
-class SYMainVC: ViewController {
+class MainVC: ViewController {
 
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -34,9 +34,9 @@ class SYMainVC: ViewController {
         searchField.keyboardType = .default
         searchField.placeholder = "placeholder.search".localized
         
-        tableView.registerCell(SYAddClientCell.self)
-        tableView.registerCell(SYClientCell.self)
-        tableView.registerCell(SYResultCell.self)
+        tableView.registerCell(AddClientCell.self)
+        tableView.registerCell(ClientCell.self)
+        tableView.registerCell(ResultCell.self)
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
         
@@ -93,7 +93,7 @@ class SYMainVC: ViewController {
 }
 
 // MARK: Notifications
-extension SYMainVC {
+extension MainVC {
     
     @objc private func appDidOpenURLNotification(_ notif: Notification) {
         guard let magnetURL = notif.userInfo?[UIApplication.DidOpenURLKey.magnetURL] as? URL else { return }
@@ -103,7 +103,7 @@ extension SYMainVC {
 }
 
 // MARK: Timer
-extension SYMainVC {
+extension MainVC {
     
     @objc private func timerRefreshClientsStatusTick() {
         if view.window == nil { return }
@@ -114,7 +114,7 @@ extension SYMainVC {
 }
 
 // MARK: Actions
-extension SYMainVC {
+extension MainVC {
     @IBAction private func helpButtonTap() {
         let alert = UIAlertController(
             title: "alert.help.title".localized,
@@ -163,7 +163,7 @@ extension SYMainVC {
             return
         }
         
-        SYMagnetPopupVC.show(in: self, magnet: magnetURL, result: result)
+        MagnetPopupVC.show(in: self, magnet: magnetURL, result: result)
     }
     
     fileprivate func removeFinished(in client: Client) {
@@ -202,7 +202,7 @@ extension SYMainVC {
     }
 }
 
-extension SYMainVC : UISearchBarDelegate {
+extension MainVC : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // when tapping the clear button we need to make sure the search results are also reset
         if searchText.isEmpty {
@@ -220,13 +220,13 @@ extension SYMainVC : UISearchBarDelegate {
     }
 }
 
-extension SYMainVC : UIScrollViewDelegate {
+extension MainVC : UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         constraintHeaderHeight.constant = constraintHeaderHeightOriginalValue - min(0, scrollView.contentOffset.y)
     }
 }
 
-extension SYMainVC : UITableViewDataSource {
+extension MainVC : UITableViewDataSource {
     enum TableSection : Int, CaseIterable {
         case buttons, clients, results
     }
@@ -259,28 +259,28 @@ extension SYMainVC : UITableViewDataSource {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return UITableViewCell() }
         switch tableSection {
         case .buttons:
-            let cell = tableView.dequeueCell(SYAddClientCell.self, for: indexPath)
+            let cell = tableView.dequeueCell(AddClientCell.self, for: indexPath)
             cell.clientsCount = clients.count
             cell.addButtonTapBlock = { [weak self] in
-                let vc = SYDiscoverClientsVC()
-                let nc = SYNavigationController(rootViewController: vc)
+                let vc = DiscoverClientsVC()
+                let nc = NavigationController(rootViewController: vc)
                 self?.present(nc, animated: true, completion: nil)
             }
             return cell
         case .clients:
-            let cell = tableView.dequeueCell(SYClientCell.self, for: indexPath)
+            let cell = tableView.dequeueCell(ClientCell.self, for: indexPath)
             cell.client = clients[indexPath.row]
             cell.isDiscoveredClient = false
             return cell
         case .results:
-            let cell = tableView.dequeueCell(SYResultCell.self, for: indexPath)
+            let cell = tableView.dequeueCell(ResultCell.self, for: indexPath)
             cell.result = searchResults[indexPath.row]
             return cell
         }
     }
 }
 
-extension SYMainVC : UITableViewDelegate {
+extension MainVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return 0 }
         switch tableSection {
@@ -304,8 +304,8 @@ extension SYMainVC : UITableViewDelegate {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return }
         switch tableSection {
         case .buttons:
-            let vc = SYDiscoverClientsVC()
-            let nc = SYNavigationController(rootViewController: vc)
+            let vc = DiscoverClientsVC()
+            let nc = NavigationController(rootViewController: vc)
             present(nc, animated: true, completion: nil)
 
         case .clients:
@@ -344,7 +344,7 @@ extension SYMainVC : UITableViewDelegate {
             }
             removeFinishedAction.backgroundColor = .basicAction
             let editAction = UITableViewRowAction(style: .normal, title: "action.edit".localized) { [weak self] (_, _) in
-                let vc = SYEditClientVC()
+                let vc = EditClientVC()
                 vc.client = client
                 self?.navigationController?.pushViewController(vc, animated: true)
             }

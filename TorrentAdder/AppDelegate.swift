@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @objc var window: UIWindow?
     var isShowingAuthAlertView: Bool = false
-    private let mainVC = SYMainVC()
+    private let mainVC = MainVC()
 
     static var obtain: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SVProgressHUD.setBackgroundColor(.accent)
         SVProgressHUD.setForegroundColor(.textOverAccent)
 
-        let nc = SYNavigationController(rootViewController: mainVC)
+        let nc = NavigationController(rootViewController: mainVC)
         window = SYWindow.mainWindow(rootViewController: nc)
         #if DEBUG
         (window as? SYWindow)?.enableSlowAnimationsOnShake = true

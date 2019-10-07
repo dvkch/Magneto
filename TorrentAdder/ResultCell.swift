@@ -1,5 +1,5 @@
 //
-//  SYResultCell.swift
+//  ResultCell.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -10,7 +10,7 @@ import UIKit
 import NSDate_TimeAgo
 import SYKit
 
-class SYResultCell: UITableViewCell {
+class ResultCell: UITableViewCell {
 
     // MARK: Properties
     var result: SearchResult? {

@@ -1,5 +1,5 @@
 //
-//  SYClientFormCell.swift
+//  ClientFormCell.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SYClientFormCell: UITableViewCell {
+class ClientFormCell: UITableViewCell {
     
     // MARK: Init
     override func awakeFromNib() {
@@ -77,7 +77,7 @@ class SYClientFormCell: UITableViewCell {
     }
 }
 
-extension SYClientFormCell : UITextFieldDelegate {
+extension ClientFormCell : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         client?.setValue(textField.text ?? "", for: formField)
         textField.resignFirstResponder()

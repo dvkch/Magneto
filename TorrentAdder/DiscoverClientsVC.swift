@@ -1,5 +1,5 @@
 //
-//  SYDiscoverClientsVC.swift
+//  DiscoverClientsVC.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SYDiscoverClientsVC: ViewController {
+class DiscoverClientsVC: ViewController {
 
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -21,7 +21,7 @@ class SYDiscoverClientsVC: ViewController {
         progressView.trackTintColor = .background
         progressView.progressTintColor = .accent
         
-        tableView.registerCell(SYClientCell.self)
+        tableView.registerCell(ClientCell.self)
         tableView.tableFooterView = UIView()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.hostnameResolverUpdatedNotification), name: .hostnameResolverUpdated, object: nil)
@@ -95,7 +95,7 @@ class SYDiscoverClientsVC: ViewController {
     }
 }
 
-extension SYDiscoverClientsVC : UITableViewDataSource {
+extension DiscoverClientsVC : UITableViewDataSource {
     func client(at indexPath: IndexPath) -> Client? {
         guard indexPath.row < availableIPs.count else { return  nil }
         let host = availableIPs[indexPath.row]
@@ -108,7 +108,7 @@ extension SYDiscoverClientsVC : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueCell(SYClientCell.self, for: indexPath)
+        let cell = tableView.dequeueCell(ClientCell.self, for: indexPath)
         cell.isDiscoveredClient = true
         cell.client = client(at: indexPath)
         return cell
@@ -119,11 +119,11 @@ extension SYDiscoverClientsVC : UITableViewDataSource {
     }
 }
 
-extension SYDiscoverClientsVC : UITableViewDelegate {
+extension DiscoverClientsVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let vc = SYEditClientVC()
+        let vc = EditClientVC()
         vc.client = client(at: indexPath) ?? Client(host: "", name: nil)
         navigationController?.pushViewController(vc, animated: true)
     }

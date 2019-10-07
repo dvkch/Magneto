@@ -1,5 +1,5 @@
 //
-//  SYNavigationController.swift
+//  NavigationController.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SYNavigationController: UINavigationController {
+class NavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

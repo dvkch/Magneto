@@ -1,5 +1,5 @@
 //
-//  SYEditClientVC.swift
+//  EditClientVC.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -9,7 +9,7 @@
 import UIKit
 import SYKit
 
-class SYEditClientVC: ViewController {
+class EditClientVC: ViewController {
 
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -17,7 +17,7 @@ class SYEditClientVC: ViewController {
         isCreation = Preferences.shared.clientWithIdentifier(client.id) == nil
         title = isCreation ? "client.title.new".localized : "client.title.edit".localized
         
-        tableView.registerCell(SYClientFormCell.self)
+        tableView.registerCell(ClientFormCell.self)
         
         if isCreation {
             let footer = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 60))
@@ -81,20 +81,20 @@ class SYEditClientVC: ViewController {
     }
 }
 
-extension SYEditClientVC : UITableViewDataSource {
+extension EditClientVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Client.FormField.allCases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueCell(SYClientFormCell.self, for: indexPath)
+        let cell = tableView.dequeueCell(ClientFormCell.self, for: indexPath)
         cell.client = client
         cell.formField = Client.FormField.allCases[indexPath.row]
         return cell
     }
 }
 
-extension SYEditClientVC : UITableViewDelegate {
+extension EditClientVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }

@@ -1,5 +1,5 @@
 //
-//  SYMagnetPopupVC.swift
+//  MagnetPopupVC.swift
 //  TorrentAdder
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
@@ -9,11 +9,11 @@
 import UIKit
 import SYPopoverController
 
-class SYMagnetPopupVC: ViewController {
+class MagnetPopupVC: ViewController {
 
     // MARK: Presentation
     static func show(in viewController: UIViewController, magnet: URL?, result: SearchResult?) {
-        let popupVC = SYMagnetPopupVC()
+        let popupVC = MagnetPopupVC()
         popupVC.result = result
         popupVC.magnetURL = magnet
         
@@ -37,7 +37,7 @@ class SYMagnetPopupVC: ViewController {
         
         spinner.color = .accent
         
-        tableView.registerCell(SYClientCell.self)
+        tableView.registerCell(ClientCell.self)
         tableView.tableFooterView = UIView()
         
         cancelButton.setTitle("action.cancel".localized, for: .normal)
@@ -198,13 +198,13 @@ class SYMagnetPopupVC: ViewController {
     }
 }
 
-extension SYMagnetPopupVC : UITableViewDataSource {
+extension MagnetPopupVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return clients.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueCell(SYClientCell.self, for: indexPath)
+        let cell = tableView.dequeueCell(ClientCell.self, for: indexPath)
         cell.client = clients[indexPath.row]
         cell.isDiscoveredClient = false
         return cell
@@ -215,7 +215,7 @@ extension SYMagnetPopupVC : UITableViewDataSource {
     }
 }
 
-extension SYMagnetPopupVC : UITableViewDelegate {
+extension MagnetPopupVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
@@ -226,7 +226,7 @@ extension SYMagnetPopupVC : UITableViewDelegate {
     }
 }
 
-extension SYMagnetPopupVC : SYPopoverContentViewDelegate {
+extension MagnetPopupVC : SYPopoverContentViewDelegate {
     func popoverControllerShouldDismiss(onBackgroundTap popoverController: SYPopoverController!) -> Bool {
         return canClose
     }

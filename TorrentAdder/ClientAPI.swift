@@ -80,7 +80,7 @@ private extension ClientAPI {
     // https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
     // https://github.com/transmission/transmission/blob/1.70/doc/rpc-spec.txt
     
-    private struct SYTransmissionResponse: Decodable {
+    private struct TransmissionResponse: Decodable {
         struct Item : Decodable {
             let id: Int
             let doneDate: Int
@@ -116,7 +116,7 @@ private extension ClientAPI {
         return manager
             .request(client.apiURL, method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: nil)
             .validate()
-            .responseFutureCodable(type: SYTransmissionResponse.self)
+            .responseFutureCodable(type: TransmissionResponse.self)
             .map { $0.result }
     }
     
@@ -129,7 +129,7 @@ private extension ClientAPI {
         return manager
             .request(client.apiURL, method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: nil)
             .validate()
-            .responseFutureCodable(type: SYTransmissionResponse.self)
+            .responseFutureCodable(type: TransmissionResponse.self)
             .map { response in response.items.filter { $0.doneDate > 0 }.map { $0.id } }
     }
     
@@ -144,7 +144,7 @@ private extension ClientAPI {
         return manager
             .request(client.apiURL, method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: nil)
             .validate()
-            .responseFutureCodable(type: SYTransmissionResponse.self)
+            .responseFutureCodable(type: TransmissionResponse.self)
             .map { _ in ids.count }
     }
 }
@@ -155,7 +155,7 @@ private extension ClientAPI {
     // http://forum.utorrent.com/topic/21814-web-ui-api/#entry207447
     // http://forum.utorrent.com/topic/49588-%C2%B5torrent-webui/
     
-    private struct SYUTorretResponse: Decodable {
+    private struct UTorretResponse: Decodable {
         struct Item: Decodable {
             let hash: String
             let name: String
@@ -226,7 +226,7 @@ private extension ClientAPI {
         return manager
             .request(client.apiURL, parameters: parameters, encoding: URLEncoding(), headers: nil)
             .validate()
-            .responseFutureCodable(type: SYUTorretResponse.self)
+            .responseFutureCodable(type: UTorretResponse.self)
             .map { response in response.torrents.filter { $0.isFinished }.map { $0.hash } }
     }
     
