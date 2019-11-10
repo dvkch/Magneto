@@ -51,6 +51,10 @@ class WebAPI: NSObject {
     }
     
     // MARK: Methods
+    func clearMirrors() {
+        availableMirrorURLs = []
+    }
+    
     private func getMirror() -> Future<URL, AppError> {
         if let mirrorURL = availableMirrorURLs.first {
             return .init(value: mirrorURL)
@@ -59,8 +63,9 @@ class WebAPI: NSObject {
         return self.manager
             .request("https://thepiratebay-proxylist.se/")
             .validate()
-            .responseFutureHTML(XPathQuery: "//td[@title='URL']")
-            .flatMap { (elements) -> Future<URL, AppError> in
+            .responseFutureHTML()
+            .flatMap { (document) -> Future<URL, AppError> in
+                let elements = document.xpath("//td[@title='URL']")
                 let URLs = elements
                     .compactMap { $0.attr("data-href") }
                     .compactMap { URL(string: $0) }

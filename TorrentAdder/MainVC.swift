@@ -115,6 +115,14 @@ extension MainVC {
 
 // MARK: Actions
 extension MainVC {
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            WebAPI.shared.clearMirrors()
+            return
+        }
+        super.motionEnded(motion, with: event)
+    }
+    
     @IBAction private func helpButtonTap() {
         let alert = UIAlertController(
             title: "alert.help.title".localized,
