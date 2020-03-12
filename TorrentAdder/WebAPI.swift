@@ -68,13 +68,13 @@ class WebAPI: NSObject {
         }
         
         return self.manager
-            .request("https://thepiratebay-proxylist.se/")
+            .request("https://www.heypirateproxy.com/")
             .validate()
             .responseFutureHTML()
             .flatMap { (document) -> Future<URL, AppError> in
-                let elements = document.xpath("//td[@title='URL']")
+                let elements = document.xpath("//td[@class='column-url']/a")
                 let URLs = elements
-                    .compactMap { $0.attr("data-href") }
+                    .compactMap { $0.attr("href") }
                     .compactMap { URL(string: $0) }
                 
                 if let mirrorURL = URLs.first {
@@ -126,7 +126,12 @@ class WebAPI: NSObject {
     
     func getResultPageURL(_ result: SearchResult) -> Future<URL, AppError> {
         return getMirror()
-            .map { $0.appendingPathComponent(result.pagePath) }
+            .map { mirror in
+                let path = URLComponents(string: result.pagePath)?.path ?? result.pagePath
+                var components = URLComponents(url: mirror, resolvingAgainstBaseURL: true)!
+                components.path = path
+                return components.url!
+        }
     }
     
     func getMagnet(for result: SearchResult) -> Future<URL, AppError> {
