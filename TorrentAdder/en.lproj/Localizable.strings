@@ -65,3 +65,6 @@
 "error.noMirrorAnswered"        = "No available mirror could respond to the request";
 "error.clientOffline"           = "Client unavailable";
 "error.unknown"                 = "Unknown error";
+
+"mirror.current %@"             = "Mirror: %@";
+"mirror.none"                   = "No mirror";

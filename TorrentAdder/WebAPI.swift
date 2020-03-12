@@ -11,6 +11,10 @@ import Alamofire
 import Fuzi
 import BrightFutures
 
+extension Notification.Name {
+    static let mirrorsChanged = Notification.Name("WebAPI.mirrorsChanged")
+}
+
 class WebAPI: NSObject {
     
     // MARK: Init
@@ -30,9 +34,12 @@ class WebAPI: NSObject {
     
     // MARK: Properties
     private var manager: SessionManager
-    private var availableMirrorURLs = [URL]() {
+    private(set) var availableMirrorURLs = [URL]() {
         didSet {
             Preferences.shared.savedAvailableMirrors = availableMirrorURLs
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .mirrorsChanged, object: nil)
+            }
             print("Using \(availableMirrorURLs.count) mirrors")
         }
     }

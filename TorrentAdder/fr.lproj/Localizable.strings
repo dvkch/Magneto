@@ -65,3 +65,6 @@
 "error.noMirrorAnswered"        = "Aucun miroir disponible pour répondre à cette requête";
 "error.clientOffline"           = "Client indisponible";
 "error.unknown"                 = "Erreur inconnue";
+
+"mirror.current %@"             = "Miroir: %@";
+"mirror.none"                   = "Aucun miroir";

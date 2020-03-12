@@ -18,7 +18,8 @@ class MainVC: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.appDidOpenURLNotification(_:)), name: .didOpenURL, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.mirrorsChanged), name: .mirrorsChanged, object: nil)
+
         timerRefreshClientsStatus = Timer(timeInterval: 5, target: self, selector: #selector(self.timerRefreshClientsStatusTick), userInfo: nil, repeats: true)
         RunLoop.main.add(timerRefreshClientsStatus!, forMode: .common)
 
@@ -28,6 +29,10 @@ class MainVC: ViewController {
         spinner.radius = 13
         spinner.strokeThickness = 3
         spinner.isHidden = true
+        
+        mirrorLabelContainer.layer.cornerRadius = 3
+        mirrorLabelContainer.layer.masksToBounds = true
+        mirrorsChanged()
 
         searchField.textField?.backgroundColor = .fieldBackground
         searchField.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
@@ -81,6 +86,8 @@ class MainVC: ViewController {
     @IBOutlet private var constraintHeaderHeight: NSLayoutConstraint!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var spinner: SVIndefiniteAnimatedView!
+    @IBOutlet private var mirrorLabelContainer: UIView!
+    @IBOutlet private var mirrorLabel: UILabel!
     @IBOutlet private var searchField: UISearchBar!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var helpButton: HelpButton!
@@ -100,6 +107,13 @@ extension MainVC {
         openTorrentPopup(with: magnetURL, or: nil)
     }
     
+    @objc private func mirrorsChanged() {
+        if let host = WebAPI.shared.availableMirrorURLs.first?.host {
+            mirrorLabel.text = String(format: "mirror.current %@".localized, host)
+        } else {
+            mirrorLabel.text = "mirror.none".localized
+        }
+    }
 }
 
 // MARK: Timer
