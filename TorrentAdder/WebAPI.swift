@@ -127,7 +127,7 @@ class WebAPI: NSObject {
     func getResultPageURL(_ result: SearchResult) -> Future<URL, AppError> {
         return getMirror()
             .map { mirror in
-                let path = URLComponents(string: result.pagePath)?.path ?? result.pagePath
+                let path = URL(string: result.pagePath)?.path ?? result.pagePath
                 var components = URLComponents(url: mirror, resolvingAgainstBaseURL: true)!
                 components.path = path
                 return components.url!
