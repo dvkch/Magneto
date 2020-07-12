@@ -20,20 +20,18 @@ class ClientAPI: NSObject {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 10
         configuration.timeoutIntervalForResource = 10
-        manager = Alamofire.SessionManager(configuration: configuration)
         super.init()
-        manager.adapter = self
-        manager.retrier = self
+        session = Alamofire.Session(configuration: configuration, interceptor: self)
     }
     
     // MARK: Properties
-    private let manager: SessionManager
-    private var pendingAuthentications = [String: [RequestRetryCompletion]]()
+    private var session: Session!
+    private var pendingAuthentications = [String: [(RetryResult) -> Void]]()
     private var transmissionSessionIDs = [String: String]()
     
     // MARK: Public methods
     func getClientStatus(_ client: Client) -> Future<Bool, Never> {
-        return manager.request(client.apiURL)
+        return session.request(client.apiURL)
             .validate()
             .responseFutureData()
             .map { _ in true }
@@ -113,7 +111,7 @@ private extension ClientAPI {
             "arguments": ["filename": magnetURL.absoluteString]
             ]
             
-        return manager
+        return session
             .request(client.apiURL, method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: nil)
             .validate()
             .responseFutureCodable(type: TransmissionResponse.self)
@@ -126,7 +124,7 @@ private extension ClientAPI {
             "arguments": ["fields": ["id", "doneDate", "name"]]
         ]
         
-        return manager
+        return session
             .request(client.apiURL, method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: nil)
             .validate()
             .responseFutureCodable(type: TransmissionResponse.self)
@@ -141,7 +139,7 @@ private extension ClientAPI {
             "arguments": ["ids": ids, "delete-local-data": false]
         ]
         
-        return manager
+        return session
             .request(client.apiURL, method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: nil)
             .validate()
             .responseFutureCodable(type: TransmissionResponse.self)
@@ -191,7 +189,7 @@ private extension ClientAPI {
     
 
     private func getUTorrentToken(_ client: Client) -> Future<String, AppError> {
-        return manager
+        return session
             .request(client.apiURL.appendingPathComponent("token.html"))
             .validate()
             .responseFutureHTML()
@@ -210,7 +208,7 @@ private extension ClientAPI {
             "s": magnetURL.absoluteString
         ]
         
-        return manager
+        return session
             .request(client.apiURL, parameters: parameters, encoding: URLEncoding(), headers: nil)
             .validate()
             .responseFutureJSON()
@@ -223,7 +221,7 @@ private extension ClientAPI {
             "list": 1
         ]
         
-        return manager
+        return session
             .request(client.apiURL, parameters: parameters, encoding: URLEncoding(), headers: nil)
             .validate()
             .responseFutureCodable(type: UTorretResponse.self)
@@ -246,7 +244,7 @@ private extension ClientAPI {
             "hash": hash
         ]
 
-        return manager
+        return session
             .request(client.apiURL, parameters: parameters, encoding: URLEncoding(), headers: nil)
             .validate()
             .responseFutureJSON()
@@ -254,9 +252,11 @@ private extension ClientAPI {
     }
 }
 
-extension ClientAPI : RequestAdapter {
-    func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
-        guard let client = urlRequest.client else { return urlRequest }
+extension ClientAPI : RequestInterceptor {
+    
+    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        guard let client = urlRequest.client else { return completion(.success(urlRequest)) }
+
         var request = urlRequest
         if let u = client.username, let p = client.password, let base64 = "\(u):\(p)".data(using: .utf8)?.base64EncodedString() {
             request.setValue("Basic " + base64, forHTTPHeaderField: "Authorization")
@@ -264,14 +264,12 @@ extension ClientAPI : RequestAdapter {
         if let sessionID = transmissionSessionIDs[client.id] {
             request.setValue(sessionID, forHTTPHeaderField: "X-Transmission-Session-Id")
         }
-        return request
+        completion(.success(request))
     }
-}
 
-extension ClientAPI : RequestRetrier {
-    func should(_ manager: SessionManager, retry request: Request, with error: Error, completion: @escaping RequestRetryCompletion) {
+    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         guard let client = request.request?.client, request.retryCount < 5 else {
-            completion(false, 0)
+            completion(.doNotRetry)
             return
         }
         
@@ -279,7 +277,7 @@ extension ClientAPI : RequestRetrier {
             let sessionID = request.response?.allHeaderFields["X-Transmission-Session-Id"] as? String
         {
             transmissionSessionIDs[client.id] = sessionID
-            completion(true, 0.1)
+            completion(.retryWithDelay(0.1))
             return
         }
 
@@ -297,17 +295,17 @@ extension ClientAPI : RequestRetrier {
                     self.pendingAuthentications.removeValue(forKey: client.id)
                     
                     if cancelled {
-                        completions.forEach { $0(false, 0) }
+                        completions.forEach { $0(.doNotRetry) }
                     }
                     else {
-                        completions.forEach { $0(true, 0.1) }
+                        completions.forEach { $0(.retryWithDelay(0.1)) }
                     }
                 }
             }
             return
         }
         
-        completion(false, 0)
+        completion(.doNotRetry)
     }
 }
 

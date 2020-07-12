@@ -28,33 +28,33 @@ extension URLRequest {
 extension DataRequest {
     
     @discardableResult
-    func responseCodable<T: Decodable>(queue: DispatchQueue? = .main, type: T.Type, completionHandler: @escaping (DataResponse<T>) -> Void) -> Self {
+    func responseCodable<T: Decodable>(queue: DispatchQueue = .main, type: T.Type, completionHandler: @escaping (DataResponse<T, Error>) -> Void) -> Self {
         return responseData(queue: queue) { (responseData) in
-            let responseCodable = responseData.flatMap { try JSONDecoder().decode(T.self, from: $0) }
+            let responseCodable = responseData.tryMap { try JSONDecoder().decode(T.self, from: $0) }
             completionHandler(responseCodable)
         }
     }
     
     @discardableResult
-    func responseXML(queue: DispatchQueue? = .main, completionHandler: @escaping (DataResponse<XMLDocument>) -> Void) -> Self {
+    func responseXML(queue: DispatchQueue = .main, completionHandler: @escaping (DataResponse<XMLDocument, Error>) -> Void) -> Self {
         return responseData(queue: queue) { (responseData) in
-            let responseXML = responseData.flatMap { try XMLDocument(data: $0) }
+            let responseXML = responseData.tryMap { try XMLDocument(data: $0) }
             completionHandler(responseXML)
         }
     }
 
     @discardableResult
-    func responseHTML(queue: DispatchQueue? = .main, completionHandler: @escaping (DataResponse<HTMLDocument>) -> Void) -> Self {
+    func responseHTML(queue: DispatchQueue = .main, completionHandler: @escaping (DataResponse<HTMLDocument, Error>) -> Void) -> Self {
         return responseData(queue: queue) { (responseData) in
-            let responseHTML = responseData.flatMap { try HTMLDocument(data: $0) }
+            let responseHTML = responseData.tryMap { try HTMLDocument(data: $0) }
             completionHandler(responseHTML)
         }
     }
 
     @discardableResult
-    func responseHTML(queue: DispatchQueue? = .main, XPathQuery: String, completionHandler: @escaping (DataResponse<NodeSet>) -> Void) -> Self {
+    func responseHTML(queue: DispatchQueue = .main, XPathQuery: String, completionHandler: @escaping (DataResponse<NodeSet, Error>) -> Void) -> Self {
         return responseData(queue: queue) { (responseData) in
-            let responseHTML = responseData.flatMap { try HTMLDocument(data: $0).xpath(XPathQuery) }
+            let responseHTML = responseData.tryMap { try HTMLDocument(data: $0).xpath(XPathQuery) }
             completionHandler(responseHTML)
         }
     }
@@ -62,7 +62,7 @@ extension DataRequest {
 
 extension DataRequest {
     
-    func responseFutureData(queue: DispatchQueue? = .main) -> Future<Data, AppError> {
+    func responseFutureData(queue: DispatchQueue = .main) -> Future<Data, AppError> {
         return Future<Data, AppError> { resolver in
             self.responseData(queue: queue, completionHandler: { (response) in
                 switch response.result {
@@ -75,7 +75,7 @@ extension DataRequest {
         }
     }
     
-    func responseFutureJSON(queue: DispatchQueue? = .main) -> Future<Any, AppError> {
+    func responseFutureJSON(queue: DispatchQueue = .main) -> Future<Any, AppError> {
         return Future<Any, AppError> { resolver in
             self.responseJSON(queue: queue, completionHandler: { (response) in
                 switch response.result {
@@ -88,7 +88,7 @@ extension DataRequest {
         }
     }
     
-    func responseFutureCodable<T: Decodable>(queue: DispatchQueue? = .main, type: T.Type) -> Future<T, AppError> {
+    func responseFutureCodable<T: Decodable>(queue: DispatchQueue = .main, type: T.Type) -> Future<T, AppError> {
         return Future<T, AppError> { resolver in
             self.responseCodable(queue: queue, type: T.self, completionHandler: { (response) in
                 switch response.result {
@@ -101,7 +101,7 @@ extension DataRequest {
         }
     }
     
-    func responseFutureXML(queue: DispatchQueue? = .main) -> Future<XMLDocument, AppError> {
+    func responseFutureXML(queue: DispatchQueue = .main) -> Future<XMLDocument, AppError> {
         return Future<XMLDocument, AppError> { resolver in
             self.responseXML(queue: queue, completionHandler: { (response) in
                 switch response.result {
@@ -114,7 +114,7 @@ extension DataRequest {
         }
     }
     
-    func responseFutureHTML(queue: DispatchQueue? = .main) -> Future<HTMLDocument, AppError> {
+    func responseFutureHTML(queue: DispatchQueue = .main) -> Future<HTMLDocument, AppError> {
         return Future<HTMLDocument, AppError> { resolver in
             self.responseHTML(queue: queue, completionHandler: { (response) in
                 switch response.result {
@@ -127,7 +127,7 @@ extension DataRequest {
         }
     }
 
-    func responseFutureHTML(queue: DispatchQueue? = .main, XPathQuery: String) -> Future<NodeSet, AppError> {
+    func responseFutureHTML(queue: DispatchQueue = .main, XPathQuery: String) -> Future<NodeSet, AppError> {
         return Future<NodeSet, AppError> { resolver in
             self.responseHTML(queue: queue, XPathQuery: XPathQuery, completionHandler: { (response) in
                 switch response.result {

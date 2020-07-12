@@ -26,14 +26,14 @@ class WebAPI: NSObject {
         configuration.timeoutIntervalForResource = 20
         // ignore cache for update management
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-        manager = Alamofire.SessionManager(configuration: configuration)
+        session = Alamofire.Session(configuration: configuration)
         
         super.init()
         availableMirrorURLs = Preferences.shared.savedAvailableMirrors
     }
     
     // MARK: Properties
-    private var manager: SessionManager
+    private var session: Session
     private(set) var availableMirrorURLs = [URL]() {
         didSet {
             Preferences.shared.savedAvailableMirrors = availableMirrorURLs
@@ -47,7 +47,7 @@ class WebAPI: NSObject {
     
     // MARK: Update
     func getLatestBuildNumber() -> Future<Int?, AppError> {
-        return manager
+        return session
             .request("https://ota.syan.me/TorrentAdder.plist")
             .responseFutureData()
             .map { (data) -> Int? in
@@ -67,7 +67,7 @@ class WebAPI: NSObject {
             return .init(value: mirrorURL)
         }
         
-        return self.manager
+        return self.session
             .request("https://www.heypirateproxy.com/")
             .validate()
             .responseFutureHTML()
@@ -101,7 +101,7 @@ class WebAPI: NSObject {
     func getResults(query: String) -> Future<[SearchResult], AppError> {
         return getMirror()
             .map { mirror in self.getQueryURL(mirrorURL: mirror, query: query) }
-            .flatMap { url in self.manager.request(url).validate().responseFutureHTML() }
+            .flatMap { url in self.session.request(url).validate().responseFutureHTML() }
             .map { html in SearchResult.parseModels(html: html)  }
             .recoverWith { (error) -> Future<[SearchResult], AppError> in
                 if case let .alamofire(request) = error {
@@ -140,7 +140,7 @@ class WebAPI: NSObject {
         }
 
         return getResultPageURL(result)
-            .flatMap { url in self.manager.request(url).validate().responseFutureHTML() }
+            .flatMap { url in self.session.request(url).validate().responseFutureHTML() }
             .flatMap { (html) -> Future<URL, AppError> in
                 if let url = SearchResult.parseMagnetURL(html: html) {
                     self.magnetCache[result.pagePath] = url

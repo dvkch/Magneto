@@ -85,7 +85,7 @@ extension AppDelegate {
                 
                 let alert = UIAlertController(title: "alert.update.title".localized, message: "alert.update.message".localized, preferredStyle: .alert)
                 alert.addAction(title: "action.update".localized, style: .default) { _ in
-                    UIApplication.shared.openURL(URL(string: "https://ota.syan.me/")!)
+                    UIApplication.shared.open(URL(string: "https://ota.syan.me/")!, options: [:], completionHandler: nil)
                 }
                 alert.addAction(title: "action.cancel".localized, style: .cancel, handler: nil)
                 self.mainVC.present(alert, animated: true, completion: nil)

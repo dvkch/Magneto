@@ -30,25 +30,29 @@ extension AppError : LocalizedError {
         case .invalidUTorrentPayload:       return "error.invalidUTorrentPayload".localized
         case .noMirrorAnswered:             return "error.noMirrorAnswered".localized
         case .clientOffline:                return "error.clientOffline".localized
-        case .alamofire(let response):      return response.error?.localizedDescription ?? "error.unknown".localized
+        case .alamofire(let response):      return response.untypedError?.localizedDescription ?? "error.unknown".localized
         }
     }
 }
 
 // MARK: Alamofire reponse handling
 protocol AlamoDataResponseProtocol {
-    var error: Error? { get }
+    var untypedError: Error? { get }
     var response: HTTPURLResponse? { get }
 }
 
-extension DataResponse : AlamoDataResponseProtocol { }
+extension DataResponse : AlamoDataResponseProtocol {
+    var untypedError: Error? {
+        error
+    }
+}
 
 extension AlamoDataResponseProtocol {
     var isUnreachable: Bool {
         if (response?.statusCode ?? 0) >= 500 {
             return true
         }
-        if error?.isNSError(domain: NSURLErrorDomain, codes: [NSURLErrorTimedOut, NSURLErrorCannotFindHost]) == true {
+        if untypedError?.isNSError(domain: NSURLErrorDomain, codes: [NSURLErrorTimedOut, NSURLErrorCannotFindHost]) == true {
             return true
         }
         return false
