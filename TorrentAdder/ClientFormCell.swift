@@ -61,6 +61,7 @@ class ClientFormCell: UITableViewCell {
                 segmentedControl.insertSegment(withTitle: options[index], at: index, animated: false)
             }
             segmentedControl.selectedSegmentIndex = client.intValue(for: formField) ?? 0
+            segmentedControl.setTitleTextAttributes([.font: UIFont.preferredFont(forTextStyle: .body)], for: .normal)
         }
         else {
             textField.isHidden = false

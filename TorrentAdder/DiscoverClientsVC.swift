@@ -33,7 +33,11 @@ class DiscoverClientsVC: ViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        startPinging()
+        
+        // don't block UI
+        DispatchQueue.main.async {
+            self.startPinging()
+        }
     }
     
     // MARK: Properties

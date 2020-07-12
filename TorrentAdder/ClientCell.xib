@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,23 +16,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="293" height="60"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Add a custom client" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUD-Uw-XYl">
-                        <rect key="frame" x="44" y="12" width="160" height="22"/>
+                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Add a custom client" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUD-Uw-XYl">
+                        <rect key="frame" x="44" y="12" width="242" height="20.5"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="22" id="2Dy-ZY-MiK"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <color key="textColor" red="0.10000000149011612" green="0.10000000149011612" blue="0.10000000149011612" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="in case it wasn't automatically detected" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcZ-vp-eeR">
-                        <rect key="frame" x="44" y="34" width="224" height="15"/>
+                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="in case it wasn't automatically detected" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcZ-vp-eeR">
+                        <rect key="frame" x="44" y="32.5" width="242" height="15.5"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="15" id="oim-4z-cuJ"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                         <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -54,11 +48,14 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="4jQ-7L-moG" firstAttribute="centerY" secondItem="Y4r-Aq-C6z" secondAttribute="centerY" id="4ua-U1-zsn"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="hcZ-vp-eeR" secondAttribute="trailing" id="Cl6-20-FlF"/>
                     <constraint firstItem="hcZ-vp-eeR" firstAttribute="leading" secondItem="Y4r-Aq-C6z" secondAttribute="leading" constant="44" id="CvP-IP-ap3"/>
                     <constraint firstItem="4jQ-7L-moG" firstAttribute="leading" secondItem="Y4r-Aq-C6z" secondAttribute="leading" constant="11" id="I5e-fV-hPl"/>
                     <constraint firstItem="tPf-93-i9H" firstAttribute="centerX" secondItem="4jQ-7L-moG" secondAttribute="centerX" id="ZqI-W9-FIg"/>
                     <constraint firstItem="tPf-93-i9H" firstAttribute="centerY" secondItem="4jQ-7L-moG" secondAttribute="centerY" id="bDO-af-Vhs"/>
                     <constraint firstItem="hcZ-vp-eeR" firstAttribute="top" secondItem="pUD-Uw-XYl" secondAttribute="bottom" id="fdf-k8-Yc2"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="pUD-Uw-XYl" secondAttribute="trailing" id="ptk-jb-fTe"/>
+                    <constraint firstAttribute="bottom" secondItem="hcZ-vp-eeR" secondAttribute="bottom" constant="12" id="xnZ-0H-YvM"/>
                     <constraint firstItem="pUD-Uw-XYl" firstAttribute="top" secondItem="Y4r-Aq-C6z" secondAttribute="top" constant="12" id="y6N-z4-CCa"/>
                     <constraint firstItem="pUD-Uw-XYl" firstAttribute="leading" secondItem="Y4r-Aq-C6z" secondAttribute="leading" constant="44" id="zlA-lz-tfg"/>
                 </constraints>

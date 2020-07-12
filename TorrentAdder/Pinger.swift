@@ -57,7 +57,7 @@ class Pinger: NSObject {
     }
     
     private func executeQueue() {
-        while runningIPs.count < 64 {
+        while runningIPs.count < 30 {
             guard !isCancelled && !queuedIPs.isEmpty else { return }
             
             let ip = queuedIPs.removeFirst()

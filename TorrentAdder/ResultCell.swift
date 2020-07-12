@@ -30,7 +30,7 @@ class ResultCell: UITableViewCell {
         }
         
         var dateString = result.age ?? ""
-        var dateFont = UIFont.systemFont(ofSize: 14)
+        var dateFont = UIFont.preferredFont(forTextStyle: .caption1)
         if let date = result.parsedDate {
             let twoMonths: TimeInterval = 1440 * 3600
             dateString = (date as NSDate).timeAgo(withLimit: twoMonths, dateFormat: .medium, andTimeFormat: .none)
@@ -45,16 +45,16 @@ class ResultCell: UITableViewCell {
         
         let string = NSMutableAttributedString()
         
-        string.append(result.name + "\n", font: UIFont.systemFont(ofSize: 16), color: .text)
+        string.append(result.name + "\n", font: .preferredFont(forTextStyle: .body), color: .text)
         if let size = result.size {
-            string.append(size + ", ", font: UIFont.systemFont(ofSize: 15), color: .subtext)
+            string.append(size + ", ", font: .preferredFont(forTextStyle: .body), color: .subtext)
         }
         string.append(dateString + ", ", font: dateFont, color: .subtext)
-        string.append(String(result.seed), font: UIFont.systemFont(ofSize: 14), color: .seeder)
-        string.append("/", font: UIFont.systemFont(ofSize: 14), color: .gray)
-        string.append(String(result.leech), font: UIFont.systemFont(ofSize: 14), color: .leechers)
+        string.append(String(result.seed), font: .preferredFont(forTextStyle: .caption1), color: .seeder)
+        string.append("/", font: .preferredFont(forTextStyle: .caption1), color: .gray)
+        string.append(String(result.leech), font: .preferredFont(forTextStyle: .caption1), color: .leechers)
         if result.verified {
-            string.append(" ✔️", font: UIFont.systemFont(ofSize: 12), color: nil)
+            string.append(" ✔️", font: .preferredFont(forTextStyle: .caption2), color: nil)
         }
         
         label.attributedText = string

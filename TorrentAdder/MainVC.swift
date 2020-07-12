@@ -302,22 +302,13 @@ extension MainVC : UITableViewDataSource {
 }
 
 extension MainVC : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let tableSection = TableSection(rawValue: indexPath.section) else { return 0 }
-        switch tableSection {
-        case .buttons: return 60
-        case .clients: return 60
-        case .results: return 80
-        }
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return 40
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let tableSection = TableSection(rawValue: indexPath.section) else { return 0 }
-        switch tableSection {
-        case .buttons: return 60
-        case .clients: return 60
-        case .results: return UITableView.automaticDimension
-        }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard self.tableView(tableView, titleForHeaderInSection: section) != nil else { return 0 }
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -341,7 +332,7 @@ extension MainVC : UITableViewDelegate {
             if #available(iOS 13.0, *) {
                 vc.preferredBarTintColor = UIColor.accent.resolvedColor(with: traitCollection)
                 vc.preferredControlTintColor = UIColor.text.resolvedColor(with: traitCollection)
-            } else if #available(iOS 10, *) {
+            } else {
                 vc.preferredBarTintColor = UIColor.accent
                 vc.preferredControlTintColor = UIColor.text
             }

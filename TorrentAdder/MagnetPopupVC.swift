@@ -33,8 +33,6 @@ class MagnetPopupVC: ViewController {
         view.layer.cornerRadius = 6
         view.layer.masksToBounds = true
         
-        preferredContentSize = CGSize(width: 300, height: 250)
-        
         spinner.color = .accent
         
         tableView.registerCell(ClientCell.self)
@@ -44,7 +42,7 @@ class MagnetPopupVC: ViewController {
         closeButton.setTitle("action.close".localized, for: .normal)
         
         for button in [cancelButton!, closeButton!] {
-            button.titleLabel?.font = .boldSystemFont(ofSize: button.titleLabel?.font.pointSize ?? 16)
+            button.titleLabel?.font = .boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize)
             button.backgroundColor = .background
             button.setTitleColor(.accent, for: .normal)
             button.setTitleColor(.text, for: .highlighted)
@@ -196,6 +194,12 @@ class MagnetPopupVC: ViewController {
             }
         }
     }
+    
+    // MARK: Layout
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        preferredContentSize = CGSize(width: max(300, view.frame.size.width - 40), height: 400)
+    }
 }
 
 extension MagnetPopupVC : UITableViewDataSource {
@@ -216,10 +220,6 @@ extension MagnetPopupVC : UITableViewDataSource {
 }
 
 extension MagnetPopupVC : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         fetchMagnetURLAndAdd(to: clients[indexPath.row])

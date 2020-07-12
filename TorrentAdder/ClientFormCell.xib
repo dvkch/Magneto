@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,9 +16,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="510" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="information" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l35-SY-mm1">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="information" textAlignment="right" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l35-SY-mm1">
                         <rect key="frame" x="46" y="0.0" width="456" height="44"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                         <connections>
                             <action selector="textFieldEditingChanged" destination="KGk-i7-Jjw" eventType="editingChanged" id="A0V-Fc-NVI"/>
@@ -42,16 +42,26 @@
                             <constraint firstAttribute="width" constant="40" id="7Pm-fH-ehy"/>
                         </constraints>
                     </imageView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sizing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2R-Js-2eG">
+                        <rect key="frame" x="15" y="12" width="47" height="20.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
+                    <constraint firstItem="FFZ-hf-NzI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oqo-Jv-I0U" secondAttribute="trailing" constant="8" id="IkY-u9-zbX"/>
                     <constraint firstItem="l35-SY-mm1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="46" id="K2R-lU-gOj"/>
                     <constraint firstAttribute="trailing" secondItem="l35-SY-mm1" secondAttribute="trailing" constant="8" id="Mv9-Db-65A"/>
+                    <constraint firstItem="C2R-Js-2eG" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Q4u-4J-bPm"/>
                     <constraint firstItem="FFZ-hf-NzI" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="SNs-Lh-I4l"/>
                     <constraint firstItem="FFZ-hf-NzI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Wqw-d7-Dpn"/>
+                    <constraint firstItem="C2R-Js-2eG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ZqM-Cm-YFo"/>
                     <constraint firstItem="l35-SY-mm1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="apR-CA-C94"/>
                     <constraint firstItem="l35-SY-mm1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hYg-Ln-Hl5"/>
                     <constraint firstItem="oqo-Jv-I0U" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rTA-lX-Zlq"/>
+                    <constraint firstItem="C2R-Js-2eG" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="w8m-fh-9LJ"/>
                     <constraint firstItem="oqo-Jv-I0U" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="2" id="xde-kG-8hG"/>
                     <constraint firstAttribute="bottom" secondItem="l35-SY-mm1" secondAttribute="bottom" id="zzR-RY-qDZ"/>
                 </constraints>
