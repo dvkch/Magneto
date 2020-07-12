@@ -43,7 +43,7 @@ class WebAPI: NSObject {
             print("Using \(availableMirrorURLs.count) mirrors")
         }
     }
-    private var magnetCache: [String: URL] = [:]
+    private var magnetCache: [URL: URL] = [:]
     
     // MARK: Update
     func getLatestBuildNumber() -> Future<Int?, AppError> {
@@ -89,7 +89,7 @@ class WebAPI: NSObject {
     
     private func getQueryURL(mirrorURL: URL, query: String) -> URL {
         var urlComponents = URLComponents(url: mirrorURL, resolvingAgainstBaseURL: true)!
-        urlComponents.path = "/s/"
+        urlComponents.path = "/search"
         urlComponents.queryItems = [
             URLQueryItem(name: "q", value: query),
             URLQueryItem(name: "page", value: String(0)),
@@ -127,15 +127,14 @@ class WebAPI: NSObject {
     func getResultPageURL(_ result: SearchResult) -> Future<URL, AppError> {
         return getMirror()
             .map { mirror in
-                let path = URL(string: result.pagePath)?.path ?? result.pagePath
                 var components = URLComponents(url: mirror, resolvingAgainstBaseURL: true)!
-                components.path = path
+                components.path = result.pageURL.path
                 return components.url!
         }
     }
     
     func getMagnet(for result: SearchResult) -> Future<URL, AppError> {
-        if let url = magnetCache[result.pagePath] {
+        if let url = result.magnetURL ?? magnetCache[result.pageURL] {
             return .init(value: url)
         }
 
@@ -143,7 +142,7 @@ class WebAPI: NSObject {
             .flatMap { url in self.session.request(url).validate().responseFutureHTML() }
             .flatMap { (html) -> Future<URL, AppError> in
                 if let url = SearchResult.parseMagnetURL(html: html) {
-                    self.magnetCache[result.pagePath] = url
+                    self.magnetCache[result.pageURL] = url
                     return .init(value: url)
                 }
                 return .init(error: AppError.noMagnetFound)

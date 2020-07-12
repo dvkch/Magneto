@@ -29,17 +29,21 @@ class ResultCell: UITableViewCell {
             return
         }
         
-        var dateString = result.age ?? ""
+        let df = DateFormatter()
+        df.dateStyle = .medium
+        df.timeStyle = .none
+        var dateString = result.date.map { df.string(from: $0) } ?? ""
         var dateFont = UIFont.preferredFont(forTextStyle: .caption1)
-        if let date = result.parsedDate {
+        
+        if let date = result.date {
             let twoMonths: TimeInterval = 1440 * 3600
             dateString = (date as NSDate).timeAgo(withLimit: twoMonths, dateFormat: .medium, andTimeFormat: .none)
             
             if fabs(date.timeIntervalSinceNow) < 48 * 3600 {
-                dateFont = UIFont.systemFont(ofSize: 14, weight: .bold)
+                dateFont = UIFont.systemFont(ofSize: dateFont.pointSize, weight: .bold)
             }
             else if fabs(date.timeIntervalSinceNow) < 360 * 3600 {
-                dateFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
+                dateFont = UIFont.systemFont(ofSize: dateFont.pointSize, weight: .semibold)
             }
         }
         
@@ -47,7 +51,7 @@ class ResultCell: UITableViewCell {
         
         string.append(result.name + "\n", font: .preferredFont(forTextStyle: .body), color: .text)
         if let size = result.size {
-            string.append(size + ", ", font: .preferredFont(forTextStyle: .body), color: .subtext)
+            string.append(size + ", ", font: .preferredFont(forTextStyle: .caption1), color: .subtext)
         }
         string.append(dateString + ", ", font: dateFont, color: .subtext)
         string.append(String(result.seed), font: .preferredFont(forTextStyle: .caption1), color: .seeder)
