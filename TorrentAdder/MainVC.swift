@@ -206,7 +206,7 @@ extension MainVC {
         tableView.endUpdates()
     }
     
-    fileprivate func shareResult(_ result: SearchResult, from cell: UITableViewCell?) {
+    fileprivate func shareResult(_ result: SearchResult, from cell: UITableViewCell) {
         SVProgressHUD.show()
         WebAPI.shared.getResultPageURL(result)
             .andThen { _ in SVProgressHUD.dismiss() }
@@ -214,10 +214,9 @@ extension MainVC {
             .onSuccess { (fullURL) in
                 
                 let vc = UIActivityViewController(activityItems: [fullURL], applicationActivities: nil)
-                vc.popoverPresentationController?.sourceRect = cell?.frame ?? .zero
-                vc.popoverPresentationController?.sourceView = self.view
+                vc.popoverPresentationController?.sourceRect = cell.frame
+                vc.popoverPresentationController?.sourceView = cell
                 
-                // TODO: use better sourceRect (centered ?) and arrowDirection
                 self.present(vc, animated: true, completion: nil)
                 self.tableView.setEditing(false, animated: true)
         }
@@ -380,7 +379,8 @@ extension MainVC : UITableViewDelegate {
         case .results:
             let result = searchResults[indexPath.row]
             let shareAction = UITableViewRowAction(style: .normal, title: "action.sharelink".localized) { [weak self] (_, indexPath) in
-                self?.shareResult(result, from: tableView.cellForRow(at: indexPath))
+                guard let cell = tableView.cellForRow(at: indexPath) else { return }
+                self?.shareResult(result, from: cell)
             }
             shareAction.backgroundColor = .accent
             return [shareAction]
