@@ -22,6 +22,8 @@
 		974D373421B1E2DA00C0FDDE /* IPv4Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373321B1E2DA00C0FDDE /* IPv4Interface.swift */; };
 		974D373921B4999E00C0FDDE /* Sockets+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 974D373821B4999E00C0FDDE /* Sockets+SY.m */; };
 		974D373B21B49D4800C0FDDE /* ClientAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373A21B49D4800C0FDDE /* ClientAPI.swift */; };
+		974D3A1424BB327900953757 /* SuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D3A1224BB327900953757 /* SuggestionCell.swift */; };
+		974D3A1524BB327900953757 /* SuggestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 974D3A1324BB327900953757 /* SuggestionCell.xib */; };
 		9768CA6321B55838000AA7C2 /* UIColor+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6221B55838000AA7C2 /* UIColor+SY.swift */; };
 		9768CA6521B5770B000AA7C2 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6421B5770B000AA7C2 /* Client.swift */; };
 		9768CA6721B57B33000AA7C2 /* Client+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6621B57B33000AA7C2 /* Client+UI.swift */; };
@@ -98,6 +100,8 @@
 		974D373521B4965700C0FDDE /* Sockets+SY.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sockets+SY.h"; sourceTree = "<group>"; };
 		974D373821B4999E00C0FDDE /* Sockets+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Sockets+SY.m"; sourceTree = "<group>"; };
 		974D373A21B49D4800C0FDDE /* ClientAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientAPI.swift; sourceTree = "<group>"; };
+		974D3A1224BB327900953757 /* SuggestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionCell.swift; sourceTree = "<group>"; };
+		974D3A1324BB327900953757 /* SuggestionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionCell.xib; sourceTree = "<group>"; };
 		9768CA6221B55838000AA7C2 /* UIColor+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SY.swift"; sourceTree = "<group>"; };
 		9768CA6421B5770B000AA7C2 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		9768CA6621B57B33000AA7C2 /* Client+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Client+UI.swift"; sourceTree = "<group>"; };
@@ -194,6 +198,8 @@
 				97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */,
 				9771AB3221AF08E4005DE97D /* ResultCell.swift */,
 				97A18E111BBC017500F33AF5 /* ResultCell.xib */,
+				974D3A1224BB327900953757 /* SuggestionCell.swift */,
+				974D3A1324BB327900953757 /* SuggestionCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -442,6 +448,7 @@
 				97A0C55D1BC3271300DC4EEC /* blue_background.png in Resources */,
 				976D5EF9230E0E3600573E0D /* Localizable.strings in Resources */,
 				97A18E141BBC017C00F33AF5 /* DiscoverClientsVC.xib in Resources */,
+				974D3A1524BB327900953757 /* SuggestionCell.xib in Resources */,
 				97F911481BC2C45C00BF1848 /* EditClientVC.xib in Resources */,
 				97A0C5631BC3271300DC4EEC /* IconRed.png in Resources */,
 				97A0C5641BC3271300DC4EEC /* IconRed2.png in Resources */,
@@ -540,6 +547,7 @@
 				979D4A9621AF4335000BFDF0 /* NetService+SY.swift in Sources */,
 				974D373B21B49D4800C0FDDE /* ClientAPI.swift in Sources */,
 				9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */,
+				974D3A1424BB327900953757 /* SuggestionCell.swift in Sources */,
 				97B4041522C5274F00C7A684 /* IconButtons.swift in Sources */,
 				974D373221B1DF8600C0FDDE /* IPv4Address.swift in Sources */,
 				97EC446321AF37330034C861 /* Pinger.swift in Sources */,
@@ -640,7 +648,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -692,7 +700,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
