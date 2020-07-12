@@ -45,7 +45,7 @@ extension SearchResult {
         let size        = html.firstChild(css: "span.item-size")?.text
         let date        = html.firstChild(css: "span.item-uploaded")?.text.map { parseDate($0) } ?? nil
         let verified    = html.css("span.item-icons img").contains(where: { $0.attr("alt") == "Trusted" })
-        let magnet      = html.firstChild(css: "span.item-icons a.js-magnet-link")?.attr("href")?.url
+        let magnet      = html.firstChild(css: "span.item-icons a.js-magnet-link")?.attr("href")?.magnetURL
         
         return SearchResult(
             name: name,
@@ -68,11 +68,11 @@ extension SearchResult {
     }
     
     static func parseMagnetURL(html: HTMLDocument) -> URL? {
-        let links = html.xpath("//div[@class='download']/a")
+        let links = html.css("div.links a.js-magnet-link")
         let URLs = links
             .compactMap { $0.attr("href") }
             .filter { $0.hasPrefix("magnet:") }
-            .compactMap { URL(string: $0) }
+            .compactMap { $0.magnetURL }
         
         return URLs.first
     }

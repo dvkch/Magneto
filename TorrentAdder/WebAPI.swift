@@ -129,6 +129,7 @@ class WebAPI: NSObject {
             .map { mirror in
                 var components = URLComponents(url: mirror, resolvingAgainstBaseURL: true)!
                 components.path = result.pageURL.path
+                components.query = result.pageURL.query
                 return components.url!
         }
     }
