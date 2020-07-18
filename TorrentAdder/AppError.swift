@@ -52,7 +52,7 @@ extension AlamoDataResponseProtocol {
         if (response?.statusCode ?? 0) >= 500 {
             return true
         }
-        if untypedError?.isNSError(domain: NSURLErrorDomain, codes: [NSURLErrorTimedOut, NSURLErrorCannotFindHost]) == true {
+        if (untypedError as? AFError)?.underlyingError?.isNSError(domain: NSURLErrorDomain, codes: [NSURLErrorTimedOut, NSURLErrorCannotFindHost]) == true {
             return true
         }
         return false
