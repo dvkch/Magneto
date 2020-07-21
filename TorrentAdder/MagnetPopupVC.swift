@@ -90,22 +90,9 @@ class MagnetPopupVC: ViewController {
     
     // MARK: API
     private func fetchMagnetURLAndAdd(to client: Client) {
+        guard let url = (magnetURL ?? result?.magnetURL) else { return }
         updateForMode(.loading, animated: true)
-        
-        if let magnetURL = (magnetURL ?? result?.magnetURL) {
-            addMagnetToClient(magnetURL: magnetURL, client: client)
-            return
-        }
-        
-        guard let result = result else { return }
-        
-        _ = WebAPI.shared.getMagnet(for: result)
-            .onSuccess { [weak self] (magnetURL) in
-                self?.addMagnetToClient(magnetURL: magnetURL, client: client)
-            }
-            .onFailure { [weak self] (error) in
-                self?.updateForMode(.failure(error.localizedDescription), animated: true)
-            }
+        addMagnetToClient(magnetURL: url, client: client)
     }
     
     private func addMagnetToClient(magnetURL: URL, client: Client) {

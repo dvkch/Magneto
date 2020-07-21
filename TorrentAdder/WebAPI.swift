@@ -43,7 +43,6 @@ class WebAPI: NSObject {
             print("Using \(availableMirrorURLs.count) mirrors")
         }
     }
-    private var magnetCache: [URL: URL] = [:]
     
     // MARK: Update
     func getLatestBuildNumber() -> Future<Int?, AppError> {
@@ -68,14 +67,14 @@ class WebAPI: NSObject {
         }
         
         return self.session
-            .request("https://www.heypirateproxy.com/")
+            .request("https://pirateproxy.wtf/")
             .validate()
             .responseFutureHTML()
             .flatMap { (document) -> Future<URL, AppError> in
-                let elements = document.xpath("//td[@class='column-url']/a")
+                let elements = document.xpath("//table[@class='proxies']/tbody/tr//a")
                 let URLs = elements
-                    .compactMap { $0.attr("href") }
-                    .compactMap { URL(string: $0) }
+                    .compactMap { $0.text }
+                    .compactMap { URL(string: "https://" + $0) }
                 
                 if let mirrorURL = URLs.first {
                     self.availableMirrorURLs = URLs
@@ -88,21 +87,26 @@ class WebAPI: NSObject {
     }
     
     private func getQueryURL(mirrorURL: URL, query: String) -> URL {
-        var urlComponents = URLComponents(url: mirrorURL, resolvingAgainstBaseURL: true)!
-        urlComponents.path = "/search"
-        urlComponents.queryItems = [
+        var internalURLComponents = URLComponents()
+        internalURLComponents.path = "/q.php"
+        internalURLComponents.queryItems = [
             URLQueryItem(name: "q", value: query),
-            URLQueryItem(name: "page", value: String(0)),
-            URLQueryItem(name: "orderby", value: String(99))
+            URLQueryItem(name: "cat", value: "")
         ]
-        return try! urlComponents.asURL()
+        
+        var urlComponents = URLComponents(url: mirrorURL, resolvingAgainstBaseURL: true)!
+        urlComponents.path = "/api"
+        urlComponents.queryItems = [
+            URLQueryItem(name: "url", value: internalURLComponents.url!.absoluteString),
+        ]
+        return urlComponents.url!
     }
     
     func getResults(query: String) -> Future<[SearchResult], AppError> {
         return getMirror()
             .map { mirror in self.getQueryURL(mirrorURL: mirror, query: query) }
-            .flatMap { url in self.session.request(url).validate().responseFutureHTML() }
-            .map { html in SearchResult.parseModels(html: html)  }
+            .flatMap { url in self.session.request(url).validate().responseFutureCodable(type: [SearchResult].self) }
+            .map { $0.filter { $0.size > 0 } } // a single item with all attributes set to 0 is returned when no results have been found, let's handle this properly
             .recoverWith { (error) -> Future<[SearchResult], AppError> in
                 if case let .alamofire(request) = error {
                     if request.isNotFoundError {
@@ -126,27 +130,6 @@ class WebAPI: NSObject {
     
     func getResultPageURL(_ result: SearchResult) -> Future<URL, AppError> {
         return getMirror()
-            .map { mirror in
-                var components = URLComponents(url: mirror, resolvingAgainstBaseURL: true)!
-                components.path = result.pageURL.path
-                components.query = result.pageURL.query
-                return components.url!
-        }
-    }
-    
-    func getMagnet(for result: SearchResult) -> Future<URL, AppError> {
-        if let url = result.magnetURL ?? magnetCache[result.pageURL] {
-            return .init(value: url)
-        }
-
-        return getResultPageURL(result)
-            .flatMap { url in self.session.request(url).validate().responseFutureHTML() }
-            .flatMap { (html) -> Future<URL, AppError> in
-                if let url = SearchResult.parseMagnetURL(html: html) {
-                    self.magnetCache[result.pageURL] = url
-                    return .init(value: url)
-                }
-                return .init(error: AppError.noMagnetFound)
-        }
+            .map { mirror in result.pageURL(mirror: mirror) }
     }
 }
