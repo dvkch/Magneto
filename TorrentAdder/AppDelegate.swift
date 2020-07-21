@@ -10,8 +10,6 @@ import UIKit
 import SYKit
 import SVProgressHUD
 
-// TODO: replace SYPopover by real popover ?
-
 extension Notification.Name {
     static let didOpenURL = Notification.Name(rawValue: "UIAppDidOpenURLNotification")
 }

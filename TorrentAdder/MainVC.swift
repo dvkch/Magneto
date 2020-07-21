@@ -10,7 +10,6 @@ import UIKit
 import SYKit
 import SafariServices
 import SVProgressHUD
-import SYPopoverController
 
 class MainVC: ViewController {
 

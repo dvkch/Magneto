@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SYPopoverController
 
 class MagnetPopupVC: ViewController {
 
@@ -17,13 +16,16 @@ class MagnetPopupVC: ViewController {
         popupVC.result = result
         popupVC.magnetURL = magnet
         
-        let blur: UIBlurEffect.Style
-        if #available(iOS 10.0, *) {
-            blur = .prominent
-        } else {
-            blur = .light
-        }
-        viewController.sy_presentPopover(popupVC, backgroundEffect: UIBlurEffect(style: blur), animated: true, completion: nil)
+        popupVC.modalPresentationStyle = .popover
+        popupVC.modalTransitionStyle = .crossDissolve
+        popupVC.popoverPresentationController?.permittedArrowDirections = []
+        popupVC.popoverPresentationController?.sourceView = viewController.view
+        popupVC.popoverPresentationController?.sourceRect = viewController.view.bounds
+        popupVC.popoverPresentationController?.delegate = popupVC
+
+        UIView.transition(with: viewController.view.window ?? viewController.view, duration: 0.2, options: .transitionCrossDissolve, animations: {
+            viewController.present(popupVC, animated: false, completion: nil)
+        }, completion: nil)
     }
     
     // MARK: UIViewController
@@ -37,6 +39,7 @@ class MagnetPopupVC: ViewController {
         
         tableView.registerCell(ClientCell.self)
         tableView.tableFooterView = UIView()
+        tableView.addObserver(self, forKeyPath: #keyPath(UITableView.intrinsicContentSize), options: .new, context: nil)
         
         cancelButton.setTitle("action.cancel".localized, for: .normal)
         closeButton.setTitle("action.close".localized, for: .normal)
@@ -64,6 +67,26 @@ class MagnetPopupVC: ViewController {
         updateForMode(.clients, animated: false)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addBackgroundBlur()
+        
+        transitionCoordinator?.animate(alongsideTransition: { (ctx) in
+            self.blurView?.alpha = 1
+        }, completion: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        transitionCoordinator?.animate(alongsideTransition: { (ctx) in
+            self.blurView?.alpha = 0
+        }, completion: nil)
+    }
+    
+    deinit {
+        tableView.removeObserver(self, forKeyPath: #keyPath(UITableView.intrinsicContentSize))
+    }
+    
     // MARK: Properties
     private var magnetURL: URL?
     private var result: SearchResult?
@@ -71,6 +94,7 @@ class MagnetPopupVC: ViewController {
     private var canClose: Bool = false
 
     // MARK: Views
+    private var blurView: UIVisualEffectView?
     @IBOutlet private var statusContainerView: UIView!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var statusLabel: UILabel!
@@ -115,6 +139,19 @@ class MagnetPopupVC: ViewController {
     // MARK: Content
     enum Mode {
         case clients, loading, success(_ message: String), failure(_ error: String)
+    }
+    
+    private func addBackgroundBlur() {
+        guard let transitionView = popoverPresentationController?.containerView, blurView == nil else { return }
+
+        let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
+        effectView.frame = transitionView.bounds
+        effectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        effectView.alpha = 0
+        transitionView.addSubview(effectView)
+        transitionView.sendSubviewToBack(effectView)
+
+        blurView = effectView
     }
     
     private func updateForMode(_ mode: Mode, animated: Bool) {
@@ -183,9 +220,24 @@ class MagnetPopupVC: ViewController {
     }
     
     // MARK: Layout
+    private func updatePopover() {
+        guard let window = view.window else { return }
+        preferredContentSize.width = max(320, window.bounds.width - 40)
+        preferredContentSize.height = min(500, max(300, tableView.contentSize.height + buttonsStackView.frame.height))
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if (object as? UITableView) == tableView && keyPath == #keyPath(UITableView.contentSize) {
+            updatePopover()
+            return
+        }
+        super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        preferredContentSize = CGSize(width: max(300, view.frame.size.width - 40), height: 400)
+        tableView.layoutIfNeeded()
+        updatePopover()
     }
 }
 
@@ -213,13 +265,9 @@ extension MagnetPopupVC : UITableViewDelegate {
     }
 }
 
-extension MagnetPopupVC : SYPopoverContentViewDelegate {
-    func popoverControllerShouldDismiss(onBackgroundTap popoverController: SYPopoverController!) -> Bool {
-        return canClose
-    }
-    
-    func popoverControllerBackgroundColor(_ popoverController: SYPopoverController!) -> UIColor! {
-        return nil
+extension MagnetPopupVC : UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
     }
 }
 
