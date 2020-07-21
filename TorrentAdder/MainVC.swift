@@ -80,6 +80,7 @@ class MainVC: ViewController {
     private var constraintHeaderHeightOriginalValue: CGFloat = 0
     private var isVisible: Bool = false
     private var showingSearch: Bool { return !searchQuery.isEmpty }
+    private weak var suggestionsVC: SuggestionsVC?
     
     // MARK: Views
     @IBOutlet private var headerView: UIView!
@@ -172,6 +173,7 @@ extension MainVC {
                     self.searchResults = items
                     self.tableView.reloadData()
                     self.tableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false)
+                    Preferences.shared.addPrevSearch(text)
                     
                 case .failure(let error):
                     self.showError(error, title: "error.title.cannotLoadResults".localized)
@@ -229,13 +231,27 @@ extension MainVC : UISearchBarDelegate {
         if searchText.isEmpty {
             updateSearch("")
         }
+        suggestionsVC?.input = searchBar.text ?? ""
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if suggestionsVC == nil {
+            suggestionsVC = SuggestionsVC.present(under: searchBar, in: self)
+            suggestionsVC?.selectedSuggestionBlock = { [weak self] (suggestion) in
+                searchBar.text = suggestion
+                self?.suggestionsVC?.input = suggestion
+            }
+        }
+        suggestionsVC?.input = searchBar.text ?? ""
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        suggestionsVC?.dismiss(animated: true, completion: nil)
         searchBar.resignFirstResponder()
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        suggestionsVC?.dismiss(animated: true, completion: nil)
         updateSearch(searchBar.text ?? "")
         searchBar.resignFirstResponder()
     }

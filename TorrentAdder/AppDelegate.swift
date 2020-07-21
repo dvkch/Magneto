@@ -10,7 +10,6 @@ import UIKit
 import SYKit
 import SVProgressHUD
 
-// TODO: add search history
 // TODO: replace SYPopover by real popover ?
 
 extension Notification.Name {
