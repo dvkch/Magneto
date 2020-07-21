@@ -20,6 +20,7 @@ class Preferences: NSObject {
         super.init()
         loadClients()
         loadMirrors()
+        loadPrevSearches()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.ubiquitousStoreChanged(notification:)),
                                                name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
@@ -86,6 +87,27 @@ class Preferences: NSObject {
         }
     }
     
+    // MARK: Suggestions
+    private static let prevSearchesPrefKey = "prev_searches"
+    private(set) var prevSearches: [String] = [] {
+        didSet {
+            savePrevSearches()
+        }
+    }
+    
+    private func savePrevSearches() {
+        UserDefaults.standard.set(prevSearches, forKey: Self.prevSearchesPrefKey)
+        NSUbiquitousKeyValueStore.default.set(prevSearches, forKey: Self.prevSearchesPrefKey)
+    }
+    
+    private func loadPrevSearches() {
+        let dataUserDefaults = UserDefaults.standard.stringArray(forKey: Self.prevSearchesPrefKey)
+        let dataUbiquitous = NSUbiquitousKeyValueStore.default.array(forKey: Self.prevSearchesPrefKey) as? [String]
+        guard let data = dataUserDefaults ?? dataUbiquitous else { return }
+        prevSearches = data
+    }
+
+
     // MARK: Ubiquitous KV Store
     @objc private func ubiquitousStoreChanged(notification: Notification) {
         guard let reason = notification.userInfo?[NSUbiquitousKeyValueStoreChangeReasonKey] as? Int else { return }
@@ -100,22 +122,25 @@ class Preferences: NSObject {
             guard let keys = notification.userInfo?[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String] else { return }
             let store = NSUbiquitousKeyValueStore.default
             for key in keys {
-                if key != Self.clientsPrefKey {
+                if ![Self.clientsPrefKey, Self.prevSearchesPrefKey].contains(key) {
                     print("unsupported key changed", key)
                 }
                 
                 let value = store.object(forKey: key)
                 if let value = value {
                     // added / updated
+                    print("updated value for key", key)
                     UserDefaults.standard.set(value, forKey: key)
                 }
                 else {
                     // deleted
+                    print("deleted value for key", key)
                     UserDefaults.standard.removeObject(forKey: key)
                 }
             }
             
             loadClients()
+            loadPrevSearches()
             
         default:
             print("Unknown reason:", reason)
@@ -135,6 +160,16 @@ class Preferences: NSObject {
     
     func removeClient(_ client: Client) {
         clients = clients.filter { $0.id != client.id }
+    }
+    
+    func addPrevSearch(_ value: String) {
+        var prevSearches = self.prevSearches.filter { $0.compare(value, options: [.diacriticInsensitive, .caseInsensitive]) != .orderedSame }
+        prevSearches.insert(value, at: 0)
+        self.prevSearches = Array(prevSearches.subarray(maxCount: 80))
+    }
+    
+    func clearPrevSearches() {
+        prevSearches = []
     }
     
     // MARK: UIApplication notifications
