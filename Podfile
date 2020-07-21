@@ -12,15 +12,15 @@ target 'TorrentAdder' do
     pod 'SPLPing'
     pod 'SVProgressHUD'
     pod 'SYKit'
-    pod 'SYPopoverController'
     pod 'TPKeyboardAvoiding'
     #pod 'SparkInspector', :configurations => ['Debug']
 end
 
-post_install do |pi|
-    pi.pods_project.targets.each do |t|
-        t.build_configurations.each do |config|
-            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
+            config.build_settings.delete 'ARCHS'
         end
     end
 end

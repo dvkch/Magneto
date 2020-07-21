@@ -197,18 +197,6 @@ SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Use it as you like in every project you want, redistribute with mentions of my name and don't blame me if it breaks :)
-
--- dvkch</string>
-			<key>License</key>
-			<string>Custom</string>
-			<key>Title</key>
-			<string>SYPopoverController</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
 			<string>Copyright (c) 2013 Michael Tyson
 
 This software is provided 'as-is', without any express or implied

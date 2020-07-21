@@ -6,7 +6,6 @@ PODS:
   - SPLPing (1.1.8)
   - SVProgressHUD (2.2.5)
   - SYKit (0.1.14)
-  - SYPopoverController (2.2.6)
   - TPKeyboardAvoiding (1.3.4)
 
 DEPENDENCIES:
@@ -17,7 +16,6 @@ DEPENDENCIES:
   - SPLPing
   - SVProgressHUD
   - SYKit
-  - SYPopoverController
   - TPKeyboardAvoiding
 
 SPEC REPOS:
@@ -29,7 +27,6 @@ SPEC REPOS:
     - SPLPing
     - SVProgressHUD
     - SYKit
-    - SYPopoverController
     - TPKeyboardAvoiding
 
 SPEC CHECKSUMS:
@@ -40,9 +37,8 @@ SPEC CHECKSUMS:
   SPLPing: 420837fae1e19bba0a8360e91e7a384f22509663
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SYKit: 60cd278f1eaaa4c4d9d01ebf65430a65ccc3c607
-  SYPopoverController: a48f3eac2ff080476798b32e8ad12298c88fd4a1
   TPKeyboardAvoiding: 7c2187e2338052b2c5be4a8052f297fdb124e261
 
-PODFILE CHECKSUM: 86db50f6ab2a360e7cfd4b0c10ddc15b371bda5f
+PODFILE CHECKSUM: 3c0b83a7531b49c4378b52802dd9b5435ab77448
 
 COCOAPODS: 1.9.3
