@@ -37,9 +37,10 @@ class SuggestionsVC: ViewController {
     
     // MARK: Content
     private func reloadContent() {
-        filteredSuggestions = Preferences.shared.prevSearches
+        filteredSuggestions = []
         if input.isNotEmpty {
-            filteredSuggestions = filteredSuggestions.filter { $0.lowercased().contains(input.lowercased()) }
+            // don't show anything until something has been typed
+            filteredSuggestions = Preferences.shared.prevSearches.filter { $0.lowercased().contains(input.lowercased()) }
         }
         tableView.reloadData()
         updatePopover()
