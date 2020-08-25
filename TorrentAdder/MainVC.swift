@@ -225,23 +225,35 @@ extension MainVC {
 }
 
 extension MainVC : UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // when tapping the clear button we need to make sure the search results are also reset
-        if searchText.isEmpty {
-            updateSearch("")
-        }
-        suggestionsVC?.input = searchBar.text ?? ""
-    }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if suggestionsVC == nil {
+    private func updateSuggestionsVC(searchBar: UISearchBar) {
+        let input = searchBar.text
+
+        if suggestionsVC == nil && SuggestionsVC.shouldPresentPopover(for: input) {
             suggestionsVC = SuggestionsVC.present(under: searchBar, in: self)
             suggestionsVC?.selectedSuggestionBlock = { [weak self] (suggestion) in
                 searchBar.text = suggestion
                 self?.suggestionsVC?.input = suggestion
             }
         }
-        suggestionsVC?.input = searchBar.text ?? ""
+
+        if suggestionsVC != nil && !SuggestionsVC.shouldPresentPopover(for: input) {
+            suggestionsVC?.dismiss(animated: false, completion: nil)
+            suggestionsVC = nil
+        }
+
+        suggestionsVC?.input = input ?? ""
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // when tapping the clear button we need to make sure the search results are also reset
+        if searchText.isEmpty {
+            updateSearch("")
+        }
+        updateSuggestionsVC(searchBar: searchBar)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        updateSuggestionsVC(searchBar: searchBar)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

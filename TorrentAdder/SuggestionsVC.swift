@@ -59,7 +59,7 @@ class SuggestionsVC: ViewController {
         guard let window = view.window else { return }
         preferredContentSize.width  = min(320, max(500, window.bounds.width - 40))
         preferredContentSize.height = min(500, max(300, tableView.contentSize.height))
-        popoverPresentationController?.containerView?.alpha = filteredSuggestions.isEmpty ? 0 : 1
+        popoverPresentationController?.containerView?.alpha = filteredSuggestions.isEmpty ? 0.05 : 1 // don't set under 0.05 or touch won't hit it and it will cause navigation issues
     }
     
     // MARK: Presentation
@@ -70,9 +70,15 @@ class SuggestionsVC: ViewController {
         vc.popoverPresentationController?.permittedArrowDirections = [.up]
         vc.popoverPresentationController?.sourceView = view
         vc.popoverPresentationController?.sourceRect = view.bounds
+        vc.popoverPresentationController?.passthroughViews = [view]
         
         viewController.present(vc, animated: true, completion: nil)
         return vc
+    }
+    
+    static func shouldPresentPopover(for input: String?) -> Bool {
+        guard let input = input, input.isNotEmpty else { return false }
+        return Preferences.shared.prevSearches.filter { $0.lowercased().contains(input.lowercased()) }.isNotEmpty
     }
 }
 
