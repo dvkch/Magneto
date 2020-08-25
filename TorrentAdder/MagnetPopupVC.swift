@@ -222,7 +222,7 @@ class MagnetPopupVC: ViewController {
     // MARK: Layout
     private func updatePopover() {
         guard let window = view.window else { return }
-        preferredContentSize.width = max(320, window.bounds.width - 40)
+        preferredContentSize.width  = min(320, max(500, window.bounds.width - 40))
         preferredContentSize.height = min(500, max(300, tableView.contentSize.height + buttonsStackView.frame.height))
     }
     

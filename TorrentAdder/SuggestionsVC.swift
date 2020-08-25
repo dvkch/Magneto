@@ -56,7 +56,9 @@ class SuggestionsVC: ViewController {
     }
     
     private func updatePopover() {
-        preferredContentSize.height = max(1, min(300, tableView.contentSize.height))
+        guard let window = view.window else { return }
+        preferredContentSize.width  = min(320, max(500, window.bounds.width - 40))
+        preferredContentSize.height = min(500, max(300, tableView.contentSize.height))
         popoverPresentationController?.containerView?.alpha = filteredSuggestions.isEmpty ? 0 : 1
     }
     
