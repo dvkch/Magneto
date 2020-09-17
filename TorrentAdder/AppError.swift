@@ -30,7 +30,12 @@ extension AppError : LocalizedError {
         case .invalidUTorrentPayload:       return "error.invalidUTorrentPayload".localized
         case .noMirrorAnswered:             return "error.noMirrorAnswered".localized
         case .clientOffline:                return "error.clientOffline".localized
-        case .alamofire(let response):      return response.untypedError?.localizedDescription ?? "error.unknown".localized
+        case .alamofire(let response):
+            var message = response.untypedError?.localizedDescription ?? "error.unknown".localized
+            if let statusCode = response.response?.statusCode {
+                message += String(format: " (%d)", statusCode)
+            }
+            return message
         }
     }
 }
