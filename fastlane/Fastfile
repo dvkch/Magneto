@@ -6,10 +6,13 @@ platform :ios do
     lane :signing do
         cert(team_id: "79RY8264V4", development: true)
         sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", development: true)
+        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", development: true, platform: 'catalyst')
 
         cert(team_id: "79RY8264V4")
         sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", adhoc: true)
+        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", platform: 'catalyst')
     
+        system "rm ../*.provisionprofile"
         system "rm ../*.mobileprovision"
         system "rm ../*.cer"
         system "rm ../*.p12"

@@ -258,6 +258,7 @@ extension MainVC {
 
 extension MainVC : UISearchBarDelegate {
     private func updateSuggestionsVC(searchBar: UISearchBar) {
+        #if !targetEnvironment(macCatalyst) && os(iOS)
         let input = searchBar.text
 
         if suggestionsVC == nil && SuggestionsVC.shouldPresentPopover(for: input) {
@@ -274,6 +275,7 @@ extension MainVC : UISearchBarDelegate {
         }
 
         suggestionsVC?.input = input ?? ""
+        #endif
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

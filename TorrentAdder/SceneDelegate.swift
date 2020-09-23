@@ -44,6 +44,13 @@ extension SceneDelegate : UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         if let windowScene = scene as? UIWindowScene {
             self.window = SceneDelegate.createWindow(windowScene: windowScene)
+            
+            #if targetEnvironment(macCatalyst)
+            if let titlebar = windowScene.titlebar {
+                titlebar.titleVisibility = .hidden
+                titlebar.toolbar = nil
+            }
+            #endif
         }
     }
     

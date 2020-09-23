@@ -16,4 +16,19 @@ extension UIView {
         layer.shadowOffset = .zero
         layer.masksToBounds = false
     }
+    
+    #if targetEnvironment(macCatalyst)
+    var focusRingType: UInt {
+        get { (perform(Selector(("_focusRingType")))?.takeUnretainedValue() as? NSNumber)?.uintValue ?? 0 }
+        set {
+            guard [0, 1, 2].contains(newValue) else { return print("Should be using a real value") }
+            perform(Selector(("_setFocusRingType:")), with: newValue)
+        }
+    }
+    #else
+    var focusRingType: UInt {
+        get { return 0 }
+        set { }
+    }
+    #endif
 }

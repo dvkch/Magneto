@@ -37,6 +37,8 @@ class SuggestionsVC: ViewController {
     
     // MARK: Content
     private func reloadContent() {
+        guard isViewLoaded else { return }
+
         filteredSuggestions = []
         if input.isNotEmpty {
             // don't show anything until something has been typed
