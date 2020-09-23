@@ -12,19 +12,33 @@ class NavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationBar.tintColor = .textOverAccent
-        navigationBar.barStyle = .blackOpaque
-        navigationBar.titleTextAttributes = [.foregroundColor: UIColor.textOverAccent]
-        updateColors()
+        updateNavBar()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        updateColors()
+        updateNavBar()
     }
     
-    private func updateColors() {
-        navigationBar.setBackgroundImage(UIImage(color: .accent), for: .default)
-        navigationBar.setBackgroundImage(UIImage(color: .accent), for: .compact)
+    private func updateNavBar() {
+        
+        if #available(iOS 13.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .accent
+            appearance.titleTextAttributes = [.foregroundColor: UIColor.textOverAccent]
+
+            navigationBar.standardAppearance = appearance
+            navigationBar.tintColor = .textOverAccent
+            navigationBar.prefersLargeTitles = false
+        }
+        else {
+            navigationBar.prefersLargeTitles = false
+            navigationBar.isTranslucent = false
+            navigationBar.setBackgroundImage(UIImage(color: .accent), for: .default)
+            navigationBar.titleTextAttributes = [.foregroundColor: UIColor.textOverAccent]
+            navigationBar.tintColor = .textOverAccent
+            navigationBar.barTintColor = .clear
+        }
     }
 }

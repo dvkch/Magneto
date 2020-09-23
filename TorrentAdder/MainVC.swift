@@ -16,7 +16,6 @@ class MainVC: ViewController {
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.appDidOpenURLNotification(_:)), name: .didOpenURL, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.mirrorsChanged), name: .mirrorsChanged, object: nil)
 
         timerRefreshClientsStatus = Timer(timeInterval: 5, target: self, selector: #selector(self.timerRefreshClientsStatusTick), userInfo: nil, repeats: true)
@@ -63,7 +62,6 @@ class MainVC: ViewController {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: .didOpenURL, object: nil)
         timerRefreshClientsStatus?.invalidate()
     }
     
@@ -101,12 +99,6 @@ class MainVC: ViewController {
 
 // MARK: Notifications
 extension MainVC {
-    
-    @objc private func appDidOpenURLNotification(_ notif: Notification) {
-        guard let magnetURL = notif.userInfo?[UIApplication.DidOpenURLKey.magnetURL] as? URL else { return }
-        openTorrentPopup(with: magnetURL, or: nil)
-    }
-    
     @objc private func mirrorsChanged() {
         if let host = WebAPI.shared.availableMirrorURLs.first?.host {
             mirrorLabel.text = String(format: "mirror.current %@".localized, host)
@@ -180,7 +172,14 @@ extension MainVC {
         }
     }
     
-    fileprivate func openTorrentPopup(with magnetURL: URL?, or result: SearchResult?) {
+    func openTorrentPopup(with magnetURL: URL?, or result: SearchResult?) {
+        if let presentedViewController = presentedViewController {
+            presentedViewController.dismiss(animated: false) {
+                self.openTorrentPopup(with: magnetURL, or: result)
+            }
+            return
+        }
+        
         guard !clients.isEmpty else {
             showError(AppError.noClientsSaved, title: "error.title.cannotAddTorrent".localized)
             return
@@ -189,11 +188,33 @@ extension MainVC {
         MagnetPopupVC.show(in: self, magnet: magnetURL, result: result)
     }
     
+    fileprivate func openSafariURL(_ url: URL) {
+        #if targetEnvironment(macCatalyst)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        #elseif os(iOS)
+        let vc = SFSafariViewController(url: url)
+        if #available(iOS 13.0, *) {
+            vc.preferredBarTintColor = UIColor.accent.resolvedColor(with: traitCollection)
+            vc.preferredControlTintColor = UIColor.text.resolvedColor(with: traitCollection)
+        } else {
+            vc.preferredBarTintColor = UIColor.accent
+            vc.preferredControlTintColor = UIColor.text
+        }
+        present(vc, animated: true, completion: nil)
+        #endif
+    }
+    
     fileprivate func removeFinished(in client: Client) {
         SVProgressHUD.show()
         ClientAPI.shared.removeCompletedTorrents(in: client)
             .andThen { _ in SVProgressHUD.dismiss() }
-            .onSuccess { (count) in SVProgressHUD.showSuccess(withStatus: String(format: "torrent.removed.%d".localized, count)) }
+            .onSuccess { (count) in
+                if count > 0 {
+                    SVProgressHUD.showSuccess(withStatus: String(format: "torrent.removed.%d".localized, count))
+                } else {
+                    SVProgressHUD.showSuccess(withStatus: nil)
+                }
+            }
             .onFailure { error in self.showError(error) }
     }
     
@@ -219,6 +240,17 @@ extension MainVC {
                 vc.popoverPresentationController?.sourceView = cell
                 
                 self.present(vc, animated: true, completion: nil)
+                self.tableView.setEditing(false, animated: true)
+        }
+    }
+    
+    fileprivate func openResultInSafari(_ result: SearchResult) {
+        SVProgressHUD.show()
+        WebAPI.shared.getResultPageURL(result)
+            .andThen { _ in SVProgressHUD.dismiss() }
+            .onFailure { (error) in self.showError(error) }
+            .onSuccess { (fullURL) in
+                self.openSafariURL(fullURL)
                 self.tableView.setEditing(false, animated: true)
         }
     }
@@ -355,22 +387,61 @@ extension MainVC : UITableViewDelegate {
                 components.password = password
                 url = components.url ?? url
             }
-            let vc = SFSafariViewController(url: url)
-            if #available(iOS 13.0, *) {
-                vc.preferredBarTintColor = UIColor.accent.resolvedColor(with: traitCollection)
-                vc.preferredControlTintColor = UIColor.text.resolvedColor(with: traitCollection)
-            } else {
-                vc.preferredBarTintColor = UIColor.accent
-                vc.preferredControlTintColor = UIColor.text
-            }
-            present(vc, animated: true, completion: nil)
+            self.openSafariURL(url)
 
         case .results:
             self.openTorrentPopup(with: nil, or: searchResults[indexPath.row])
         }
     }
     
+    @available(iOS 13.0, *)
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        guard let tableSection = TableSection(rawValue: indexPath.section) else { return nil }
+        switch tableSection {
+        case .buttons:
+            return nil
+            
+        case .clients:
+            let client = clients[indexPath.row]
+            
+            return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
+                let removeFinishedAction = UIAction(title: "action.removefinished".localized, image: UIImage(systemName: "tray")) { [weak self] (_) in
+                    self?.removeFinished(in: client)
+                }
+                let editAction = UIAction(title: "action.edit".localized, image: UIImage(systemName: "square.and.pencil")) { [weak self] (_) in
+                    let vc = EditClientVC()
+                    vc.client = client
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                }
+                let deleteAction = UIAction(title: "action.delete".localized, image: UIImage(systemName: "trash.fill"), attributes: .destructive) { [weak self] (_) in
+                    self?.removeClient(client, at: indexPath)
+                }
+
+                return UIMenu(title: "", children: [removeFinishedAction, editAction, deleteAction])
+            }
+            
+        case .results:
+            let result = searchResults[indexPath.row]
+            return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
+                let shareAction = UIAction(title: "action.sharelink".localized, image: UIImage(systemName: "square.and.arrow.up")) { [weak self] (_) in
+                    guard let cell = tableView.cellForRow(at: indexPath) else { return }
+                    self?.shareResult(result, from: cell)
+                }
+                let openAction = UIAction(title: "action.open".localized, image: UIImage(systemName: "safari")) { [weak self] (_) in
+                    self?.openResultInSafari(result)
+                }
+
+                return UIMenu(title: "", children: [openAction, shareAction])
+            }
+        }
+    }
+    
+    #if !targetEnvironment(macCatalyst) && os(iOS)
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        if #available(iOS 13.0, *) {
+            return []
+        }
+        
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return [] }
         switch tableSection {
         case .buttons:
@@ -396,12 +467,17 @@ extension MainVC : UITableViewDelegate {
             
         case .results:
             let result = searchResults[indexPath.row]
+            let openAction = UITableViewRowAction(style: .normal, title: "action.open".localized) { [weak self] (_, _) in
+                self?.openResultInSafari(result)
+            }
+            openAction.backgroundColor = .basicAction
             let shareAction = UITableViewRowAction(style: .normal, title: "action.sharelink".localized) { [weak self] (_, indexPath) in
                 guard let cell = tableView.cellForRow(at: indexPath) else { return }
                 self?.shareResult(result, from: cell)
             }
             shareAction.backgroundColor = .accent
-            return [shareAction]
+            return [shareAction, openAction]
         }
     }
+    #endif
 }

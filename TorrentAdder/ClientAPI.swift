@@ -290,7 +290,7 @@ extension ClientAPI : RequestInterceptor {
             pendingAuthentications[client.id] = [completion]
 
             DispatchQueue.main.async {
-                AppDelegate.obtain.promptAuthenticationUpdate(for: client) { (cancelled) in
+                ViewRouter.shared.promptAuthenticationUpdate(for: client) { (cancelled) in
                     let completions = self.pendingAuthentications[client.id] ?? []
                     self.pendingAuthentications.removeValue(forKey: client.id)
                     

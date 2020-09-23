@@ -28,7 +28,7 @@ extension UIColor {
     }
 
     static var leechers: UIColor {
-        return destructiveAction
+        return .red
     }
     
     static var text: UIColor {
@@ -47,15 +47,19 @@ extension UIColor {
         return .white
     }
     
-    static var destructiveAction: UIColor {
-        return .red
-    }
-    
-    static var basicAction: UIColor {
+    static var separator: UIColor {
         return UIColor(light: UIColor(white: 0.85, alpha: 1), dark: .darkGray)
     }
     
     static var background: UIColor {
         return UIColor(light: .white, dark: UIColor(white: 0.05, alpha: 1))
+    }
+    
+    static var basicAction: UIColor {
+        return .separator
+    }
+    
+    static var destructiveAction: UIColor {
+        return .red
     }
 }

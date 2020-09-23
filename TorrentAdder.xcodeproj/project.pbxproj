@@ -11,6 +11,8 @@
 		970130E021B07EC000E7CFEC /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130DF21B07EC000E7CFEC /* WebAPI.swift */; };
 		970130E221B084E500E7CFEC /* Alamofire+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130E121B084E500E7CFEC /* Alamofire+SY.swift */; };
 		970130E421B08E1000E7CFEC /* Error+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130E321B08E1000E7CFEC /* Error+SY.swift */; };
+		9715A479251B9CD200C2C52F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9715A478251B9CD200C2C52F /* SceneDelegate.swift */; };
+		9715A508251BA32B00C2C52F /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9715A507251BA32B00C2C52F /* ViewRouter.swift */; };
 		972589AD21B0AD6D00FCE9D5 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972589AC21B0AD6D00FCE9D5 /* AppError.swift */; };
 		972B4FBC24BBCF270026BFE4 /* String+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B4FBB24BBCF270026BFE4 /* String+SY.swift */; };
 		973784321BD40649001AD487 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973784311BD40649001AD487 /* Launch.storyboard */; };
@@ -91,6 +93,8 @@
 		970130DF21B07EC000E7CFEC /* WebAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
 		970130E121B084E500E7CFEC /* Alamofire+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+SY.swift"; sourceTree = "<group>"; };
 		970130E321B08E1000E7CFEC /* Error+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+SY.swift"; sourceTree = "<group>"; };
+		9715A478251B9CD200C2C52F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		9715A507251BA32B00C2C52F /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		972589AC21B0AD6D00FCE9D5 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		972B4FBB24BBCF270026BFE4 /* String+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+SY.swift"; sourceTree = "<group>"; };
 		973784311BD40649001AD487 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
@@ -283,6 +287,7 @@
 				97EACC011BC2C31B00382614 /* API */,
 				97EACC001BC2C31300382614 /* Network */,
 				97EACC021BC2C32700382614 /* Storage */,
+				9715A507251BA32B00C2C52F /* ViewRouter.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -329,6 +334,7 @@
 				97B4041622C5275700C7A684 /* Views */,
 				973AFF811BB41CFC00BA4B8B /* VCs */,
 				9771AB1A21AEDC92005DE97D /* AppDelegate.swift */,
+				9715A478251B9CD200C2C52F /* SceneDelegate.swift */,
 				973784311BD40649001AD487 /* Launch.storyboard */,
 				F8986775192A317C00735175 /* Images.xcassets */,
 				F8986761192A317C00735175 /* Supporting Files */,
@@ -560,12 +566,14 @@
 				974D373221B1DF8600C0FDDE /* IPv4Address.swift in Sources */,
 				97EC446321AF37330034C861 /* Pinger.swift in Sources */,
 				974D372C21B157CE00C0FDDE /* Fuzi+SY.swift in Sources */,
+				9715A479251B9CD200C2C52F /* SceneDelegate.swift in Sources */,
 				9768CA6721B57B33000AA7C2 /* Client+UI.swift in Sources */,
 				970130E021B07EC000E7CFEC /* WebAPI.swift in Sources */,
 				9768CA6321B55838000AA7C2 /* UIColor+SY.swift in Sources */,
 				9768CA6521B5770B000AA7C2 /* Client.swift in Sources */,
 				9771AB2521AEF3CE005DE97D /* UIView+SY.swift in Sources */,
 				9771AB1F21AEE457005DE97D /* MagnetPopupVC.swift in Sources */,
+				9715A508251BA32B00C2C52F /* ViewRouter.swift in Sources */,
 				974D373921B4999E00C0FDDE /* Sockets+SY.m in Sources */,
 				970130E421B08E1000E7CFEC /* Error+SY.swift in Sources */,
 				9771AB3A21AF319E005DE97D /* HostnameResolver.swift in Sources */,

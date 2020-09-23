@@ -14,6 +14,7 @@
 "action.edit"           = "Editer";
 "action.delete"         = "Supprimer";
 "action.sharelink"      = "Partager le lien";
+"action.open"           = "Ouvrir";
 
 "placeholder.search"    = "Rechercher";
 

@@ -52,7 +52,7 @@ class MagnetPopupVC: ViewController {
             
             let separator = UIView()
             separator.translatesAutoresizingMaskIntoConstraints = false
-            separator.backgroundColor = .basicAction
+            separator.backgroundColor = .separator
             button.addSubview(separator)
             
             separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
@@ -84,7 +84,7 @@ class MagnetPopupVC: ViewController {
     }
     
     deinit {
-        tableView.removeObserver(self, forKeyPath: #keyPath(UITableView.intrinsicContentSize))
+        tableView?.removeObserver(self, forKeyPath: #keyPath(UITableView.intrinsicContentSize))
     }
     
     // MARK: Properties
