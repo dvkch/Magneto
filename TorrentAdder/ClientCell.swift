@@ -24,16 +24,34 @@ class ClientCell: UITableViewCell {
     }
     
     // MARK: Properties
-    var isDiscoveredClient: Bool = false {
+    var kind: Kind = .client(nil) {
         didSet {
             updateContent()
             updateStatus()
         }
     }
-    var client: Client? {
-        didSet {
-            updateContent()
-            updateStatus()
+    enum Kind {
+        case client(Client?), discoveredClient(Client?), openURL
+
+        var client: Client? {
+            switch self {
+            case .client(let client), .discoveredClient(let client): return client
+            case .openURL: return nil
+            }
+        }
+        
+        var isDiscoveredClient: Bool {
+            switch self {
+            case .discoveredClient: return true
+            case .client, .openURL: return false
+            }
+        }
+        
+        var isOpenURL: Bool {
+            switch self {
+            case .openURL: return true
+            case .client, .discoveredClient: return false
+            }
         }
     }
     
@@ -45,37 +63,47 @@ class ClientCell: UITableViewCell {
     
     // MARK: Content
     private func updateContent() {
-        accessoryType = isDiscoveredClient ? .disclosureIndicator : .none
-        if let client = client {
-            nameLabel.text = client.name
-            if isDiscoveredClient {
-                hostLabel.text = client.host
-            }
-            else {
+        switch kind {
+        case .client(let client):
+            accessoryType = .none
+            if let client = client {
+                nameLabel.text = client.name
                 hostLabel.text = [client.host, String(client.port ?? 0)].joined(separator: ":")
+            } else {
+                nameLabel.text = nil
+                hostLabel.text = nil
             }
-        }
-        else if isDiscoveredClient
-        {
-            nameLabel.text = "clients.addcustom.line1".localized
-            hostLabel.text = "clients.addcustom.line2".localized
-        }
-        else
-        {
-            nameLabel.text = nil
-            hostLabel.text = nil
+            
+            
+        case .discoveredClient(let client):
+            accessoryType = .disclosureIndicator
+            if let client = client {
+                nameLabel.text = client.name
+                hostLabel.text = client.host
+            } else {
+                nameLabel.text = "clients.addcustom.line1".localized
+                hostLabel.text = "clients.addcustom.line2".localized
+            }
+
+            
+        case .openURL:
+            accessoryType = .none
+            nameLabel.text = "clients.openurl.line1".localized
+            hostLabel.text = "clients.openurl.line2".localized
         }
     }
     
     @objc private func updateStatus() {
-        var loading = ClientStatusManager.shared.isClientLoading(client)
-        var status  = ClientStatusManager.shared.lastStatusForClient(client)
+        var loading = ClientStatusManager.shared.isClientLoading(kind.client)
+        var status  = ClientStatusManager.shared.lastStatusForClient(kind.client)
         
-        if isDiscoveredClient && client == nil {
-            loading = true
-        }
-        if isDiscoveredClient && client != nil {
-            status = .online
+        if kind.isDiscoveredClient {
+            if kind.client == nil {
+                loading = true
+            }
+            if kind.client != nil {
+                status = .online
+            }
         }
         
         // show loading only if previous status is unknown, else show last status
@@ -94,6 +122,11 @@ class ClientCell: UITableViewCell {
             activityIndicator.stopAnimating()
         case .unknown:
             statusImageView.image = nil
+            activityIndicator.stopAnimating()
+        }
+        
+        if #available(iOS 13.0, *), kind.isOpenURL {
+            statusImageView.image = UIImage(systemName: "arrowshape.turn.up.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .bold))?.masking(with: .seeder)
             activityIndicator.stopAnimating()
         }
     }

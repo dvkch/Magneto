@@ -47,6 +47,8 @@
 
 "clients.addcustom.line1"   = "Ajouter un client manuellement";
 "clients.addcustom.line2"   = "si le votre n'a pas été détecté";
+"clients.openurl.line1"     = "Ouvrir le magnet";
+"clients.openurl.line2"     = "Lancera votre application torrent par défaut";
 
 "clients.section.clients"   = "Clients disponibles";
 "clients.section.noresults" = "Aucun résultat";

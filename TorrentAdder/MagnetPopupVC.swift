@@ -63,7 +63,6 @@ class MagnetPopupVC: ViewController {
         
         statusLabel.font = UIFont.systemFont(ofSize: 15)
         
-        clients = Preferences.shared.clients
         updateForMode(.clients, animated: false)
     }
     
@@ -90,7 +89,13 @@ class MagnetPopupVC: ViewController {
     // MARK: Properties
     private var magnetURL: URL?
     private var result: SearchResult?
-    private var clients = [Client]()
+    private let clientKinds: [ClientCell.Kind] = {
+        var kinds = Preferences.shared.clients.map { ClientCell.Kind.client($0) }
+        #if targetEnvironment(macCatalyst)
+        kinds.insert(.openURL, at: 0)
+        #endif
+        return kinds
+    }()
     private var canClose: Bool = false
 
     // MARK: Views
@@ -113,10 +118,20 @@ class MagnetPopupVC: ViewController {
     }
     
     // MARK: API
-    private func fetchMagnetURLAndAdd(to client: Client) {
+    private func fetchMagnetURLAndAdd(to clientKind: ClientCell.Kind) {
         guard let url = (magnetURL ?? result?.magnetURL) else { return }
-        updateForMode(.loading, animated: true)
-        addMagnetToClient(magnetURL: url, client: client)
+        
+        switch clientKind {
+        case .client(let client), .discoveredClient(let client):
+            if let client = client {
+                updateForMode(.loading, animated: true)
+                addMagnetToClient(magnetURL: url, client: client)
+            }
+
+        case .openURL:
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     private func addMagnetToClient(magnetURL: URL, client: Client) {
@@ -243,13 +258,12 @@ class MagnetPopupVC: ViewController {
 
 extension MagnetPopupVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return clients.count
+        return clientKinds.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(ClientCell.self, for: indexPath)
-        cell.client = clients[indexPath.row]
-        cell.isDiscoveredClient = false
+        cell.kind = clientKinds[indexPath.row]
         return cell
     }
     
@@ -261,7 +275,7 @@ extension MagnetPopupVC : UITableViewDataSource {
 extension MagnetPopupVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        fetchMagnetURLAndAdd(to: clients[indexPath.row])
+        fetchMagnetURLAndAdd(to: clientKinds[indexPath.row])
     }
 }
 

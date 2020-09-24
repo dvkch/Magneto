@@ -180,11 +180,13 @@ extension MainVC {
             return
         }
         
+        #if !targetEnvironment(macCatalyst) && os(iOS)
         guard !clients.isEmpty else {
             showError(AppError.noClientsSaved, title: "error.title.cannotAddTorrent".localized)
             return
         }
-        
+        #endif
+
         MagnetPopupVC.show(in: self, magnet: magnetURL, result: result)
     }
     
@@ -351,8 +353,7 @@ extension MainVC : UITableViewDataSource {
             return cell
         case .clients:
             let cell = tableView.dequeueCell(ClientCell.self, for: indexPath)
-            cell.client = clients[indexPath.row]
-            cell.isDiscoveredClient = false
+            cell.kind = .client(clients[indexPath.row])
             return cell
         case .results:
             let cell = tableView.dequeueCell(ResultCell.self, for: indexPath)

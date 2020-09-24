@@ -47,6 +47,8 @@
 
 "clients.addcustom.line1"   = "Add a custom client";
 "clients.addcustom.line2"   = "in case yours wasn't detected";
+"clients.openurl.line1"     = "Open magnet";
+"clients.openurl.line2"     = "Will launch your default torrent app";
 
 "clients.section.clients"   = "Available clients";
 "clients.section.noresults" = "No results";

@@ -24,7 +24,7 @@ extension UIColor {
     }
     
     static var seeder: UIColor {
-        return UIColor(red: 0, green: 0.56, blue: 0.06, alpha: 1)
+        return UIColor(red: 0.39, green: 0.79, blue: 0.34, alpha: 1)
     }
 
     static var leechers: UIColor {

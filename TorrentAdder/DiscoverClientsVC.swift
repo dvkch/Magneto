@@ -113,8 +113,7 @@ extension DiscoverClientsVC : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(ClientCell.self, for: indexPath)
-        cell.isDiscoveredClient = true
-        cell.client = client(at: indexPath)
+        cell.kind = .discoveredClient(client(at: indexPath))
         return cell
     }
     
