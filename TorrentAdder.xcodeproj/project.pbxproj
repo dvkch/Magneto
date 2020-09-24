@@ -16,6 +16,7 @@
 		972589AD21B0AD6D00FCE9D5 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972589AC21B0AD6D00FCE9D5 /* AppError.swift */; };
 		972B4FBC24BBCF270026BFE4 /* String+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B4FBB24BBCF270026BFE4 /* String+SY.swift */; };
 		973784321BD40649001AD487 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973784311BD40649001AD487 /* Launch.storyboard */; };
+		97471476251CA25A003FEEF4 /* UINSSceneView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97471475251CA25A003FEEF4 /* UINSSceneView+SY.swift */; };
 		9747560A232AB4DA0038698E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97475609232AB4DA0038698E /* ViewController.swift */; };
 		974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372921B150FC00C0FDDE /* SearchResult.swift */; };
 		974D372C21B157CE00C0FDDE /* Fuzi+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372B21B157CE00C0FDDE /* Fuzi+SY.swift */; };
@@ -98,6 +99,7 @@
 		972589AC21B0AD6D00FCE9D5 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		972B4FBB24BBCF270026BFE4 /* String+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+SY.swift"; sourceTree = "<group>"; };
 		973784311BD40649001AD487 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
+		97471475251CA25A003FEEF4 /* UINSSceneView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINSSceneView+SY.swift"; sourceTree = "<group>"; };
 		97475609232AB4DA0038698E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		974D372921B150FC00C0FDDE /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		974D372B21B157CE00C0FDDE /* Fuzi+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fuzi+SY.swift"; sourceTree = "<group>"; };
@@ -228,11 +230,12 @@
 				979D4A9C21AF4764000BFDF0 /* NSHost+SY.h */,
 				974D373521B4965700C0FDDE /* Sockets+SY.h */,
 				974D373821B4999E00C0FDDE /* Sockets+SY.m */,
+				972B4FBB24BBCF270026BFE4 /* String+SY.swift */,
+				9768CA6221B55838000AA7C2 /* UIColor+SY.swift */,
+				97471475251CA25A003FEEF4 /* UINSSceneView+SY.swift */,
 				9771AB2421AEF3CE005DE97D /* UIView+SY.swift */,
 				974D372F21B1DDEE00C0FDDE /* UIViewController+SY.swift */,
 				9771AB2221AEF1A5005DE97D /* URL+SY.swift */,
-				9768CA6221B55838000AA7C2 /* UIColor+SY.swift */,
-				972B4FBB24BBCF270026BFE4 /* String+SY.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				9768CA6521B5770B000AA7C2 /* Client.swift in Sources */,
 				9771AB2521AEF3CE005DE97D /* UIView+SY.swift in Sources */,
 				9771AB1F21AEE457005DE97D /* MagnetPopupVC.swift in Sources */,
+				97471476251CA25A003FEEF4 /* UINSSceneView+SY.swift in Sources */,
 				9715A508251BA32B00C2C52F /* ViewRouter.swift in Sources */,
 				974D373921B4999E00C0FDDE /* Sockets+SY.m in Sources */,
 				970130E421B08E1000E7CFEC /* Error+SY.swift in Sources */,
