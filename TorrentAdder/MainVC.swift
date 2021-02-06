@@ -30,6 +30,7 @@ class MainVC: ViewController {
         
         mirrorLabelContainer.layer.cornerRadius = 3
         mirrorLabelContainer.layer.masksToBounds = true
+        mirrorLabelContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.mirrorLabelTap)))
         mirrorsChanged()
 
         searchField.textField?.backgroundColor = .fieldBackground
@@ -127,6 +128,10 @@ extension MainVC {
             return
         }
         super.motionEnded(motion, with: event)
+    }
+    
+    @objc private func mirrorLabelTap() {
+        WebAPI.shared.clearMirrors()
     }
     
     @IBAction private func helpButtonTap() {

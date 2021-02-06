@@ -41,10 +41,14 @@ class SceneDelegate: UIResponder {
 @available(iOS 13.0, *)
 extension SceneDelegate : UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+
         guard let _ = (scene as? UIWindowScene) else { return }
         if let windowScene = scene as? UIWindowScene {
             self.window = SceneDelegate.createWindow(windowScene: windowScene)
             
+            // temporary fix for SVProgressHUD
+            (UIApplication.shared.delegate as? AppDelegate)?.window = window
+
             #if targetEnvironment(macCatalyst)
             if let titlebar = windowScene.titlebar {
                 titlebar.titleVisibility = .hidden
