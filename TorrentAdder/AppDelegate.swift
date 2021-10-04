@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window = SceneDelegate.createWindow()
         }
         
-        #if os(iOS)
+        #if !targetEnvironment(macCatalyst)
         ViewRouter.shared.handleUpdateCheck()
         #endif
 
