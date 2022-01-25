@@ -44,6 +44,7 @@ extension AppError : LocalizedError {
 protocol AlamoDataResponseProtocol {
     var untypedError: Error? { get }
     var response: HTTPURLResponse? { get }
+    var data: Data? { get }
 }
 
 extension DataResponse : AlamoDataResponseProtocol {
