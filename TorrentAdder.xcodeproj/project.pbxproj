@@ -414,7 +414,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SY;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					F8986756192A317C00735175 = {

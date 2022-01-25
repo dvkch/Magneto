@@ -43,13 +43,17 @@ class HostnameResolver: NSObject {
     }
     
     func hostnameForIP(_ ip: String) -> String? {
-        let names = services
+        let name = services
             .filter { $0.addressesStrings.contains(ip) }
             .compactMap { $0.hostName?.replacingOccurrences(of: "." + $0.domain, with: "") }
-        
-        return names
             .sorted { n1, n2 in n1.count > n2.count }
-            .first ?? NSHost.init(address: ip)?.name()
+            .first
+
+        #if targetEnvironment(macCatalyst)
+        return name
+        #else
+        return name ?? NSHost.init(address: ip)?.name()
+        #endif
     }
     
 }

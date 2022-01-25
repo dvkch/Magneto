@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#if !TARGET_OS_MACCATALYST
 @interface NSHost : NSObject
 + (void)flushHostCache;
 + (void)setHostCacheEnabled:(BOOL)arg1;
@@ -19,3 +20,4 @@
 - (nullable NSArray <NSString *> *)names;
 - (nullable NSString *)name;
 @end
+#endif

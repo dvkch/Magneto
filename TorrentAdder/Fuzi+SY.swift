@@ -8,8 +8,8 @@
 
 import Fuzi
 
-extension XMLElement {
-    var textNode: XMLNode? {
+extension Fuzi.XMLElement {
+    var textNode: Fuzi.XMLNode? {
         return childNodes(ofTypes: [.Text]).first
     }
     

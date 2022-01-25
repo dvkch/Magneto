@@ -36,7 +36,7 @@ extension DataRequest {
     }
     
     @discardableResult
-    func responseXML(queue: DispatchQueue = .main, completionHandler: @escaping (DataResponse<XMLDocument, Error>) -> Void) -> Self {
+    func responseXML(queue: DispatchQueue = .main, completionHandler: @escaping (DataResponse<Fuzi.XMLDocument, Error>) -> Void) -> Self {
         return responseData(queue: queue) { (responseData) in
             let responseXML = responseData.tryMap { try XMLDocument(data: $0) }
             completionHandler(responseXML)
@@ -44,7 +44,7 @@ extension DataRequest {
     }
 
     @discardableResult
-    func responseHTML(queue: DispatchQueue = .main, completionHandler: @escaping (DataResponse<HTMLDocument, Error>) -> Void) -> Self {
+    func responseHTML(queue: DispatchQueue = .main, completionHandler: @escaping (DataResponse<Fuzi.HTMLDocument, Error>) -> Void) -> Self {
         return responseData(queue: queue) { (responseData) in
             let responseHTML = responseData.tryMap { try HTMLDocument(data: $0) }
             completionHandler(responseHTML)
@@ -101,8 +101,8 @@ extension DataRequest {
         }
     }
     
-    func responseFutureXML(queue: DispatchQueue = .main) -> Future<XMLDocument, AppError> {
-        return Future<XMLDocument, AppError> { resolver in
+    func responseFutureXML(queue: DispatchQueue = .main) -> Future<Fuzi.XMLDocument, AppError> {
+        return Future<Fuzi.XMLDocument, AppError> { resolver in
             self.responseXML(queue: queue, completionHandler: { (response) in
                 switch response.result {
                 case .success(let value):
@@ -114,8 +114,8 @@ extension DataRequest {
         }
     }
     
-    func responseFutureHTML(queue: DispatchQueue = .main) -> Future<HTMLDocument, AppError> {
-        return Future<HTMLDocument, AppError> { resolver in
+    func responseFutureHTML(queue: DispatchQueue = .main) -> Future<Fuzi.HTMLDocument, AppError> {
+        return Future<Fuzi.HTMLDocument, AppError> { resolver in
             self.responseHTML(queue: queue, completionHandler: { (response) in
                 switch response.result {
                 case .success(let value):
