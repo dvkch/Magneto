@@ -20,6 +20,7 @@ class Preferences: NSObject {
         super.init()
         loadClients()
         loadMirrors()
+        loadMirrorBlacklist()
         loadPrevSearches()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.ubiquitousStoreChanged(notification:)),
@@ -71,19 +72,27 @@ class Preferences: NSObject {
     private static let savedAvailableMirrorsPrefKey = "available_mirrors"
     var savedAvailableMirrors: [URL] = [] {
         didSet {
-            if savedAvailableMirrors != oldValue {
-                saveMirrors()
-            }
+            UserDefaults.standard.set(savedAvailableMirrors.map { $0.absoluteString }, forKey: Self.savedAvailableMirrorsPrefKey)
         }
-    }
-    
-    private func saveMirrors() {
-        UserDefaults.standard.set(savedAvailableMirrors.map { $0.absoluteString }, forKey: Self.savedAvailableMirrorsPrefKey)
     }
     
     private func loadMirrors() {
         if let urlStrings = UserDefaults.standard.array(forKey: Self.savedAvailableMirrorsPrefKey) as? [String] {
             savedAvailableMirrors = urlStrings.compactMap { URL(string: $0) }
+        }
+    }
+    
+    // MARK: Mirrors blacklist
+    private static let mirrorBlacklistPrefKey = "mirrors_blacklist"
+    var mirrorBlacklist: [URL] = [] {
+        didSet {
+            UserDefaults.standard.set(mirrorBlacklist.map { $0.absoluteString }, forKey: Self.mirrorBlacklistPrefKey)
+        }
+    }
+    
+    private func loadMirrorBlacklist() {
+        if let urlStrings = UserDefaults.standard.array(forKey: Self.mirrorBlacklistPrefKey) as? [String] {
+            mirrorBlacklist = urlStrings.compactMap { URL(string: $0) }
         }
     }
     

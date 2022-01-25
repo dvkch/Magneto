@@ -131,7 +131,28 @@ extension MainVC {
     }
     
     @objc private func mirrorLabelTap() {
-        WebAPI.shared.clearMirrors()
+        let alert = UIAlertController(
+            title: "alert.mirror.title".localized,
+            message: WebAPI.shared.availableMirrorURLs.first?.host,
+            preferredStyle: .actionSheet
+        )
+        if let mirror = WebAPI.shared.availableMirrorURLs.first {
+            alert.addAction(title: "action.open".localized, style: .default) { _ in
+                self.openSafariURL(mirror) 
+            }
+            alert.addAction(title: "alert.mirror.blacklist_mirror".localized, style: .default) { _ in
+                Preferences.shared.mirrorBlacklist.append(mirror)
+                WebAPI.shared.clearMirrors()
+            }
+        }
+        alert.addAction(title: "alert.mirror.clean_mirror_blacklist".localized, style: .default) { _ in
+            Preferences.shared.mirrorBlacklist = []
+            WebAPI.shared.clearMirrors()
+        }
+        alert.addAction(title: "action.close".localized, style: .cancel, handler: nil)
+        alert.popoverPresentationController?.sourceView = mirrorLabel
+        alert.popoverPresentationController?.sourceRect = mirrorLabel.bounds
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction private func helpButtonTap() {

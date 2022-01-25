@@ -75,6 +75,7 @@ class WebAPI: NSObject {
                 let URLs = elements
                     .compactMap { $0.text }
                     .compactMap { URL(string: "https://" + $0) }
+                    .filter { !Preferences.shared.mirrorBlacklist.contains($0) }
                 
                 if let mirrorURL = URLs.first {
                     self.availableMirrorURLs = URLs

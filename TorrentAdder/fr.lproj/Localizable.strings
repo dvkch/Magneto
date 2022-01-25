@@ -45,6 +45,10 @@
 "alert.help.title"      = "Aide";
 "alert.help.message"    = "Pour ajouter un torrent ouvrez une page contenant un lien magnet. Ouvrez Safari et allez sur une page contenant un lien magnet, tappez dessus pour ouvrir cette application puis selectionnez un client pour démarrer le téléchargement.";
 
+"alert.mirror.title"                    = "Gestion des miroirs";
+"alert.mirror.blacklist_mirror"         = "Blacklister";
+"alert.mirror.clean_mirror_blacklist"   = "Vider la blacklist";
+
 "clients.addcustom.line1"   = "Ajouter un client manuellement";
 "clients.addcustom.line2"   = "si le votre n'a pas été détecté";
 "clients.openurl.line1"     = "Ouvrir le magnet";
