@@ -67,7 +67,7 @@ class WebAPI: NSObject {
         }
         
         return self.session
-            .request("https://pirateproxy.wtf/")
+            .request("https://thepirateproxybay.com/")
             .validate()
             .responseFutureHTML()
             .flatMap { (document) -> Future<URL, AppError> in
@@ -96,11 +96,10 @@ class WebAPI: NSObject {
         ]
         
         var urlComponents = URLComponents(url: mirrorURL, resolvingAgainstBaseURL: true)!
-        urlComponents.path = "/api"
-        urlComponents.queryItems = [
-            URLQueryItem(name: "url", value: internalURLComponents.url!.absoluteString),
-        ]
-        return urlComponents.url!
+        urlComponents.path = "/"
+        
+        let url = urlComponents.url!.absoluteString + "api.php?url=" + internalURLComponents.url!.absoluteString
+        return URL(string: url)!
     }
     
     func getResults(query: String) -> Future<[SearchResult], AppError> {

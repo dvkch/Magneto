@@ -9,6 +9,20 @@
 import UIKit
 import Fuzi
 
+struct IntMaybeString: Decodable {
+    private(set) var value: Int = 0
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let stringValue = try? container.decode(String.self), let intValue = Int(stringValue) {
+            value = intValue
+        }
+        else {
+            value = try container.decode(Int.self)
+        }
+    }
+}
+
 struct SearchResult : Decodable {
 
     // MARK: Properties
@@ -38,8 +52,8 @@ struct SearchResult : Decodable {
         id = try container.decode(String.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         infoHash = try container.decode(String.self, forKey: .infoHash)
-        seeders = Int(try container.decode(String.self, forKey: .seeders)) ?? 0
-        leechers = Int(try container.decode(String.self, forKey: .leechers)) ?? 0
+        seeders = (try container.decode(IntMaybeString.self, forKey: .seeders)).value
+        leechers = (try container.decode(IntMaybeString.self, forKey: .leechers)).value
         size = Int64(try container.decode(String.self, forKey: .size)) ?? 0
         verified = (try container.decode(String.self, forKey: .status)) == "trusted"
         added = Date(timeIntervalSince1970: TimeInterval(Int((try container.decode(String.self, forKey: .added))) ?? 0))
