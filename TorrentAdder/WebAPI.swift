@@ -62,6 +62,11 @@ class WebAPI: NSObject {
     }
     
     private func getMirror() -> Future<URL, AppError> {
+        // Mirrors now seem to use the same API server, seen in /static/main-new.js. Instead of downloading that file and parsing the server,
+        // we're just gonna use it for a while it see if it works reliably
+        self.availableMirrorURLs = [URL(string: "https://bayapi.lol/")!]
+        return .init(value: self.availableMirrorURLs.first!)
+        
         if let mirrorURL = availableMirrorURLs.first {
             return .init(value: mirrorURL)
         }
@@ -88,17 +93,11 @@ class WebAPI: NSObject {
     }
     
     private func getQueryURL(mirrorURL: URL, query: String) -> URL {
-        var internalURLComponents = URLComponents()
-        internalURLComponents.path = "/q.php"
-        internalURLComponents.queryItems = [
+        var urlComponents = URLComponents(url: mirrorURL, resolvingAgainstBaseURL: true)!
+        urlComponents.path = "/q.php"
+        urlComponents.queryItems = [
             URLQueryItem(name: "q", value: query),
             URLQueryItem(name: "cat", value: "")
-        ]
-        
-        var urlComponents = URLComponents(url: mirrorURL, resolvingAgainstBaseURL: true)!
-        urlComponents.path = "/api"
-        urlComponents.queryItems = [
-            URLQueryItem(name: "url", value: internalURLComponents.url!.absoluteString),
         ]
         return urlComponents.url!
     }
@@ -106,13 +105,10 @@ class WebAPI: NSObject {
     func getResults(query: String) -> Future<[SearchResult], AppError> {
         return getMirror()
             .map { mirror in self.getQueryURL(mirrorURL: mirror, query: query) }
-            .flatMap { url in self.session.request(url).validate().responseFutureCodable(type: [SearchResult].self) }
+            .flatMap { url in return self.session.request(url).validate().responseFutureCodable(type: [SearchResult].self) }
             .map { $0.filter { $0.size > 0 } } // a single item with all attributes set to 0 is returned when no results have been found, let's handle this properly
             .recoverWith { (error) -> Future<[SearchResult], AppError> in
                 if case let .alamofire(request) = error {
-                    if request.isNotFoundError {
-                        return .init(value: [])
-                    }
                     if request.isUnreachable {
                         if self.availableMirrorURLs.count > 1 {
                             self.availableMirrorURLs.removeFirst()
