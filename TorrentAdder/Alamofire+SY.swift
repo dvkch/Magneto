@@ -75,19 +75,6 @@ extension DataRequest {
         }
     }
     
-    func responseFutureJSON(queue: DispatchQueue = .main) -> Future<Any, AppError> {
-        return Future<Any, AppError> { resolver in
-            self.responseJSON(queue: queue, completionHandler: { (response) in
-                switch response.result {
-                case .success(let value):
-                    resolver(.success(value))
-                case .failure:
-                    resolver(.failure(AppError.alamofire(response)))
-                }
-            })
-        }
-    }
-    
     func responseFutureCodable<T: Decodable>(queue: DispatchQueue = .main, type: T.Type) -> Future<T, AppError> {
         return Future<T, AppError> { resolver in
             self.responseCodable(queue: queue, type: T.self, completionHandler: { (response) in

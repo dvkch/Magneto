@@ -211,8 +211,8 @@ private extension ClientAPI {
         return session
             .request(client.apiURL, parameters: parameters, encoding: URLEncoding(), headers: nil)
             .validate()
-            .responseFutureJSON()
-            .map { json in nil }
+            .responseFutureData()
+            .map { _ in nil }
     }
     
     private func listEndedTorrents(inUTorrent client: Client, token: String) -> Future<[String], AppError> {
@@ -247,7 +247,7 @@ private extension ClientAPI {
         return session
             .request(client.apiURL, parameters: parameters, encoding: URLEncoding(), headers: nil)
             .validate()
-            .responseFutureJSON()
+            .responseFutureData()
             .map { _ in () }
     }
 }
