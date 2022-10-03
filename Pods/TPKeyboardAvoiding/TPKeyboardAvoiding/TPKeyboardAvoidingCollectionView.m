@@ -8,6 +8,8 @@
 
 #import "TPKeyboardAvoidingCollectionView.h"
 
+#if ! TARGET_OS_TV
+
 @interface TPKeyboardAvoidingCollectionView () <UITextFieldDelegate, UITextViewDelegate>
 @end
 
@@ -15,7 +17,7 @@
 
 #pragma mark - Setup/Teardown
 
-- (void)setup {
+- (void)setupKeyboardAvoiding {
     if ( [self hasAutomaticKeyboardAvoidingBehaviour] ) return;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TPKeyboardAvoiding_keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
@@ -26,19 +28,19 @@
 
 -(id)initWithFrame:(CGRect)frame {
     if ( !(self = [super initWithFrame:frame]) ) return nil;
-    [self setup];
+    [self setupKeyboardAvoiding];
     return self;
 }
 
 - (id)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout {
     if ( !(self = [super initWithFrame:frame collectionViewLayout:layout]) ) return nil;
-    [self setup];
+    [self setupKeyboardAvoiding];
     return self;
 }
 
 -(void)awakeFromNib {
     [super awakeFromNib];
-    [self setup];
+    [self setupKeyboardAvoiding];
 }
 
 -(void)dealloc {
@@ -111,3 +113,6 @@
 }
 
 @end
+
+#endif
+

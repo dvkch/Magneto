@@ -7,6 +7,9 @@
 //
 
 #import "UIScrollView+TPKeyboardAvoidingAdditions.h"
+
+#if ! TARGET_OS_TV
+
 #import "TPKeyboardAvoidingScrollView.h"
 #import <objc/runtime.h>
 
@@ -55,6 +58,7 @@ static const int kStateKey;
     CGRect beginKeyboardRect = [self convertRect:[[info objectForKey:_UIKeyboardFrameBeginUserInfoKey] CGRectValue] fromView:nil];
     CGRect endKeyboardRect = [self convertRect:[[info objectForKey:_UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:nil];
     if (CGRectIsEmpty(endKeyboardRect)) {
+        self.keyboardAvoidingState.keyboardVisible = NO;
         return;
     }
     
@@ -67,12 +71,16 @@ static const int kStateKey;
     if ( !state.keyboardVisible ) {
         state.priorInset = self.contentInset;
         state.priorScrollIndicatorInsets = self.scrollIndicatorInsets;
+#if TARGET_OS_IOS
         state.priorPagingEnabled = self.pagingEnabled;
+#endif
     }
 
     state.keyboardVisible = YES;
+#if TARGET_OS_IOS
     self.pagingEnabled = NO;
-
+#endif
+    
     if ( [self isKindOfClass:[TPKeyboardAvoidingScrollView class]] ) {
         state.priorContentSize = self.contentSize;
 
@@ -99,6 +107,7 @@ static const int kStateKey;
         
         [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
         [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]];
+        [UIView setAnimationBeginsFromCurrentState:YES];
         
         self.contentInset = [self TPKeyboardAvoiding_contentInsetForKeyboard];
         
@@ -152,6 +161,7 @@ static const int kStateKey;
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationCurve:[[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
     [UIView setAnimationDuration:[[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]];
+    [UIView setAnimationBeginsFromCurrentState:YES];
     
     if ( [self isKindOfClass:[TPKeyboardAvoidingScrollView class]] ) {
         self.contentSize = state.priorContentSize;
@@ -159,7 +169,9 @@ static const int kStateKey;
     
     self.contentInset = state.priorInset;
     self.scrollIndicatorInsets = state.priorScrollIndicatorInsets;
+#if TARGET_OS_IOS
     self.pagingEnabled = state.priorPagingEnabled;
+#endif
 	[self layoutIfNeeded];
     [UIView commitAnimations];
 }
@@ -298,11 +310,11 @@ static const int kStateKey;
     if ( [view isKindOfClass:[UITextField class]] && ((UITextField*)view).enabled ) {
         return YES;
     }
-    
+#if TARGET_OS_IOS
     if ( [view isKindOfClass:[UITextView class]] && ((UITextView*)view).isEditable ) {
         return YES;
     }
-    
+#endif
     return NO;
 }
 
@@ -341,7 +353,13 @@ static const int kStateKey;
     TPKeyboardAvoidingState *state = self.keyboardAvoidingState;
     UIEdgeInsets newInset = self.contentInset;
     CGRect keyboardRect = state.keyboardRect;
-    newInset.bottom = keyboardRect.size.height - MAX((CGRectGetMaxY(keyboardRect) - CGRectGetMaxY(self.bounds)), 0);
+    
+    if (keyboardRect.size.height == 0) {
+        newInset.bottom = state.priorInset.bottom;
+    } else {
+        newInset.bottom = MAX(keyboardRect.size.height - MAX((CGRectGetMaxY(keyboardRect) - CGRectGetMaxY(self.bounds)), 0), 0);
+    }
+
     return newInset;
 }
 
@@ -350,6 +368,11 @@ static const int kStateKey;
     __block CGFloat offset = 0.0;
 
     CGRect subviewRect = [view convertRect:view.bounds toView:self];
+    
+    // Allow views to specify their need to float to the top instead of towards the middle.
+    if ( [view respondsToSelector:@selector(TPKeyboardAvoiding_idealOffsetForViewAlwaysTop)] && [((id<TPKeyboardAvoidingAdditionsOptions>)view) TPKeyboardAvoiding_idealOffsetForViewAlwaysTop] ) {
+        return subviewRect.origin.y;
+    }
 
     __block CGFloat padding = 0.0;
     __block UIEdgeInsets contentInset;
@@ -443,3 +466,5 @@ static const int kStateKey;
 
 @implementation TPKeyboardAvoidingState
 @end
+
+#endif

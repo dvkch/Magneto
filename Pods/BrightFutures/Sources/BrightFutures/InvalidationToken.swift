@@ -15,7 +15,7 @@ public protocol InvalidationTokenType {
     var isInvalid : Bool { get }
     
     /// The future will fail with .InvalidationTokenInvalidated when the token invalidates
-    var future: Future<NoValue, BrightFuturesError<Never>> { get }
+    var future: Future<Never, BrightFuturesError<Never>> { get }
     
     /// This context executes as long as the token is valid. If the token is invalid, the given blocks are discarded
     func validContext(_ parentContext: @escaping ExecutionContext) -> ExecutionContext
@@ -26,10 +26,10 @@ extension InvalidationTokenType {
     /// Alias of context(parentContext:task:) which uses the default threading model
     /// Due to a limitation of the Swift compiler, we cannot express this with a single method
     public var validContext: ExecutionContext {
-        return validContext(DefaultThreadingModel())
+        return validContext(defaultContext())
     }
     
-    public func validContext(_ parentContext: @escaping ExecutionContext = DefaultThreadingModel()) -> ExecutionContext {
+    public func validContext(_ parentContext: @escaping ExecutionContext = defaultContext()) -> ExecutionContext {
         return { task in
             parentContext {
                 if !self.isInvalid {
@@ -49,7 +49,7 @@ public protocol ManualInvalidationTokenType : InvalidationTokenType {
 /// A default invalidation token implementation
 public class InvalidationToken : ManualInvalidationTokenType {
    
-    public let future = Future<NoValue, BrightFuturesError<Never>>()
+    public let future = Future<Never, BrightFuturesError<Never>>()
     
     /// Creates a new valid token
     public init() { }

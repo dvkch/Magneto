@@ -10,7 +10,7 @@ import UIKit
 
 public extension UIWindow {
     
-    @available(iOS 13.0, *)
+    @available(iOS 13.0, tvOS 13.0, *)
     static func mainWindow(windowScene: UIWindowScene?, rootViewController: UIViewController?) -> Self {
         let window: Self
         if let windowScene = windowScene {

@@ -8,6 +8,8 @@
 
 #import "TPKeyboardAvoidingScrollView.h"
 
+#if ! TARGET_OS_TV
+
 @interface TPKeyboardAvoidingScrollView () <UITextFieldDelegate, UITextViewDelegate>
 @end
 
@@ -15,7 +17,7 @@
 
 #pragma mark - Setup/Teardown
 
-- (void)setup {
+- (void)setupKeyboardAvoiding {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TPKeyboardAvoiding_keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TPKeyboardAvoiding_keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollToActiveTextField) name:UITextViewTextDidBeginEditingNotification object:nil];
@@ -24,13 +26,13 @@
 
 -(id)initWithFrame:(CGRect)frame {
     if ( !(self = [super initWithFrame:frame]) ) return nil;
-    [self setup];
+    [self setupKeyboardAvoiding];
     return self;
 }
 
 -(void)awakeFromNib {
     [super awakeFromNib];
-    [self setup];
+    [self setupKeyboardAvoiding];
 }
 
 -(void)dealloc {
@@ -90,3 +92,6 @@
 }
 
 @end
+
+#endif
+
