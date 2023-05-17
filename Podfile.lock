@@ -5,7 +5,7 @@ PODS:
   - "NSDate+TimeAgo (1.0.6)"
   - SPLPing (1.1.8)
   - SVProgressHUD (2.2.5)
-  - SYKit (0.1.23)
+  - SYKit (0.2.5)
   - TPKeyboardAvoiding (1.3.5)
 
 DEPENDENCIES:
@@ -36,7 +36,7 @@ SPEC CHECKSUMS:
   "NSDate+TimeAgo": 35601c619b2d59290055e4fe76e61d97677a2360
   SPLPing: 420837fae1e19bba0a8360e91e7a384f22509663
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SYKit: 685fa400d3fee1b68fe6de52db5bf607757aa0d8
+  SYKit: 5977f90a6b1511189979407d97ab672f7e37a5ef
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
 
 PODFILE CHECKSUM: b39b9fe1c35e1b52d0ee4112ecf0715a707a77f3

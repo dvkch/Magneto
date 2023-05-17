@@ -192,7 +192,7 @@ extension MainVC {
                     Preferences.shared.addPrevSearch(text)
                     
                 case .failure(let error):
-                    self.showError(error, title: "error.title.cannotLoadResults".localized)
+                    UIAlertController.show(for: error, title: "error.title.cannotLoadResults".localized, close: "action.close".localized, in: self)
                 }
         }
     }
@@ -207,7 +207,7 @@ extension MainVC {
         
         #if !targetEnvironment(macCatalyst) && os(iOS)
         guard !clients.isEmpty else {
-            showError(AppError.noClientsSaved, title: "error.title.cannotAddTorrent".localized)
+            UIAlertController.show(for: AppError.noClientsSaved, title: "error.title.cannotAddTorrent".localized, close: "action.close".localized, in: self)
             return
         }
         #endif
@@ -237,7 +237,9 @@ extension MainVC {
                     SVProgressHUD.showSuccess(withStatus: nil)
                 }
             }
-            .onFailure { error in self.showError(error) }
+            .onFailure { error in
+                UIAlertController.show(for: error, close: "action.close".localized, in: self)
+            }
     }
     
     fileprivate func removeClient(_ client: Client, at indexPath: IndexPath) {
@@ -254,7 +256,9 @@ extension MainVC {
         SVProgressHUD.show()
         WebAPI.shared.getResultPageURL(result)
             .andThen { _ in SVProgressHUD.dismiss() }
-            .onFailure { (error) in self.showError(error) }
+            .onFailure { (error) in
+                UIAlertController.show(for: error, close: "action.close".localized, in: self)
+            }
             .onSuccess { (fullURL) in
                 
                 let vc = UIActivityViewController(activityItems: [fullURL], applicationActivities: nil)
@@ -270,7 +274,9 @@ extension MainVC {
         SVProgressHUD.show()
         WebAPI.shared.getResultPageURL(result)
             .andThen { _ in SVProgressHUD.dismiss() }
-            .onFailure { (error) in self.showError(error) }
+            .onFailure { (error) in
+                UIAlertController.show(for: error, close: "action.close".localized, in: self)
+            }
             .onSuccess { (fullURL) in
                 self.openSafariURL(fullURL)
                 self.tableView.setEditing(false, animated: true)

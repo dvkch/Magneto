@@ -44,7 +44,10 @@ class HostnameResolver: NSObject {
     
     func hostnameForIP(_ ip: String) -> String? {
         let name = services
-            .filter { $0.addressesStrings.contains(ip) }
+            .filter { service in
+                let addresses = (service.parsedAddresses?.map(\.ip) ?? [])
+                return addresses.contains(ip)
+            }
             .compactMap { $0.hostName?.replacingOccurrences(of: "." + $0.domain, with: "") }
             .sorted { n1, n2 in n1.count > n2.count }
             .first
