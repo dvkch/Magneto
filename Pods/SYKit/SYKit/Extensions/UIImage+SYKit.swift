@@ -40,18 +40,31 @@ import ImageIO
         return nil
     }
 
-    @objc(sy_thumbnailForImageAtURL:maxEdgeSize:)
-    static func thumbnailForImage(at url: URL, maxEdgeSize: CGFloat) -> UIImage? {
+    @objc enum ThumbnailOptions: Int {
+        case alwaysCreate
+        case createIfAbsent
+        case dontCreate
+    }
+    @objc(sy_thumbnailForImageAtURL:maxEdgeSize:options:)
+    static func thumbnailForImage(at url: URL, maxEdgeSize: CGFloat, options: ThumbnailOptions) -> UIImage? {
         // http://stackoverflow.com/a/5860390/1439489
         guard let source = CGImageSourceCreateWithURL(url as CFURL, nil) else { return nil }
-
-        let options = [
-            kCGImageSourceCreateThumbnailFromImageIfAbsent: kCFBooleanTrue,
-            kCGImageSourceCreateThumbnailWithTransform: kCFBooleanTrue,
-            kCGImageSourceThumbnailMaxPixelSize: maxEdgeSize as NSNumber,
-            ] as CFDictionary
         
-        guard let thumb = CGImageSourceCreateThumbnailAtIndex(source, 0, options) else { return nil }
+        var cgOptions: [CFString: Any] = [
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxEdgeSize as NSNumber,
+        ]
+        
+        switch options {
+        case .alwaysCreate:
+            cgOptions[kCGImageSourceCreateThumbnailFromImageAlways] = true
+        case .createIfAbsent:
+            cgOptions[kCGImageSourceCreateThumbnailFromImageIfAbsent] = true
+        case .dontCreate:
+            cgOptions[kCGImageSourceCreateThumbnailFromImageIfAbsent] = false
+        }
+        
+        guard let thumb = CGImageSourceCreateThumbnailAtIndex(source, 0, cgOptions as CFDictionary) else { return nil }
         return UIImage(cgImage: thumb)
     }
 }
@@ -96,8 +109,8 @@ import ImageIO
         return UIGraphicsGetImageFromCurrentImageContext()
     }
     
-    @objc(sy_resizingToSize:)
-    func resizing(to size: CGSize) -> UIImage? {
+    @objc(sy_resizingToSize:interpolation:)
+    func resizing(to size: CGSize, interpolation: CGInterpolationQuality = .high) -> UIImage? {
         // http://www.lukaszielinski.de/blog/posts/2014/01/21/ios-how-to-resize-and-rotate-uiimages-in-a-thread-safe-fashion/
         guard let cgImage = self.cgImage, let colorSpace = cgImage.colorSpace else { return nil }
         
@@ -114,28 +127,29 @@ import ImageIO
             bitmapInfo: cgImage.alphaInfo.rawValue
             ) else { return nil }
     
+        context.interpolationQuality = interpolation
         context.draw(cgImage, in: CGRect(x: 0, y: 0, width: targetWidth, height: targetHeight))
         
         guard let newCGImage = context.makeImage() else { return nil }
         return UIImage(cgImage: newCGImage, scale: scale, orientation: imageOrientation)
     }
 
-    @objc(sy_resizingWidthTo:)
-    func resizingWidth(to width: CGFloat) -> UIImage? {
-        return self.resizing(to: CGSize(width: width, height: size.height * width / size.width))
+    @objc(sy_resizingWidthTo:interpolation:)
+    func resizingWidth(to width: CGFloat, interpolation: CGInterpolationQuality = .high) -> UIImage? {
+        return self.resizing(to: CGSize(width: width, height: size.height * width / size.width), interpolation: interpolation)
     }
     
-    @objc(sy_resizingHeightTo:)
-    func resizingHeight(to height: CGFloat) -> UIImage? {
-        return self.resizing(to: CGSize(width: size.width * height / size.height, height: height))
+    @objc(sy_resizingHeightTo:interpolation:)
+    func resizingHeight(to height: CGFloat, interpolation: CGInterpolationQuality = .high) -> UIImage? {
+        return self.resizing(to: CGSize(width: size.width * height / size.height, height: height), interpolation: interpolation)
     }
     
-    @objc(sy_resizingLongestEdgeTo:)
-    func resizingLongestEdge(to size: CGFloat) -> UIImage? {
+    @objc(sy_resizingLongestEdgeTo:interpolation:)
+    func resizingLongestEdge(to size: CGFloat, interpolation: CGInterpolationQuality = .high) -> UIImage? {
         if self.size.width > self.size.height {
-            return resizingWidth(to: size)
+            return resizingWidth(to: size, interpolation: interpolation)
         } else {
-            return resizingHeight(to: size)
+            return resizingHeight(to: size, interpolation: interpolation)
         }
     }
     

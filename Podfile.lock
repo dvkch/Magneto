@@ -1,11 +1,11 @@
 PODS:
-  - Alamofire (5.6.2)
+  - Alamofire (5.7.1)
   - BrightFutures (8.2.0)
   - Fuzi (3.1.3)
   - "NSDate+TimeAgo (1.0.6)"
   - SPLPing (1.1.8)
   - SVProgressHUD (2.2.5)
-  - SYKit (0.1.16)
+  - SYKit (0.1.23)
   - TPKeyboardAvoiding (1.3.5)
 
 DEPENDENCIES:
@@ -30,15 +30,15 @@ SPEC REPOS:
     - TPKeyboardAvoiding
 
 SPEC CHECKSUMS:
-  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
   Fuzi: 4c10d6449c0b49a85cd75b13844c559c0fc71220
   "NSDate+TimeAgo": 35601c619b2d59290055e4fe76e61d97677a2360
   SPLPing: 420837fae1e19bba0a8360e91e7a384f22509663
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SYKit: 2eaf235862d8de406af61a66c73bb7b58887f4af
+  SYKit: 685fa400d3fee1b68fe6de52db5bf607757aa0d8
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
 
-PODFILE CHECKSUM: 3c0b83a7531b49c4378b52802dd9b5435ab77448
+PODFILE CHECKSUM: b39b9fe1c35e1b52d0ee4112ecf0715a707a77f3
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
