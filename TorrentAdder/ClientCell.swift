@@ -125,7 +125,7 @@ class ClientCell: UITableViewCell {
             activityIndicator.stopAnimating()
         }
         
-        if #available(iOS 13.0, *), kind.isOpenURL {
+        if kind.isOpenURL {
             statusImageView.image = UIImage(systemName: "arrowshape.turn.up.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .bold))?.masking(with: .seeder)
             activityIndicator.stopAnimating()
         }

@@ -49,9 +49,7 @@ class ClientFormCell: UITableViewCell {
         
         iconView.image = formField.image?.masking(with: .accent)
         textField.keyboardType = formField.keyboardType
-        if #available(iOS 11.0, *) {
-            textField.textContentType = formField.textContentType
-        }
+        textField.textContentType = formField.textContentType
 
         if let options = formField.options, !options.isEmpty {
             textField.isHidden = true

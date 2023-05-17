@@ -20,26 +20,13 @@ class ViewRouter {
     private var isShowingAuthAlertView: Bool = false
 
     // MARK: Finding views
-    private var currentWindow: UIWindow? {
-        var window: UIWindow? = AppDelegate.obtain.window
-        if #available(iOS 13.0, *) {
-            window = Array(UIApplication.shared.connectedScenes)
-                .filter { $0.activationState != .unattached }
-                .sorted { $0.activationState.rawValue < $1.activationState.rawValue }
-                .compactMap { (($0 as? UIWindowScene)?.delegate as? UIWindowSceneDelegate)?.window }
-                .first ?? nil
-        }
-        return window
-    }
-
-    private func mainVC(in window: UIWindow?) -> MainVC? {
-        let w = window ?? currentWindow
-        let nc = w?.rootViewController as? UINavigationController
-        return nc?.viewControllers.first as? MainVC
+    private func mainVC(in scene: UIWindowScene) -> MainVC? {
+        guard let delegate = scene.delegate as? SceneDelegate else { return nil }
+        return delegate.mainVC
     }
     
-    private var topViewController: UIViewController? {
-        var viewController = currentWindow?.rootViewController
+    private func topViewController(in scene: UIWindowScene) -> UIViewController? {
+        var viewController = scene.windows.first(where: \.isKeyWindow)?.rootViewController
         while true {
             if let nc = viewController as? UINavigationController {
                 viewController = nc.viewControllers.last
@@ -58,11 +45,7 @@ class ViewRouter {
     }
     
     // MARK: Routes
-    func handleOpenedURL(_ url: URL, window: UIWindow?) {
-        mainVC(in: window)?.openTorrentPopup(with: url, or: nil)
-    }
-    
-    func handleUpdateCheck() {
+    func handleUpdateCheck(in scene: UIWindowScene) {
         let currentBuild = Int(Bundle.main.buildVersion) ?? 0
         WebAPI.shared.getLatestBuildNumber()
             .onSuccess { (value) in
@@ -74,7 +57,7 @@ class ViewRouter {
                     UIApplication.shared.open(URL(string: "https://ota.syan.me/")!, options: [:], completionHandler: nil)
                 }
                 alert.addAction(title: "action.cancel".localized, style: .cancel, handler: nil)
-                self.mainVC(in: nil)?.present(alert, animated: true, completion: nil)
+                self.mainVC(in: scene)?.present(alert, animated: true, completion: nil)
             }
             .onFailure { (error) in
                 print("Couldn't download dist plist:", error)
@@ -82,6 +65,8 @@ class ViewRouter {
     }
     
     func promptAuthenticationUpdate(for client: Client, completion: @escaping (_ cancelled: Bool) -> Void) {
+        guard let scene: UIWindowScene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first else { return }
+
         if isShowingAuthAlertView {
             completion(true)
             return
@@ -123,6 +108,6 @@ class ViewRouter {
             completion(false)
         }
         
-        topViewController?.present(alert, animated: true, completion: nil)
+        topViewController(in: scene)?.present(alert, animated: true, completion: nil)
     }
 }

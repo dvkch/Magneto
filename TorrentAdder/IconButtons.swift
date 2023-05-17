@@ -29,11 +29,7 @@ class IconButton: UIButton {
     
     // MARK: Style
     func updateStyle() {
-        if #available(iOS 12.0, *) {
-            layer.shadowColor = traitCollection.userInterfaceStyle == .dark ? UIColor(white: 0.2, alpha: 1).cgColor : UIColor.gray.cgColor
-        } else {
-            layer.shadowColor = UIColor.darkGray.cgColor
-        }
+        layer.shadowColor = traitCollection.userInterfaceStyle == .dark ? UIColor(white: 0.2, alpha: 1).cgColor : UIColor.gray.cgColor
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

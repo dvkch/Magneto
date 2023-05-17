@@ -21,24 +21,13 @@ class NavigationController: UINavigationController {
     }
     
     private func updateNavBar() {
-        
-        if #available(iOS 13.0, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .accent
-            appearance.titleTextAttributes = [.foregroundColor: UIColor.textOverAccent]
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .accent
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.textOverAccent]
 
-            navigationBar.standardAppearance = appearance
-            navigationBar.tintColor = .textOverAccent
-            navigationBar.prefersLargeTitles = false
-        }
-        else {
-            navigationBar.prefersLargeTitles = false
-            navigationBar.isTranslucent = false
-            navigationBar.setBackgroundImage(UIImage(color: .accent), for: .default)
-            navigationBar.titleTextAttributes = [.foregroundColor: UIColor.textOverAccent]
-            navigationBar.tintColor = .textOverAccent
-            navigationBar.barTintColor = .clear
-        }
+        navigationBar.standardAppearance = appearance
+        navigationBar.tintColor = .textOverAccent
+        navigationBar.prefersLargeTitles = false
     }
 }

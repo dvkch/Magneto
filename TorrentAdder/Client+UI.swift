@@ -52,7 +52,6 @@ extension Client {
             }
         }
         
-        @available(iOS 11.0, *)
         var textContentType: UITextContentType? {
             switch self {
             case .name:     return nil

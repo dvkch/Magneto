@@ -76,7 +76,6 @@ class MainVC: ViewController {
     private var searchResults: [SearchResult] = []
     private var searchQuery: String = ""
     private var constraintHeaderHeightOriginalValue: CGFloat = 0
-    private var isVisible: Bool = false
     private var showingSearch: Bool { return !searchQuery.isEmpty }
     private weak var suggestionsVC: SuggestionsVC?
     
@@ -221,13 +220,8 @@ extension MainVC {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
         #elseif os(iOS)
         let vc = SFSafariViewController(url: url)
-        if #available(iOS 13.0, *) {
-            vc.preferredBarTintColor = UIColor.accent.resolvedColor(with: traitCollection)
-            vc.preferredControlTintColor = UIColor.text.resolvedColor(with: traitCollection)
-        } else {
-            vc.preferredBarTintColor = UIColor.accent
-            vc.preferredControlTintColor = UIColor.text
-        }
+        vc.preferredBarTintColor = UIColor.accent.resolvedColor(with: traitCollection)
+        vc.preferredControlTintColor = UIColor.text.resolvedColor(with: traitCollection)
         present(vc, animated: true, completion: nil)
         #endif
     }
@@ -256,7 +250,7 @@ extension MainVC {
         tableView.endUpdates()
     }
     
-    fileprivate func shareResult(_ result: SearchResult, from cell: UITableViewCell) {
+    fileprivate func shareResult(_ result: SearchResult, from sender: UIView) {
         SVProgressHUD.show()
         WebAPI.shared.getResultPageURL(result)
             .andThen { _ in SVProgressHUD.dismiss() }
@@ -264,8 +258,8 @@ extension MainVC {
             .onSuccess { (fullURL) in
                 
                 let vc = UIActivityViewController(activityItems: [fullURL], applicationActivities: nil)
-                vc.popoverPresentationController?.sourceRect = cell.frame
-                vc.popoverPresentationController?.sourceView = cell
+                vc.popoverPresentationController?.sourceRect = sender.frame
+                vc.popoverPresentationController?.sourceView = sender
                 
                 self.present(vc, animated: true, completion: nil)
                 self.tableView.setEditing(false, animated: true)
@@ -423,7 +417,6 @@ extension MainVC : UITableViewDelegate {
         }
     }
     
-    @available(iOS 13.0, *)
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return nil }
         switch tableSection {
@@ -465,48 +458,46 @@ extension MainVC : UITableViewDelegate {
         }
     }
     
-    #if !targetEnvironment(macCatalyst) && os(iOS)
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        if #available(iOS 13.0, *) {
-            return []
-        }
-        
-        guard let tableSection = TableSection(rawValue: indexPath.section) else { return [] }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let tableSection = TableSection(rawValue: indexPath.section) else { return nil }
         switch tableSection {
         case .buttons:
-            return []
+            return nil
             
         case .clients:
             let client = clients[indexPath.row]
-            let removeFinishedAction = UITableViewRowAction(style: .normal, title: "action.removefinished".localized) { [weak self] (_, _) in
+            let removeFinishedAction = UIContextualAction(style: .normal, title: "action.removefinished".localized) { [weak self] (_, _, completed) in
                 self?.removeFinished(in: client)
+                completed(true)
             }
             removeFinishedAction.backgroundColor = .basicAction
-            let editAction = UITableViewRowAction(style: .normal, title: "action.edit".localized) { [weak self] (_, _) in
+            let editAction = UIContextualAction(style: .normal, title: "action.edit".localized) { [weak self] (_, _, completed) in
                 let vc = EditClientVC()
                 vc.client = client
                 self?.navigationController?.pushViewController(vc, animated: true)
+                completed(true)
             }
             editAction.backgroundColor = .accent
-            let deleteAction = UITableViewRowAction(style: .destructive, title: "action.delete".localized) { [weak self] (_, indexPath) in
+            let deleteAction = UIContextualAction(style: .destructive, title: "action.delete".localized) { [weak self] (_, _, completed) in
                 self?.removeClient(client, at: indexPath)
+                completed(true)
             }
             deleteAction.backgroundColor = .destructiveAction
-            return [deleteAction, editAction, removeFinishedAction]
+            return UISwipeActionsConfiguration(actions: [deleteAction, editAction, removeFinishedAction])
             
         case .results:
             let result = searchResults[indexPath.row]
-            let openAction = UITableViewRowAction(style: .normal, title: "action.open".localized) { [weak self] (_, _) in
+            let openAction = UIContextualAction(style: .normal, title: "action.open".localized) { [weak self] (_, _, completed) in
                 self?.openResultInSafari(result)
+                completed(true)
             }
             openAction.backgroundColor = .basicAction
-            let shareAction = UITableViewRowAction(style: .normal, title: "action.sharelink".localized) { [weak self] (_, indexPath) in
-                guard let cell = tableView.cellForRow(at: indexPath) else { return }
-                self?.shareResult(result, from: cell)
+            let shareAction = UIContextualAction(style: .normal, title: "action.sharelink".localized) { [weak self] (_, view, completed) in
+                self?.shareResult(result, from: view)
+                completed(true)
             }
             shareAction.backgroundColor = .accent
-            return [shareAction, openAction]
+            return UISwipeActionsConfiguration(actions: [shareAction, openAction])
         }
     }
-    #endif
 }

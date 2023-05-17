@@ -13,32 +13,18 @@ import SVProgressHUD
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    @objc var window: UIWindow?
-
     static var obtain: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
     
+    var window: UIWindow? // TODO: delete when we'll have removed SVProgressHUD
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        
         HostnameResolver.shared.start()
 
         SVProgressHUD.setBackgroundColor(.accent)
         SVProgressHUD.setForegroundColor(.textOverAccent)
 
-        if #available(iOS 13.0, *) {} else {
-            window = SceneDelegate.createWindow()
-        }
-        
-        #if !targetEnvironment(macCatalyst)
-        ViewRouter.shared.handleUpdateCheck()
-        #endif
-
-        return true
-    }
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        ViewRouter.shared.handleOpenedURL(url, window: window)
         return true
     }
 }
