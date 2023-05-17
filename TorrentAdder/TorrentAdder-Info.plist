@@ -36,6 +36,18 @@
 	<string>42</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
+	<key>NSBonjourServices</key>
+	<array>
+        <string>_smb._tcp</string>
+        <string>_afpovertcp._tcp</string>
+        <string>_daap._tcp</string>
+        <string>_home-sharing._tcp</string>
+        <string>_rfb._tcp</string>
+        <string>_companion-link._tcp</string>
+        <string>_raop._tcp</string>
+        <string>_sleep-proxy._udp</string>
+        <string>_http._tcp</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

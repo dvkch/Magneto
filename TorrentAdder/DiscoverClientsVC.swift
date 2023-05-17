@@ -103,7 +103,7 @@ extension DiscoverClientsVC : UITableViewDataSource {
     func client(at indexPath: IndexPath) -> Client? {
         guard indexPath.row < availableIPs.count else { return  nil }
         let host = availableIPs[indexPath.row]
-        let name = HostnameResolver.shared.hostnameForIP(host) ?? host
+        let name = HostnameResolver.shared.hostname(for: host) ?? host
         return Client(host: host, name: name)
     }
     
