@@ -9,7 +9,6 @@
 import UIKit
 import SYKit
 import SafariServices
-import SVProgressHUD
 
 class MainVC: ViewController {
 
@@ -23,10 +22,8 @@ class MainVC: ViewController {
 
         titleLabel.addGlow(color: .lightGray, size: 4)
         
-        spinner.strokeColor = .textOverAccent
-        spinner.radius = 13
-        spinner.strokeThickness = 3
-        spinner.isHidden = true
+        spinner.color = .textOverAccent
+        spinner.hidesWhenStopped = true
         
         mirrorLabelContainer.layer.cornerRadius = 3
         mirrorLabelContainer.layer.masksToBounds = true
@@ -83,7 +80,7 @@ class MainVC: ViewController {
     @IBOutlet private var headerView: UIView!
     @IBOutlet private var constraintHeaderHeight: NSLayoutConstraint!
     @IBOutlet private var titleLabel: UILabel!
-    @IBOutlet private var spinner: SVIndefiniteAnimatedView!
+    @IBOutlet private var spinner: UIActivityIndicatorView!
     @IBOutlet private var mirrorLabelContainer: UIView!
     @IBOutlet private var mirrorLabel: UILabel!
     @IBOutlet private var searchField: UISearchBar!
@@ -227,14 +224,12 @@ extension MainVC {
     }
     
     fileprivate func removeFinished(in client: Client) {
-        SVProgressHUD.show()
+        let hud = HUDAlertController.show(in: self)
         ClientAPI.shared.removeCompletedTorrents(in: client)
-            .andThen { _ in SVProgressHUD.dismiss() }
+            .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
             .onSuccess { (count) in
                 if count > 0 {
-                    SVProgressHUD.showSuccess(withStatus: String(format: "torrent.removed.%d".localized, count))
-                } else {
-                    SVProgressHUD.showSuccess(withStatus: nil)
+                    UIAlertController.show(title: String(format: "torrent.removed.%d".localized, count), close: "action.close".localized, in: self)
                 }
             }
             .onFailure { error in
@@ -253,9 +248,9 @@ extension MainVC {
     }
     
     fileprivate func shareResult(_ result: SearchResult, from sender: UIView) {
-        SVProgressHUD.show()
+        let hud = HUDAlertController.show(in: self)
         WebAPI.shared.getResultPageURL(result)
-            .andThen { _ in SVProgressHUD.dismiss() }
+            .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
             .onFailure { (error) in
                 UIAlertController.show(for: error, close: "action.close".localized, in: self)
             }
@@ -271,9 +266,9 @@ extension MainVC {
     }
     
     fileprivate func openResultInSafari(_ result: SearchResult) {
-        SVProgressHUD.show()
+        let hud = HUDAlertController.show(in: self)
         WebAPI.shared.getResultPageURL(result)
-            .andThen { _ in SVProgressHUD.dismiss() }
+            .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
             .onFailure { (error) in
                 UIAlertController.show(for: error, close: "action.close".localized, in: self)
             }

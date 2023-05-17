@@ -8,7 +8,6 @@
 
 import UIKit
 import SYKit
-import SVProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,13 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
     
-    var window: UIWindow? // TODO: delete when we'll have removed SVProgressHUD
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         HostnameResolver.shared.start()
-
-        SVProgressHUD.setBackgroundColor(.accent)
-        SVProgressHUD.setForegroundColor(.textOverAccent)
 
         return true
     }

@@ -113,21 +113,22 @@ public class HUDAlertController: UIAlertController {
         return alert
     }
     
-    public static func dismiss(_ hud: HUDAlertController?, animated: Bool = true, completion: @escaping () -> ()) {
+    public static func dismiss(_ hud: HUDAlertController?, animated: Bool = true, completion: (() -> ())? = nil) {
         if let hud = hud {
             hud.dismiss(animated: animated, completion: completion)
         }
         else {
-            completion()
+            completion?()
         }
     }
     
     // MARK: Init
     public override func viewDidLoad() {
         super.viewDidLoad()
-        loader.startAnimating()
+
         view.addSubview(loader)
-        
+        loader.startAnimating()
+        loader.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             loader.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loader.centerYAnchor.constraint(equalTo: view.centerYAnchor)

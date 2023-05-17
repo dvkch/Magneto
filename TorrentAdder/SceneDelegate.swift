@@ -24,9 +24,6 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
         window?.enableSlowAnimationsOnShake = true
         #endif
 
-        // TODO: use something better than SVProgressHUD
-        (UIApplication.shared.delegate as? AppDelegate)?.window = window
-
         #if targetEnvironment(macCatalyst)
         if let titlebar = windowScene.titlebar {
             titlebar.titleVisibility = .hidden

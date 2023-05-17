@@ -10,10 +10,8 @@ target 'TorrentAdder' do
     pod 'Fuzi'
     pod 'NSDate+TimeAgo'
     pod 'SPLPing'
-    pod 'SVProgressHUD'
     pod 'SYKit'
     pod 'TPKeyboardAvoiding'
-    #pod 'SparkInspector', :configurations => ['Debug']
 end
 
 post_install do |installer|
