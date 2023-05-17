@@ -58,8 +58,6 @@
 "clients.section.noresults" = "Aucun résultat";
 "clients.section.results"   = "Résultats";
 "clients.count.add"         = "Ajouter un client";
-"clients.count.1"           = "1 client";
-"clients.count.%d"          = "%d clients";
 
 "error.title.cannotLoadResults" = "Impossible de charger les résultats";
 "error.title.cannotAddTorrent"  = "Impossible d'ajouter ce torrent";

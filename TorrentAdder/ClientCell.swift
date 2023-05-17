@@ -31,26 +31,26 @@ class ClientCell: UITableViewCell {
         }
     }
     enum Kind {
-        case client(Client?), discoveredClient(Client?), openURL
+        case client(Client?), discoveredClient(Client?), newClient, openURL
 
         var client: Client? {
             switch self {
             case .client(let client), .discoveredClient(let client): return client
-            case .openURL: return nil
+            case .newClient, .openURL: return nil
             }
         }
         
         var isDiscoveredClient: Bool {
             switch self {
             case .discoveredClient: return true
-            case .client, .openURL: return false
+            case .client, .newClient, .openURL: return false
             }
         }
         
         var isOpenURL: Bool {
             switch self {
             case .openURL: return true
-            case .client, .discoveredClient: return false
+            case .client, .discoveredClient, .newClient: return false
             }
         }
     }
@@ -65,7 +65,6 @@ class ClientCell: UITableViewCell {
     private func updateContent() {
         switch kind {
         case .client(let client):
-            accessoryType = .none
             if let client = client {
                 nameLabel.text = client.name
                 hostLabel.text = [client.host, String(client.port ?? 0)].joined(separator: ":")
@@ -73,10 +72,10 @@ class ClientCell: UITableViewCell {
                 nameLabel.text = nil
                 hostLabel.text = nil
             }
-            
+            accessoryType = .none
+            accessoryView = nil
             
         case .discoveredClient(let client):
-            accessoryType = .disclosureIndicator
             if let client = client {
                 nameLabel.text = client.name
                 hostLabel.text = client.host
@@ -84,12 +83,26 @@ class ClientCell: UITableViewCell {
                 nameLabel.text = "clients.addcustom.line1".localized
                 hostLabel.text = "clients.addcustom.line2".localized
             }
-
+            accessoryType = .disclosureIndicator
+            accessoryView = nil
             
-        case .openURL:
+        case .newClient:
+            nameLabel.text = "clients.count.add".localized
+            hostLabel.text = nil
+
+            let imageView = UIImageView(image: UIImage(named: "button_add"))
+            imageView.tintColor = nameLabel.textColor
+            imageView.contentMode = .scaleAspectFit
+            let size = UIFontMetrics.default.scaledValue(for: 20)
+            imageView.frame.size = .init(width: size, height: size)
+            accessoryView = imageView
             accessoryType = .none
+
+        case .openURL:
             nameLabel.text = "clients.openurl.line1".localized
             hostLabel.text = "clients.openurl.line2".localized
+            accessoryView = nil
+            accessoryType = .none
         }
     }
     

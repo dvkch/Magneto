@@ -122,6 +122,9 @@ class MagnetPopupVC: ViewController {
         guard let url = (magnetURL ?? result?.magnetURL) else { return }
         
         switch clientKind {
+        case .newClient:
+            break
+
         case .client(let client), .discoveredClient(let client):
             if let client = client {
                 updateForMode(.loading, animated: true)

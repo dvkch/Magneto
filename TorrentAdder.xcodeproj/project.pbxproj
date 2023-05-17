@@ -39,7 +39,6 @@
 		9771AB2921AEF898005DE97D /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2821AEF898005DE97D /* NavigationController.swift */; };
 		9771AB2B21AEF901005DE97D /* DiscoverClientsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2A21AEF901005DE97D /* DiscoverClientsVC.swift */; };
 		9771AB2D21AEFF09005DE97D /* EditClientVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2C21AEFF09005DE97D /* EditClientVC.swift */; };
-		9771AB2F21AF0356005DE97D /* AddClientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2E21AF0356005DE97D /* AddClientCell.swift */; };
 		9771AB3121AF0534005DE97D /* ClientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3021AF0534005DE97D /* ClientCell.swift */; };
 		9771AB3321AF08E4005DE97D /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3221AF08E4005DE97D /* ResultCell.swift */; };
 		9771AB3521AF0C59005DE97D /* ClientFormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3421AF0C59005DE97D /* ClientFormCell.swift */; };
@@ -58,7 +57,6 @@
 		97A0C5641BC3271300DC4EEC /* IconRed2.png in Resources */ = {isa = PBXBuildFile; fileRef = 97A0C55C1BC3271300DC4EEC /* IconRed2.png */; };
 		97A18E0C1BBC011900F33AF5 /* MainVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E0B1BBC011900F33AF5 /* MainVC.xib */; };
 		97A18E0E1BBC016B00F33AF5 /* ClientCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E0D1BBC016B00F33AF5 /* ClientCell.xib */; };
-		97A18E101BBC017000F33AF5 /* AddClientCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E0F1BBC017000F33AF5 /* AddClientCell.xib */; };
 		97A18E121BBC017500F33AF5 /* ResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E111BBC017500F33AF5 /* ResultCell.xib */; };
 		97A18E141BBC017C00F33AF5 /* DiscoverClientsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E131BBC017C00F33AF5 /* DiscoverClientsVC.xib */; };
 		97B4041522C5274F00C7A684 /* IconButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B4041422C5274F00C7A684 /* IconButtons.swift */; };
@@ -123,7 +121,6 @@
 		9771AB2821AEF898005DE97D /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		9771AB2A21AEF901005DE97D /* DiscoverClientsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverClientsVC.swift; sourceTree = "<group>"; };
 		9771AB2C21AEFF09005DE97D /* EditClientVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientVC.swift; sourceTree = "<group>"; };
-		9771AB2E21AF0356005DE97D /* AddClientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientCell.swift; sourceTree = "<group>"; };
 		9771AB3021AF0534005DE97D /* ClientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCell.swift; sourceTree = "<group>"; };
 		9771AB3221AF08E4005DE97D /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 		9771AB3421AF0C59005DE97D /* ClientFormCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientFormCell.swift; sourceTree = "<group>"; };
@@ -143,7 +140,6 @@
 		97A0C55C1BC3271300DC4EEC /* IconRed2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconRed2.png; sourceTree = "<group>"; };
 		97A18E0B1BBC011900F33AF5 /* MainVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainVC.xib; sourceTree = "<group>"; };
 		97A18E0D1BBC016B00F33AF5 /* ClientCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientCell.xib; sourceTree = "<group>"; };
-		97A18E0F1BBC017000F33AF5 /* AddClientCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddClientCell.xib; sourceTree = "<group>"; };
 		97A18E111BBC017500F33AF5 /* ResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultCell.xib; sourceTree = "<group>"; };
 		97A18E131BBC017C00F33AF5 /* DiscoverClientsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscoverClientsVC.xib; sourceTree = "<group>"; };
 		97B4041422C5274F00C7A684 /* IconButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtons.swift; sourceTree = "<group>"; };
@@ -199,8 +195,6 @@
 		973AFF821BB41D0700BA4B8B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				9771AB2E21AF0356005DE97D /* AddClientCell.swift */,
-				97A18E0F1BBC017000F33AF5 /* AddClientCell.xib */,
 				9771AB3021AF0534005DE97D /* ClientCell.swift */,
 				97A18E0D1BBC016B00F33AF5 /* ClientCell.xib */,
 				9771AB3421AF0C59005DE97D /* ClientFormCell.swift */,
@@ -452,7 +446,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97A18E101BBC017000F33AF5 /* AddClientCell.xib in Resources */,
 				F8986776192A317C00735175 /* Images.xcassets in Resources */,
 				97A18E121BBC017500F33AF5 /* ResultCell.xib in Resources */,
 				97A0C55F1BC3271300DC4EEC /* form_cmd_org.png in Resources */,
@@ -578,7 +571,6 @@
 				9771AB2D21AEFF09005DE97D /* EditClientVC.swift in Sources */,
 				974D373421B1E2DA00C0FDDE /* IPv4Interface.swift in Sources */,
 				9771AB2921AEF898005DE97D /* NavigationController.swift in Sources */,
-				9771AB2F21AF0356005DE97D /* AddClientCell.swift in Sources */,
 				974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */,
 				9771AB3321AF08E4005DE97D /* ResultCell.swift in Sources */,
 				972B4FBC24BBCF270026BFE4 /* String+SY.swift in Sources */,

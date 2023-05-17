@@ -35,7 +35,6 @@ class MainVC: ViewController {
         searchField.keyboardType = .default
         searchField.placeholder = "placeholder.search".localized
         
-        tableView.registerCell(AddClientCell.self)
         tableView.registerCell(ClientCell.self)
         tableView.registerCell(ResultCell.self)
         tableView.delaysContentTouches = false
@@ -333,7 +332,7 @@ extension MainVC : UIScrollViewDelegate {
 
 extension MainVC : UITableViewDataSource {
     enum TableSection : Int, CaseIterable {
-        case buttons, clients, results
+        case clients, results
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -343,8 +342,7 @@ extension MainVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let tableSection = TableSection(rawValue: section) else { return 0 }
         switch tableSection {
-        case .buttons: return showingSearch ? 0 : 1
-        case .clients: return showingSearch ? 0 : clients.count
+        case .clients: return showingSearch ? 0 : clients.count + 1
         case .results: return searchResults.count
         }
     }
@@ -352,8 +350,7 @@ extension MainVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let tableSection = TableSection(rawValue: section) else { return nil }
         switch tableSection {
-        case .buttons: return showingSearch ? nil : "clients.section.clients".localized
-        case .clients: return nil
+        case .clients: return showingSearch ? nil : "clients.section.clients".localized
         case .results:
             if !showingSearch { return nil }
             return searchResults.isEmpty ? "clients.section.noresults".localized : "clients.section.results".localized
@@ -363,19 +360,16 @@ extension MainVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return UITableViewCell() }
         switch tableSection {
-        case .buttons:
-            let cell = tableView.dequeueCell(AddClientCell.self, for: indexPath)
-            cell.clientsCount = clients.count
-            cell.addButtonTapBlock = { [weak self] in
-                let vc = DiscoverClientsVC()
-                let nc = NavigationController(rootViewController: vc)
-                self?.present(nc, animated: true, completion: nil)
-            }
-            return cell
         case .clients:
             let cell = tableView.dequeueCell(ClientCell.self, for: indexPath)
-            cell.kind = .client(clients[indexPath.row])
+            if indexPath.row < clients.count {
+                cell.kind = .client(clients[indexPath.row])
+            }
+            else {
+                cell.kind = .newClient
+            }
             return cell
+
         case .results:
             let cell = tableView.dequeueCell(ResultCell.self, for: indexPath)
             cell.result = searchResults[indexPath.row]
@@ -398,20 +392,22 @@ extension MainVC : UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return }
         switch tableSection {
-        case .buttons:
-            let vc = DiscoverClientsVC()
-            let nc = NavigationController(rootViewController: vc)
-            present(nc, animated: true, completion: nil)
-
         case .clients:
-            let client = clients[indexPath.row]
-            var url = client.webURL
-            if let username = client.username?.nilIfEmpty, let password = client.password?.nilIfEmpty, var components = URLComponents(url: url, resolvingAgainstBaseURL: true) {
-                components.user = username
-                components.password = password
-                url = components.url ?? url
+            if indexPath.row < clients.count {
+                let client = clients[indexPath.row]
+                var url = client.webURL
+                if let username = client.username?.nilIfEmpty, let password = client.password?.nilIfEmpty, var components = URLComponents(url: url, resolvingAgainstBaseURL: true) {
+                    components.user = username
+                    components.password = password
+                    url = components.url ?? url
+                }
+                self.openSafariURL(url)
             }
-            self.openSafariURL(url)
+            else {
+                let vc = DiscoverClientsVC()
+                let nc = NavigationController(rootViewController: vc)
+                present(nc, animated: true, completion: nil)
+            }
 
         case .results:
             self.openTorrentPopup(with: nil, or: searchResults[indexPath.row])
@@ -421,9 +417,6 @@ extension MainVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return nil }
         switch tableSection {
-        case .buttons:
-            return nil
-            
         case .clients:
             let client = clients[indexPath.row]
             
@@ -462,9 +455,6 @@ extension MainVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let tableSection = TableSection(rawValue: indexPath.section) else { return nil }
         switch tableSection {
-        case .buttons:
-            return nil
-            
         case .clients:
             let client = clients[indexPath.row]
             let removeFinishedAction = UIContextualAction(style: .normal, title: "action.removefinished".localized) { [weak self] (_, _, completed) in
