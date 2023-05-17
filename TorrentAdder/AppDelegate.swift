@@ -23,7 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         HostnameResolver.shared.start()
 
-        NSObject.fixCatalystScaling()
         SVProgressHUD.setBackgroundColor(.accent)
         SVProgressHUD.setForegroundColor(.textOverAccent)
 
