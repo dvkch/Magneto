@@ -15,19 +15,19 @@ class MainVC: ViewController {
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = Bundle.main.localizedName
+        navigationItem.rightBarButtonItems = [mirrorBarButtonItem, loaderBarButtonItem]
+        (navigationController as? NavigationController)?.useClearNavBarBackground = true
+
+        let constraint = tableViewBackground.topAnchor.constraint(equalTo: searchField.bottomAnchor)
+        constraint.priority = .defaultHigh
+        constraint.isActive = true
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.mirrorsChanged), name: .mirrorsChanged, object: nil)
 
         timerRefreshClientsStatus = Timer(timeInterval: 5, target: self, selector: #selector(self.timerRefreshClientsStatusTick), userInfo: nil, repeats: true)
         RunLoop.main.add(timerRefreshClientsStatus!, forMode: .common)
 
-        titleLabel.addGlow(color: .lightGray, size: 4)
-        
-        spinner.color = .textOverAccent
-        spinner.hidesWhenStopped = true
-        
-        mirrorLabelContainer.layer.cornerRadius = 3
-        mirrorLabelContainer.layer.masksToBounds = true
-        mirrorLabelContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.mirrorLabelTap)))
         mirrorsChanged()
 
         searchField.textField?.backgroundColor = .fieldBackground
@@ -40,15 +40,12 @@ class MainVC: ViewController {
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
         
-        constraintHeaderHeightOriginalValue = constraintHeaderHeight.constant
-        
         // make sure the list has an initial value at init time, in case the app is opened from a magnet
         clients = Preferences.shared.clients
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
         clients = Preferences.shared.clients
         tableView.reloadData()
     }
@@ -71,20 +68,62 @@ class MainVC: ViewController {
     private var clients: [Client] = []
     private var searchResults: [SearchResult] = []
     private var searchQuery: String = ""
-    private var constraintHeaderHeightOriginalValue: CGFloat = 0
     private var showingSearch: Bool { return !searchQuery.isEmpty }
     private weak var suggestionsVC: SuggestionsVC?
+    private var isLoadingResults: Bool = false {
+        didSet {
+            updateNavigationItems()
+        }
+    }
     
     // MARK: Views
-    @IBOutlet private var headerView: UIView!
-    @IBOutlet private var constraintHeaderHeight: NSLayoutConstraint!
-    @IBOutlet private var titleLabel: UILabel!
-    @IBOutlet private var spinner: UIActivityIndicatorView!
-    @IBOutlet private var mirrorLabelContainer: UIView!
-    @IBOutlet private var mirrorLabel: UILabel!
+    private let loaderBarButtonItem: UIBarButtonItem = {
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.color = .textOverAccent
+        return UIBarButtonItem(customView: spinner)
+    }()
+    private var mirrorBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "icloud"), menu: nil)
     @IBOutlet private var searchField: UISearchBar!
     @IBOutlet private var tableView: UITableView!
+    @IBOutlet private var tableViewBackground: UIView!
     @IBOutlet private var helpButton: HelpButton!
+    
+    private func updateNavigationItems() {
+        // loader
+        if isLoadingResults {
+            (loaderBarButtonItem.customView as? UIActivityIndicatorView)?.startAnimating()
+        }
+        else {
+            (loaderBarButtonItem.customView as? UIActivityIndicatorView)?.stopAnimating()
+        }
+        
+        // mirrors
+        var mirrorMenus = [UIMenu]()
+        
+        if let mirror = WebAPI.shared.availableMirrorURLs.first {
+            mirrorMenus.append(UIMenu(title: "mirror.current %@".localized(mirror.host ?? ""), options: .displayInline, children: [
+                UIAction(title: "action.open".localized) { _ in
+                    self.openSafariURL(mirror)
+                },
+                UIAction(title: "alert.mirror.blacklist_mirror".localized) { _ in
+                    Preferences.shared.mirrorBlacklist.append(mirror)
+                    WebAPI.shared.clearMirrors()
+                }
+            ]))
+        }
+        else {
+            mirrorMenus.append(UIMenu(title: "mirror.none".localized))
+        }
+
+        mirrorMenus.append(UIMenu(title: "alert.mirror.title".localized, options: .displayInline, children: [
+            UIAction(title: "alert.mirror.clean_mirror_blacklist".localized) { _ in
+                Preferences.shared.mirrorBlacklist = []
+                WebAPI.shared.clearMirrors()
+            }
+        ]))
+        
+        mirrorBarButtonItem.menu = UIMenu(children: mirrorMenus)
+    }
     
     // MARK: Layout
     override func viewDidLayoutSubviews() {
@@ -96,11 +135,7 @@ class MainVC: ViewController {
 // MARK: Notifications
 extension MainVC {
     @objc private func mirrorsChanged() {
-        if let host = WebAPI.shared.availableMirrorURLs.first?.host {
-            mirrorLabel.text = String(format: "mirror.current %@".localized, host)
-        } else {
-            mirrorLabel.text = "mirror.none".localized
-        }
+        updateNavigationItems()
     }
 }
 
@@ -125,31 +160,6 @@ extension MainVC {
         super.motionEnded(motion, with: event)
     }
     
-    @objc private func mirrorLabelTap() {
-        let alert = UIAlertController(
-            title: "alert.mirror.title".localized,
-            message: WebAPI.shared.availableMirrorURLs.first?.host,
-            preferredStyle: .actionSheet
-        )
-        if let mirror = WebAPI.shared.availableMirrorURLs.first {
-            alert.addAction(title: "action.open".localized, style: .default) { _ in
-                self.openSafariURL(mirror) 
-            }
-            alert.addAction(title: "alert.mirror.blacklist_mirror".localized, style: .default) { _ in
-                Preferences.shared.mirrorBlacklist.append(mirror)
-                WebAPI.shared.clearMirrors()
-            }
-        }
-        alert.addAction(title: "alert.mirror.clean_mirror_blacklist".localized, style: .default) { _ in
-            Preferences.shared.mirrorBlacklist = []
-            WebAPI.shared.clearMirrors()
-        }
-        alert.addAction(title: "action.close".localized, style: .cancel, handler: nil)
-        alert.popoverPresentationController?.sourceView = mirrorLabel
-        alert.popoverPresentationController?.sourceRect = mirrorLabel.bounds
-        present(alert, animated: true, completion: nil)
-    }
-    
     @IBAction private func helpButtonTap() {
         let alert = UIAlertController(
             title: "alert.help.title".localized,
@@ -166,19 +176,18 @@ extension MainVC {
         guard !searchQuery.isEmpty else {
             searchResults = []
             tableView.reloadData()
-            spinner.isHidden = true
+            isLoadingResults = false
             return
         }
         
-        spinner.isHidden = false
-        
+        isLoadingResults = true
         _ = WebAPI.shared.getResults(query: text)
             .andThen { [weak self] result in
                 
                 guard let self = self else { return }
                 guard self.searchQuery == text else { return }
                 
-                self.spinner.isHidden = true
+                self.isLoadingResults = false
 
                 switch result {
                 case .success(let items):
@@ -324,12 +333,6 @@ extension MainVC : UISearchBarDelegate {
     }
 }
 
-extension MainVC : UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        constraintHeaderHeight.constant = constraintHeaderHeightOriginalValue - min(0, scrollView.contentOffset.y)
-    }
-}
-
 extension MainVC : UITableViewDataSource {
     enum TableSection : Int, CaseIterable {
         case clients, results
@@ -427,7 +430,7 @@ extension MainVC : UITableViewDelegate {
                 let editAction = UIAction(title: "action.edit".localized, image: UIImage(systemName: "square.and.pencil")) { [weak self] (_) in
                     let vc = EditClientVC()
                     vc.client = client
-                    self?.navigationController?.pushViewController(vc, animated: true)
+                    self?.present(vc, animated: true)
                 }
                 let deleteAction = UIAction(title: "action.delete".localized, image: UIImage(systemName: "trash.fill"), attributes: .destructive) { [weak self] (_) in
                     self?.removeClient(client, at: indexPath)

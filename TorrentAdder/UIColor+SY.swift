@@ -48,7 +48,7 @@ extension UIColor {
     }
     
     static var background: UIColor {
-        return UIColor(light: .white, dark: UIColor(white: 0.05, alpha: 1))
+        return systemBackground
     }
     
     static var basicAction: UIColor {
