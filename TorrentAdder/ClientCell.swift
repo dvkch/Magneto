@@ -115,10 +115,10 @@ class ClientCell: UITableViewCell {
         
         switch status {
         case .online:
-            statusImageView.image = UIImage(named: "traffic_green")
+            statusImageView.image = UIImage.traffic(.green)
             activityIndicator.stopAnimating()
         case .offline:
-            statusImageView.image = UIImage(named: "traffic_grey")
+            statusImageView.image = UIImage.traffic(.grey)
             activityIndicator.stopAnimating()
         case .unknown:
             statusImageView.image = nil
