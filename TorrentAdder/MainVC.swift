@@ -439,22 +439,22 @@ extension MainVC : UITableViewDelegate {
         switch tableSection {
         case .clients:
             let client = clients[indexPath.row]
-            let removeFinishedAction = Action(title: "action.removefinished".localized, image: "tray", color: .backgroundAlt) { [weak self] in
+            let removeFinishedAction = Action(title: "action.removefinished".localized, image: "tray.and.arrow.up", color: .cellBackgroundAlt) { [weak self] in
                 self?.removeFinished(in: client)
             }
-            let editAction = Action(title: "action.edit".localized, image: "square.and.pencil", color: .tint) { [weak self] in
+            let editAction = Action(title: "action.edit".localized, image: "pencil", color: .tint) { [weak self] in
                 let vc = EditClientVC()
                 vc.client = client
                 self?.present(vc, animated: true)
             }
-            let deleteAction = Action(title: "action.delete".localized, image: "trash.fill", color: .leechers, destructive: true) { [weak self] in
+            let deleteAction = Action(title: "action.delete".localized, image: "trash", color: .leechers, destructive: true) { [weak self] in
                 self?.removeClient(client, at: indexPath)
             }
             return [removeFinishedAction, editAction, deleteAction]
             
         case .results:
             let result = searchResults[indexPath.row]
-            let shareAction = Action(title: "action.sharelink".localized, image: "square.and.arrow.up", color: .backgroundAlt) { [weak self] in
+            let shareAction = Action(title: "action.sharelink".localized, image: "square.and.arrow.up", color: .cellBackgroundAlt) { [weak self] in
                 guard let cell = self?.tableView.cellForRow(at: indexPath) else { return }
                 self?.shareResult(result, from: cell)
             }
@@ -477,7 +477,7 @@ extension MainVC : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let actions = self.actionsForRow(at: indexPath).map { action in
+        let actions = self.actionsForRow(at: indexPath).reversed().map { action in
             let contextualAction = UIContextualAction(style: action.destructive ? .destructive : .normal, title: action.title) { _, _, completed in
                 action.closure()
                 completed(true)

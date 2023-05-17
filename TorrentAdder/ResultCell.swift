@@ -11,6 +11,11 @@ import NSDate_TimeAgo
 import SYKit
 
 class ResultCell: UITableViewCell {
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundColor = .cellBackground
+    }
 
     // MARK: Properties
     var result: SearchResult? {

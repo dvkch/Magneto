@@ -17,6 +17,7 @@ class ClientCell: UITableViewCell {
         activityIndicator.color = .normalText
         nameLabel.textColor = .normalText
         hostLabel.textColor = .altText
+        backgroundColor = .cellBackground
     }
     
     deinit {

@@ -54,7 +54,7 @@
 "clients.openurl.line1"     = "Open magnet";
 "clients.openurl.line2"     = "Will launch your default torrent app";
 
-"clients.section.clients"   = "Available clients";
+"clients.section.clients"   = "Clients";
 "clients.section.noresults" = "No results";
 "clients.section.results"   = "Results";
 "clients.count.add"         = "Add a client";

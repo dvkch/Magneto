@@ -21,6 +21,7 @@ class DiscoverClientsVC: ViewController {
         progressView.trackTintColor = .background
         progressView.progressTintColor = .tint
         
+        tableView.contentInset.top = 22
         tableView.registerCell(ClientCell.self)
         tableView.tableFooterView = UIView()
         
