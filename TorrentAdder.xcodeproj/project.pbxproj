@@ -133,7 +133,6 @@
 		97888C9E21B5A745004EB144 /* Codable+SY.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+SY.swift"; sourceTree = "<group>"; };
 		9792F0D62A14EEB9001F2EE1 /* UIImage+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+SY.swift"; sourceTree = "<group>"; };
 		979D4A9721AF4614000BFDF0 /* ClientStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientStatusManager.swift; sourceTree = "<group>"; };
-		979D4A9C21AF4764000BFDF0 /* NSHost+SY.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSHost+SY.h"; sourceTree = "<group>"; };
 		97A0C5551BC3271300DC4EEC /* blue_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_background.png; sourceTree = "<group>"; };
 		97A0C5561BC3271300DC4EEC /* form_bookmark_org.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_bookmark_org.png; sourceTree = "<group>"; };
 		97A0C5571BC3271300DC4EEC /* form_cmd_org.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_cmd_org.png; sourceTree = "<group>"; };
@@ -222,7 +221,6 @@
 				97888C9E21B5A745004EB144 /* Codable+SY.swift */,
 				970130E321B08E1000E7CFEC /* Error+SY.swift */,
 				974D372B21B157CE00C0FDDE /* Fuzi+SY.swift */,
-				979D4A9C21AF4764000BFDF0 /* NSHost+SY.h */,
 				974D373521B4965700C0FDDE /* Sockets+SY.h */,
 				974D373821B4999E00C0FDDE /* Sockets+SY.m */,
 				972B4FBB24BBCF270026BFE4 /* String+SY.swift */,
