@@ -8,7 +8,6 @@ target 'TorrentAdder' do
     pod 'Alamofire'
     pod 'BrightFutures'
     pod 'Fuzi'
-    pod 'NSDate+TimeAgo'
     pod 'SPLPing'
     pod 'SYKit'
     pod 'TPKeyboardAvoiding'

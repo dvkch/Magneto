@@ -88,6 +88,25 @@ extension SearchResult {
     }
 }
 
+extension SearchResult {
+    private static let relativeFormattingLimit: TimeInterval = 1440 * 3600 // two months
+    
+    var addedDateString: String {
+        if Date().timeIntervalSince(added) > SearchResult.relativeFormattingLimit {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
+            return formatter.string(from: added)
+        }
+        else {
+            let formatter = RelativeDateTimeFormatter()
+            formatter.dateTimeStyle = .numeric
+            formatter.unitsStyle = .full
+            return formatter.localizedString(for: added, relativeTo: Date())
+        }
+    }
+}
+
 extension SearchResult : CustomStringConvertible {
     var description: String {
         return "Result: \(name), \(size), \(added), \(seeders)/\(leechers), vip=\(verified)"

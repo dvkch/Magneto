@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import NSDate_TimeAgo
 import SYKit
 
 class ResultCell: UITableViewCell {
@@ -34,14 +33,8 @@ class ResultCell: UITableViewCell {
             return
         }
         
-        let df = DateFormatter()
-        df.dateStyle = .medium
-        df.timeStyle = .none
-        var dateString = df.string(from: result.added)
+        let dateString = result.addedDateString
         var dateFont = UIFont.preferredFont(forTextStyle: .footnote)
-        
-        let twoMonths: TimeInterval = 1440 * 3600
-        dateString = (result.added as NSDate).timeAgo(withLimit: twoMonths, dateFormat: .medium, andTimeFormat: .none)
         
         if fabs(result.added.timeIntervalSinceNow) < 48 * 3600 {
             dateFont = UIFont.systemFont(ofSize: dateFont.pointSize, weight: .bold)
