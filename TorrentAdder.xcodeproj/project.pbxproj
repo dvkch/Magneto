@@ -76,14 +76,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F88A0B311A80F7220089DE9A /* Embed App Extensions */ = {
+		F88A0B311A80F7220089DE9A /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -395,7 +395,7 @@
 				F8986753192A317C00735175 /* Sources */,
 				F8986754192A317C00735175 /* Frameworks */,
 				F8986755192A317C00735175 /* Resources */,
-				F88A0B311A80F7220089DE9A /* Embed App Extensions */,
+				F88A0B311A80F7220089DE9A /* Embed Foundation Extensions */,
 				FAF7719DF38D205F1D5C7765 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -413,8 +413,9 @@
 		F898674F192A317C00735175 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = SY;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					F8986756192A317C00735175 = {
@@ -738,6 +739,7 @@
 			baseConfigurationReference = ECB5BC1A5208F37710432FDC /* Pods-TorrentAdder.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TorrentAdder/TorrentAdder.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -770,6 +772,7 @@
 			baseConfigurationReference = 0B69C8AE8CFDA1E82A1EF6EC /* Pods-TorrentAdder.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TorrentAdder/TorrentAdder.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
