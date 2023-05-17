@@ -7,116 +7,174 @@
 //
 
 import UIKit
-import SPLPing
+import GBPing
+
+protocol PingerDelegate: NSObjectProtocol {
+    func pinger(_ pinger: Pinger, progressUpdated progress: Float)
+    func pinger(_ pinger: Pinger, found ip: String)
+    func pinger(_ pinger: Pinger, stopped completed: Bool)
+}
 
 class Pinger: NSObject {
     
     // MARK: Init
     init(networks: [IPv4Interface]) {
         self.networks = networks
+        self.queue.name = "Ping"
+        self.queue.maxConcurrentOperationCount = 20
+        self.queue.qualityOfService = .utility
         super.init()
     }
     
     // MARK: Properties
+    weak var delegate: PingerDelegate?
     private let networks: [IPv4Interface]
-    private let pingConfig = SPLPingConfiguration(pingInterval: 0.1, timeoutInterval: 1)
-    private var totalCount: Int = 0
-    private var queuedIPs: [String] = []
-    private var runningIPs: [String: PingStats] = [:]
-    private var endedIPs: [String: Bool] = [:]
-    private var pingers: [SPLPing] = []
-    private var isCancelled = false
-    
-    var progressBlock: ((_ progress: Float) -> Void)?
-    var ipFoundBlock: ((_ ip: String) -> Void)?
-    var finishedBlock: ((_ finished: Bool) -> Void)?
 
+    private var totalCount: Int = 0
+    private var finishedCount: Int = 0
+
+    private var queue = OperationQueue()
+    private var isRunning: Bool = false
+    
     // MARK: Public methods
     func start() {
-        guard queuedIPs.isEmpty else { return }
+        guard !Thread.isMainThread else {
+            DispatchQueue.global(qos: .background).async {
+                self.start()
+            }
+            return
+        }
         
-        queuedIPs = networks
+        guard !isRunning else { return }
+        isRunning = true
+        
+        let queuedIPs = networks
             .map { $0.addressesOnSubnet(ignoringMine: true) }
             .reduce([], +)
             .map { $0.stringRepresentation }
         
         totalCount = queuedIPs.count
         
-        executeQueue()
+        queuedIPs.forEach { ip in
+            let operation = PingerOperation(ip: ip) { [weak self] available in
+                DispatchQueue.main.async {
+                    self?.pingFinished(ip, available: available)
+                }
+            }
+            queue.addOperation(operation)
+        }
     }
     
     func stop() {
-        isCancelled = true
-        finishedBlock?(isCancelled)
+        queue.cancelAllOperations()
+        delegate?.pinger(self, stopped: false)
     }
     
-    // MARK: Private
-    struct PingStats {
-        var failures: Int = 0
-        var successes: Int = 0
-    }
-    
-    private func executeQueue() {
-        while runningIPs.count < 30 {
-            guard !isCancelled && !queuedIPs.isEmpty else { return }
-            
-            let ip = queuedIPs.removeFirst()
-            runningIPs[ip] = PingStats()
+    private func pingFinished(_ ip: String, available: Bool) {
+        finishedCount += 1
 
-            SPLPing.ping(toHost: ip, configuration: pingConfig) { [weak self] (ping, error) in
-                if let error = error {
-                    self?.runningIPs.removeValue(forKey: ip)
-                    self?.endedIPs[ip] = false
-                    print("Error creating pinger: ", error)
-                }
-                if let ping = ping {
-                    self?.startPing(ping, ip: ip)
-                }
+        if available {
+            delegate?.pinger(self, found: ip)
+        }
+        
+        if finishedCount < totalCount {
+            delegate?.pinger(self, progressUpdated: Float(finishedCount) / Float(totalCount))
+        }
+        else {
+            isRunning = false
+            delegate?.pinger(self, stopped: true)
+            
+            DispatchQueue.main.async {
+                self.finishedCount = 0
+                self.start()
             }
         }
     }
+}
+
+private class PingerOperation: Operation, GBPingDelegate {
     
-    private func startPing(_ ping: SPLPing, ip: String) {
-        pingers.append(ping)
-        ping.observer = { [weak self] ping, response in
-            self?.processResponse(response, ping: ping, ip: ip)
-        }
-        ping.start()
+    init(ip: String, completion: @escaping (_ available: Bool) -> ()) {
+        self.ip = ip
+        self.completion = completion
+        super.init()
+    }
+
+    let ip: String
+    private let completion: (_ available: Bool) -> ()
+    private let ping = GBPing()
+    
+    private var pingDispatchGroup = DispatchGroup()
+    private var stats: (successes: Int, failures: Int) = (0, 0)
+
+    override func main() {
+        super.main()
+        preparePing()
+        runPing()
     }
     
-    private func processResponse(_ response: SPLPingResponse, ping: SPLPing, ip: String) {
-        if response.error == nil {
-            runningIPs[ip]?.successes += 1
-        }
-        else {
-            runningIPs[ip]?.failures += 1
-        }
+    private func preparePing() {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
         
-        if response.sequenceNumber > 3 {
-            ping.stop()
-            pingers.remove(ping)
-            
-            endedIPs[ip] = runningIPs[ip]?.successes ?? 0 > 0
-            runningIPs.removeValue(forKey: ip)
-            
-            executeQueue()
-            
-            pingFinished(ip)
+        ping.host = ip
+        ping.delegate = self
+        ping.pingPeriod = 0.2
+        ping.timeout = 1
+        ping.setup { success, _ in
+            dispatchGroup.leave()
         }
+        dispatchGroup.wait()
+        runPing()
     }
     
-    private func pingFinished(_ ip: String) {
-        let success = endedIPs[ip] ?? false
+    private func runPing() {
+        guard ping.isReady else { return }
         
+        pingDispatchGroup.enter()
+        ping.startPinging()
+        pingDispatchGroup.wait()
+    }
+    
+    private func updateStats(success: Bool) {
         if success {
-            ipFoundBlock?(ip)
-        }
-        
-        if endedIPs.count < totalCount {
-            progressBlock?(Float(endedIPs.count) / Float(totalCount))
+            stats.successes += 1
         }
         else {
-            finishedBlock?(true)
+            stats.failures += 1
         }
+
+        if stats.successes + stats.failures == 3 {
+            // prevent a crash in which GBPing continues pinging even though it was stopped, and it causes an assert crash
+            // because stopping releases a lot of properties necessaries to ping. we're shutting down the loop early and
+            // waiting a bit before properly stopping
+            ping.setValue(false, forKey: "isPinging")
+            usleep(UInt32(ping.pingPeriod * TimeInterval(1_000_000)))
+
+            ping.stop()
+            pingDispatchGroup.leave()
+            
+            completion(stats.successes >= stats.failures)
+        }
+    }
+    
+    func ping(_ pinger: GBPing, didReceiveReplyWith summary: GBPingSummary) {
+        updateStats(success: true)
+    }
+
+    func ping(_ pinger: GBPing, didReceiveUnexpectedReplyWith summary: GBPingSummary) {
+        updateStats(success: true)
+    }
+
+    func ping(_ pinger: GBPing, didTimeoutWith summary: GBPingSummary) {
+        updateStats(success: false)
+    }
+
+    func ping(_ pinger: GBPing, didFailWithError error: Error) {
+        updateStats(success: false)
+    }
+
+    func ping(_ pinger: GBPing, didFailToSendPingWith summary: GBPingSummary, error: Error) {
+        updateStats(success: false)
     }
 }

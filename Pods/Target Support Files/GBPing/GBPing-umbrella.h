@@ -10,10 +10,10 @@
 #endif
 #endif
 
-#import "SPLPing.h"
-#import "SPLPingConfiguration.h"
-#import "SPLPingResponse.h"
+#import "GBPing.h"
+#import "GBPingSummary.h"
+#import "ICMPHeader.h"
 
-FOUNDATION_EXPORT double SPLPingVersionNumber;
-FOUNDATION_EXPORT const unsigned char SPLPingVersionString[];
+FOUNDATION_EXPORT double GBPingVersionNumber;
+FOUNDATION_EXPORT const unsigned char GBPingVersionString[];
 

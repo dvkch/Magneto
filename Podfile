@@ -8,7 +8,7 @@ target 'TorrentAdder' do
     pod 'Alamofire'
     pod 'BrightFutures'
     pod 'Fuzi'
-    pod 'SPLPing'
+    pod 'GBPing'
     pod 'SYKit'
     pod 'TPKeyboardAvoiding'
 end

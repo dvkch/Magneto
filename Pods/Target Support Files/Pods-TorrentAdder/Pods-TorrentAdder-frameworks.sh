@@ -179,7 +179,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SPLPing/SPLPing.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/GBPing/GBPing.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework"
 fi
@@ -187,7 +187,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SPLPing/SPLPing.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/GBPing/GBPing.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework"
 fi

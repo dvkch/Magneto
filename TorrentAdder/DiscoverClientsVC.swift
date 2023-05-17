@@ -18,6 +18,7 @@ class DiscoverClientsVC: ViewController {
         let closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
         navigationItem.leftBarButtonItem = closeButton
         
+        progressView.progress = 0
         progressView.trackTintColor = .background
         progressView.progressTintColor = .tint
         
@@ -25,25 +26,23 @@ class DiscoverClientsVC: ViewController {
         tableView.registerCell(ClientCell.self)
         tableView.tableFooterView = UIView()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.hostnameResolverUpdatedNotification), name: .hostnameResolverUpdated, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.hostnameResolverUpdatedNotification),
+            name: .hostnameResolverUpdated, object: nil
+        )
+        
+        pinger.delegate = self
+        pinger.start()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: .hostnameResolverUpdated, object: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // don't block UI
-        DispatchQueue.main.async {
-            self.startPinging()
-        }
-    }
-    
     // MARK: Properties
     private var availableIPs: [String] = []
-    private var pinger: Pinger?
+    private let pinger: Pinger = Pinger(networks: IPv4Interface.deviceNetworks(filterLocalInterfaces: true))
+
     // MARK: View
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var progressView: UIProgressView!
@@ -55,14 +54,10 @@ class DiscoverClientsVC: ViewController {
     
     // MARK: Notifications
     @objc private func hostnameResolverUpdatedNotification() {
-        reload()
-    }
-    
-    // MARK: Content
-    private func reload() {
         tableView.reloadData()
     }
     
+    // MARK: Content
     private func addAvailableIP(_ ip: String?) {
         guard let ip = ip else { return }
         availableIPs.append(ip)
@@ -79,24 +74,19 @@ class DiscoverClientsVC: ViewController {
             tableView.reloadData()
         }
     }
+}
+
+extension DiscoverClientsVC : PingerDelegate {
+    func pinger(_ pinger: Pinger, progressUpdated progress: Float) {
+        progressView.setProgress(Float(progress), animated: true)
+    }
     
-    // MARK: Ping
-    private func startPinging() {
-        guard pinger == nil else { return }
-        
-        pinger = Pinger(networks: IPv4Interface.deviceNetworks(filterLocalInterfaces: true))
-        pinger?.progressBlock = { [weak self] (progress) in
-            self?.progressView.setProgress(Float(progress), animated: true)
-        }
-        pinger?.ipFoundBlock = { [weak self] (ip) in
-            self?.addAvailableIP(ip)
-        }
-        pinger?.finishedBlock = { [weak self] (finished) in
-            self?.progressView?.setProgress(1, animated: true)
-        }
-        
-        progressView.progress = 0
-        pinger?.start()
+    func pinger(_ pinger: Pinger, stopped completed: Bool) {
+        progressView.setProgress(1, animated: true)
+    }
+
+    func pinger(_ pinger: Pinger, found ip: String) {
+        addAvailableIP(ip)
     }
 }
 
