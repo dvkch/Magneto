@@ -35,7 +35,7 @@ class MagnetPopupVC: ViewController {
         view.layer.cornerRadius = 6
         view.layer.masksToBounds = true
         
-        spinner.color = .accent
+        spinner.color = .tint
         
         tableView.registerCell(ClientCell.self)
         tableView.tableFooterView = UIView()
@@ -47,8 +47,8 @@ class MagnetPopupVC: ViewController {
         for button in [cancelButton!, closeButton!] {
             button.titleLabel?.font = .boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize)
             button.backgroundColor = .background
-            button.setTitleColor(.accent, for: .normal)
-            button.setTitleColor(.text, for: .highlighted)
+            button.setTitleColor(.tint, for: .normal)
+            button.setTitleColor(.normalText, for: .highlighted)
             
             let separator = UIView()
             separator.translatesAutoresizingMaskIntoConstraints = false

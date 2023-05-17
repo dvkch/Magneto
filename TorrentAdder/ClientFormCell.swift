@@ -13,8 +13,8 @@ class ClientFormCell: UITableViewCell {
     // MARK: Init
     override func awakeFromNib() {
         super.awakeFromNib()
-        textField.textColor = .text
-        segmentedControl.tintColor = .accent
+        textField.textColor = .normalText
+        segmentedControl.tintColor = .tint
     }
 
     // MARK: Properties
@@ -47,7 +47,7 @@ class ClientFormCell: UITableViewCell {
     private func updateContent() {
         guard let client = client else { return }
         
-        iconView.image = formField.image?.masking(with: .accent)
+        iconView.image = formField.image?.masking(with: .tint)
         textField.keyboardType = formField.keyboardType
         textField.textContentType = formField.textContentType
 

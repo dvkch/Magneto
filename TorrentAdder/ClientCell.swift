@@ -14,9 +14,9 @@ class ClientCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateStatus), name: .clientStatusChanged, object: nil)
-        activityIndicator.color = .text
-        nameLabel.textColor = .text
-        hostLabel.textColor = .subtext
+        activityIndicator.color = .normalText
+        nameLabel.textColor = .normalText
+        hostLabel.textColor = .altText
     }
     
     deinit {

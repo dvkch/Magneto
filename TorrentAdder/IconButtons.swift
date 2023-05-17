@@ -49,8 +49,8 @@ class AddButton: IconButton {
     override func updateStyle() {
         super.updateStyle()
         layer.shadowOffset = .init(width: 0, height: 0)
-        backgroundColor = .accent
-        setImage(UIImage(named: "button_add")?.masking(with: .textOverAccent), for: .normal)
+        backgroundColor = .tint
+        setImage(UIImage(named: "button_add")?.masking(with: .normalTextOnTint), for: .normal)
     }
 }
 
@@ -59,7 +59,7 @@ class HelpButton: IconButton {
     override func updateStyle() {
         super.updateStyle()
         layer.shadowOffset = .init(width: 2, height: 2)
-        backgroundColor = .textOverAccent
-        setImage(UIImage(named: "button_help")?.masking(with: .accent), for: .normal)
+        backgroundColor = .normalTextOnTint
+        setImage(UIImage(named: "button_help")?.masking(with: .tint), for: .normal)
     }
 }

@@ -79,7 +79,7 @@ class MainVC: ViewController {
     // MARK: Views
     private let loaderBarButtonItem: UIBarButtonItem = {
         let spinner = UIActivityIndicatorView(style: .medium)
-        spinner.color = .textOverAccent
+        spinner.color = .normalTextOnTint
         return UIBarButtonItem(customView: spinner)
     }()
     private var mirrorBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "icloud"), menu: nil)
@@ -225,8 +225,8 @@ extension MainVC {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
         #elseif os(iOS)
         let vc = SFSafariViewController(url: url)
-        vc.preferredBarTintColor = UIColor.accent.resolvedColor(with: traitCollection)
-        vc.preferredControlTintColor = UIColor.text.resolvedColor(with: traitCollection)
+        vc.preferredBarTintColor = UIColor.tint.resolvedColor(with: traitCollection)
+        vc.preferredControlTintColor = UIColor.normalText.resolvedColor(with: traitCollection)
         present(vc, animated: true, completion: nil)
         #endif
     }
@@ -417,81 +417,75 @@ extension MainVC : UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        guard let tableSection = TableSection(rawValue: indexPath.section) else { return nil }
+    private struct Action {
+        let title: String
+        let image: String
+        let color: UIColor
+        let destructive: Bool
+        let closure: () -> ()
+        
+        init(title: String, image: String, color: UIColor = .tint, destructive: Bool = false, closure: @escaping () -> Void) {
+            self.title = title
+            self.image = image
+            self.color = color
+            self.destructive = destructive
+            self.closure = closure
+        }
+    }
+    
+    private func actionsForRow(at indexPath: IndexPath) -> [Action] {
+        guard let tableSection = TableSection(rawValue: indexPath.section) else { return [] }
+
         switch tableSection {
         case .clients:
             let client = clients[indexPath.row]
-            
-            return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
-                let removeFinishedAction = UIAction(title: "action.removefinished".localized, image: UIImage(systemName: "tray")) { [weak self] (_) in
-                    self?.removeFinished(in: client)
-                }
-                let editAction = UIAction(title: "action.edit".localized, image: UIImage(systemName: "square.and.pencil")) { [weak self] (_) in
-                    let vc = EditClientVC()
-                    vc.client = client
-                    self?.present(vc, animated: true)
-                }
-                let deleteAction = UIAction(title: "action.delete".localized, image: UIImage(systemName: "trash.fill"), attributes: .destructive) { [weak self] (_) in
-                    self?.removeClient(client, at: indexPath)
-                }
-
-                return UIMenu(title: "", children: [removeFinishedAction, editAction, deleteAction])
+            let removeFinishedAction = Action(title: "action.removefinished".localized, image: "tray", color: .backgroundAlt) { [weak self] in
+                self?.removeFinished(in: client)
             }
+            let editAction = Action(title: "action.edit".localized, image: "square.and.pencil", color: .tint) { [weak self] in
+                let vc = EditClientVC()
+                vc.client = client
+                self?.present(vc, animated: true)
+            }
+            let deleteAction = Action(title: "action.delete".localized, image: "trash.fill", color: .leechers, destructive: true) { [weak self] in
+                self?.removeClient(client, at: indexPath)
+            }
+            return [removeFinishedAction, editAction, deleteAction]
             
         case .results:
             let result = searchResults[indexPath.row]
-            return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
-                let shareAction = UIAction(title: "action.sharelink".localized, image: UIImage(systemName: "square.and.arrow.up")) { [weak self] (_) in
-                    guard let cell = tableView.cellForRow(at: indexPath) else { return }
-                    self?.shareResult(result, from: cell)
-                }
-                let openAction = UIAction(title: "action.open".localized, image: UIImage(systemName: "safari")) { [weak self] (_) in
-                    self?.openResultInSafari(result)
-                }
-
-                return UIMenu(title: "", children: [openAction, shareAction])
+            let shareAction = Action(title: "action.sharelink".localized, image: "square.and.arrow.up", color: .backgroundAlt) { [weak self] in
+                guard let cell = self?.tableView.cellForRow(at: indexPath) else { return }
+                self?.shareResult(result, from: cell)
             }
+            let openAction = Action(title: "action.open".localized, image: "safari", color: .tint) { [weak self] in
+                self?.openResultInSafari(result)
+            }
+            return [openAction, shareAction]
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
+            let actions = self.actionsForRow(at: indexPath).map { action in
+                UIAction(title: action.title, image: UIImage(systemName: action.image), attributes: action.destructive ? .destructive : []) { _ in
+                    action.closure()
+                }
+            }
+            return UIMenu(title: "", children: actions)
         }
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let tableSection = TableSection(rawValue: indexPath.section) else { return nil }
-        switch tableSection {
-        case .clients:
-            let client = clients[indexPath.row]
-            let removeFinishedAction = UIContextualAction(style: .normal, title: "action.removefinished".localized) { [weak self] (_, _, completed) in
-                self?.removeFinished(in: client)
+        let actions = self.actionsForRow(at: indexPath).map { action in
+            let contextualAction = UIContextualAction(style: action.destructive ? .destructive : .normal, title: action.title) { _, _, completed in
+                action.closure()
                 completed(true)
             }
-            removeFinishedAction.backgroundColor = .basicAction
-            let editAction = UIContextualAction(style: .normal, title: "action.edit".localized) { [weak self] (_, _, completed) in
-                let vc = EditClientVC()
-                vc.client = client
-                self?.navigationController?.pushViewController(vc, animated: true)
-                completed(true)
-            }
-            editAction.backgroundColor = .accent
-            let deleteAction = UIContextualAction(style: .destructive, title: "action.delete".localized) { [weak self] (_, _, completed) in
-                self?.removeClient(client, at: indexPath)
-                completed(true)
-            }
-            deleteAction.backgroundColor = .destructiveAction
-            return UISwipeActionsConfiguration(actions: [deleteAction, editAction, removeFinishedAction])
-            
-        case .results:
-            let result = searchResults[indexPath.row]
-            let openAction = UIContextualAction(style: .normal, title: "action.open".localized) { [weak self] (_, _, completed) in
-                self?.openResultInSafari(result)
-                completed(true)
-            }
-            openAction.backgroundColor = .basicAction
-            let shareAction = UIContextualAction(style: .normal, title: "action.sharelink".localized) { [weak self] (_, view, completed) in
-                self?.shareResult(result, from: view)
-                completed(true)
-            }
-            shareAction.backgroundColor = .accent
-            return UISwipeActionsConfiguration(actions: [shareAction, openAction])
+            contextualAction.image = UIImage(systemName: action.image)
+            contextualAction.backgroundColor = action.color
+            return contextualAction
         }
+        return UISwipeActionsConfiguration(actions: actions)
     }
 }

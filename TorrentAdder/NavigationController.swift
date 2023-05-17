@@ -33,10 +33,10 @@ class NavigationController: UINavigationController {
         }
         else {
             appearance.configureWithDefaultBackground()
-            appearance.backgroundColor = .accent
+            appearance.backgroundColor = .tint
         }
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.textOverAccent]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.textOverAccent]
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.normalTextOnTint]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.normalTextOnTint]
 
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
@@ -45,7 +45,7 @@ class NavigationController: UINavigationController {
             navigationBar.compactScrollEdgeAppearance = appearance
         }
 
-        navigationBar.tintColor = .textOverAccent
+        navigationBar.tintColor = .normalTextOnTint
         navigationBar.prefersLargeTitles = true
     }
 }

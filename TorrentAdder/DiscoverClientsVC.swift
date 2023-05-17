@@ -19,7 +19,7 @@ class DiscoverClientsVC: ViewController {
         navigationItem.leftBarButtonItem = closeButton
         
         progressView.trackTintColor = .background
-        progressView.progressTintColor = .accent
+        progressView.progressTintColor = .tint
         
         tableView.registerCell(ClientCell.self)
         tableView.tableFooterView = UIView()
