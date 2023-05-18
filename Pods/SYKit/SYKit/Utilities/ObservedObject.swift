@@ -8,12 +8,12 @@
 
 import Foundation
 
-typealias ObservationRef = NSObject
-typealias ObservationClosure<T> = (T, T) -> Void
+public typealias ObservationRef = NSObject
+public typealias ObservationClosure<T> = (T, T) -> Void
 
-class ObservedObject<T> {
+public class ObservedObject<T> {
 
-    init(initial: T) {
+    public init(initial: T) {
         underlying = initial
     }
 
@@ -31,14 +31,14 @@ class ObservedObject<T> {
     private var underlying: T
     private var observers: Array<Observer<T>> = []
 
-    var value: T {
+    public var value: T {
         get { underlying }
         set {
             setValue(newValue, skipCallbacks: false)
         }
     }
 
-    func setValue(_ value: T, skipCallbacks: Bool = false) {
+    public func setValue(_ value: T, skipCallbacks: Bool = false) {
         let prevValue = underlying
         underlying = value
 
@@ -51,7 +51,7 @@ class ObservedObject<T> {
         }
     }
 
-    func addObserver(ref: ObservationRef, callNow: Bool = false, observer: @escaping ObservationClosure<T>) {
+    public func addObserver(ref: ObservationRef, callNow: Bool = false, observer: @escaping ObservationClosure<T>) {
         let obs = Observer(ref: ref, closure: observer)
         observers.append(obs)
         if (callNow) {
@@ -59,7 +59,7 @@ class ObservedObject<T> {
         }
     }
 
-    func removeObserver(ref: ObservationRef) {
+    public func removeObserver(ref: ObservationRef) {
         observers.removeAll(where: { $0.ref == nil || $0.ref == ref })
     }
 }

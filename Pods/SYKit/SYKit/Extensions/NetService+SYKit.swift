@@ -24,10 +24,10 @@ public struct NetAddress: CustomDebugStringConvertible, Equatable, Hashable {
     public let family: Family
     public let ip: String
     public let port: Int
-    public let host: String
-    public let serv: String
+    public let host: String?
+    public let serv: String?
     
-    public init(family: Family, ip: String, port: Int, host: String, serv: String) {
+    public init(family: Family, ip: String, port: Int, host: String?, serv: String?) {
         self.family = family
         self.ip = ip
         self.port = port
@@ -36,18 +36,18 @@ public struct NetAddress: CustomDebugStringConvertible, Equatable, Hashable {
     }
     
     public var debugDescription: String {
-        return "NetAddress: family=\(family), ip=\(ip), port=\(port), host=\(host), serv=\(serv)"
+        return "NetAddress: family=\(family), ip=\(ip), port=\(port), host=\(host ?? "<nil>"), serv=\(serv ?? "<nil>")"
     }
 }
 
 public extension NetService {
-    var parsedAddresses: [NetAddress]? {
-        return addresses?.compactMap { $0.netAddress }
+    func netAddresses(resolvingHost: Bool) -> [NetAddress]? {
+        return addresses?.compactMap { $0.netAddress(resolvingHost: resolvingHost) }
     }
 }
 
 public extension Data {
-    var netAddress: NetAddress? {
+    func netAddress(resolvingHost: Bool) -> NetAddress? {
         var ipBuffer   = [CChar](repeating: 0, count: Int(NI_MAXHOST))
         var portBuffer = [CChar](repeating: 0, count: Int(NI_MAXSERV))
         var hostBuffer = [CChar](repeating: 0, count: Int(NI_MAXHOST))
@@ -72,12 +72,18 @@ public extension Data {
                 NI_NUMERICHOST | NI_NUMERICSERV
             )
 
-            let err2 = getnameinfo(
-                sa, socklen_t(sa.pointee.sa_len),
-                &hostBuffer, socklen_t(hostBuffer.count),
-                &servBuffer, socklen_t(servBuffer.count),
-                0
-            )
+            let err2: Int32
+            if resolvingHost {
+                err2 = getnameinfo(
+                    sa, socklen_t(sa.pointee.sa_len),
+                    &hostBuffer, socklen_t(hostBuffer.count),
+                    &servBuffer, socklen_t(servBuffer.count),
+                    0
+                )
+            }
+            else {
+                err2 = 0
+            }
             
             return err1 > 0 ? err1 : err2
         }
