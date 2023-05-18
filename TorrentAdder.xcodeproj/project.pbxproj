@@ -68,7 +68,7 @@
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
 		F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675C192A317C00735175 /* CoreGraphics.framework */; };
 		F898675F192A317C00735175 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675E192A317C00735175 /* UIKit.framework */; };
-		F8986776192A317C00735175 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8986775192A317C00735175 /* Images.xcassets */; };
+		F8986776192A317C00735175 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8986775192A317C00735175 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -153,8 +153,8 @@
 		F898675A192A317C00735175 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F898675C192A317C00735175 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F898675E192A317C00735175 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		F8986762192A317C00735175 /* TorrentAdder-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TorrentAdder-Info.plist"; sourceTree = "<group>"; };
-		F8986775192A317C00735175 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F8986762192A317C00735175 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F8986775192A317C00735175 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F898677C192A317D00735175 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
@@ -173,41 +173,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		973AFF811BB41CFC00BA4B8B /* VCs */ = {
-			isa = PBXGroup;
-			children = (
-				97475609232AB4DA0038698E /* ViewController.swift */,
-				9771AB2821AEF898005DE97D /* NavigationController.swift */,
-				9771AB1221AEC919005DE97D /* MainVC.swift */,
-				97A18E0B1BBC011900F33AF5 /* MainVC.xib */,
-				9771AB2A21AEF901005DE97D /* DiscoverClientsVC.swift */,
-				97A18E131BBC017C00F33AF5 /* DiscoverClientsVC.xib */,
-				9771AB2C21AEFF09005DE97D /* EditClientVC.swift */,
-				97F911461BC2C45C00BF1848 /* EditClientVC.xib */,
-				9771AB1E21AEE457005DE97D /* MagnetPopupVC.swift */,
-				9771AB2021AEE679005DE97D /* MagnetPopupVC.xib */,
-				97C0D28524C71CBA00AFB781 /* SuggestionsVC.swift */,
-				97C0D28624C71CBA00AFB781 /* SuggestionsVC.xib */,
-			);
-			name = VCs;
-			sourceTree = "<group>";
-		};
-		973AFF821BB41D0700BA4B8B /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				9771AB3021AF0534005DE97D /* ClientCell.swift */,
-				97A18E0D1BBC016B00F33AF5 /* ClientCell.xib */,
-				9771AB3421AF0C59005DE97D /* ClientFormCell.swift */,
-				97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */,
-				9771AB3221AF08E4005DE97D /* ResultCell.swift */,
-				97A18E111BBC017500F33AF5 /* ResultCell.xib */,
-				974D3A1224BB327900953757 /* SuggestionCell.swift */,
-				974D3A1324BB327900953757 /* SuggestionCell.xib */,
-			);
-			name = Cells;
-			sourceTree = "<group>";
-		};
-		9771AB1421AECB84005DE97D /* Extensions */ = {
+		97C1E4E92A15A86E003F432E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				970130E121B084E500E7CFEC /* Alamofire+SY.swift */,
@@ -223,42 +189,102 @@
 				9771AB2421AEF3CE005DE97D /* UIView+SY.swift */,
 				9771AB2221AEF1A5005DE97D /* URL+SY.swift */,
 			);
-			name = Extensions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
-		97B4041622C5275700C7A684 /* Views */ = {
+		97C1E4EA2A15A885003F432E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				97B4041422C5274F00C7A684 /* IconButtons.swift */,
+				97C1E4EB2A15A88E003F432E /* API */,
+				97C1E4EC2A15A893003F432E /* Network */,
+				9771AB3621AF2BA4005DE97D /* Preferences.swift */,
+				9715A507251BA32B00C2C52F /* ViewRouter.swift */,
 			);
-			name = Views;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		97EACC001BC2C31300382614 /* Network */ = {
+		97C1E4EB2A15A88E003F432E /* API */ = {
+			isa = PBXGroup;
+			children = (
+				974D373A21B49D4800C0FDDE /* ClientAPI.swift */,
+				970130DF21B07EC000E7CFEC /* WebAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		97C1E4EC2A15A893003F432E /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				979D4A9721AF4614000BFDF0 /* ClientStatusManager.swift */,
 				9771AB3921AF319E005DE97D /* HostnameResolver.swift */,
 				97EC446221AF37330034C861 /* Pinger.swift */,
 			);
-			name = Network;
+			path = Network;
 			sourceTree = "<group>";
 		};
-		97EACC011BC2C31B00382614 /* API */ = {
+		97C1E4ED2A15A8C0003F432E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				974D373A21B49D4800C0FDDE /* ClientAPI.swift */,
-				970130DF21B07EC000E7CFEC /* WebAPI.swift */,
+				972589AC21B0AD6D00FCE9D5 /* AppError.swift */,
+				9768CA6421B5770B000AA7C2 /* Client.swift */,
+				9768CA6621B57B33000AA7C2 /* Client+UI.swift */,
+				974D373121B1DF8600C0FDDE /* IPv4Address.swift */,
+				974D373321B1E2DA00C0FDDE /* IPv4Interface.swift */,
+				974D372921B150FC00C0FDDE /* SearchResult.swift */,
 			);
-			name = API;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		97EACC021BC2C32700382614 /* Storage */ = {
+		97C1E4EE2A15A8D3003F432E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				9771AB3621AF2BA4005DE97D /* Preferences.swift */,
+				9771AB3021AF0534005DE97D /* ClientCell.swift */,
+				97A18E0D1BBC016B00F33AF5 /* ClientCell.xib */,
+				9771AB3421AF0C59005DE97D /* ClientFormCell.swift */,
+				97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */,
+				9771AB3221AF08E4005DE97D /* ResultCell.swift */,
+				97A18E111BBC017500F33AF5 /* ResultCell.xib */,
+				974D3A1224BB327900953757 /* SuggestionCell.swift */,
+				974D3A1324BB327900953757 /* SuggestionCell.xib */,
 			);
-			name = Storage;
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		97C1E4EF2A15A8DF003F432E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				97B4041422C5274F00C7A684 /* IconButtons.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		97C1E4F02A15A8EF003F432E /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				97475609232AB4DA0038698E /* ViewController.swift */,
+				9771AB2821AEF898005DE97D /* NavigationController.swift */,
+				9771AB1221AEC919005DE97D /* MainVC.swift */,
+				97A18E0B1BBC011900F33AF5 /* MainVC.xib */,
+				9771AB2A21AEF901005DE97D /* DiscoverClientsVC.swift */,
+				97A18E131BBC017C00F33AF5 /* DiscoverClientsVC.xib */,
+				9771AB2C21AEFF09005DE97D /* EditClientVC.swift */,
+				97F911461BC2C45C00BF1848 /* EditClientVC.xib */,
+				9771AB1E21AEE457005DE97D /* MagnetPopupVC.swift */,
+				9771AB2021AEE679005DE97D /* MagnetPopupVC.xib */,
+				97C0D28524C71CBA00AFB781 /* SuggestionsVC.swift */,
+				97C0D28624C71CBA00AFB781 /* SuggestionsVC.xib */,
+			);
+			path = VCs;
+			sourceTree = "<group>";
+		};
+		97C1E4F12A15A96A003F432E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F8986775192A317C00735175 /* Assets.xcassets */,
+				973784311BD40649001AD487 /* Launch.storyboard */,
+				976D5EFB230E0E3600573E0D /* Localizable.strings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		D2AE9763663001786F053965 /* Pods */ = {
@@ -268,17 +294,6 @@
 				0B69C8AE8CFDA1E82A1EF6EC /* Pods-TorrentAdder.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		F83FFA40192BE74E0034A95B /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				97EACC011BC2C31B00382614 /* API */,
-				97EACC001BC2C31300382614 /* Network */,
-				97EACC021BC2C32700382614 /* Storage */,
-				9715A507251BA32B00C2C52F /* ViewRouter.swift */,
-			);
-			name = Controllers;
 			sourceTree = "<group>";
 		};
 		F898674E192A317C00735175 = {
@@ -315,43 +330,20 @@
 		F8986760192A317C00735175 /* TorrentAdder */ = {
 			isa = PBXGroup;
 			children = (
+				97C1E4F12A15A96A003F432E /* Resources */,
 				9771AB3821AF2D7C005DE97D /* TorrentAdder.entitlements */,
-				9771AB1421AECB84005DE97D /* Extensions */,
-				F83FFA40192BE74E0034A95B /* Controllers */,
-				F89867BF192BA8DC00735175 /* Models */,
-				973AFF821BB41D0700BA4B8B /* Cells */,
-				97B4041622C5275700C7A684 /* Views */,
-				973AFF811BB41CFC00BA4B8B /* VCs */,
+				97C1E4E92A15A86E003F432E /* Extensions */,
+				97C1E4EA2A15A885003F432E /* Controllers */,
+				97C1E4ED2A15A8C0003F432E /* Models */,
+				97C1E4EE2A15A8D3003F432E /* Cells */,
+				97C1E4EF2A15A8DF003F432E /* Views */,
+				97C1E4F02A15A8EF003F432E /* VCs */,
 				9771AB1A21AEDC92005DE97D /* AppDelegate.swift */,
 				9715A478251B9CD200C2C52F /* SceneDelegate.swift */,
-				973784311BD40649001AD487 /* Launch.storyboard */,
-				F8986775192A317C00735175 /* Images.xcassets */,
-				F8986761192A317C00735175 /* Supporting Files */,
-				976D5EFB230E0E3600573E0D /* Localizable.strings */,
-			);
-			path = TorrentAdder;
-			sourceTree = "<group>";
-		};
-		F8986761192A317C00735175 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F8986762192A317C00735175 /* TorrentAdder-Info.plist */,
+				F8986762192A317C00735175 /* Info.plist */,
 				9771AB1121AEC918005DE97D /* TorrentAdder-Bridging-Header.h */,
 			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F89867BF192BA8DC00735175 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				972589AC21B0AD6D00FCE9D5 /* AppError.swift */,
-				9768CA6421B5770B000AA7C2 /* Client.swift */,
-				9768CA6621B57B33000AA7C2 /* Client+UI.swift */,
-				974D373121B1DF8600C0FDDE /* IPv4Address.swift */,
-				974D373321B1E2DA00C0FDDE /* IPv4Interface.swift */,
-				974D372921B150FC00C0FDDE /* SearchResult.swift */,
-			);
-			name = Models;
+			path = TorrentAdder;
 			sourceTree = "<group>";
 		};
 		F8986800192BC06700735175 /* Resources */ = {
@@ -446,7 +438,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8986776192A317C00735175 /* Images.xcassets in Resources */,
+				F8986776192A317C00735175 /* Assets.xcassets in Resources */,
 				97A18E121BBC017500F33AF5 /* ResultCell.xib in Resources */,
 				97A0C55F1BC3271300DC4EEC /* form_cmd_org.png in Resources */,
 				97A0C55D1BC3271300DC4EEC /* blue_background.png in Resources */,
@@ -727,7 +719,7 @@
 				DEVELOPMENT_TEAM = 79RY8264V4;
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 79RY8264V4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				INFOPLIST_FILE = "TorrentAdder/TorrentAdder-Info.plist";
+				INFOPLIST_FILE = TorrentAdder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -762,7 +754,7 @@
 				DEVELOPMENT_TEAM = 79RY8264V4;
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 79RY8264V4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				INFOPLIST_FILE = "TorrentAdder/TorrentAdder-Info.plist";
+				INFOPLIST_FILE = TorrentAdder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
