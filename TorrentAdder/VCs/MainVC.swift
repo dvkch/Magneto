@@ -40,6 +40,14 @@ class MainVC: ViewController {
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
         
+        helpButton.clipsToBounds = true
+        helpButton.accessibilityLabel = "alert.help.title".localized
+        helpButton.backgroundColor = .tint
+        helpButton.setBackgroundColor(.altText, for: .highlighted)
+        helpButton.tintColor = .normalTextOnTint
+        helpButton.layer.cornerRadius = 16
+        helpButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        
         NotificationCenter.default.addObserver(self, selector: #selector(refreshClients), name: .clientsChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshClients), name: .clientStatusChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshMirrorsButton), name: .mirrorsChanged, object: nil)
@@ -63,7 +71,7 @@ class MainVC: ViewController {
     private let resultsVC = ResultsVC()
     private lazy var searchController = UISearchController(searchResultsController: resultsVC)
     @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var helpButton: HelpButton!
+    @IBOutlet private var helpButton: UIButton!
     
     // MARK: Content
     @objc private func refreshMirrorsButton() {

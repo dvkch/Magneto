@@ -51,7 +51,6 @@
 		97A18E0E1BBC016B00F33AF5 /* ClientCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E0D1BBC016B00F33AF5 /* ClientCell.xib */; };
 		97A18E121BBC017500F33AF5 /* ResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E111BBC017500F33AF5 /* ResultCell.xib */; };
 		97A18E141BBC017C00F33AF5 /* DiscoverClientsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E131BBC017C00F33AF5 /* DiscoverClientsVC.xib */; };
-		97B4041522C5274F00C7A684 /* IconButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B4041422C5274F00C7A684 /* IconButtons.swift */; };
 		97C0D28724C71CBA00AFB781 /* SuggestionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C0D28524C71CBA00AFB781 /* SuggestionsVC.swift */; };
 		97C0D28824C71CBA00AFB781 /* SuggestionsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C0D28624C71CBA00AFB781 /* SuggestionsVC.xib */; };
 		97C1E4F32A164203003F432E /* UIBarButtonItem+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C1E4F22A164203003F432E /* UIBarButtonItem+SY.swift */; };
@@ -134,7 +133,6 @@
 		97A18E0D1BBC016B00F33AF5 /* ClientCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientCell.xib; sourceTree = "<group>"; };
 		97A18E111BBC017500F33AF5 /* ResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultCell.xib; sourceTree = "<group>"; };
 		97A18E131BBC017C00F33AF5 /* DiscoverClientsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscoverClientsVC.xib; sourceTree = "<group>"; };
-		97B4041422C5274F00C7A684 /* IconButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtons.swift; sourceTree = "<group>"; };
 		97C0D28524C71CBA00AFB781 /* SuggestionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsVC.swift; sourceTree = "<group>"; };
 		97C0D28624C71CBA00AFB781 /* SuggestionsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionsVC.xib; sourceTree = "<group>"; };
 		97C1E4F22A164203003F432E /* UIBarButtonItem+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+SY.swift"; sourceTree = "<group>"; };
@@ -257,7 +255,6 @@
 		97C1E4EF2A15A8DF003F432E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				97B4041422C5274F00C7A684 /* IconButtons.swift */,
 				97CEA9422A16CE9100212F49 /* NavigationBar.swift */,
 			);
 			path = Views;
@@ -535,7 +532,6 @@
 				9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */,
 				974D3A1424BB327900953757 /* SuggestionCell.swift in Sources */,
 				97CEA9432A16CE9100212F49 /* NavigationBar.swift in Sources */,
-				97B4041522C5274F00C7A684 /* IconButtons.swift in Sources */,
 				9792F0D72A14EEB9001F2EE1 /* UIImage+SY.swift in Sources */,
 				974D373221B1DF8600C0FDDE /* IPv4Address.swift in Sources */,
 				97C1E4FE2A16AC3B003F432E /* ResultsVC.swift in Sources */,
