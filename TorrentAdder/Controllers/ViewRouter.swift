@@ -101,9 +101,10 @@ class ViewRouter {
         }
         
         alert.addAction(title: "action.login".localized, style: .default) { (_) in
-            client.username = alert.textFields?.first?.text
-            client.password = alert.textFields?.last?.text
-            Preferences.shared.addClient(client)
+            var updatedClient = client
+            updatedClient.username = alert.textFields?.first?.text
+            updatedClient.password = alert.textFields?.last?.text
+            Preferences.shared.addClient(updatedClient)
             self.isShowingAuthAlertView = false
             completion(false)
         }

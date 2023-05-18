@@ -8,8 +8,8 @@
 
 import UIKit
 
-class Client: Codable, Hashable {
-    let id: String          = UUID().uuidString
+struct Client: Codable, Hashable {
+    let id: String
     var name: String        = ""
     var host: String        = "127.0.0.1"
     var port: Int?          = nil
@@ -58,8 +58,8 @@ extension Client : CustomStringConvertible {
 }
 
 extension Client {
-    convenience init(host: String, name: String) {
-        self.init()
+    init(host: String, name: String) {
+        self.init(id: UUID().uuidString)
         self.host       = host
         self.name       = name
         self.software   = .transmission

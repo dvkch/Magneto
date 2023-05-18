@@ -99,7 +99,7 @@ extension Client {
         }
     }
     
-    func setValue(_ value: Any, for field: FormField) {
+    mutating func setValue(_ value: Any, for field: FormField) {
         switch field {
         case .name:     name = (value as? String) ?? name
         case .host:     host = (value as? String) ?? host
