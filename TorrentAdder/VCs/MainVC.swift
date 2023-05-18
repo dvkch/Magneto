@@ -70,7 +70,7 @@ class MainVC: ViewController {
         spinner.color = .normalTextOnTint
         return UIBarButtonItem(customView: spinner)
     }()
-    private var mirrorBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "icloud"), menu: nil)
+    private var mirrorBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: .icon(.cloud), menu: nil)
     @IBOutlet private var searchField: UISearchBar!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var tableViewBackground: UIView!
@@ -400,14 +400,14 @@ extension MainVC : UITableViewDelegate {
     
     private struct Action {
         let title: String
-        let image: String
+        let icon: UIImage.Icon
         let color: UIColor
         let destructive: Bool
         let closure: () -> ()
         
-        init(title: String, image: String, color: UIColor = .tint, destructive: Bool = false, closure: @escaping () -> Void) {
+        init(title: String, icon: UIImage.Icon, color: UIColor = .tint, destructive: Bool = false, closure: @escaping () -> Void) {
             self.title = title
-            self.image = image
+            self.icon = icon
             self.color = color
             self.destructive = destructive
             self.closure = closure
@@ -420,26 +420,26 @@ extension MainVC : UITableViewDelegate {
         switch tableSection {
         case .clients:
             let client = clients[indexPath.row]
-            let removeFinishedAction = Action(title: "action.removefinished".localized, image: "tray.and.arrow.up", color: .cellBackgroundAlt) { [weak self] in
+            let removeFinishedAction = Action(title: "action.removefinished".localized, icon: .empty, color: .cellBackgroundAlt) { [weak self] in
                 self?.removeFinished(in: client)
             }
-            let editAction = Action(title: "action.edit".localized, image: "pencil", color: .tint) { [weak self] in
+            let editAction = Action(title: "action.edit".localized, icon: .edit, color: .tint) { [weak self] in
                 let vc = EditClientVC()
                 vc.client = client
                 self?.present(NavigationController(rootViewController: vc), animated: true)
             }
-            let deleteAction = Action(title: "action.delete".localized, image: "trash", color: .leechers, destructive: true) { [weak self] in
+            let deleteAction = Action(title: "action.delete".localized, icon: .delete, color: .leechers, destructive: true) { [weak self] in
                 self?.removeClient(client, at: indexPath)
             }
             return [removeFinishedAction, editAction, deleteAction]
             
         case .results:
             let result = searchResults[indexPath.row]
-            let shareAction = Action(title: "action.sharelink".localized, image: "square.and.arrow.up", color: .cellBackgroundAlt) { [weak self] in
+            let shareAction = Action(title: "action.sharelink".localized, icon: .share, color: .cellBackgroundAlt) { [weak self] in
                 guard let cell = self?.tableView.cellForRow(at: indexPath) else { return }
                 self?.shareResult(result, from: cell)
             }
-            let openAction = Action(title: "action.open".localized, image: "safari", color: .tint) { [weak self] in
+            let openAction = Action(title: "action.open".localized, icon: .openWeb, color: .tint) { [weak self] in
                 self?.openResultInSafari(result)
             }
             return [openAction, shareAction]
@@ -449,7 +449,7 @@ extension MainVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
             let actions = self.actionsForRow(at: indexPath).map { action in
-                UIAction(title: action.title, image: UIImage(systemName: action.image), attributes: action.destructive ? .destructive : []) { _ in
+                UIAction(title: action.title, image: .icon(action.icon), attributes: action.destructive ? .destructive : []) { _ in
                     action.closure()
                 }
             }
@@ -463,7 +463,7 @@ extension MainVC : UITableViewDelegate {
                 action.closure()
                 completed(true)
             }
-            contextualAction.image = UIImage(systemName: action.image)
+            contextualAction.image = .icon(action.icon)
             contextualAction.backgroundColor = action.color
             return contextualAction
         }

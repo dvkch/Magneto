@@ -9,6 +9,59 @@
 import UIKit
 
 extension UIImage {
+    enum Icon: String {
+        case help       = "questionmark"
+        case openMagnet = "arrowshape.turn.up.right"
+        case cloud      = "icloud"
+        case edit       = "pencil"                  // 17x15
+        case delete     = "trash"                   // 19x21
+        case share      = "square.and.arrow.up"     // 19x21
+        case openWeb    = "safari"
+        case empty      = "tray"
+
+        case bookmark   = "bookmark"
+        case network    = "network"                 // 20x19
+        case number     = "number"
+        case app        = "macwindow"
+        case user       = "person"
+        case secret     = "eyes"
+
+        case checkmark  = "checkmark"               // 18x16
+        case close      = "xmark"                   // 17x15
+        case left       = "chevron.left"            // 13x17
+        case right      = "chevron.right"           // 13x17
+
+        var availableVariantsCount: Int {
+            switch self {
+            case .right:    return 12
+            case .close:    return  4
+            default:        return  1
+            }
+        }
+        
+        func assetName(variant: Int?) -> String {
+            guard availableVariantsCount > 1 else { return rawValue }
+            let boundedVariant: Int
+            if let variant {
+                boundedVariant = variant % availableVariantsCount
+            }
+            else {
+                boundedVariant = Int.random(in: 0..<availableVariantsCount)
+            }
+            return "\(rawValue).\(boundedVariant)"
+        }
+    }
+
+    static func icon(_ icon: Icon, variant: Int? = 0, useSystem: Bool = false) -> UIImage? {
+        if useSystem {
+            return UIImage(systemName: icon.rawValue)
+        }
+
+        return UIImage(named: icon.assetName(variant: variant)) ?? UIImage(systemName: icon.rawValue)
+    }
+}
+
+extension UIImage {
     enum Traffic {
         case green, grey, orange, red
         

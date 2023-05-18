@@ -25,12 +25,12 @@ extension Client {
         
         var image: UIImage? {
             switch self {
-            case .name:     return UIImage(named: "form_bookmark")
-            case .host:     return UIImage(named: "form_host")
-            case .port:     return UIImage(named: "form_port")
-            case .software: return UIImage(named: "form_cmd")
-            case .username: return UIImage(named: "form_user")
-            case .password: return UIImage(named: "form_pass")
+            case .name:     return .icon(.bookmark)
+            case .host:     return .icon(.network)
+            case .port:     return .icon(.number)
+            case .software: return .icon(.app)
+            case .username: return .icon(.user)
+            case .password: return .icon(.secret)
             }
         }
         

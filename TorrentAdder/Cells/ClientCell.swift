@@ -91,7 +91,7 @@ class ClientCell: UITableViewCell {
             nameLabel.text = "clients.count.add".localized
             hostLabel.text = nil
 
-            let imageView = UIImageView(image: UIImage(named: "button_add"))
+            let imageView = UIImageView(image: .icon(.network))
             imageView.tintColor = nameLabel.textColor
             imageView.contentMode = .scaleAspectFit
             let size = UIFontMetrics.default.scaledValue(for: 20)
@@ -132,7 +132,7 @@ class ClientCell: UITableViewCell {
         }
         
         if kind.isOpenURL {
-            statusImageView.image = UIImage(systemName: "arrowshape.turn.up.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .bold))?.masking(with: .seeder)
+            statusImageView.image = .icon(.openMagnet)?.withTintColor(.seeder)
             activityIndicator.stopAnimating()
         }
     }

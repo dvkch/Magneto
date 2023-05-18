@@ -44,22 +44,13 @@ class IconButton: UIButton {
     }
 }
 
-class AddButton: IconButton {
-    // MARK: Style
-    override func updateStyle() {
-        super.updateStyle()
-        layer.shadowOffset = .init(width: 0, height: 0)
-        backgroundColor = .tint
-        setImage(UIImage(named: "button_add")?.masking(with: .normalTextOnTint), for: .normal)
-    }
-}
-
 class HelpButton: IconButton {
     // MARK: Style
     override func updateStyle() {
         super.updateStyle()
         layer.shadowOffset = .init(width: 2, height: 2)
         backgroundColor = .normalTextOnTint
-        setImage(UIImage(named: "button_help")?.masking(with: .tint), for: .normal)
+        setTitle(nil, for: .normal)
+        setImage(.icon(.help)?.withTintColor(.tint), for: .normal)
     }
 }
