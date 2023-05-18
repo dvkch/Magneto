@@ -29,7 +29,7 @@
                     <color key="progressTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="trackTintColor" red="0.95999997854232788" green="0.95999997854232788" blue="0.95999997854232788" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </progressView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="scrollableAxes" style="grouped" rowHeight="-1" estimatedRowHeight="60" sectionHeaderHeight="18" estimatedSectionHeaderHeight="40" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="gje-ii-Iwr">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="scrollableAxes" style="grouped" rowHeight="-1" estimatedRowHeight="60" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="40" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="gje-ii-Iwr">
                     <rect key="frame" x="0.0" y="68" width="375" height="599"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <connections>
@@ -42,9 +42,9 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="gje-ii-Iwr" secondAttribute="trailing" id="cbM-wU-AIx"/>
+                <constraint firstItem="gje-ii-Iwr" firstAttribute="top" secondItem="R4Y-vo-kqf" secondAttribute="bottom" id="gnD-K9-Sxz"/>
                 <constraint firstItem="gje-ii-Iwr" firstAttribute="leading" secondItem="25g-WW-uzj" secondAttribute="leading" id="hEG-sk-j9s"/>
                 <constraint firstAttribute="trailing" secondItem="R4Y-vo-kqf" secondAttribute="trailing" id="lmk-ul-BQZ"/>
-                <constraint firstItem="gje-ii-Iwr" firstAttribute="top" secondItem="R4Y-vo-kqf" secondAttribute="bottom" id="m5s-Ah-fdw"/>
                 <constraint firstAttribute="bottom" secondItem="gje-ii-Iwr" secondAttribute="bottom" id="mPr-4X-hqF"/>
                 <constraint firstItem="R4Y-vo-kqf" firstAttribute="top" secondItem="vx2-eI-EEd" secondAttribute="top" id="pu0-nc-GxR"/>
                 <constraint firstItem="R4Y-vo-kqf" firstAttribute="leading" secondItem="25g-WW-uzj" secondAttribute="leading" id="uHx-EF-mq3"/>

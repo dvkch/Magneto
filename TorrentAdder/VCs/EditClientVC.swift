@@ -18,10 +18,12 @@ class EditClientVC: ViewController {
         title = isCreation ? "client.title.new".localized : "client.title.edit".localized
         isModalInPresentation = true
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: isCreation ? .icon(.checkmark) : .icon(.close),
-            style: .done, target: self, action: #selector(close)
-        )
+        if isCreation {
+            navigationItem.rightBarButtonItem = .save(target: self, action: #selector(close))
+        }
+        else {
+            navigationItem.rightBarButtonItem = .close(target: self, action: #selector(close))
+        }
         
         tableView.registerCell(ClientFormCell.self)
         tableView.tableFooterView = UIView()

@@ -15,6 +15,7 @@
 "action.delete"         = "Delete";
 "action.sharelink"      = "Share page link";
 "action.open"           = "Open";
+"action.save"           = "Save";
 
 "placeholder.search"    = "Search";
 

@@ -54,6 +54,8 @@
 		97B4041522C5274F00C7A684 /* IconButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B4041422C5274F00C7A684 /* IconButtons.swift */; };
 		97C0D28724C71CBA00AFB781 /* SuggestionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C0D28524C71CBA00AFB781 /* SuggestionsVC.swift */; };
 		97C0D28824C71CBA00AFB781 /* SuggestionsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C0D28624C71CBA00AFB781 /* SuggestionsVC.xib */; };
+		97C1E4F32A164203003F432E /* UIBarButtonItem+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C1E4F22A164203003F432E /* UIBarButtonItem+SY.swift */; };
+		97C1E4F52A16441F003F432E /* UITableViewCell+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C1E4F42A16441F003F432E /* UITableViewCell+SY.swift */; };
 		97EC446321AF37330034C861 /* Pinger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC446221AF37330034C861 /* Pinger.swift */; };
 		97F911481BC2C45C00BF1848 /* EditClientVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* EditClientVC.xib */; };
 		97F9114D1BC2C73D00BF1848 /* ClientFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */; };
@@ -129,6 +131,8 @@
 		97B4041422C5274F00C7A684 /* IconButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtons.swift; sourceTree = "<group>"; };
 		97C0D28524C71CBA00AFB781 /* SuggestionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsVC.swift; sourceTree = "<group>"; };
 		97C0D28624C71CBA00AFB781 /* SuggestionsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionsVC.xib; sourceTree = "<group>"; };
+		97C1E4F22A164203003F432E /* UIBarButtonItem+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+SY.swift"; sourceTree = "<group>"; };
+		97C1E4F42A16441F003F432E /* UITableViewCell+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+SY.swift"; sourceTree = "<group>"; };
 		97EC446221AF37330034C861 /* Pinger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pinger.swift; sourceTree = "<group>"; };
 		97F911461BC2C45C00BF1848 /* EditClientVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditClientVC.xib; sourceTree = "<group>"; };
 		97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientFormCell.xib; sourceTree = "<group>"; };
@@ -168,8 +172,10 @@
 				974D373521B4965700C0FDDE /* Sockets+SY.h */,
 				974D373821B4999E00C0FDDE /* Sockets+SY.m */,
 				972B4FBB24BBCF270026BFE4 /* String+SY.swift */,
+				97C1E4F22A164203003F432E /* UIBarButtonItem+SY.swift */,
 				9768CA6221B55838000AA7C2 /* UIColor+SY.swift */,
 				9792F0D62A14EEB9001F2EE1 /* UIImage+SY.swift */,
+				97C1E4F42A16441F003F432E /* UITableViewCell+SY.swift */,
 				9771AB2421AEF3CE005DE97D /* UIView+SY.swift */,
 				9771AB2221AEF1A5005DE97D /* URL+SY.swift */,
 			);
@@ -519,6 +525,7 @@
 				9771AB2321AEF1A5005DE97D /* URL+SY.swift in Sources */,
 				9771AB3521AF0C59005DE97D /* ClientFormCell.swift in Sources */,
 				9771AB2D21AEFF09005DE97D /* EditClientVC.swift in Sources */,
+				97C1E4F32A164203003F432E /* UIBarButtonItem+SY.swift in Sources */,
 				974D373421B1E2DA00C0FDDE /* IPv4Interface.swift in Sources */,
 				9771AB2921AEF898005DE97D /* NavigationController.swift in Sources */,
 				974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */,
@@ -530,6 +537,7 @@
 				97C0D28724C71CBA00AFB781 /* SuggestionsVC.swift in Sources */,
 				97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */,
 				974D372E21B1D87300C0FDDE /* Calendar+SY.swift in Sources */,
+				97C1E4F52A16441F003F432E /* UITableViewCell+SY.swift in Sources */,
 				979D4A9821AF4614000BFDF0 /* ClientStatusManager.swift in Sources */,
 				970130E221B084E500E7CFEC /* Alamofire+SY.swift in Sources */,
 				9771AB3721AF2BA4005DE97D /* Preferences.swift in Sources */,

@@ -12,11 +12,11 @@ extension UIImage {
     enum Icon: String {
         case help       = "questionmark"
         case openMagnet = "arrowshape.turn.up.right"
-        case cloud      = "icloud"
+        case cloud      = "cloud"
         case edit       = "pencil"                  // 17x15
         case delete     = "trash"                   // 19x21
         case share      = "square.and.arrow.up"     // 19x21
-        case openWeb    = "safari"
+        case openWeb    = "magnifyingglass"
         case empty      = "tray"
 
         case bookmark   = "bookmark"
@@ -57,7 +57,7 @@ extension UIImage {
             return UIImage(systemName: icon.rawValue)
         }
 
-        return UIImage(named: icon.assetName(variant: variant)) ?? UIImage(systemName: icon.rawValue)
+        return UIImage(named: icon.assetName(variant: variant))
     }
 }
 

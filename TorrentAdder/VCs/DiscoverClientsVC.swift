@@ -14,15 +14,12 @@ class DiscoverClientsVC: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "discovery.title".localized
-
-        let closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.closeButtonTap))
-        navigationItem.leftBarButtonItem = closeButton
+        navigationItem.leftBarButtonItem = .close(target: self, action: #selector(closeButtonTap))
         
         progressView.progress = 0
         progressView.trackTintColor = .background
         progressView.progressTintColor = .tint
         
-        tableView.contentInset.top = 22
         tableView.registerCell(ClientCell.self)
         tableView.tableFooterView = UIView()
         
@@ -104,7 +101,7 @@ extension DiscoverClientsVC : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(ClientCell.self, for: indexPath)
-        cell.kind = .discoveredClient(client(at: indexPath))
+        cell.kind = .discoveredClient(client(at: indexPath), index: indexPath.row)
         return cell
     }
     

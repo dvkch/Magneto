@@ -125,7 +125,7 @@ class MagnetPopupVC: ViewController {
         case .newClient:
             break
 
-        case .client(let client), .discoveredClient(let client):
+        case .client(let client), .discoveredClient(let client, _):
             if let client = client {
                 updateForMode(.loading, animated: true)
                 addMagnetToClient(magnetURL: url, client: client)

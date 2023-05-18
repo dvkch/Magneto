@@ -62,12 +62,8 @@ class MainVC: ViewController {
     }
     
     // MARK: Views
-    private let loaderBarButtonItem: UIBarButtonItem = {
-        let spinner = UIActivityIndicatorView(style: .medium)
-        spinner.color = .normalTextOnTint
-        return UIBarButtonItem(customView: spinner)
-    }()
-    private var mirrorBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: .icon(.cloud), menu: nil)
+    private let loaderBarButtonItem: UIBarButtonItem = .loader(color: .normalTextOnTint)
+    private let mirrorBarButtonItem: UIBarButtonItem = .init(image: .icon(.cloud), menu: nil)
     @IBOutlet private var searchField: UISearchBar!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var tableViewBackground: UIView!

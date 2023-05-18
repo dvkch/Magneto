@@ -37,11 +37,10 @@
                             <constraint firstAttribute="height" constant="20" id="svM-1H-ZoI"/>
                         </constraints>
                     </activityIndicatorView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="form_host" translatesAutoresizingMaskIntoConstraints="NO" id="tPf-93-i9H">
-                        <rect key="frame" x="15" y="24" width="12" height="12"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bookmark" translatesAutoresizingMaskIntoConstraints="NO" id="tPf-93-i9H">
+                        <rect key="frame" x="10" y="19" width="22" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="12" id="SjW-y1-EuP"/>
-                            <constraint firstAttribute="height" constant="12" id="Z8F-Nd-1I7"/>
+                            <constraint firstAttribute="width" secondItem="tPf-93-i9H" secondAttribute="height" multiplier="1:1" id="rFe-35-yeK"/>
                         </constraints>
                     </imageView>
                 </subviews>
@@ -71,6 +70,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="form_host" width="40" height="27"/>
+        <image name="bookmark" width="14" height="22"/>
     </resources>
 </document>

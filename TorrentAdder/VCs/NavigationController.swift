@@ -47,5 +47,7 @@ class NavigationController: UINavigationController {
 
         navigationBar.tintColor = .normalTextOnTint
         navigationBar.prefersLargeTitles = true
+        
+        navigationBar.setBackButtonImage(.icon(.left))
     }
 }

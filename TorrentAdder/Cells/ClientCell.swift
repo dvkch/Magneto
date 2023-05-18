@@ -17,6 +17,7 @@ class ClientCell: UITableViewCell {
         activityIndicator.color = .normalText
         nameLabel.textColor = .normalText
         hostLabel.textColor = .altText
+        statusImageView.adjustsImageSizeForAccessibilityContentSizeCategory = false // traffic icons will be regenerated larger
         backgroundColor = .cellBackground
     }
     
@@ -32,11 +33,11 @@ class ClientCell: UITableViewCell {
         }
     }
     enum Kind {
-        case client(Client?), discoveredClient(Client?), newClient, openURL
+        case client(Client?), discoveredClient(Client?, index: Int), newClient, openURL
 
         var client: Client? {
             switch self {
-            case .client(let client), .discoveredClient(let client): return client
+            case .client(let client), .discoveredClient(let client, _): return client
             case .newClient, .openURL: return nil
             }
         }
@@ -73,10 +74,9 @@ class ClientCell: UITableViewCell {
                 nameLabel.text = nil
                 hostLabel.text = nil
             }
-            accessoryType = .none
             accessoryView = nil
             
-        case .discoveredClient(let client):
+        case .discoveredClient(let client, let index):
             if let client = client {
                 nameLabel.text = client.name
                 hostLabel.text = client.host
@@ -84,8 +84,7 @@ class ClientCell: UITableViewCell {
                 nameLabel.text = "clients.addcustom.line1".localized
                 hostLabel.text = "clients.addcustom.line2".localized
             }
-            accessoryType = .disclosureIndicator
-            accessoryView = nil
+            showDisclosureIndicator(index: index)
             
         case .newClient:
             nameLabel.text = "clients.count.add".localized
@@ -97,13 +96,11 @@ class ClientCell: UITableViewCell {
             let size = UIFontMetrics.default.scaledValue(for: 20)
             imageView.frame.size = .init(width: size, height: size)
             accessoryView = imageView
-            accessoryType = .none
 
         case .openURL:
             nameLabel.text = "clients.openurl.line1".localized
             hostLabel.text = "clients.openurl.line2".localized
             accessoryView = nil
-            accessoryType = .none
         }
     }
     
