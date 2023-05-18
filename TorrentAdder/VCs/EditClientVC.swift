@@ -16,33 +16,15 @@ class EditClientVC: ViewController {
         super.viewDidLoad()
         isCreation = Preferences.shared.clientWithIdentifier(client.id) == nil
         title = isCreation ? "client.title.new".localized : "client.title.edit".localized
+        isModalInPresentation = true
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: isCreation ? .icon(.checkmark) : .icon(.close),
+            style: .done, target: self, action: #selector(close)
+        )
         
         tableView.registerCell(ClientFormCell.self)
-        
-        if isCreation {
-            let footer = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 60))
-            tableView.tableFooterView = footer
-            
-            let addButton = AddButton()
-            addButton.translatesAutoresizingMaskIntoConstraints = false
-            addButton.addTarget(self, action: #selector(self.addButtonTap), for: .touchUpInside)
-            footer.addSubview(addButton)
-            
-            addButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
-            addButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            addButton.centerXAnchor.constraint(equalTo: footer.centerXAnchor).isActive = true
-            addButton.centerYAnchor.constraint(equalTo: footer.centerYAnchor).isActive = true
-        }
-        else {
-            self.tableView.tableFooterView = UIView()
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if !isCreation {
-            saveClient(force: true)
-        }
+        tableView.tableFooterView = UIView()
     }
     
     // MARK: Properties
@@ -53,8 +35,8 @@ class EditClientVC: ViewController {
     @IBOutlet private var tableView: UITableView!
 
     // MARK: Actions
-    @objc private func addButtonTap() {
-        if saveClient(force: false) {
+    @objc private func close() {
+        if saveClient(force: !isCreation) {
             dismiss(animated: true, completion: nil)
         }
     }

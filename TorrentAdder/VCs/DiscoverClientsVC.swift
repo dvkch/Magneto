@@ -118,7 +118,7 @@ extension DiscoverClientsVC : UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let vc = EditClientVC()
-        vc.client = client(at: indexPath) ?? Client(host: "", name: nil)
+        vc.client = client(at: indexPath) ?? Client(host: "", name: "")
         navigationController?.pushViewController(vc, animated: true)
     }
 }

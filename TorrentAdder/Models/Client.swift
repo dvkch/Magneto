@@ -10,7 +10,7 @@ import UIKit
 
 class Client: Codable, Hashable {
     let id: String          = UUID().uuidString
-    var name: String?       = nil
+    var name: String        = ""
     var host: String        = "127.0.0.1"
     var port: Int?          = nil
     var software: Software  = .transmission
@@ -53,12 +53,12 @@ extension Client {
 
 extension Client : CustomStringConvertible {
     var description: String {
-        return "Client: \(name ?? "<no name>") -> \(host):\(port ?? 0), auth: \(username ?? "<none>")"
+        return "Client: \(name) -> \(host):\(port ?? 0), auth: \(username ?? "<none>")"
     }
 }
 
 extension Client {
-    convenience init(host: String, name: String?) {
+    convenience init(host: String, name: String) {
         self.init()
         self.host       = host
         self.name       = name

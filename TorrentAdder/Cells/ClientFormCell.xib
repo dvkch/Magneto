@@ -1,84 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="KGk-i7-Jjw" customClass="ClientFormCell" customModule="TorrentAdder" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="510" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="162" id="KGk-i7-Jjw" customClass="ClientFormCell" customModule="TorrentAdder" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="510" height="162"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="510" height="44"/>
+                <rect key="frame" x="0.0" y="0.0" width="510" height="162"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="information" textAlignment="right" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l35-SY-mm1">
-                        <rect key="frame" x="46" y="0.0" width="456" height="44"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                        <connections>
-                            <action selector="textFieldEditingChanged" destination="KGk-i7-Jjw" eventType="editingChanged" id="A0V-Fc-NVI"/>
-                            <outlet property="delegate" destination="KGk-i7-Jjw" id="7hu-2j-PTb"/>
-                        </connections>
-                    </textField>
-                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FFZ-hf-NzI">
-                        <rect key="frame" x="364" y="6.5" width="131" height="32"/>
-                        <segments>
-                            <segment title="First"/>
-                            <segment title="Second"/>
-                        </segments>
-                        <connections>
-                            <action selector="segmentedControlChanged" destination="KGk-i7-Jjw" eventType="valueChanged" id="wlr-NP-DIP"/>
-                        </connections>
-                    </segmentedControl>
-                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oqo-Jv-I0U">
-                        <rect key="frame" x="2" y="2" width="40" height="40"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="40" id="6T7-o6-EQY"/>
-                            <constraint firstAttribute="width" constant="40" id="7Pm-fH-ehy"/>
-                        </constraints>
-                    </imageView>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sizing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2R-Js-2eG">
-                        <rect key="frame" x="15" y="12" width="47" height="20.5"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="NZr-hC-ccS">
+                        <rect key="frame" x="16" y="11" width="478" height="140"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n7b-q8-xiE">
+                                <rect key="frame" x="0.0" y="0.0" width="478" height="30"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="251" image="form_bookmark" translatesAutoresizingMaskIntoConstraints="NO" id="oqo-Jv-I0U">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="6T7-o6-EQY"/>
+                                            <constraint firstAttribute="width" constant="30" id="7Pm-fH-ehy"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Host name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2R-Js-2eG">
+                                        <rect key="frame" x="40" y="0.0" width="438" height="30"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="oqo-Jv-I0U" firstAttribute="top" secondItem="n7b-q8-xiE" secondAttribute="top" id="352-8F-MyN"/>
+                                    <constraint firstItem="C2R-Js-2eG" firstAttribute="leading" secondItem="oqo-Jv-I0U" secondAttribute="trailing" constant="10" id="ObD-Aq-sTt"/>
+                                    <constraint firstItem="oqo-Jv-I0U" firstAttribute="leading" secondItem="n7b-q8-xiE" secondAttribute="leading" id="QwI-4V-FcU"/>
+                                    <constraint firstAttribute="trailing" secondItem="C2R-Js-2eG" secondAttribute="trailing" id="R48-6Y-001"/>
+                                    <constraint firstItem="C2R-Js-2eG" firstAttribute="top" secondItem="n7b-q8-xiE" secondAttribute="top" id="dFE-cq-Ern"/>
+                                    <constraint firstAttribute="bottom" secondItem="oqo-Jv-I0U" secondAttribute="bottom" id="jDL-3v-i0i"/>
+                                    <constraint firstAttribute="bottom" secondItem="C2R-Js-2eG" secondAttribute="bottom" id="pK2-Xi-CpN"/>
+                                </constraints>
+                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="192.168.1.1" borderStyle="roundedRect" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="l35-SY-mm1">
+                                <rect key="frame" x="0.0" y="34" width="478" height="34"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="textFieldEditingChanged" destination="KGk-i7-Jjw" eventType="editingChanged" id="A0V-Fc-NVI"/>
+                                    <outlet property="delegate" destination="KGk-i7-Jjw" id="7hu-2j-PTb"/>
+                                </connections>
+                            </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FFZ-hf-NzI">
+                                <rect key="frame" x="0.0" y="72" width="478" height="69"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedControlChanged" destination="KGk-i7-Jjw" eventType="valueChanged" id="wlr-NP-DIP"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="FFZ-hf-NzI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oqo-Jv-I0U" secondAttribute="trailing" constant="8" id="IkY-u9-zbX"/>
-                    <constraint firstItem="l35-SY-mm1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="46" id="K2R-lU-gOj"/>
-                    <constraint firstAttribute="trailing" secondItem="l35-SY-mm1" secondAttribute="trailing" constant="8" id="Mv9-Db-65A"/>
-                    <constraint firstItem="C2R-Js-2eG" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Q4u-4J-bPm"/>
-                    <constraint firstItem="FFZ-hf-NzI" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="SNs-Lh-I4l"/>
-                    <constraint firstItem="FFZ-hf-NzI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Wqw-d7-Dpn"/>
-                    <constraint firstItem="C2R-Js-2eG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ZqM-Cm-YFo"/>
-                    <constraint firstItem="l35-SY-mm1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="apR-CA-C94"/>
-                    <constraint firstItem="l35-SY-mm1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hYg-Ln-Hl5"/>
-                    <constraint firstItem="oqo-Jv-I0U" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rTA-lX-Zlq"/>
-                    <constraint firstItem="C2R-Js-2eG" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="w8m-fh-9LJ"/>
-                    <constraint firstItem="oqo-Jv-I0U" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="2" id="xde-kG-8hG"/>
-                    <constraint firstAttribute="bottom" secondItem="l35-SY-mm1" secondAttribute="bottom" id="zzR-RY-qDZ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="NZr-hC-ccS" secondAttribute="bottom" id="AJe-QZ-wb7"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="NZr-hC-ccS" secondAttribute="trailing" id="BOL-sn-ao0"/>
+                    <constraint firstItem="NZr-hC-ccS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ggt-bS-mdE"/>
+                    <constraint firstItem="NZr-hC-ccS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="p9R-5e-Syb"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="hYg-Ln-Hl5"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="iconView" destination="oqo-Jv-I0U" id="K7C-tf-wjn"/>
+                <outlet property="nameLabel" destination="C2R-Js-2eG" id="QQm-Pv-Gp2"/>
                 <outlet property="segmentedControl" destination="FFZ-hf-NzI" id="dIb-Em-vWo"/>
                 <outlet property="textField" destination="l35-SY-mm1" id="Cfq-ff-3ox"/>
             </connections>
-            <point key="canvasLocation" x="185.59999999999999" y="53.973013493253376"/>
+            <point key="canvasLocation" x="185.59999999999999" y="107.0464767616192"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="form_bookmark" width="40" height="27"/>
+    </resources>
 </document>

@@ -23,6 +23,17 @@ extension Client {
             }
         }
         
+        var placeholder: String {
+            switch self {
+            case .name:     return "client.name.placeholder".localized
+            case .host:     return "client.host.placeholder".localized
+            case .port:     return "client.port.placeholder".localized
+            case .software: return "client.software.placeholder".localized
+            case .username: return "client.username.placeholder".localized
+            case .password: return "client.password.placeholder".localized
+            }
+        }
+        
         var image: UIImage? {
             switch self {
             case .name:     return .icon(.bookmark)

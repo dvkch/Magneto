@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SYKit
 
 class ClientFormCell: UITableViewCell {
     
@@ -31,6 +32,7 @@ class ClientFormCell: UITableViewCell {
     
     // MARK: Views
     @IBOutlet private var iconView: UIImageView!
+    @IBOutlet private var nameLabel: UILabel!
     @IBOutlet private var textField: UITextField!
     @IBOutlet private var segmentedControl: UISegmentedControl!
 
@@ -48,12 +50,13 @@ class ClientFormCell: UITableViewCell {
         guard let client = client else { return }
         
         iconView.image = formField.image?.masking(with: .tint)
+        nameLabel.text = formField.name
         textField.keyboardType = formField.keyboardType
         textField.textContentType = formField.textContentType
 
         if let options = formField.options, !options.isEmpty {
-            textField.isHidden = true
-            segmentedControl.isHidden = false
+            textField.sy_isHidden = true
+            segmentedControl.sy_isHidden = false
             segmentedControl.removeAllSegments()
             options.keys.sorted().forEach { (index) in
                 segmentedControl.insertSegment(withTitle: options[index], at: index, animated: false)
@@ -62,9 +65,9 @@ class ClientFormCell: UITableViewCell {
             segmentedControl.setTitleTextAttributes([.font: UIFont.preferredFont(forTextStyle: .body)], for: .normal)
         }
         else {
-            textField.isHidden = false
-            segmentedControl.isHidden = true
-            textField.placeholder = formField.name
+            textField.sy_isHidden = false
+            segmentedControl.sy_isHidden = true
+            textField.placeholder = formField.placeholder
             textField.text = client.stringValue(for: formField)
         }
     }
