@@ -16,28 +16,38 @@ class MainVC: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = Bundle.main.localizedName
+        navigationItem.largeTitleDisplayMode = .always
         navigationItem.rightBarButtonItems = [mirrorBarButtonItem, loaderBarButtonItem]
-        (navigationController as? NavigationController)?.useClearNavBarBackground = true
 
-        let constraint = tableViewBackground.topAnchor.constraint(equalTo: searchField.bottomAnchor)
-        constraint.priority = .defaultHigh
-        constraint.isActive = true
-
-        searchField.textField?.backgroundColor = .fieldBackground
-        searchField.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
-        searchField.keyboardType = .default
-        searchField.placeholder = "placeholder.search".localized
+        resultsVC.delegate = self
+        searchController.searchResultsUpdater = resultsVC
+        searchController.searchBar.delegate = resultsVC
+        searchController.searchBar.placeholder = "placeholder.search".localized
+        searchController.searchBar.keyboardType = .default
+        searchController.searchBar.textField?.backgroundColor = .fieldBackground
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        if #available(iOS 16.0, *) {
+            navigationItem.preferredSearchBarPlacement = .stacked
+        }
         
+        tableView.dataSource = dataSource
+        tableView.backgroundColor = .background
         tableView.registerCell(ClientCell.self)
         tableView.registerCell(ResultCell.self)
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.clientsChanged), name: .clientsChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.clientsChanged), name: .clientStatusChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.mirrorsChanged), name: .mirrorsChanged, object: nil)
-        refreshClients()
-        mirrorsChanged()
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshClients), name: .clientsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshClients), name: .clientStatusChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshMirrorsButton), name: .mirrorsChanged, object: nil)
+        
+        DispatchQueue.main.async {
+            self.refreshClients(animated: false)
+            self.refreshMirrorsButton()
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -45,41 +55,18 @@ class MainVC: ViewController {
     }
     
     // MARK: Properties
-    private var clients: [Client] = [] {
-        didSet {
-            // TODO: use distinct diffable data sources for clients and results ?
-            tableView.reloadData()
-        }
-    }
-    private var searchResults: [SearchResult] = []
-    private var searchQuery: String = ""
-    private var showingSearch: Bool { return !searchQuery.isEmpty }
-    private weak var suggestionsVC: SuggestionsVC?
-    private var isLoadingResults: Bool = false {
-        didSet {
-            updateNavigationItems()
-        }
-    }
+    private lazy var dataSource: ClientsDataSources = .init(tableView: tableView)
     
     // MARK: Views
     private let loaderBarButtonItem: UIBarButtonItem = .loader(color: .normalTextOnTint)
     private let mirrorBarButtonItem: UIBarButtonItem = .init(image: .icon(.cloud), menu: nil)
-    @IBOutlet private var searchField: UISearchBar!
+    private let resultsVC = ResultsVC()
+    private lazy var searchController = UISearchController(searchResultsController: resultsVC)
     @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var tableViewBackground: UIView!
     @IBOutlet private var helpButton: HelpButton!
     
     // MARK: Content
-    private func updateNavigationItems() {
-        // loader
-        if isLoadingResults {
-            (loaderBarButtonItem.customView as? UIActivityIndicatorView)?.startAnimating()
-        }
-        else {
-            (loaderBarButtonItem.customView as? UIActivityIndicatorView)?.stopAnimating()
-        }
-        
-        // mirrors
+    @objc private func refreshMirrorsButton() {
         var mirrorMenus = [UIMenu]()
         
         if let mirror = WebAPI.shared.availableMirrorURLs.first {
@@ -107,7 +94,7 @@ class MainVC: ViewController {
         mirrorBarButtonItem.menu = UIMenu(children: mirrorMenus)
     }
     
-    private func refreshClients() {
+    @objc private func refreshClients(animated: Bool = true) {
         let clientsWithPosition = Preferences.shared.clients.map {
             let statusPosition: Int
             switch ClientStatusManager.shared.statusForClient($0) {
@@ -118,29 +105,11 @@ class MainVC: ViewController {
             return ($0, "\(statusPosition)-\($0.name.uppercased())")
         }
 
-        clients = clientsWithPosition.sorted(by: \.1).map(\.0)
+        let sortedClients = clientsWithPosition.sorted(by: \.1).map(\.0)
+        dataSource.update(with: sortedClients, showAdd: true, animated: animated)
     }
-    
-    // MARK: Layout
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        helpButton.layer.cornerRadius = helpButton.bounds.height / 2
-    }
-}
 
-// MARK: Notifications
-extension MainVC {
-    @objc private func clientsChanged() {
-        refreshClients()
-    }
-    
-    @objc private func mirrorsChanged() {
-        updateNavigationItems()
-    }
-}
-
-// MARK: Actions
-extension MainVC {
+    // MARK: Actions
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
             WebAPI.shared.clearMirrors()
@@ -153,42 +122,12 @@ extension MainVC {
         let alert = UIAlertController(
             title: "alert.help.title".localized,
             message: "alert.help.message".localized,
-            preferredStyle: .alert
+            preferredStyle: .actionSheet
         )
         alert.addAction(title: "action.close".localized, style: .cancel, handler: nil)
+        alert.popoverPresentationController?.sourceView = helpButton
+        alert.popoverPresentationController?.sourceRect = helpButton.bounds
         present(alert, animated: true, completion: nil)
-    }
-    
-    fileprivate func updateSearch(_ text: String) {
-        searchQuery = text
-        
-        guard !searchQuery.isEmpty else {
-            searchResults = []
-            tableView.reloadData()
-            isLoadingResults = false
-            return
-        }
-        
-        isLoadingResults = true
-        _ = WebAPI.shared.getResults(query: text)
-            .andThen { [weak self] result in
-                
-                guard let self = self else { return }
-                guard self.searchQuery == text else { return }
-                
-                self.isLoadingResults = false
-
-                switch result {
-                case .success(let items):
-                    self.searchResults = items
-                    self.tableView.reloadData()
-                    self.tableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false)
-                    Preferences.shared.addPrevSearch(text)
-                    
-                case .failure(let error):
-                    UIAlertController.show(for: error, title: "error.title.cannotLoadResults".localized, close: "action.close".localized, in: self)
-                }
-        }
     }
     
     func openTorrentPopup(with magnetURL: URL?, or result: SearchResult?) {
@@ -198,26 +137,8 @@ extension MainVC {
             }
             return
         }
-        
-        #if !targetEnvironment(macCatalyst) && os(iOS)
-        guard !clients.isEmpty else {
-            UIAlertController.show(for: AppError.noClientsSaved, title: "error.title.cannotAddTorrent".localized, close: "action.close".localized, in: self)
-            return
-        }
-        #endif
 
         MagnetPopupVC.show(in: self, magnet: magnetURL, result: result)
-    }
-    
-    fileprivate func openSafariURL(_ url: URL) {
-        #if targetEnvironment(macCatalyst)
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        #elseif os(iOS)
-        let vc = SFSafariViewController(url: url)
-        vc.preferredBarTintColor = UIColor.tint.resolvedColor(with: traitCollection)
-        vc.preferredControlTintColor = UIColor.normalText.resolvedColor(with: traitCollection)
-        present(vc, animated: true, completion: nil)
-        #endif
     }
     
     fileprivate func removeFinished(in client: Client) {
@@ -239,128 +160,20 @@ extension MainVC {
         refreshClients()
     }
     
-    fileprivate func shareResult(_ result: SearchResult, from sender: UIView) {
-        let hud = HUDAlertController.show(in: self)
-        WebAPI.shared.getResultPageURL(result)
-            .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
-            .onFailure { (error) in
-                UIAlertController.show(for: error, close: "action.close".localized, in: self)
-            }
-            .onSuccess { (fullURL) in
-                
-                let vc = UIActivityViewController(activityItems: [fullURL], applicationActivities: nil)
-                vc.popoverPresentationController?.sourceRect = sender.frame
-                vc.popoverPresentationController?.sourceView = sender
-                
-                self.present(vc, animated: true, completion: nil)
-                self.tableView.setEditing(false, animated: true)
-        }
-    }
-    
-    fileprivate func openResultInSafari(_ result: SearchResult) {
-        let hud = HUDAlertController.show(in: self)
-        WebAPI.shared.getResultPageURL(result)
-            .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
-            .onFailure { (error) in
-                UIAlertController.show(for: error, close: "action.close".localized, in: self)
-            }
-            .onSuccess { (fullURL) in
-                self.openSafariURL(fullURL)
-                self.tableView.setEditing(false, animated: true)
-        }
+    // MARK: Layout
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.tableHeaderView?.frame.size = searchController.searchBar.intrinsicContentSize
     }
 }
 
-extension MainVC : UISearchBarDelegate {
-    private func updateSuggestionsVC(searchBar: UISearchBar) {
-        #if !targetEnvironment(macCatalyst) && os(iOS)
-        let input = searchBar.text
-
-        if suggestionsVC == nil && SuggestionsVC.shouldPresentPopover(for: input) {
-            suggestionsVC = SuggestionsVC.present(under: searchBar, in: self)
-            suggestionsVC?.selectedSuggestionBlock = { [weak self] (suggestion) in
-                searchBar.text = suggestion
-                self?.suggestionsVC?.input = suggestion
-            }
+extension MainVC : ResultsVCDelegate {
+    func resultsVC(_ resultsVC: ResultsVC, isLoading: Bool) {
+        if isLoading {
+            (loaderBarButtonItem.customView as? UIActivityIndicatorView)?.startAnimating()
         }
-
-        if suggestionsVC != nil && !SuggestionsVC.shouldPresentPopover(for: input) {
-            suggestionsVC?.dismiss(animated: false, completion: nil)
-            suggestionsVC = nil
-        }
-
-        suggestionsVC?.input = input ?? ""
-        #endif
-    }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // when tapping the clear button we need to make sure the search results are also reset
-        if searchText.isEmpty {
-            updateSearch("")
-        }
-        updateSuggestionsVC(searchBar: searchBar)
-    }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        updateSuggestionsVC(searchBar: searchBar)
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        suggestionsVC?.dismiss(animated: true, completion: nil)
-        searchBar.resignFirstResponder()
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        suggestionsVC?.dismiss(animated: true, completion: nil)
-        updateSearch(searchBar.text ?? "")
-        searchBar.resignFirstResponder()
-    }
-}
-
-extension MainVC : UITableViewDataSource {
-    enum TableSection : Int, CaseIterable {
-        case clients, results
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return TableSection.allCases.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let tableSection = TableSection(rawValue: section) else { return 0 }
-        switch tableSection {
-        case .clients: return showingSearch ? 0 : clients.count + 1
-        case .results: return searchResults.count
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let tableSection = TableSection(rawValue: section) else { return nil }
-        switch tableSection {
-        case .clients: return showingSearch ? nil : "clients.section.clients".localized
-        case .results:
-            if !showingSearch { return nil }
-            return searchResults.isEmpty ? "clients.section.noresults".localized : "clients.section.results".localized
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let tableSection = TableSection(rawValue: indexPath.section) else { return UITableViewCell() }
-        switch tableSection {
-        case .clients:
-            let cell = tableView.dequeueCell(ClientCell.self, for: indexPath)
-            if indexPath.row < clients.count {
-                cell.kind = .client(clients[indexPath.row])
-            }
-            else {
-                cell.kind = .newClient
-            }
-            return cell
-
-        case .results:
-            let cell = tableView.dequeueCell(ResultCell.self, for: indexPath)
-            cell.result = searchResults[indexPath.row]
-            return cell
+        else {
+            (loaderBarButtonItem.customView as? UIActivityIndicatorView)?.stopAnimating()
         }
     }
 }
@@ -371,105 +184,49 @@ extension MainVC : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard self.tableView(tableView, titleForHeaderInSection: section) != nil else { return 0 }
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let tableSection = TableSection(rawValue: indexPath.section) else { return }
-        switch tableSection {
-        case .clients:
-            if indexPath.row < clients.count {
-                let client = clients[indexPath.row]
-                var url = client.webURL
-                if let username = client.username?.nilIfEmpty, let password = client.password?.nilIfEmpty, var components = URLComponents(url: url, resolvingAgainstBaseURL: true) {
-                    components.user = username
-                    components.password = password
-                    url = components.url ?? url
-                }
-                self.openSafariURL(url)
-            }
-            else {
-                let vc = DiscoverClientsVC()
-                let nc = NavigationController(rootViewController: vc)
-                present(nc, animated: true, completion: nil)
-            }
-
-        case .results:
-            self.openTorrentPopup(with: nil, or: searchResults[indexPath.row])
-        }
-    }
-    
-    private struct Action {
-        let title: String
-        let icon: UIImage.Icon
-        let color: UIColor
-        let destructive: Bool
-        let closure: () -> ()
         
-        init(title: String, icon: UIImage.Icon, color: UIColor = .tint, destructive: Bool = false, closure: @escaping () -> Void) {
-            self.title = title
-            self.icon = icon
-            self.color = color
-            self.destructive = destructive
-            self.closure = closure
+        let item = dataSource.itemIdentifier(for: indexPath) ?? .newClient
+        if let client = item.client {
+            openSafariURL(client.webURLWithAuth)
+        }
+        else {
+            let vc = DiscoverClientsVC()
+            let nc = NavigationController(rootViewController: vc)
+            present(nc, animated: true, completion: nil)
         }
     }
     
     private func actionsForRow(at indexPath: IndexPath) -> [Action] {
-        guard let tableSection = TableSection(rawValue: indexPath.section) else { return [] }
+        let item = dataSource.itemIdentifier(for: indexPath) ?? .newClient
+        guard let client = item.client else { return [] }
 
-        switch tableSection {
-        case .clients:
-            let client = clients[indexPath.row]
-            let removeFinishedAction = Action(title: "action.removefinished".localized, icon: .empty, color: .cellBackgroundAlt) { [weak self] in
-                self?.removeFinished(in: client)
-            }
-            let editAction = Action(title: "action.edit".localized, icon: .edit, color: .tint) { [weak self] in
-                let vc = EditClientVC()
-                vc.client = client
-                self?.present(NavigationController(rootViewController: vc), animated: true)
-            }
-            let deleteAction = Action(title: "action.delete".localized, icon: .delete, color: .leechers, destructive: true) { [weak self] in
-                self?.removeClient(client, at: indexPath)
-            }
-            return [removeFinishedAction, editAction, deleteAction]
-            
-        case .results:
-            let result = searchResults[indexPath.row]
-            let shareAction = Action(title: "action.sharelink".localized, icon: .share, color: .cellBackgroundAlt) { [weak self] in
-                guard let cell = self?.tableView.cellForRow(at: indexPath) else { return }
-                self?.shareResult(result, from: cell)
-            }
-            let openAction = Action(title: "action.open".localized, icon: .openWeb, color: .tint) { [weak self] in
-                self?.openResultInSafari(result)
-            }
-            return [openAction, shareAction]
+        let removeFinishedAction = Action(title: "action.removefinished".localized, icon: .empty, color: .cellBackgroundAlt) { [weak self] in
+            self?.removeFinished(in: client)
         }
+        let editAction = Action(title: "action.edit".localized, icon: .edit, color: .tint) { [weak self] in
+            let vc = EditClientVC()
+            vc.client = client
+            self?.present(NavigationController(rootViewController: vc), animated: true)
+        }
+        let deleteAction = Action(title: "action.delete".localized, icon: .delete, color: .leechers, destructive: true) { [weak self] in
+            self?.removeClient(client, at: indexPath)
+        }
+        return [removeFinishedAction, editAction, deleteAction]
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
-            let actions = self.actionsForRow(at: indexPath).map { action in
-                UIAction(title: action.title, image: .icon(action.icon), attributes: action.destructive ? .destructive : []) { _ in
-                    action.closure()
-                }
-            }
-            return UIMenu(title: "", children: actions)
+            return UIMenu(title: "", children: self.actionsForRow(at: indexPath).map(\.uiAction))
         }
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let actions = self.actionsForRow(at: indexPath).reversed().map { action in
-            let contextualAction = UIContextualAction(style: action.destructive ? .destructive : .normal, title: action.title) { _, _, completed in
-                action.closure()
-                completed(true)
-            }
-            contextualAction.image = .icon(action.icon)
-            contextualAction.backgroundColor = action.color
-            return contextualAction
-        }
+        let actions = actionsForRow(at: indexPath).reversed().map(\.uiContextualAction)
         return UISwipeActionsConfiguration(actions: actions)
     }
 }

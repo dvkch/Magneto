@@ -90,7 +90,7 @@ extension HostnameResolver: NetServiceBrowserDelegate {
 
 extension HostnameResolver: NetServiceDelegate {
     func netServiceDidResolveAddress(_ service: NetService) {
-        addresses[service] = service.parsedAddresses?.filter { $0.family == .ip4 }.map { $0.ip }
+        addresses[service] = service.netAddresses(resolvingHost: false)?.filter { $0.family == .ip4 }.map { $0.ip }
     }
 
     func netService(_ service: NetService, didNotResolve errorDict: [String : NSNumber]) {

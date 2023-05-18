@@ -12,6 +12,18 @@ class MagnetPopupVC: ViewController {
 
     // MARK: Presentation
     static func show(in viewController: UIViewController, magnet: URL?, result: SearchResult?) {
+        #if !targetEnvironment(macCatalyst) && os(iOS)
+        guard Preferences.shared.clients.isNotEmpty else {
+            UIAlertController.show(
+                for: AppError.noClientsSaved,
+                title: "error.title.cannotAddTorrent".localized,
+                close: "action.close".localized,
+                in: viewController
+            )
+            return
+        }
+        #endif
+
         let popupVC = MagnetPopupVC()
         popupVC.result = result
         popupVC.magnetURL = magnet

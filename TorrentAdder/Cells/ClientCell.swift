@@ -19,6 +19,7 @@ class ClientCell: UITableViewCell {
         hostLabel.textColor = .altText
         statusImageView.adjustsImageSizeForAccessibilityContentSizeCategory = false // traffic icons will be regenerated larger
         backgroundColor = .cellBackground
+        accessoryType = .none
     }
     
     deinit {
@@ -32,7 +33,7 @@ class ClientCell: UITableViewCell {
             updateStatus()
         }
     }
-    enum Kind {
+    enum Kind: Hashable {
         case client(Client?), discoveredClient(Client?, index: Int), newClient, openURL
 
         var client: Client? {

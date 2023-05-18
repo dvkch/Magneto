@@ -84,6 +84,15 @@ extension Client {
         comps.path = software.webPath
         return comps.url!
     }
+    
+    var webURLWithAuth: URL {
+        guard let username = username?.nilIfEmpty, let password = password?.nilIfEmpty else { return webURL }
+
+        var components = URLComponents(url: webURL, resolvingAgainstBaseURL: true)!
+        components.user = username
+        components.password = password
+        return components.url!
+    }
 }
 
 extension Client {

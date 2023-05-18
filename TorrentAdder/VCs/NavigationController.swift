@@ -9,9 +9,20 @@
 import UIKit
 
 class NavigationController: UINavigationController {
+    convenience override init(rootViewController: UIViewController) {
+        self.init(navigationBarClass: NavigationBar.self, toolbarClass: nil)
+        self.viewControllers = [rootViewController]
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewControllers.first?.loadViewIfNeeded()
+
+        // https://stackoverflow.com/a/72505571/1439489
+        if let scrollView = viewControllers.first?.view.subviews.first as? UIScrollView {
+            scrollView.setContentOffset(CGPoint(x: 0, y: -1), animated: false)
+        }
+
         updateNavBar()
     }
     
@@ -20,21 +31,9 @@ class NavigationController: UINavigationController {
         updateNavBar()
     }
     
-    var useClearNavBarBackground: Bool = false {
-        didSet {
-            updateNavBar()
-        }
-    }
-    
     private func updateNavBar() {
         let appearance = UINavigationBarAppearance()
-        if useClearNavBarBackground {
-            appearance.configureWithTransparentBackground()
-        }
-        else {
-            appearance.configureWithDefaultBackground()
-            appearance.backgroundColor = .tint
-        }
+        appearance.configureWithTransparentBackground()
         appearance.titleTextAttributes = [.foregroundColor: UIColor.normalTextOnTint]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.normalTextOnTint]
 
@@ -47,7 +46,6 @@ class NavigationController: UINavigationController {
 
         navigationBar.tintColor = .normalTextOnTint
         navigationBar.prefersLargeTitles = true
-        
-        navigationBar.setBackButtonImage(.icon(.left))
+        navigationBar.sizeToFit()
     }
 }
