@@ -33,6 +33,7 @@ class SuggestionsVC: ViewController {
     private var filteredSuggestions = [String]()
     
     // MARK: Views
+    private var attachedToView: UIView?
     @IBOutlet private var tableView: UITableView!
     
     // MARK: Content
@@ -58,21 +59,35 @@ class SuggestionsVC: ViewController {
     }
     
     private func updatePopover() {
-        guard let window = view.window else { return }
-        preferredContentSize.width  = min(320, max(500, window.bounds.width - 40))
+        preferredContentSize.width  = attachedToView?.bounds.width ?? 0
         preferredContentSize.height = min(500, max(300, tableView.contentSize.height))
         popoverPresentationController?.containerView?.alpha = filteredSuggestions.isEmpty ? 0.05 : 1 // don't set under 0.05 or touch won't hit it and it will cause navigation issues
     }
     
     // MARK: Presentation
-    static func present(under view: UIView, in viewController: UIViewController) -> SuggestionsVC {
+    private class PopoverBackground: UIPopoverBackgroundView {
+        override static func arrowHeight() -> CGFloat { 4 }
+        override class func contentViewInsets() -> UIEdgeInsets { return .zero }
+        override var arrowDirection: UIPopoverArrowDirection {
+            get { .up }
+            set {}
+        }
+        override var arrowOffset: CGFloat {
+            get { 0 }
+            set {}
+        }
+    }
+    
+    static func present(under field: UITextField, in viewController: UIViewController) -> SuggestionsVC {
         let vc = SuggestionsVC()
+        vc.attachedToView = field
         vc.modalPresentationStyle = .popover
         vc.popoverPresentationController?.delegate = vc
         vc.popoverPresentationController?.permittedArrowDirections = [.up]
-        vc.popoverPresentationController?.sourceView = view
-        vc.popoverPresentationController?.sourceRect = view.bounds
-        vc.popoverPresentationController?.passthroughViews = [view]
+        vc.popoverPresentationController?.sourceView = field
+        vc.popoverPresentationController?.sourceRect = field.bounds
+        vc.popoverPresentationController?.passthroughViews = [field]
+        vc.popoverPresentationController?.popoverBackgroundViewClass = PopoverBackground.self
         
         viewController.present(vc, animated: true, completion: nil)
         return vc
