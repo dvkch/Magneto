@@ -7,10 +7,8 @@
 //
 
 import UIKit
-
-protocol ClientStatusManagerDelegate : NSObjectProtocol {
-    func clientStatusManager(_ manager: ClientStatusManager, changedStatusFor client: Client)
-}
+import SYKit
+import Network
 
 extension Notification.Name {
     static let clientStatusChanged = Notification.Name("ClientStatusManager.clientStatusChanged")
@@ -23,7 +21,9 @@ class ClientStatusManager: NSObject {
     
     override init() {
         super.init()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(stop), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(start), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(observeClients), name: .clientsChanged, object: nil)
     }
     
     // MARK: Types
@@ -32,83 +32,78 @@ class ClientStatusManager: NSObject {
     }
     
     // MARK: Properties
-    weak var delegate: ClientStatusManagerDelegate?
-    private let urlSession = URLSession(configuration: .ephemeral)
-    private var loadingClients: [String] = []
-    private var lastStatuses: [String: (Date, ClientStatus)] = [:]
+    private(set) var isRunning: Bool = false
+    private var queue = DispatchQueue(label: "ClientStatusManager", qos: .utility)
+    private var connections: [Client: NWConnection] = [:]
+    private var statuses: [Client: ClientStatus] = [:] {
+        didSet {
+            NotificationCenter.default.post(name: .clientStatusChanged, object: nil)
+        }
+    }
 
     // MARK: Public methods
-    func isClientLoading(_ client: Client?) -> Bool {
-        guard let client = client else { return false }
-        return loadingClients.contains(client.id)
+    func statusForClient(_ client: Client) -> ClientStatus {
+        return statuses[client] ?? .unknown
     }
     
-    func lastStatusForClient(_ client: Client?) -> ClientStatus {
-        guard let client = client else { return .unknown }
-        return lastStatuses[client.id]?.1 ?? .unknown
+    @objc func start() {
+        guard !isRunning else { return }
+        isRunning = true
+        
+        observeClients()
     }
     
-    func startStatusUpdateIfNeeded(for client: Client) {
-        let status = lastStatuses[client.id]
-        let date = status?.0 ?? Date(timeIntervalSince1970: 0)
-        
-        // refresh if it's unknown or old
-        if status == nil || date.timeIntervalSinceNow < -10 {
-            DispatchQueue.main.async {
-                self.startStatusUpdate(for: client)
-            }
-        }
-    }
-    
-    // MARK: Private
-    private func startStatusUpdate(for client: Client) {
-        if isClientLoading(client) { return }
-        
-        setClientLoading(client, loading: true)
-        
-        ClientAPI.shared.getClientStatus(client)
-            .onSuccess { (online) in
-                self.setStatus(online ? .online : .offline, for: client)
-                self.setClientLoading(client, loading: false)
-        }
-    }
-    
-    private func setStatus(_ status: ClientStatus, for client: Client) {
-        guard Thread.isMainThread else {
-            DispatchQueue.main.async {
-                self.setStatus(status, for: client)
-            }
-            return
-        }
-        
-        let prevStatus = lastStatusForClient(client)
-        lastStatuses[client.id] = (Date(), status)
-        
-        if prevStatus != status {
-            NotificationCenter.default.post(name: .clientStatusChanged, object: client)
-            delegate?.clientStatusManager(self, changedStatusFor: client)
-        }
-    }
+    @objc func stop() {
+        isRunning = false
 
-    func setClientLoading(_ client: Client?, loading: Bool) {
-        guard Thread.isMainThread else {
-            DispatchQueue.main.async {
-                self.setClientLoading(client, loading: loading)
+        connections.forEach { $0.value.cancel() }
+        connections = [:]
+    }
+    
+    @objc private func observeClients() {
+        let unobservedClients = Set(Preferences.shared.clients).subtracting(connections.keys)
+        
+        unobservedClients.forEach { client in
+            let options = NWProtocolTCP.Options()
+            options.connectionTimeout = 5
+
+            let connection = NWConnection(
+                host: .init(client.host),
+                port: .init(rawValue: UInt16(client.port ?? client.software.defaultPort))!,
+                using: .init(tls: .none, tcp: options)
+            )
+
+            connection.stateUpdateHandler = { (newState) in
+                switch(newState) {
+                case .ready:
+                    self.updateClientStatus(client, status: .online)
+
+                case .waiting:
+                    self.updateClientStatus(client, status: .offline)
+
+                case .failed:
+                    self.updateClientStatus(client, status: .offline)
+
+                default: break
+                }
             }
-            return
+            connection.start(queue: queue)
+            self.connections[client] = connection
         }
-        
-        guard let client = client, loading != isClientLoading(client) else { return }
-        
-        if loading {
-            loadingClients.append(client.id)
+    }
+    
+    private func updateClientStatus(_ client: Client, status: ClientStatus) {
+        DispatchQueue.main.async {
+            self.statuses[client] = status
+            self.connections[client]?.stateUpdateHandler = nil
+            self.connections[client]?.cancel()
+            self.connections.removeValue(forKey: client)
+            
+            if self.connections.isEmpty {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                    self.observeClients()
+                }
+            }
         }
-        else {
-            loadingClients.remove(client.id)
-        }
-        
-        NotificationCenter.default.post(name: .clientStatusChanged, object: client)
-        delegate?.clientStatusManager(self, changedStatusFor: client)
     }
 }
-

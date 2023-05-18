@@ -23,13 +23,6 @@ class MainVC: ViewController {
         constraint.priority = .defaultHigh
         constraint.isActive = true
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.mirrorsChanged), name: .mirrorsChanged, object: nil)
-
-        timerRefreshClientsStatus = Timer(timeInterval: 5, target: self, selector: #selector(self.timerRefreshClientsStatusTick), userInfo: nil, repeats: true)
-        RunLoop.main.add(timerRefreshClientsStatus!, forMode: .common)
-
-        mirrorsChanged()
-
         searchField.textField?.backgroundColor = .fieldBackground
         searchField.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         searchField.keyboardType = .default
@@ -42,6 +35,10 @@ class MainVC: ViewController {
         
         // make sure the list has an initial value at init time, in case the app is opened from a magnet
         clients = Preferences.shared.clients
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.clientsChanged), name: .clientsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.mirrorsChanged), name: .mirrorsChanged, object: nil)
+        mirrorsChanged()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,21 +47,12 @@ class MainVC: ViewController {
         tableView.reloadData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        timerRefreshClientsStatusTick()
-    }
-    
-    deinit {
-        timerRefreshClientsStatus?.invalidate()
-    }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
     // MARK: Properties
-    private var timerRefreshClientsStatus: Timer?
+    // TODO: use distinct diffable data sources for clients and results ?
     private var clients: [Client] = []
     private var searchResults: [SearchResult] = []
     private var searchQuery: String = ""
@@ -134,19 +122,12 @@ class MainVC: ViewController {
 
 // MARK: Notifications
 extension MainVC {
+    @objc private func clientsChanged() {
+        clients = Preferences.shared.clients
+    }
+    
     @objc private func mirrorsChanged() {
         updateNavigationItems()
-    }
-}
-
-// MARK: Timer
-extension MainVC {
-    
-    @objc private func timerRefreshClientsStatusTick() {
-        if view.window == nil { return }
-        clients.forEach {
-            ClientStatusManager.shared.startStatusUpdateIfNeeded(for: $0)
-        }
     }
 }
 
@@ -445,7 +426,7 @@ extension MainVC : UITableViewDelegate {
             let editAction = Action(title: "action.edit".localized, image: "pencil", color: .tint) { [weak self] in
                 let vc = EditClientVC()
                 vc.client = client
-                self?.present(vc, animated: true)
+                self?.present(NavigationController(rootViewController: vc), animated: true)
             }
             let deleteAction = Action(title: "action.delete".localized, image: "trash", color: .leechers, destructive: true) { [weak self] in
                 self?.removeClient(client, at: indexPath)

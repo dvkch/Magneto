@@ -30,19 +30,6 @@ class ClientAPI: NSObject {
     private var transmissionSessionIDs = [String: String]()
     
     // MARK: Public methods
-    func getClientStatus(_ client: Client) -> Future<Bool, Never> {
-        return session.request(client.apiURL)
-            .validate()
-            .responseFutureData()
-            .map { _ in true }
-            .recover { error in
-                if case let .alamofire(afError) = error, afError.response != nil {
-                    return true
-                }
-                return false
-        }
-    }
-    
     func addMagnet(_ magnetURL: URL, to client: Client) -> Future<String?, AppError> {
         switch client.software {
         case .transmission:

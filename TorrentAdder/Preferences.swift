@@ -39,7 +39,9 @@ class Preferences: NSObject {
     private(set) var clients: [Client] = [] {
         didSet {
             saveClients()
-            NotificationCenter.default.post(name: .clientsChanged, object: self)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .clientsChanged, object: self)
+            }
         }
     }
     

@@ -108,23 +108,12 @@ class ClientCell: UITableViewCell {
     }
     
     @objc private func updateStatus() {
-        var loading = ClientStatusManager.shared.isClientLoading(kind.client)
-        var status  = ClientStatusManager.shared.lastStatusForClient(kind.client)
-        
-        if kind.isDiscoveredClient {
-            if kind.client == nil {
-                loading = true
-            }
-            if kind.client != nil {
-                status = .online
-            }
+        var status: ClientStatusManager.ClientStatus? = nil
+        if let client = kind.client {
+            status = ClientStatusManager.shared.statusForClient(client)
         }
-        
-        // show loading only if previous status is unknown, else show last status
-        if loading && status == .unknown {
-            statusImageView.image = nil
-            activityIndicator.startAnimating()
-            return
+        if kind.isDiscoveredClient {
+            status = kind.client != nil ? .online : .unknown
         }
         
         switch status {
@@ -135,6 +124,9 @@ class ClientCell: UITableViewCell {
             statusImageView.image = UIImage.traffic(.grey)
             activityIndicator.stopAnimating()
         case .unknown:
+            statusImageView.image = nil
+            activityIndicator.startAnimating()
+        case .none:
             statusImageView.image = nil
             activityIndicator.stopAnimating()
         }

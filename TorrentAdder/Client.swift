@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Client : Codable {
+class Client: Codable, Hashable {
     let id: String          = UUID().uuidString
     var name: String?       = nil
     var host: String        = "127.0.0.1"
@@ -25,6 +25,14 @@ class Client : Codable {
         case software = "software"
         case username = "username"
         case password = "password"
+    }
+    
+    static func ==(lhs: Client, rhs: Client) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 
@@ -75,12 +83,6 @@ extension Client {
         var comps = baseComponents
         comps.path = software.webPath
         return comps.url!
-    }
-}
-
-extension Client : Equatable {
-    static func == (lhs: Client, rhs: Client) -> Bool {
-        return lhs.id == rhs.id
     }
 }
 

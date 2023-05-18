@@ -20,7 +20,7 @@ class Pinger: NSObject {
     // MARK: Init
     init(networks: [IPv4Interface]) {
         self.networks = networks
-        self.queue.name = "Ping"
+        self.queue.name = "Pinger"
         self.queue.maxConcurrentOperationCount = 20
         self.queue.qualityOfService = .utility
         super.init()
@@ -83,11 +83,6 @@ class Pinger: NSObject {
         else {
             isRunning = false
             delegate?.pinger(self, stopped: true)
-            
-            DispatchQueue.main.async {
-                self.finishedCount = 0
-                self.start()
-            }
         }
     }
 }
@@ -137,6 +132,13 @@ private class PingerOperation: Operation, GBPingDelegate {
     }
     
     private func updateStats(success: Bool) {
+        guard !Thread.isMainThread else {
+            DispatchQueue.global(qos: .background).async {
+                self.updateStats(success: success)
+            }
+            return
+        }
+
         if success {
             stats.successes += 1
         }
