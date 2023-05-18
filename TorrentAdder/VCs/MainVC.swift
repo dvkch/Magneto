@@ -33,18 +33,11 @@ class MainVC: ViewController {
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
         
-        // make sure the list has an initial value at init time, in case the app is opened from a magnet
-        clients = Preferences.shared.clients
-
         NotificationCenter.default.addObserver(self, selector: #selector(self.clientsChanged), name: .clientsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.clientsChanged), name: .clientStatusChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.mirrorsChanged), name: .mirrorsChanged, object: nil)
+        refreshClients()
         mirrorsChanged()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        clients = Preferences.shared.clients
-        tableView.reloadData()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -52,8 +45,12 @@ class MainVC: ViewController {
     }
     
     // MARK: Properties
-    // TODO: use distinct diffable data sources for clients and results ?
-    private var clients: [Client] = []
+    private var clients: [Client] = [] {
+        didSet {
+            // TODO: use distinct diffable data sources for clients and results ?
+            tableView.reloadData()
+        }
+    }
     private var searchResults: [SearchResult] = []
     private var searchQuery: String = ""
     private var showingSearch: Bool { return !searchQuery.isEmpty }
@@ -76,6 +73,7 @@ class MainVC: ViewController {
     @IBOutlet private var tableViewBackground: UIView!
     @IBOutlet private var helpButton: HelpButton!
     
+    // MARK: Content
     private func updateNavigationItems() {
         // loader
         if isLoadingResults {
@@ -113,6 +111,20 @@ class MainVC: ViewController {
         mirrorBarButtonItem.menu = UIMenu(children: mirrorMenus)
     }
     
+    private func refreshClients() {
+        let clientsWithPosition = Preferences.shared.clients.map {
+            let statusPosition: Int
+            switch ClientStatusManager.shared.statusForClient($0) {
+            case .online:  statusPosition = 0
+            case .unknown: statusPosition = 1
+            case .offline: statusPosition = 2
+            }
+            return ($0, "\(statusPosition)-\($0.name.uppercased())")
+        }
+
+        clients = clientsWithPosition.sorted(by: \.1).map(\.0)
+    }
+    
     // MARK: Layout
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -123,7 +135,7 @@ class MainVC: ViewController {
 // MARK: Notifications
 extension MainVC {
     @objc private func clientsChanged() {
-        clients = Preferences.shared.clients
+        refreshClients()
     }
     
     @objc private func mirrorsChanged() {
@@ -228,12 +240,7 @@ extension MainVC {
     
     fileprivate func removeClient(_ client: Client, at indexPath: IndexPath) {
         Preferences.shared.removeClient(client)
-        clients = Preferences.shared.clients
-        
-        tableView.beginUpdates()
-        tableView.deleteRows(at: [indexPath], with: .automatic)
-        tableView.reloadRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
-        tableView.endUpdates()
+        refreshClients()
     }
     
     fileprivate func shareResult(_ result: SearchResult, from sender: UIView) {
