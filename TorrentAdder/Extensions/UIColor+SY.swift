@@ -19,6 +19,10 @@ extension UIColor {
         return UIColor(light: light, dark: dark)
     }
     
+    static var darkTint: UIColor {
+        return UIColor(red: 22, green: 59, blue: 190).withAlphaComponent(0.5)
+    }
+    
     static var background: UIColor {
         if #available(iOS 13.0, *) {
             return .systemGroupedBackground

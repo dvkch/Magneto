@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SYKit
 
 class NavigationBar: UINavigationBar {
 
@@ -35,10 +36,24 @@ class NavigationBar: UINavigationBar {
             backgroundImageView.rightAnchor.constraint(equalTo: self.rightAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
+        
+        animatedCirclesView.numberOfCircles = 3
+        animatedCirclesView.backgroundColor = .darkTint.withAlphaComponent(0.6)
+        animatedCirclesView.color = .normalTextOnTint.withAlphaComponent(0.3)
+        animatedCirclesView.blurEffect = UIBlurEffect(style: .light)
+        animatedCirclesView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(animatedCirclesView)
+        NSLayoutConstraint.activate([
+            animatedCirclesView.topAnchor.constraint(equalTo: backgroundImageView.topAnchor),
+            animatedCirclesView.leftAnchor.constraint(equalTo: backgroundImageView.leftAnchor),
+            animatedCirclesView.rightAnchor.constraint(equalTo: backgroundImageView.rightAnchor),
+            animatedCirclesView.bottomAnchor.constraint(equalTo: backgroundImageView.bottomAnchor)
+        ])
     }
 
     // MARK: Views
     private let backgroundImageView = UIImageView()
+    private let animatedCirclesView = AnimatedCirclesView()
     private var topConstraint: NSLayoutConstraint!
     
     // MARK: Layout
@@ -46,6 +61,7 @@ class NavigationBar: UINavigationBar {
         super.layoutSubviews()
         topConstraint.constant = -(window?.safeAreaInsets.top ?? 0)
         if subviews.firstIndex(of: backgroundImageView) != 0 {
+            sendSubviewToBack(animatedCirclesView)
             sendSubviewToBack(backgroundImageView)
         }
     }
