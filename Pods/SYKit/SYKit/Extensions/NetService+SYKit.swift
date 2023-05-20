@@ -89,7 +89,7 @@ public extension Data {
         }
         guard err == 0 else { return nil }
 
-        let ip   = String(cString: hostBuffer)
+        let ip   = String(cString: ipBuffer)
         let port = String(cString: portBuffer)
         let host = String(cString: hostBuffer)
         let serv = String(cString: servBuffer)
