@@ -33,7 +33,7 @@ extension AppError : LocalizedError {
         case .alamofire(let response):
             var message = response.untypedError?.localizedDescription ?? "error.unknown".localized
             if let statusCode = response.response?.statusCode {
-                message += String(format: " (%d)", statusCode)
+                message += " (\(statusCode)"
             }
             return message
         }

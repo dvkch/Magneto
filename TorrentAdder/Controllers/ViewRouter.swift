@@ -76,7 +76,7 @@ class ViewRouter {
         
         let alert = UIAlertController(
             title: "alert.auth.title".localized,
-            message: String(format: "alert.auth.message %@".localized, client.name),
+            message: "alert.auth.message %@".localized(client.name),
             preferredStyle: .alert
         )
         

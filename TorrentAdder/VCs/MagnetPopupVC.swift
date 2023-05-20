@@ -156,7 +156,7 @@ class MagnetPopupVC: ViewController {
             .onSuccess { message in
                 var successMessage = "torrent.success".localized
                 if let message = message, !message.isEmpty {
-                    successMessage += "\n\n" + String(format: "torrent.success.messagefrom %@".localized, client.name) + message
+                    successMessage += "\n\n" + "torrent.success.messagefrom %@".localized(client.name) + message
                 }
                 self.updateForMode(.success(successMessage), animated: true)
             }

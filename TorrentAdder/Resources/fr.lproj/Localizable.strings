@@ -39,7 +39,9 @@
 "torrent.success"                   = "Succès !";
 "torrent.loading"                   = "Chargement …";
 "torrent.success.messagefrom %@"    = "Message de %@ : ";
-"torrent.removed.%d"                = "%d élément(s) supprimé(s)";
+"torrent.removed.zero"              = "Aucun élément fini à supprimer";
+"torrent.removed.one"               = "Un élément fini supprimé";
+"torrent.removed.other"             = "%d éléments supprimés";
 
 "discovery.title"           = "Ajouter un client";
 "discovery.section.found"   = "Clients disponibles";

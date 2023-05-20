@@ -155,7 +155,7 @@ class MainVC: ViewController {
             .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
             .onSuccess { (count) in
                 if count > 0 {
-                    UIAlertController.show(title: String(format: "torrent.removed.%d".localized, count), close: "action.close".localized, in: self)
+                    UIAlertController.show(title: "torrent.removed.%d".localized(quantity: count), close: "action.close".localized, in: self)
                 }
             }
             .onFailure { error in
