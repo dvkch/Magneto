@@ -8,14 +8,25 @@
 
 import UIKit
 
-struct Client: Codable, Hashable {
-    let id: String
+class Client: Codable, Hashable {
+    private(set) var id: String
     var name: String        = ""
     var host: String        = "127.0.0.1"
     var port: Int?          = nil
     var software: Software  = .transmission
     var username: String?   = ""
     var password: String?   = ""
+    
+    var portOrDefault: Int {
+        port ?? software.defaultPort
+    }
+    
+    init(host: String, name: String) {
+        self.id         = UUID().uuidString
+        self.host       = host
+        self.name       = name
+        self.software   = .transmission
+    }
     
     private enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -34,20 +45,14 @@ struct Client: Codable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-}
-
-extension Client {
-    var isValid: Bool {
-        if host.isEmpty {
-            return false
+    
+    func copy(keepID: Bool) -> Self {
+        let data = try! JSONEncoder().encode(self)
+        var copy = try! JSONDecoder().decode(Self.self, from: data)
+        if !keepID {
+            copy.id = UUID().uuidString
         }
-        if (password ?? "").count > 0 && (username ?? "").isEmpty {
-            return false
-        }
-        if port == nil || port == 0 {
-            return false
-        }
-        return true
+        return copy
     }
 }
 
@@ -58,18 +63,11 @@ extension Client : CustomStringConvertible {
 }
 
 extension Client {
-    init(host: String, name: String) {
-        self.init(id: UUID().uuidString)
-        self.host       = host
-        self.name       = name
-        self.software   = .transmission
-    }
-    
     private var baseComponents: URLComponents {
         var components = URLComponents()
         components.scheme = "http"
         components.host = host
-        components.port = port ?? software.defaultPort
+        components.port = portOrDefault
         return components
     }
     

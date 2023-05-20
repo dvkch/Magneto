@@ -78,6 +78,10 @@
 "error.noMirrorAnswered"        = "Aucun miroir disponible pour répondre à cette requête";
 "error.clientOffline"           = "Client indisponible";
 "error.unknown"                 = "Erreur inconnue";
+"error.form"                    = "Veuillez vérifier vos informations";
+"error.form.missing %@"         = "%@ doit être rempli";
+"error.form.missingIfHas %@ %@" = "%@ doit être rempli en utilisant %@";
+"error.form.invalid %@"         = "%@ n'est pas valide";
 
 "mirror.current %@"             = "Miroir: %@";
 "mirror.none"                   = "Aucun miroir";

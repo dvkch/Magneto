@@ -69,7 +69,7 @@ class ClientStatusManager: NSObject {
 
             let connection = NWConnection(
                 host: .init(client.host),
-                port: .init(rawValue: UInt16(client.port ?? client.software.defaultPort))!,
+                port: .init(rawValue: UInt16(client.portOrDefault))!,
                 using: .init(tls: .none, tcp: options)
             )
 

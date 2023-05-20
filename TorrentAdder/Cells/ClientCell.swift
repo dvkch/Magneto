@@ -70,7 +70,7 @@ class ClientCell: UITableViewCell {
         case .client(let client):
             if let client = client {
                 nameLabel.text = client.name
-                hostLabel.text = [client.host, String(client.port ?? 0)].joined(separator: ":")
+                hostLabel.text = [client.host, String(client.portOrDefault)].joined(separator: ":")
             } else {
                 nameLabel.text = nil
                 hostLabel.text = nil

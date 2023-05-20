@@ -16,6 +16,7 @@ class ClientFormCell: UITableViewCell {
         super.awakeFromNib()
         textField.textColor = .normalText
         textField.backgroundColor = .cellBackgroundAlt
+        textField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         segmentedControl.tintColor = .tint
     }
 
@@ -72,6 +73,11 @@ class ClientFormCell: UITableViewCell {
             textField.text = client.stringValue(for: formField)
         }
     }
+
+    // MARK: Actions
+    @objc private func textFieldChanged() {
+        client?.setValue(textField.text ?? "", for: formField)
+    }
     
     // MARK: Style
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -82,7 +88,6 @@ class ClientFormCell: UITableViewCell {
 
 extension ClientFormCell : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        client?.setValue(textField.text ?? "", for: formField)
         textField.resignFirstResponder()
         return false
     }

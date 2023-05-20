@@ -9,6 +9,34 @@
 import UIKit
 
 extension Client {
+    enum FormError {
+        case missing, invalid, missingIfHas(otherField: FormField)
+        
+        func message(for field: FormField) -> String {
+            switch self {
+            case .missing:                      return "error.form.missing %@".localized(field.name)
+            case .invalid:                      return "error.form.missingIfHas %@ %@".localized(field.name)
+            case .missingIfHas(let otherField): return "error.form.invalid %@".localized(field.name, otherField.name)
+            }
+        }
+    }
+
+    var formErrors: [FormField: FormError] {
+        var errors = [FormField: FormError]()
+        if name.isEmpty {
+            errors[.name] = .missing
+        }
+        if host.isEmpty {
+            errors[.host] = .missing
+        }
+        if (password ?? "").isNotEmpty && (username ?? "").isEmpty {
+            errors[.username] = .missingIfHas(otherField: .password)
+        }
+        return errors
+    }
+}
+
+extension Client {
     enum FormField : CaseIterable {
         case name, host, port, software, username, password
         
@@ -99,14 +127,14 @@ extension Client {
         }
     }
     
-    mutating func setValue(_ value: Any, for field: FormField) {
+    func setValue(_ value: Any, for field: FormField) {
         switch field {
-        case .name:     name = (value as? String) ?? name
-        case .host:     host = (value as? String) ?? host
+        case .name:     name = (value as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? name
+        case .host:     host = (value as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? host
         case .port:     port = (value as? Int) ?? port
         case .software: software = Software(rawValue: (value as? Int) ?? software.rawValue) ?? software
-        case .username: username = (value as? String) ?? username
-        case .password: password = (value as? String) ?? password
+        case .username: username = (value as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? username
+        case .password: password = (value as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? password
         }
     }
 }

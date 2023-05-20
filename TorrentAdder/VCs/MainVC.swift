@@ -217,8 +217,7 @@ extension MainVC : UITableViewDelegate {
             self?.removeFinished(in: client)
         }
         let editAction = Action(title: "action.edit".localized, icon: .edit, color: .tint) { [weak self] in
-            let vc = EditClientVC()
-            vc.client = client
+            let vc = EditClientVC(client: client)
             self?.present(NavigationController(rootViewController: vc), animated: true)
         }
         let deleteAction = Action(title: "action.delete".localized, icon: .delete, color: .leechers, destructive: true) { [weak self] in

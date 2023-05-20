@@ -78,6 +78,10 @@
 "error.noMirrorAnswered"        = "No available mirror could respond to the request";
 "error.clientOffline"           = "Client unavailable";
 "error.unknown"                 = "Unknown error";
+"error.form"                    = "Please check your informations";
+"error.form.missing %@"         = "%@ should be filled";
+"error.form.missingIfHas %@ %@" = "%@ should be filled when using a %@";
+"error.form.invalid %@"         = "%@ is not valid";
 
 "mirror.current %@"             = "Mirror: %@";
 "mirror.none"                   = "No mirror";
