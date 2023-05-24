@@ -48,14 +48,17 @@ class MainVC: ViewController {
         helpButton.layer.cornerRadius = 16
         helpButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
         
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshClients), name: .clientsChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshClients), name: .clientStatusChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(clientsChanged), name: .clientsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(clientsChanged), name: .clientStatusChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshMirrorsButton), name: .mirrorsChanged, object: nil)
         
-        DispatchQueue.main.async {
-            self.refreshClients(animated: false)
-            self.refreshMirrorsButton()
-        }
+        self.refreshClients(animated: false)
+        self.refreshMirrorsButton()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewDidAppearOnce = true
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -64,6 +67,7 @@ class MainVC: ViewController {
     
     // MARK: Properties
     private lazy var dataSource: ClientsDataSources = .init(tableView: tableView)
+    private var viewDidAppearOnce: Bool = false
     
     // MARK: Views
     private let loaderBarButtonItem: UIBarButtonItem = .loader(color: .normalTextOnTint)
@@ -102,7 +106,7 @@ class MainVC: ViewController {
         mirrorBarButtonItem.menu = UIMenu(children: mirrorMenus)
     }
     
-    @objc private func refreshClients(animated: Bool = true) {
+    private func refreshClients(animated: Bool) {
         let clientsWithPosition = Preferences.shared.clients.map {
             let statusPosition: Int
             switch ClientStatusManager.shared.statusForClient($0) {
@@ -115,6 +119,10 @@ class MainVC: ViewController {
 
         let sortedClients = clientsWithPosition.sorted(by: \.1).map(\.0)
         dataSource.update(with: sortedClients, showAdd: true, animated: animated)
+    }
+    
+    @objc private func clientsChanged() {
+        refreshClients(animated: viewDidAppearOnce)
     }
 
     // MARK: Actions

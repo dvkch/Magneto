@@ -29,7 +29,7 @@
                     </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fys-rs-gN2">
-                    <rect key="frame" x="321" y="613" width="54" height="54"/>
+                    <rect key="frame" x="321" y="605" width="54" height="54"/>
                     <color key="backgroundColor" systemColor="labelColor"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Fys-rs-gN2" secondAttribute="height" multiplier="1:1" id="J4F-dT-cWF"/>
@@ -52,7 +52,7 @@
                 <constraint firstAttribute="bottom" secondItem="ucm-nH-v1i" secondAttribute="bottom" id="SjV-4Q-aeC"/>
                 <constraint firstAttribute="trailing" secondItem="ucm-nH-v1i" secondAttribute="trailing" id="Ynx-FL-bk9"/>
                 <constraint firstItem="ucm-nH-v1i" firstAttribute="leading" secondItem="KTm-qJ-gVZ" secondAttribute="leading" id="bWd-OD-yTF"/>
-                <constraint firstItem="Lbr-DV-gq5" firstAttribute="bottom" secondItem="Fys-rs-gN2" secondAttribute="bottom" id="tOB-Zn-mtq"/>
+                <constraint firstItem="Lbr-DV-gq5" firstAttribute="bottom" secondItem="Fys-rs-gN2" secondAttribute="bottom" constant="8" id="tOB-Zn-mtq"/>
             </constraints>
             <point key="canvasLocation" x="34.399999999999999" y="54.422788605697157"/>
         </view>

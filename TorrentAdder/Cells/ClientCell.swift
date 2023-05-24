@@ -20,6 +20,7 @@ class ClientCell: UITableViewCell {
         statusImageView.adjustsImageSizeForAccessibilityContentSizeCategory = false // traffic icons will be regenerated larger
         backgroundColor = .cellBackground
         accessoryType = .none
+        isAccessibilityElement = true
     }
     
     deinit {
@@ -103,6 +104,8 @@ class ClientCell: UITableViewCell {
             hostLabel.text = "clients.openurl.line2".localized
             accessoryView = nil
         }
+        
+        accessibilityLabel = [nameLabel.text, hostLabel.text].removingNils().joined(separator: " - ")
     }
     
     @objc private func updateStatus() {
