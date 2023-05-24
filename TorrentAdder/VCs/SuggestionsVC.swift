@@ -8,6 +8,7 @@
 
 import UIKit
 
+@available(macCatalyst, unavailable)
 class SuggestionsVC: ViewController {
     
     // MARK: ViewController
@@ -43,7 +44,7 @@ class SuggestionsVC: ViewController {
         filteredSuggestions = []
         if input.isNotEmpty {
             // don't show anything until something has been typed
-            filteredSuggestions = Preferences.shared.prevSearches.filter { $0.lowercased().contains(input.lowercased()) }
+            filteredSuggestions = Preferences.shared.prevSearches(matching: input)
         }
         tableView.reloadData()
         updatePopover()
@@ -61,7 +62,9 @@ class SuggestionsVC: ViewController {
     private func updatePopover() {
         preferredContentSize.width  = attachedToView?.bounds.width ?? 0
         preferredContentSize.height = min(500, max(300, tableView.contentSize.height))
-        popoverPresentationController?.containerView?.alpha = filteredSuggestions.isEmpty ? 0.05 : 1 // don't set under 0.05 or touch won't hit it and it will cause navigation issues
+
+        // don't set under 0.05 or touch won't hit it and it will cause navigation issues
+        popoverPresentationController?.containerView?.alpha = filteredSuggestions.isEmpty ? 0.05 : 1
     }
     
     // MARK: Presentation
@@ -78,7 +81,8 @@ class SuggestionsVC: ViewController {
         }
     }
     
-    static func present(under field: UITextField, in viewController: UIViewController) -> SuggestionsVC {
+    static func present(under searhBar: UISearchBar, in viewController: UIViewController) -> SuggestionsVC {
+        let field = searhBar.searchTextField
         let vc = SuggestionsVC()
         vc.attachedToView = field
         vc.modalPresentationStyle = .popover
@@ -86,19 +90,20 @@ class SuggestionsVC: ViewController {
         vc.popoverPresentationController?.permittedArrowDirections = [.up]
         vc.popoverPresentationController?.sourceView = field
         vc.popoverPresentationController?.sourceRect = field.bounds
-        vc.popoverPresentationController?.passthroughViews = [field]
+        vc.popoverPresentationController?.passthroughViews = [field, viewController.view]
         vc.popoverPresentationController?.popoverBackgroundViewClass = PopoverBackground.self
-        
+
         viewController.present(vc, animated: true, completion: nil)
         return vc
     }
     
     static func shouldPresentPopover(for input: String?) -> Bool {
         guard let input = input, input.isNotEmpty else { return false }
-        return Preferences.shared.prevSearches.filter { $0.lowercased().contains(input.lowercased()) }.isNotEmpty
+        return Preferences.shared.prevSearches(matching: input).isNotEmpty
     }
 }
 
+@available(macCatalyst, unavailable)
 extension SuggestionsVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredSuggestions.count
@@ -111,12 +116,14 @@ extension SuggestionsVC : UITableViewDataSource {
     }
 }
 
+@available(macCatalyst, unavailable)
 extension SuggestionsVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedSuggestionBlock?(filteredSuggestions[indexPath.row])
     }
 }
 
+@available(macCatalyst, unavailable)
 extension SuggestionsVC : UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return .none

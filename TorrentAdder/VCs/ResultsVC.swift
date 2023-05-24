@@ -20,6 +20,7 @@ class ResultsVC: ViewController {
         super.viewDidLoad()
         view.backgroundColor = .clear
 
+        tableView.separatorStyle = .singleLine // force their appearance on catalyst
         tableView.registerCell(ResultCell.self)
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
@@ -30,6 +31,7 @@ class ResultsVC: ViewController {
     }
     
     // MARK: Properties
+    var searchController: UISearchController!
     weak var delegate: ResultsVCDelegate?
     private var searchQuery: String = "" {
         didSet {
@@ -51,13 +53,16 @@ class ResultsVC: ViewController {
 
     // MARK: Views
     @IBOutlet private var tableView: UITableView!
+
+    #if !targetEnvironment(macCatalyst)
     private weak var suggestionsVC: SuggestionsVC?
+    #endif
 
     // MARK: Actions
     fileprivate func refreshResults() {
+        searchResults = nil
+
         guard searchQuery.isNotEmpty else {
-            searchResults = nil
-            tableView.reloadData()
             isLoadingResults = false
             return
         }
@@ -130,18 +135,28 @@ class ResultsVC: ViewController {
 
 extension ResultsVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        updateSuggestionsVC(searchBar: searchController.searchBar)
+        updateSuggestions(searchBar: searchController.searchBar)
+    }
+
+    @available(macCatalyst 16.0, *)
+    func updateSearchResults(for searchController: UISearchController, selecting searchSuggestion: UISearchSuggestion) {
+        searchController.searchBar.text = searchSuggestion.localizedSuggestion
+        updateSuggestions(searchBar: searchController.searchBar)
     }
 }
 
 extension ResultsVC : UISearchBarDelegate {
-    private func updateSuggestionsVC(searchBar: UISearchBar) {
-        // TODO: try again on catalyst ?
-        #if !targetEnvironment(macCatalyst) && os(iOS)
+    private func updateSuggestions(searchBar: UISearchBar) {
         let input = searchBar.text
-
+        
+        #if targetEnvironment(macCatalyst)
+        if #available(macCatalyst 16.0, *) {
+            searchController.searchSuggestions = Preferences.shared.prevSearches(matching: input)
+                .map { UISearchSuggestionItem(localizedSuggestion: $0) }
+        }
+        #else
         if suggestionsVC == nil && SuggestionsVC.shouldPresentPopover(for: input) {
-            suggestionsVC = SuggestionsVC.present(under: searchBar.searchTextField, in: self)
+            suggestionsVC = SuggestionsVC.present(under: searchBar, in: self)
             suggestionsVC?.selectedSuggestionBlock = { [weak self] (suggestion) in
                 searchBar.text = suggestion
                 self?.suggestionsVC?.input = suggestion
@@ -162,22 +177,42 @@ extension ResultsVC : UISearchBarDelegate {
         if searchText.isEmpty {
             searchQuery = ""
         }
-        updateSuggestionsVC(searchBar: searchBar)
+        updateSuggestions(searchBar: searchBar)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        updateSuggestionsVC(searchBar: searchBar)
+        updateSuggestions(searchBar: searchBar)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if #available(macCatalyst 16.0, *), let selectedSuggestion = searchController.selectedSuggestion {
+            // search bar button was "clicked" by pressing Enter on a selected suggestion
+            // we do this manually because on Catalyst pressing Enter on a suggestion triggers
+            // searchBarSearchButtonClicked, but never tells that the suggestion is highlighted...
+            // we also can only run this method from here or it the list of suggestions will have been cleared out...
+            if selectedSuggestion.localizedSuggestion != searchBar.text {
+                DispatchQueue.main.async {
+                    self.updateSearchResults(for: self.searchController, selecting: selectedSuggestion)
+                }
+                return false
+            }
+        }
+        return true
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        suggestionsVC?.dismiss(animated: true, completion: nil)
+        #if !targetEnvironment(macCatalyst)
+        suggestionsVC?.dismiss(animated: false, completion: nil)
+        #endif
+        
         searchQuery = searchBar.text ?? ""
         searchBar.resignFirstResponder()
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        suggestionsVC?.dismiss(animated: true, completion: nil)
-        searchBar.resignFirstResponder()
+        #if !targetEnvironment(macCatalyst)
+        suggestionsVC?.dismiss(animated: false, completion: nil)
+        #endif
     }
 }
 

@@ -56,6 +56,11 @@ class Preferences: NSObject {
         self.prevSearches = Array(prevSearches.subarray(maxCount: 80))
     }
     
+    func prevSearches(matching input: String?) -> [String] {
+        let filter = input?.lowercased() ?? ""
+        return prevSearches.filter { $0.lowercased().contains(filter) }
+    }
+    
     func clearPrevSearches() {
         prevSearches = []
     }

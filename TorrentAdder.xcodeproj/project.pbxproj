@@ -30,6 +30,7 @@
 		9768CA6521B5770B000AA7C2 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6421B5770B000AA7C2 /* Client.swift */; };
 		9768CA6721B57B33000AA7C2 /* Client+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6621B57B33000AA7C2 /* Client+UI.swift */; };
 		976D5EF9230E0E3600573E0D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 976D5EFB230E0E3600573E0D /* Localizable.strings */; };
+		976EDB672A1E377700DA0361 /* UISearchController+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976EDB662A1E377700DA0361 /* UISearchController+SY.swift */; };
 		9771AB1321AEC919005DE97D /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1221AEC919005DE97D /* MainVC.swift */; };
 		9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1A21AEDC92005DE97D /* AppDelegate.swift */; };
 		9771AB1F21AEE457005DE97D /* MagnetPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1E21AEE457005DE97D /* MagnetPopupVC.swift */; };
@@ -110,6 +111,7 @@
 		9768CA6621B57B33000AA7C2 /* Client+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Client+UI.swift"; sourceTree = "<group>"; };
 		976D5EFA230E0E3600573E0D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		976D5EFD230E0E4400573E0D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		976EDB662A1E377700DA0361 /* UISearchController+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchController+SY.swift"; sourceTree = "<group>"; };
 		9771AB1121AEC918005DE97D /* TorrentAdder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TorrentAdder-Bridging-Header.h"; sourceTree = "<group>"; };
 		9771AB1221AEC919005DE97D /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		9771AB1A21AEDC92005DE97D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 				97C1E4F22A164203003F432E /* UIBarButtonItem+SY.swift */,
 				9768CA6221B55838000AA7C2 /* UIColor+SY.swift */,
 				9792F0D62A14EEB9001F2EE1 /* UIImage+SY.swift */,
+				976EDB662A1E377700DA0361 /* UISearchController+SY.swift */,
 				97C1E4F42A16441F003F432E /* UITableViewCell+SY.swift */,
 				9771AB2421AEF3CE005DE97D /* UIView+SY.swift */,
 				97C1E5002A16B016003F432E /* UIViewController+SY.swift */,
@@ -534,6 +537,7 @@
 				97CEA9432A16CE9100212F49 /* NavigationBar.swift in Sources */,
 				9792F0D72A14EEB9001F2EE1 /* UIImage+SY.swift in Sources */,
 				974D373221B1DF8600C0FDDE /* IPv4Address.swift in Sources */,
+				976EDB672A1E377700DA0361 /* UISearchController+SY.swift in Sources */,
 				97C1E4FE2A16AC3B003F432E /* ResultsVC.swift in Sources */,
 				97EC446321AF37330034C861 /* Pinger.swift in Sources */,
 				974D372C21B157CE00C0FDDE /* Fuzi+SY.swift in Sources */,

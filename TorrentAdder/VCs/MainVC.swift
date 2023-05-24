@@ -20,11 +20,15 @@ class MainVC: ViewController {
         navigationItem.rightBarButtonItems = [mirrorBarButtonItem, loaderBarButtonItem]
 
         resultsVC.delegate = self
+        resultsVC.searchController = searchController
         searchController.searchResultsUpdater = resultsVC
         searchController.searchBar.delegate = resultsVC
         searchController.searchBar.placeholder = "placeholder.search".localized
         searchController.searchBar.keyboardType = .default
-        searchController.searchBar.textField?.backgroundColor = .fieldBackground
+        searchController.searchBar.searchTextField.backgroundColor = .fieldBackground
+        searchController.searchBar.searchTextField.layer.cornerRadius = 5
+        searchController.searchBar.searchTextField.clipsToBounds = true
+
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         navigationItem.searchController = searchController
@@ -33,6 +37,7 @@ class MainVC: ViewController {
             navigationItem.preferredSearchBarPlacement = .stacked
         }
         
+        tableView.separatorStyle = .singleLine // force their appearance on catalyst
         tableView.dataSource = dataSource
         tableView.backgroundColor = .background
         tableView.registerCell(ClientCell.self)
