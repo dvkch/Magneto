@@ -59,6 +59,9 @@
 "alert.mirror.blacklist_mirror"         = "Blacklist";
 "alert.mirror.clean_mirror_blacklist"   = "Empty the blacklist";
 
+"alert.client.delete.title"         = "Confirmation required";
+"alert.client.delete.message %@"    = "Are you sure you want to delete %@?";
+
 "clients.addcustom.line1"   = "Add a custom client";
 "clients.addcustom.line2"   = "in case yours wasn't detected";
 "clients.openurl.line1"     = "Open magnet";

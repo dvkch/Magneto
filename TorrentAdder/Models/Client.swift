@@ -48,7 +48,7 @@ class Client: Codable, Hashable {
     
     func copy(keepID: Bool) -> Self {
         let data = try! JSONEncoder().encode(self)
-        var copy = try! JSONDecoder().decode(Self.self, from: data)
+        let copy = try! JSONDecoder().decode(Self.self, from: data)
         if !keepID {
             copy.id = UUID().uuidString
         }

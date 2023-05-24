@@ -163,9 +163,25 @@ class MainVC: ViewController {
             }
     }
     
-    fileprivate func removeClient(_ client: Client, at indexPath: IndexPath) {
+    fileprivate func removeClient(_ client: Client, confirmed: Bool, sender: UIView?) {
+        if !confirmed {
+            let alert = UIAlertController(
+                title: "alert.client.delete.title".localized,
+                message: "alert.client.delete.message %@".localized(client.name),
+                preferredStyle: .alert
+            )
+            alert.addAction(title: "action.delete".localized, style: .destructive) { _ in
+                self.removeClient(client, confirmed: true, sender: sender)
+            }
+            alert.addAction(title: "action.cancel".localized, style: .cancel, handler: nil)
+            alert.popoverPresentationController?.sourceView = sender
+            alert.popoverPresentationController?.sourceRect = sender?.bounds ?? .zero
+            present(alert, animated: true)
+            return
+        }
+
         Preferences.shared.removeClient(client)
-        refreshClients()
+        refreshClients(animated: true)
     }
     
     // MARK: Layout
@@ -221,7 +237,7 @@ extension MainVC : UITableViewDelegate {
             self?.present(NavigationController(rootViewController: vc), animated: true)
         }
         let deleteAction = Action(title: "action.delete".localized, icon: .delete, color: .leechers, destructive: true) { [weak self] in
-            self?.removeClient(client, at: indexPath)
+            self?.removeClient(client, confirmed: false, sender: self?.tableView.cellForRow(at: indexPath))
         }
         return [removeFinishedAction, editAction, deleteAction]
     }
