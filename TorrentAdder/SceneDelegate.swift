@@ -17,8 +17,7 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
-
-        mainVC.loadViewIfNeeded() // make sure the didOpenURL notification is properly registered before continuing
+        
         window = SYWindow.mainWindow(windowScene: windowScene, rootViewController: navigationController)
         #if DEBUG
         window?.enableSlowAnimationsOnShake = true
@@ -30,10 +29,16 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
             titlebar.toolbar = nil
         }
         #endif
+        
+        DispatchQueue.main.async {
+            // surprisingly not done automatically ¯\_(ツ)_/¯
+            self.scene(scene, openURLContexts: connectionOptions.urlContexts)
+        }
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let magnetURL = URLContexts.map(\.url).first(where: { $0.scheme == "magnet" }) else { return }
+        mainVC.loadViewIfNeeded()
         mainVC.openTorrentPopup(with: magnetURL, or: nil)
     }
 }
