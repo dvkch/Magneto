@@ -88,10 +88,10 @@ class MainVC: ViewController {
         
         if let mirror = WebAPI.shared.availableMirrorURLs.first {
             mirrorMenus.append(UIMenu(title: "mirror.current %@".localized(mirror.host ?? ""), options: .displayInline, children: [
-                UIAction(title: "action.open".localized) { _ in
+                UIAction(title: "action.open".localized, image: .icon(.openWeb)) { _ in
                     self.openSafariURL(mirror)
                 },
-                UIAction(title: "alert.mirror.blacklist_mirror".localized) { _ in
+                UIAction(title: "alert.mirror.blacklist_mirror".localized, image: .icon(.close)) { _ in
                     Preferences.shared.mirrorBlacklist.append(mirror)
                     WebAPI.shared.clearMirrors()
                 }
@@ -102,7 +102,7 @@ class MainVC: ViewController {
         }
 
         mirrorMenus.append(UIMenu(title: "alert.mirror.title".localized, options: .displayInline, children: [
-            UIAction(title: "alert.mirror.clean_mirror_blacklist".localized) { _ in
+            UIAction(title: "alert.mirror.clean_mirror_blacklist".localized, image: .icon(.empty)) { _ in
                 Preferences.shared.mirrorBlacklist = []
                 WebAPI.shared.clearMirrors()
             }
