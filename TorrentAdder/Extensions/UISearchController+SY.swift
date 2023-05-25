@@ -22,7 +22,7 @@ extension UISearchController {
         return suggestionCell?.superview as? UICollectionView
     }
     
-    @available(macCatalyst 16.0, *)
+    @available(iOS 16.0, *)
     var selectedSuggestion: UISearchSuggestion? {
         guard let suggestionsCollectionView else { return nil }
         guard let selectedCell = suggestionsCollectionView.visibleCells.first(where: { $0.isFocused }) else { return nil }

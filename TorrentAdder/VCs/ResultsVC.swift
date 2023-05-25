@@ -138,7 +138,7 @@ extension ResultsVC: UISearchResultsUpdating {
         updateSuggestions(searchBar: searchController.searchBar)
     }
 
-    @available(macCatalyst 16.0, *)
+    @available(iOS 16.0, *)
     func updateSearchResults(for searchController: UISearchController, selecting searchSuggestion: UISearchSuggestion) {
         searchController.searchBar.text = searchSuggestion.localizedSuggestion
         updateSuggestions(searchBar: searchController.searchBar)
@@ -185,7 +185,7 @@ extension ResultsVC : UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if #available(macCatalyst 16.0, *), let selectedSuggestion = searchController.selectedSuggestion {
+        if #available(iOS 16.0, *), let selectedSuggestion = searchController.selectedSuggestion {
             // search bar button was "clicked" by pressing Enter on a selected suggestion
             // we do this manually because on Catalyst pressing Enter on a suggestion triggers
             // searchBarSearchButtonClicked, but never tells that the suggestion is highlighted...

@@ -46,9 +46,11 @@ class NavigationController: UINavigationController {
 
         navigationBar.tintColor = .normalTextOnTint
         navigationBar.prefersLargeTitles = true
+        #if targetEnvironment(macCatalyst)
         if #available(macCatalyst 16.0, *) {
             navigationBar.preferredBehavioralStyle = .pad
         }
+        #endif
 
         navigationBar.sizeToFit()
     }
