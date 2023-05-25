@@ -123,7 +123,10 @@ private extension ClientAPI {
         
         let parameters: Parameters = [
             "method":"torrent-remove",
-            "arguments": ["ids": ids, "delete-local-data": false]
+            "arguments": [
+                "ids": ids,
+                "delete-local-data": false
+            ] as [String : Any]
         ]
         
         return session
