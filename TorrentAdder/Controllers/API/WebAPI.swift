@@ -42,6 +42,12 @@ class WebAPI: NSObject {
             }
     }
     
+    // MARK: Web URL
+    func getWebMirrorURL() -> Future<URL, AppError> {
+        // TODO: find an API that lists mirrors, instead of parsing HTML from https://pirateproxy.wtf/
+        return .init(error: .noAvailableAPI)
+    }
+    
     // MARK: Methods
     private func getQueryURL(query: String) -> URL {
         var urlComponents = URLComponents(url: apiURL, resolvingAgainstBaseURL: true)!
