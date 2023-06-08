@@ -133,7 +133,7 @@ class ClientCell: UITableViewCell {
         }
         
         if kind.isOpenURL {
-            statusImageView.image = .icon(.openMagnet)?.withTintColor(.seeder)
+            statusImageView.image = .icon(.openMagnet)?.withTintColor(.seeder, renderingMode: .alwaysOriginal)
             activityIndicator.stopAnimating()
         }
     }

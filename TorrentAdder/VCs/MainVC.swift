@@ -37,11 +37,14 @@ class MainVC: ViewController {
             navigationItem.preferredSearchBarPlacement = .stacked
         }
         
+        dataSource = .init(
+            tableView: tableView, sectionTitle: "clients.section.clients".localized,
+            showAdd: true, showMagnet: false
+        )
         tableView.separatorStyle = .singleLine // force their appearance on catalyst
         tableView.dataSource = dataSource
         tableView.backgroundColor = .background
         tableView.registerCell(ClientCell.self)
-        tableView.registerCell(ResultCell.self)
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
         
@@ -53,11 +56,7 @@ class MainVC: ViewController {
         helpButton.layer.cornerRadius = 16
         helpButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
         
-        NotificationCenter.default.addObserver(self, selector: #selector(clientsChanged), name: .clientsChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(clientsChanged), name: .clientStatusChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshMirrorsButton), name: .mirrorsChanged, object: nil)
-        
-        self.refreshClients(animated: false)
         self.refreshMirrorsButton()
     }
     
@@ -71,7 +70,7 @@ class MainVC: ViewController {
     }
     
     // MARK: Properties
-    private lazy var dataSource: ClientsDataSources = .init(tableView: tableView)
+    private var dataSource: ClientsDataSources!
     private var viewDidAppearOnce: Bool = false
     
     // MARK: Views
@@ -111,25 +110,6 @@ class MainVC: ViewController {
         mirrorBarButtonItem.menu = UIMenu(children: mirrorMenus)
     }
     
-    private func refreshClients(animated: Bool) {
-        let clientsWithPosition = Preferences.shared.clients.map {
-            let statusPosition: Int
-            switch ClientStatusManager.shared.statusForClient($0) {
-            case .online:  statusPosition = 0
-            case .unknown: statusPosition = 1
-            case .offline: statusPosition = 2
-            }
-            return ($0, "\(statusPosition)-\($0.name.uppercased())")
-        }
-
-        let sortedClients = clientsWithPosition.sorted(by: \.1).map(\.0)
-        dataSource.update(with: sortedClients, showAdd: true, animated: animated)
-    }
-    
-    @objc private func clientsChanged() {
-        refreshClients(animated: viewDidAppearOnce)
-    }
-
     // MARK: Actions
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
@@ -149,17 +129,6 @@ class MainVC: ViewController {
         alert.popoverPresentationController?.sourceView = helpButton
         alert.popoverPresentationController?.sourceRect = helpButton.bounds
         present(alert, animated: true, completion: nil)
-    }
-    
-    func openTorrentPopup(with magnetURL: URL?, or result: SearchResult?) {
-        if let presentedViewController = presentedViewController {
-            presentedViewController.dismiss(animated: false) {
-                self.openTorrentPopup(with: magnetURL, or: result)
-            }
-            return
-        }
-
-        MagnetPopupVC.show(in: self, magnet: magnetURL, result: result)
     }
     
     fileprivate func removeFinished(in client: Client) {
@@ -194,7 +163,6 @@ class MainVC: ViewController {
         }
 
         Preferences.shared.removeClient(client)
-        refreshClients(animated: true)
     }
     
     // MARK: Layout

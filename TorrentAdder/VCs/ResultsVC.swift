@@ -90,17 +90,6 @@ class ResultsVC: ViewController {
         }
     }
     
-    func openTorrentPopup(with magnetURL: URL?, or result: SearchResult?) {
-        if let presentedViewController = presentedViewController {
-            presentedViewController.dismiss(animated: false) {
-                self.openTorrentPopup(with: magnetURL, or: result)
-            }
-            return
-        }
-        
-        MagnetPopupVC.show(in: self, magnet: magnetURL, result: result)
-    }
-
     fileprivate func shareResult(_ result: SearchResult, from sender: UIView) {
         let hud = HUDAlertController.show(in: self)
         WebAPI.shared.getResultPageURL(result)
@@ -244,7 +233,9 @@ extension ResultsVC : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        openTorrentPopup(with: nil, or: searchResults?[indexPath.row])
+        
+        guard let result = searchResults?[indexPath.row] else { return }
+        openTorrentPopup(with: .result(result), sender: tableView.cellForRow(at: indexPath))
     }
     
     private func actionsForRow(at indexPath: IndexPath) -> [Action] {

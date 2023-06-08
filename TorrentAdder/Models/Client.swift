@@ -119,3 +119,21 @@ extension Client {
         }
     }
 }
+
+extension Array where Element == Client {
+    private func sortableString(for element: Element) -> String {
+        let position: Int
+        switch ClientStatusManager.shared.statusForClient(element) {
+        case .online:  position = 0
+        case .unknown: position = 1
+        case .offline: position = 2
+        }
+        return "\(position)-\(element.name.uppercased())"
+    }
+    
+    var sortedByAvailability: [Element] {
+        return sorted { client1, client2 in
+            sortableString(for: client1) < sortableString(for: client2)
+        }
+    }
+}
