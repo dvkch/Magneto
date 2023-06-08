@@ -10,12 +10,11 @@ import UIKit
 import Alamofire
 
 enum AppError {
-    case noMirrorsFound
     case noMagnetFound
     case noClientsSaved
     case noUTorrentToken
     case invalidUTorrentPayload
-    case noMirrorAnswered
+    case noAvailableAPI
     case clientOffline
     case alamofire(_ request: AlamoDataResponseProtocol)
 }
@@ -23,12 +22,11 @@ enum AppError {
 extension AppError : LocalizedError {
     var errorDescription: String? {
         switch self {
-        case .noMirrorsFound:               return "error.noMirrorsFound".localized
         case .noMagnetFound:                return "error.noMagnetFound".localized
         case .noClientsSaved:               return "error.noClientsSaved".localized
         case .noUTorrentToken:              return "error.noUTorrentToken".localized
         case .invalidUTorrentPayload:       return "error.invalidUTorrentPayload".localized
-        case .noMirrorAnswered:             return "error.noMirrorAnswered".localized
+        case .noAvailableAPI:               return "error.noAvailableAPI".localized
         case .clientOffline:                return "error.clientOffline".localized
         case .alamofire(let response):
             var message = response.untypedError?.localizedDescription ?? "error.unknown".localized

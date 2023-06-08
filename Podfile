@@ -7,7 +7,6 @@ use_frameworks!
 target 'TorrentAdder' do
     pod 'Alamofire'
     pod 'BrightFutures'
-    pod 'Fuzi'
     pod 'GBPing'
     pod 'SYKit'
     pod 'TPKeyboardAvoiding'

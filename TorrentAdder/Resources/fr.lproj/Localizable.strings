@@ -55,10 +55,6 @@
 "alert.help.title"      = "Aide";
 "alert.help.message"    = "Pour ajouter un torrent ouvrez une page contenant un lien magnet. Ouvrez Safari et allez sur une page contenant un lien magnet, tappez dessus pour ouvrir cette application puis selectionnez un client pour démarrer le téléchargement.";
 
-"alert.mirror.title"                    = "Gestion des miroirs";
-"alert.mirror.blacklist_mirror"         = "Blacklister";
-"alert.mirror.clean_mirror_blacklist"   = "Vider la blacklist";
-
 "alert.client.delete.title"         = "Confirmation requise";
 "alert.client.delete.message %@"    = "Êtes-vous sûr.e de vouloir supprimer %@ ?";
 
@@ -75,18 +71,14 @@
 "error.title.cannotLoadResults" = "Impossible de charger les résultats";
 "error.title.cannotAddTorrent"  = "Impossible d'ajouter ce torrent";
 
-"error.noMirrorsFound"          = "Aucun miroir trouvé";
 "error.noMagnetFound"           = "Aucun magnet trouvé";
 "error.noClientsSaved"          = "Aucun client n'est sauvegardé dans vos réglages, merci d'en ajouter un pour téléchargé ce torrent";
 "error.noUTorrentToken"         = "Impossible de se connecter au client uTorrent";
 "error.invalidUTorrentPayload"  = "Réponse de uTorrent invalide";
-"error.noMirrorAnswered"        = "Aucun miroir disponible pour répondre à cette requête";
+"error.noAvailableAPI"          = "Aucune API disponible pour répondre à cette requête";
 "error.clientOffline"           = "Client indisponible";
 "error.unknown"                 = "Erreur inconnue";
 "error.form"                    = "Veuillez vérifier vos informations";
 "error.form.missing %@"         = "%@ doit être rempli";
 "error.form.missingIfHas %@ %@" = "%@ doit être rempli en utilisant %@";
 "error.form.invalid %@"         = "%@ n'est pas valide";
-
-"mirror.current %@"             = "Miroir: %@";
-"mirror.none"                   = "Aucun miroir";

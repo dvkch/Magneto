@@ -55,10 +55,6 @@
 "alert.help.title"      = "Help";
 "alert.help.message"    = "To add a torrent you need to open this app with a magnet. Go to Safari, open a page with a magnet link in it, click the magnet to open this app, and then select a client to start downloading the torrent.";
 
-"alert.mirror.title"                    = "Mirrors management";
-"alert.mirror.blacklist_mirror"         = "Blacklist";
-"alert.mirror.clean_mirror_blacklist"   = "Empty the blacklist";
-
 "alert.client.delete.title"         = "Confirmation required";
 "alert.client.delete.message %@"    = "Are you sure you want to delete %@?";
 
@@ -75,18 +71,14 @@
 "error.title.cannotLoadResults" = "Cannot load results";
 "error.title.cannotAddTorrent"  = "Cannot add torrent";
 
-"error.noMirrorsFound"          = "No mirrors found";
 "error.noMagnetFound"           = "No magnet found";
 "error.noClientsSaved"          = "No client saved in your settings, please add one before trying to download this item";
 "error.noUTorrentToken"         = "Couldn't connect to the uTorrent client";
 "error.invalidUTorrentPayload"  = "Invalid uTorrent payload";
-"error.noMirrorAnswered"        = "No available mirror could respond to the request";
+"error.noAvailableAPI"          = "No available API could respond to the request";
 "error.clientOffline"           = "Client unavailable";
 "error.unknown"                 = "Unknown error";
 "error.form"                    = "Please check your informations";
 "error.form.missing %@"         = "%@ should be filled";
 "error.form.missingIfHas %@ %@" = "%@ should be filled when using a %@";
 "error.form.invalid %@"         = "%@ is not valid";
-
-"mirror.current %@"             = "Mirror: %@";
-"mirror.none"                   = "No mirror";

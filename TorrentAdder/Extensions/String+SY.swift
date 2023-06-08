@@ -14,4 +14,12 @@ extension String {
             .replacingOccurrences(of: " ", with: "%20")
             .url
     }
+    
+    func stringBetween(start: String, end: String) -> String? {
+        let startRange = (self as NSString).range(of: start)
+        let endRange   = (self as NSString).range(of: end)
+        guard startRange.location != NSNotFound, endRange.location != NSNotFound else { return nil }
+        let range = NSMakeRange(startRange.upperBound, endRange.lowerBound - startRange.upperBound)
+        return (self as NSString).substring(with: range)
+    }
 }

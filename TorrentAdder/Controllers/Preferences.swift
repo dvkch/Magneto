@@ -38,14 +38,6 @@ class Preferences: NSObject {
         clients = clients.filter { $0.id != client.id }
     }
 
-    // MARK: Mirrors
-    @PrefValue(key: "available_mirrors", defaultValue: [])
-    var savedAvailableMirrors: [URL]
-    
-    // MARK: Mirrors blacklist
-    @PrefValue(key: "mirrors_blacklist", defaultValue: [])
-    var mirrorBlacklist: [URL]
-    
     // MARK: Suggestions
     @PrefValue(key: "prev_searches", defaultValue: [])
     private(set) var prevSearches: [String]

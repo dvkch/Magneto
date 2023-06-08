@@ -18,8 +18,6 @@
 		973784321BD40649001AD487 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973784311BD40649001AD487 /* Launch.storyboard */; };
 		9747560A232AB4DA0038698E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97475609232AB4DA0038698E /* ViewController.swift */; };
 		974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372921B150FC00C0FDDE /* SearchResult.swift */; };
-		974D372C21B157CE00C0FDDE /* Fuzi+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372B21B157CE00C0FDDE /* Fuzi+SY.swift */; };
-		974D372E21B1D87300C0FDDE /* Calendar+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372D21B1D87300C0FDDE /* Calendar+SY.swift */; };
 		974D373221B1DF8600C0FDDE /* IPv4Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373121B1DF8600C0FDDE /* IPv4Address.swift */; };
 		974D373421B1E2DA00C0FDDE /* IPv4Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373321B1E2DA00C0FDDE /* IPv4Interface.swift */; };
 		974D373921B4999E00C0FDDE /* Sockets+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 974D373821B4999E00C0FDDE /* Sockets+SY.m */; };
@@ -36,7 +34,6 @@
 		9771AB1F21AEE457005DE97D /* MagnetPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1E21AEE457005DE97D /* MagnetPopupVC.swift */; };
 		9771AB2121AEE679005DE97D /* MagnetPopupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9771AB2021AEE679005DE97D /* MagnetPopupVC.xib */; };
 		9771AB2321AEF1A5005DE97D /* URL+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2221AEF1A5005DE97D /* URL+SY.swift */; };
-		9771AB2521AEF3CE005DE97D /* UIView+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2421AEF3CE005DE97D /* UIView+SY.swift */; };
 		9771AB2921AEF898005DE97D /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2821AEF898005DE97D /* NavigationController.swift */; };
 		9771AB2B21AEF901005DE97D /* DiscoverClientsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2A21AEF901005DE97D /* DiscoverClientsVC.swift */; };
 		9771AB2D21AEFF09005DE97D /* EditClientVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB2C21AEFF09005DE97D /* EditClientVC.swift */; };
@@ -97,8 +94,6 @@
 		973784311BD40649001AD487 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		97475609232AB4DA0038698E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		974D372921B150FC00C0FDDE /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
-		974D372B21B157CE00C0FDDE /* Fuzi+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fuzi+SY.swift"; sourceTree = "<group>"; };
-		974D372D21B1D87300C0FDDE /* Calendar+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+SY.swift"; sourceTree = "<group>"; };
 		974D373121B1DF8600C0FDDE /* IPv4Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPv4Address.swift; sourceTree = "<group>"; };
 		974D373321B1E2DA00C0FDDE /* IPv4Interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPv4Interface.swift; sourceTree = "<group>"; };
 		974D373521B4965700C0FDDE /* Sockets+SY.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sockets+SY.h"; sourceTree = "<group>"; };
@@ -118,7 +113,6 @@
 		9771AB1E21AEE457005DE97D /* MagnetPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnetPopupVC.swift; sourceTree = "<group>"; };
 		9771AB2021AEE679005DE97D /* MagnetPopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MagnetPopupVC.xib; sourceTree = "<group>"; };
 		9771AB2221AEF1A5005DE97D /* URL+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+SY.swift"; sourceTree = "<group>"; };
-		9771AB2421AEF3CE005DE97D /* UIView+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SY.swift"; sourceTree = "<group>"; };
 		9771AB2821AEF898005DE97D /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		9771AB2A21AEF901005DE97D /* DiscoverClientsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverClientsVC.swift; sourceTree = "<group>"; };
 		9771AB2C21AEFF09005DE97D /* EditClientVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientVC.swift; sourceTree = "<group>"; };
@@ -177,10 +171,8 @@
 			isa = PBXGroup;
 			children = (
 				970130E121B084E500E7CFEC /* Alamofire+SY.swift */,
-				974D372D21B1D87300C0FDDE /* Calendar+SY.swift */,
 				97888C9E21B5A745004EB144 /* Codable+SY.swift */,
 				970130E321B08E1000E7CFEC /* Error+SY.swift */,
-				974D372B21B157CE00C0FDDE /* Fuzi+SY.swift */,
 				974D373521B4965700C0FDDE /* Sockets+SY.h */,
 				974D373821B4999E00C0FDDE /* Sockets+SY.m */,
 				972B4FBB24BBCF270026BFE4 /* String+SY.swift */,
@@ -189,7 +181,6 @@
 				9792F0D62A14EEB9001F2EE1 /* UIImage+SY.swift */,
 				976EDB662A1E377700DA0361 /* UISearchController+SY.swift */,
 				97C1E4F42A16441F003F432E /* UITableViewCell+SY.swift */,
-				9771AB2421AEF3CE005DE97D /* UIView+SY.swift */,
 				97C1E5002A16B016003F432E /* UIViewController+SY.swift */,
 				9771AB2221AEF1A5005DE97D /* URL+SY.swift */,
 			);
@@ -503,7 +494,6 @@
 				"${PODS_ROOT}/Target Support Files/Pods-TorrentAdder/Pods-TorrentAdder-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework",
-				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
 				"${BUILT_PRODUCTS_DIR}/GBPing/GBPing.framework",
 				"${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
@@ -512,7 +502,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightFutures.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GBPing.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
@@ -540,13 +529,11 @@
 				976EDB672A1E377700DA0361 /* UISearchController+SY.swift in Sources */,
 				97C1E4FE2A16AC3B003F432E /* ResultsVC.swift in Sources */,
 				97EC446321AF37330034C861 /* Pinger.swift in Sources */,
-				974D372C21B157CE00C0FDDE /* Fuzi+SY.swift in Sources */,
 				9715A479251B9CD200C2C52F /* SceneDelegate.swift in Sources */,
 				9768CA6721B57B33000AA7C2 /* Client+UI.swift in Sources */,
 				970130E021B07EC000E7CFEC /* WebAPI.swift in Sources */,
 				9768CA6321B55838000AA7C2 /* UIColor+SY.swift in Sources */,
 				9768CA6521B5770B000AA7C2 /* Client.swift in Sources */,
-				9771AB2521AEF3CE005DE97D /* UIView+SY.swift in Sources */,
 				9771AB1F21AEE457005DE97D /* MagnetPopupVC.swift in Sources */,
 				9715A508251BA32B00C2C52F /* ViewRouter.swift in Sources */,
 				974D373921B4999E00C0FDDE /* Sockets+SY.m in Sources */,
@@ -568,7 +555,6 @@
 				972589AD21B0AD6D00FCE9D5 /* AppError.swift in Sources */,
 				97C0D28724C71CBA00AFB781 /* SuggestionsVC.swift in Sources */,
 				97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */,
-				974D372E21B1D87300C0FDDE /* Calendar+SY.swift in Sources */,
 				97C1E4F52A16441F003F432E /* UITableViewCell+SY.swift in Sources */,
 				979D4A9821AF4614000BFDF0 /* ClientStatusManager.swift in Sources */,
 				970130E221B084E500E7CFEC /* Alamofire+SY.swift in Sources */,
@@ -715,7 +701,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 48;
 				DEVELOPMENT_TEAM = 79RY8264V4;
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 79RY8264V4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -724,7 +710,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = me.syan.TorrentAdder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -750,7 +736,7 @@
 				CODE_SIGN_ENTITLEMENTS = TorrentAdder/TorrentAdder.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 48;
 				DEVELOPMENT_TEAM = 79RY8264V4;
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 79RY8264V4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -759,7 +745,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = me.syan.TorrentAdder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

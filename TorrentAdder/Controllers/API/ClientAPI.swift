@@ -9,7 +9,6 @@
 import UIKit
 import BrightFutures
 import Alamofire
-import Fuzi
 
 class ClientAPI: NSObject {
 
@@ -182,9 +181,10 @@ private extension ClientAPI {
         return session
             .request(client.apiURL.appendingPathComponent("token.html"))
             .validate()
-            .responseFutureHTML()
-            .flatMap { html -> Future<String, AppError> in
-                if let token = html.firstChild(css: "div#token")?.text {
+            .responseFutureData()
+            .flatMap { data in
+                let string = String(data: data, encoding: .utf8)!
+                if let token = string.stringBetween(start: "<div id=\'token\' style=\'display:none;\'>", end: "</div>") {
                     return Future(value: token)
                 }
                 return Future(error: AppError.noUTorrentToken)

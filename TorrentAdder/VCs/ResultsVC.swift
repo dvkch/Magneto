@@ -89,37 +89,6 @@ class ResultsVC: ViewController {
             }
         }
     }
-    
-    fileprivate func shareResult(_ result: SearchResult, from sender: UIView) {
-        let hud = HUDAlertController.show(in: self)
-        WebAPI.shared.getResultPageURL(result)
-            .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
-            .onFailure { (error) in
-                UIAlertController.show(for: error, close: "action.close".localized, in: self)
-            }
-            .onSuccess { (fullURL) in
-                
-                let vc = UIActivityViewController(activityItems: [fullURL], applicationActivities: nil)
-                vc.popoverPresentationController?.sourceRect = sender.frame
-                vc.popoverPresentationController?.sourceView = sender
-                
-                self.present(vc, animated: true, completion: nil)
-                self.tableView.setEditing(false, animated: true)
-        }
-    }
-    
-    fileprivate func openResultInSafari(_ result: SearchResult) {
-        let hud = HUDAlertController.show(in: self)
-        WebAPI.shared.getResultPageURL(result)
-            .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
-            .onFailure { (error) in
-                UIAlertController.show(for: error, close: "action.close".localized, in: self)
-            }
-            .onSuccess { (fullURL) in
-                self.openSafariURL(fullURL)
-                self.tableView.setEditing(false, animated: true)
-        }
-    }
 }
 
 extension ResultsVC: UISearchResultsUpdating {
@@ -236,28 +205,5 @@ extension ResultsVC : UITableViewDelegate {
         
         guard let result = searchResults?[indexPath.row] else { return }
         openTorrentPopup(with: .result(result), sender: tableView.cellForRow(at: indexPath))
-    }
-    
-    private func actionsForRow(at indexPath: IndexPath) -> [Action] {
-        guard let result = searchResults?[indexPath.row] else { return [] }
-        let shareAction = Action(title: "action.sharelink".localized, icon: .share, color: .cellBackgroundAlt) { [weak self] in
-            guard let cell = self?.tableView.cellForRow(at: indexPath) else { return }
-            self?.shareResult(result, from: cell)
-        }
-        let openAction = Action(title: "action.open".localized, icon: .openWeb, color: .tint) { [weak self] in
-            self?.openResultInSafari(result)
-        }
-        return [openAction, shareAction]
-    }
-    
-    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
-            return UIMenu(title: "", children: self.actionsForRow(at: indexPath).map(\.uiAction))
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let actions = actionsForRow(at: indexPath).reversed().map(\.uiContextualAction)
-        return UISwipeActionsConfiguration(actions: actions)
     }
 }

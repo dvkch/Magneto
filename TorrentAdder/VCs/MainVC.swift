@@ -17,7 +17,7 @@ class MainVC: ViewController {
         super.viewDidLoad()
         navigationItem.title = Bundle.main.localizedName
         navigationItem.largeTitleDisplayMode = .always
-        navigationItem.rightBarButtonItems = [mirrorBarButtonItem, loaderBarButtonItem]
+        navigationItem.rightBarButtonItems = [loaderBarButtonItem]
 
         resultsVC.delegate = self
         resultsVC.searchController = searchController
@@ -55,9 +55,6 @@ class MainVC: ViewController {
         helpButton.tintColor = .normalTextOnTint
         helpButton.layer.cornerRadius = 16
         helpButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshMirrorsButton), name: .mirrorsChanged, object: nil)
-        self.refreshMirrorsButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,50 +72,12 @@ class MainVC: ViewController {
     
     // MARK: Views
     private let loaderBarButtonItem: UIBarButtonItem = .loader(color: .normalTextOnTint)
-    private let mirrorBarButtonItem: UIBarButtonItem = .init(image: .icon(.cloud), menu: nil)
     private let resultsVC = ResultsVC()
     private lazy var searchController = UISearchController(searchResultsController: resultsVC)
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var helpButton: UIButton!
     
-    // MARK: Content
-    @objc private func refreshMirrorsButton() {
-        var mirrorMenus = [UIMenu]()
-        
-        if let mirror = WebAPI.shared.availableMirrorURLs.first {
-            mirrorMenus.append(UIMenu(title: "mirror.current %@".localized(mirror.host ?? ""), options: .displayInline, children: [
-                UIAction(title: "action.open".localized, image: .icon(.openWeb)) { _ in
-                    self.openSafariURL(mirror)
-                },
-                UIAction(title: "alert.mirror.blacklist_mirror".localized, image: .icon(.close)) { _ in
-                    Preferences.shared.mirrorBlacklist.append(mirror)
-                    WebAPI.shared.clearMirrors()
-                }
-            ]))
-        }
-        else {
-            mirrorMenus.append(UIMenu(title: "mirror.none".localized))
-        }
-
-        mirrorMenus.append(UIMenu(title: "alert.mirror.title".localized, options: .displayInline, children: [
-            UIAction(title: "alert.mirror.clean_mirror_blacklist".localized, image: .icon(.empty)) { _ in
-                Preferences.shared.mirrorBlacklist = []
-                WebAPI.shared.clearMirrors()
-            }
-        ]))
-        
-        mirrorBarButtonItem.menu = UIMenu(children: mirrorMenus)
-    }
-    
     // MARK: Actions
-    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        if motion == .motionShake {
-            WebAPI.shared.clearMirrors()
-            return
-        }
-        super.motionEnded(motion, with: event)
-    }
-    
     @IBAction private func helpButtonTap() {
         let alert = UIAlertController(
             title: "alert.help.title".localized,

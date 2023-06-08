@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Fuzi
 
 struct IntMaybeString: Decodable {
     private(set) var value: Int = 0
@@ -61,13 +60,6 @@ struct SearchResult : Decodable {
 }
 
 extension SearchResult {
-    func pageURL(mirror: URL) -> URL {
-        var components = URLComponents(url: mirror, resolvingAgainstBaseURL: true)!
-        components.path = "/description.php"
-        components.queryItems = [URLQueryItem(name: "id", value: id)]
-        return components.url!
-    }
-
     var magnetURL: URL {
         var components = URLComponents()
         components.scheme = "magnet"
