@@ -9,6 +9,10 @@
 import UIKit
 import SYKit
 
+// TODO: remove uTorrent API, way to weird to handle
+// TODO: use an API to list mirrors
+// TODO: maybe integrate other websites as well like 1337x ?
+
 class SceneDelegate: NSObject, UIWindowSceneDelegate {
     private var window: SYWindow?
     
