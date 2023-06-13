@@ -35,7 +35,7 @@ platform :ios do
         promptIncrementBuild
         gym(export_method: "ad-hoc")
 
-        copyFile("../TorrentAdder/TorrentAdder-Info.plist", "../build/TorrentAdder.plist")
+        copyFile("../TorrentAdder/Info.plist", "../build/TorrentAdder.plist")
 
         ftp(host: "ftp.stanislaschevallier.fr",
             username: 'stanislaw',
