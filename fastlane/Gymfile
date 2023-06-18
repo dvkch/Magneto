@@ -1,6 +1,6 @@
-scheme "TorrentAdder"
+scheme "Magneto"
 
 output_directory "./build"
-output_name "TorrentAdder"
+output_name "Magneto"
 
 clean true

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainVC" customModule="Magneto" customModuleProvider="target">
+            <connections>
+                <outlet property="helpButton" destination="Fys-rs-gN2" id="SOs-k4-jRS"/>
+                <outlet property="tableView" destination="ucm-nH-v1i" id="YHR-w6-1ch"/>
+                <outlet property="view" destination="KTm-qJ-gVZ" id="LmK-v4-ZUZ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="KTm-qJ-gVZ">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="scrollableAxes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ucm-nH-v1i" customClass="TPKeyboardAvoidingTableView">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="rx6-N3-4iV"/>
+                    </connections>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fys-rs-gN2">
+                    <rect key="frame" x="321" y="605" width="54" height="54"/>
+                    <color key="backgroundColor" systemColor="labelColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Fys-rs-gN2" secondAttribute="height" multiplier="1:1" id="J4F-dT-cWF"/>
+                    </constraints>
+                    <color key="tintColor" systemColor="tintColor"/>
+                    <inset key="contentEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
+                    <state key="normal" image="questionmark">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="helpButtonTap" destination="-1" eventType="touchUpInside" id="2zv-4Q-1D2"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Lbr-DV-gq5"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ucm-nH-v1i" firstAttribute="top" secondItem="KTm-qJ-gVZ" secondAttribute="top" id="C5C-xW-Uxq"/>
+                <constraint firstItem="Lbr-DV-gq5" firstAttribute="trailing" secondItem="Fys-rs-gN2" secondAttribute="trailing" id="GWZ-Ol-I2N"/>
+                <constraint firstAttribute="bottom" secondItem="ucm-nH-v1i" secondAttribute="bottom" id="SjV-4Q-aeC"/>
+                <constraint firstAttribute="trailing" secondItem="ucm-nH-v1i" secondAttribute="trailing" id="Ynx-FL-bk9"/>
+                <constraint firstItem="ucm-nH-v1i" firstAttribute="leading" secondItem="KTm-qJ-gVZ" secondAttribute="leading" id="bWd-OD-yTF"/>
+                <constraint firstItem="Lbr-DV-gq5" firstAttribute="bottom" secondItem="Fys-rs-gN2" secondAttribute="bottom" constant="8" id="tOB-Zn-mtq"/>
+            </constraints>
+            <point key="canvasLocation" x="34.399999999999999" y="54.422788605697157"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="questionmark" width="11" height="19"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

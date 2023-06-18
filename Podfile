@@ -4,7 +4,7 @@ inhibit_all_warnings!
 
 use_frameworks!
 
-target 'TorrentAdder' do
+target 'Magneto' do
     pod 'Alamofire'
     pod 'BrightFutures'
     pod 'GBPing'

@@ -1,0 +1,84 @@
+/* 
+  Localizable.strings
+  Magneto
+
+  Created by Stanislas Chevallier on 22/08/2019.
+  Copyright © 2019 Syan. All rights reserved.
+*/
+
+"action.cancel"         = "Cancel";
+"action.update"         = "Update";
+"action.login"          = "Login";
+"action.close"          = "Close";
+"action.removefinished" = "Remove finished";
+"action.edit"           = "Edit";
+"action.delete"         = "Delete";
+"action.sharelink"      = "Share page link";
+"action.open"           = "Open";
+"action.save"           = "Save";
+
+"placeholder.search"    = "Search";
+
+"client.title.new"  = "New client";
+"client.title.edit" = "Edit client";
+
+"client.name"       = "Name";
+"client.host"       = "Host";
+"client.port"       = "Port";
+"client.software"   = "Software";
+"client.username"   = "Username";
+"client.password"   = "Password";
+
+"client.name.placeholder"       = "My server";
+"client.host.placeholder"       = "192.168.13.12";
+"client.port.placeholder"       = "9091";
+"client.software.placeholder"   = "Transmission";
+"client.username.placeholder"   = "user";
+"client.password.placeholder"   = "password";
+
+"torrent.success"                   = "Success!";
+"torrent.loading"                   = "Loading…";
+"torrent.success.messagefrom %@"    = "Message from %@: ";
+"torrent.removed.zero"              = "No finished item to remove";
+"torrent.removed.one"               = "Removed one finished item";
+"torrent.removed.other"             = "Removed %d finished item(s)";
+
+"discovery.title"           = "Add a client";
+"discovery.section.found"   = "Available clients";
+
+"alert.update.title"    = "Update available";
+"alert.update.message"  = "A new version of Magneto is available, you definitely should install it ;)";
+
+"alert.auth.title"      = "Authentication needed";
+"alert.auth.message %@" = "%@ requires a user and a password";
+
+"alert.help.title"      = "Help";
+"alert.help.message"    = "To add a torrent you need to open this app with a magnet. Go to Safari, open a page with a magnet link in it, click the magnet to open this app, and then select a client to start downloading the torrent.";
+
+"alert.client.delete.title"         = "Confirmation required";
+"alert.client.delete.message %@"    = "Are you sure you want to delete %@?";
+
+"clients.addcustom.line1"   = "Add a custom client";
+"clients.addcustom.line2"   = "in case yours wasn't detected";
+"clients.openurl.line1"     = "Open magnet";
+"clients.openurl.line2"     = "Will launch your default torrent app";
+
+"clients.section.clients"   = "Clients";
+"clients.section.noresults" = "No results";
+"clients.section.results"   = "Results";
+"clients.count.add"         = "Add a client";
+
+"error.title.cannotLoadResults" = "Cannot load results";
+"error.title.cannotAddTorrent"  = "Cannot add torrent";
+
+"error.noMagnetFound"           = "No magnet found";
+"error.noClientsSaved"          = "No client saved in your settings, please add one before trying to download this item";
+"error.noUTorrentToken"         = "Couldn't connect to the uTorrent client";
+"error.invalidUTorrentPayload"  = "Invalid uTorrent payload";
+"error.noAvailableAPI"          = "No available API could respond to the request";
+"error.clientOffline"           = "Client unavailable";
+"error.unknown"                 = "Unknown error";
+"error.form"                    = "Please check your informations";
+"error.form.missing %@"         = "%@ should be filled";
+"error.form.missingIfHas %@ %@" = "%@ should be filled when using a %@";
+"error.form.invalid %@"         = "%@ is not valid";

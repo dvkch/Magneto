@@ -35,19 +35,19 @@ platform :ios do
         promptIncrementBuild
         gym(export_method: "ad-hoc")
 
-        copyFile("../TorrentAdder/Info.plist", "../build/TorrentAdder.plist")
+        copyFile("../Magneto/Info.plist", "../build/Magneto.plist")
 
         ftp(host: "ftp.stanislaschevallier.fr",
             username: 'stanislaw',
             upload: {
-                src: 'build/TorrentAdder.ipa',
+                src: 'build/Magneto.ipa',
                 dest: '/www_ota/'
             }
         )
         ftp(host: "ftp.stanislaschevallier.fr",
             username: 'stanislaw',
             upload: {
-                src: 'build/TorrentAdder.plist',
+                src: 'build/Magneto.plist',
                 dest: '/www_ota/'
             }
         )
