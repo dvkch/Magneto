@@ -96,26 +96,23 @@ extension Client {
 
 extension Client {
     enum Software: Int, Codable {
-        case transmission = 0, uTorrent = 1
+        case transmission = 0
         
         var defaultPort: Int {
             switch self {
             case .transmission: return 9091
-            case .uTorrent:     return 18764
             }
         }
         
         var apiPath: String {
             switch self {
             case .transmission: return "/transmission/rpc/"
-            case .uTorrent:     return "/gui/"
             }
         }
         
         var webPath: String {
             switch self {
             case .transmission: return "/transmission/web/"
-            case .uTorrent:     return "/gui/"
             }
         }
     }

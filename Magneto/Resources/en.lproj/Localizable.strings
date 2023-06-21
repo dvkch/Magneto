@@ -73,8 +73,6 @@
 
 "error.noMagnetFound"           = "No magnet found";
 "error.noClientsSaved"          = "No client saved in your settings, please add one before trying to download this item";
-"error.noUTorrentToken"         = "Couldn't connect to the uTorrent client";
-"error.invalidUTorrentPayload"  = "Invalid uTorrent payload";
 "error.noAvailableAPI"          = "No available API could respond to the request";
 "error.clientOffline"           = "Client unavailable";
 "error.unknown"                 = "Unknown error";

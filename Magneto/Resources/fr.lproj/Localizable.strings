@@ -73,8 +73,6 @@
 
 "error.noMagnetFound"           = "Aucun magnet trouvé";
 "error.noClientsSaved"          = "Aucun client n'est sauvegardé dans vos réglages, merci d'en ajouter un pour téléchargé ce torrent";
-"error.noUTorrentToken"         = "Impossible de se connecter au client uTorrent";
-"error.invalidUTorrentPayload"  = "Réponse de uTorrent invalide";
 "error.noAvailableAPI"          = "Aucune API disponible pour répondre à cette requête";
 "error.clientOffline"           = "Client indisponible";
 "error.unknown"                 = "Erreur inconnue";

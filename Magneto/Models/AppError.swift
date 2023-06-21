@@ -12,8 +12,6 @@ import Alamofire
 enum AppError {
     case noMagnetFound
     case noClientsSaved
-    case noUTorrentToken
-    case invalidUTorrentPayload
     case noAvailableAPI
     case clientOffline
     case alamofire(_ request: AlamoDataResponseProtocol)
@@ -24,8 +22,6 @@ extension AppError : LocalizedError {
         switch self {
         case .noMagnetFound:                return "error.noMagnetFound".localized
         case .noClientsSaved:               return "error.noClientsSaved".localized
-        case .noUTorrentToken:              return "error.noUTorrentToken".localized
-        case .invalidUTorrentPayload:       return "error.invalidUTorrentPayload".localized
         case .noAvailableAPI:               return "error.noAvailableAPI".localized
         case .clientOffline:                return "error.clientOffline".localized
         case .alamofire(let response):

@@ -75,7 +75,7 @@ extension Client {
         
         var options: [Int: String]? {
             switch self {
-            case .software: return [Software.transmission.rawValue: "Transmission", Software.uTorrent.rawValue: "uTorrent"]
+            case .software: return [Software.transmission.rawValue: "Transmission"]
             default:        return nil
             }
         }
