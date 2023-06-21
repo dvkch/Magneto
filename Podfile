@@ -7,7 +7,7 @@ use_frameworks!
 target 'Magneto' do
     pod 'Alamofire'
     pod 'BrightFutures'
-    pod 'GBPing'
+    pod 'Disco'
     pod 'SYKit'
     pod 'TPKeyboardAvoiding'
 end

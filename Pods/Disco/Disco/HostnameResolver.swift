@@ -1,39 +1,53 @@
 //
 //  HostnameResolver.swift
-//  Magneto
+//  Disco
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
 //  Copyright © 2018 Syan. All rights reserved.
 //
 
+import Foundation
+
+#if os(iOS)
 import UIKit
-import SYKit
+#endif
 
 extension Notification.Name {
-    static let hostnameResolverUpdated = Notification.Name.init("HostnameResolver.updated")
+    public static let hostnameResolverUpdated = Notification.Name.init("HostnameResolver.updated")
 }
 
 /// Used to resolve hostnames from IP addresses
-class HostnameResolver: NSObject {
+public class HostnameResolver: NSObject {
     
     // MARK: Init
-    static let shared = HostnameResolver()
+    public static let shared = HostnameResolver()
     private override init() {
         super.init()
         
+        #if os(iOS)
         NotificationCenter.default.addObserver(
             self, selector: #selector(start),
             name: UIApplication.didBecomeActiveNotification, object: nil
         )
+        #endif
     }
     
     // MARK: Properties
-    var isRunning: Bool {
-        return browsers.isNotEmpty
+    public var isRunning: Bool {
+        return !browsers.isEmpty
     }
     
     // MARK: Internal properties
-    private let servicesTypes = ["_smb._tcp", "_afpovertcp._tcp", "_daap._tcp", "_home-sharing._tcp", "_rfb._tcp", "_companion-link._tcp", "_raop._tcp", "_sleep-proxy._udp", "_http._tcp"]
+    public var servicesTypes = [
+        "_smb._tcp", "_afpovertcp._tcp", "_daap._tcp",
+        "_home-sharing._tcp", "_rfb._tcp", "_companion-link._tcp",
+        "_raop._tcp", "_sleep-proxy._udp", "_http._tcp"
+    ] {
+        didSet {
+            stop()
+            start()
+        }
+    }
     private var browsers: [NetServiceBrowser] = []
     private var services: [NetService] = []
     private var addresses: [NetService: [String]] = [:] {
@@ -45,14 +59,14 @@ class HostnameResolver: NSObject {
     }
     
     // MARK: Access
-    func hostname(for ip: String) -> String? {
+    public func hostname(for ip: String) -> String? {
         let services = addresses.filter({ $0.value.contains(ip) }).keys
         let names = services.compactMap { $0.hostName?.replacingOccurrences(of: "." + $0.domain, with: "") }
-        return names.sorted(by: \.count).last
+        return names.sorted(by: { $0.count < $1.count }).last
     }
     
     // MARK: Actions
-    @objc func start() {
+    @objc public func start() {
         browsers = servicesTypes.map { service in
             let browser = NetServiceBrowser()
             browser.delegate = self
@@ -61,40 +75,40 @@ class HostnameResolver: NSObject {
         }
     }
     
-    func stop() {
+    public func stop() {
         browsers.forEach { $0.stop() }
         browsers = []
     }
 }
 
 extension HostnameResolver: NetServiceBrowserDelegate {
-    func netServiceBrowserDidStopSearch(_ browser: NetServiceBrowser) {
-        browsers.remove(browser)
+    public func netServiceBrowserDidStopSearch(_ browser: NetServiceBrowser) {
+        browsers.removeAll(where: { $0 == browser })
     }
 
-    func netServiceBrowser(_ browser: NetServiceBrowser, didNotSearch errorDict: [String : NSNumber]) {
-        browsers.remove(browser)
+    public func netServiceBrowser(_ browser: NetServiceBrowser, didNotSearch errorDict: [String : NSNumber]) {
+        browsers.removeAll(where: { $0 == browser })
     }
 
-    func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
+    public func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
         services.append(service)
         service.delegate = self
         service.resolve(withTimeout: 5)
     }
 
-    func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
-        services.remove(service)
+    public func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
+        services.removeAll(where: { $0 == service })
         addresses.removeValue(forKey: service)
     }
 }
 
 extension HostnameResolver: NetServiceDelegate {
-    func netServiceDidResolveAddress(_ service: NetService) {
+    public func netServiceDidResolveAddress(_ service: NetService) {
         addresses[service] = service.netAddresses(resolvingHost: false)?.filter { $0.family == .ip4 }.map { $0.ip }
     }
 
-    func netService(_ service: NetService, didNotResolve errorDict: [String : NSNumber]) {
-        services.remove(service)
+    public func netService(_ service: NetService, didNotResolve errorDict: [String : NSNumber]) {
+        services.removeAll(where: { $0 == service })
         addresses.removeValue(forKey: service)
     }
 }

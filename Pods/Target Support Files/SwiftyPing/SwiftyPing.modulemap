@@ -1,0 +1,6 @@
+framework module SwiftyPing {
+  umbrella header "SwiftyPing-umbrella.h"
+
+  export *
+  module * { export * }
+}

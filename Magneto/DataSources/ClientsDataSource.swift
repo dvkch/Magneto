@@ -23,7 +23,7 @@ class ClientsDataSources: UITableViewDiffableDataSource<Int, ClientCell.Kind> {
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(clientsChanged), name: .clientsChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(clientsChanged), name: .clientStatusChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(clientsChanged), name: .hostStatusChanged, object: nil)
         refreshClients(animated: false)
     }
     

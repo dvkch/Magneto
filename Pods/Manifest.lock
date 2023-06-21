@@ -1,14 +1,16 @@
 PODS:
   - Alamofire (5.7.1)
   - BrightFutures (8.2.0)
-  - GBPing (1.5.1)
+  - Disco (1.1.1):
+    - SwiftyPing (>= 1.2.2)
+  - SwiftyPing (1.2.2)
   - SYKit (0.2.10)
   - TPKeyboardAvoiding (1.3.5)
 
 DEPENDENCIES:
   - Alamofire
   - BrightFutures
-  - GBPing
+  - Disco
   - SYKit
   - TPKeyboardAvoiding
 
@@ -16,17 +18,19 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - BrightFutures
-    - GBPing
+    - Disco
+    - SwiftyPing
     - SYKit
     - TPKeyboardAvoiding
 
 SPEC CHECKSUMS:
   Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
-  GBPing: d7fb1b91990f1d2a0f07f72e0fe79e91ee9fc3ba
+  Disco: 8bf16509471ce3b40a151bc0540a5eea6d3705eb
+  SwiftyPing: 284e9dc6ec6b7ed42c906758f8c1c067d8a7fc21
   SYKit: 2bf3fa823f1361adff0ea931cdbfdf77912c925e
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
 
-PODFILE CHECKSUM: c80692ff7de1afe9c7f4ebbc11e980a7f58f6fb1
+PODFILE CHECKSUM: 87c5a4e05103acf713e79a9f7ce2d9b7b33979e0
 
 COCOAPODS: 1.12.1

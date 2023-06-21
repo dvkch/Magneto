@@ -10,10 +10,7 @@
 #endif
 #endif
 
-#import "GBPing.h"
-#import "GBPingSummary.h"
-#import "ICMPHeader.h"
 
-FOUNDATION_EXPORT double GBPingVersionNumber;
-FOUNDATION_EXPORT const unsigned char GBPingVersionString[];
+FOUNDATION_EXPORT double SwiftyPingVersionNumber;
+FOUNDATION_EXPORT const unsigned char SwiftyPingVersionString[];
 

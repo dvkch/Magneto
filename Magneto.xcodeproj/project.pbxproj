@@ -18,9 +18,6 @@
 		973784321BD40649001AD487 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973784311BD40649001AD487 /* Launch.storyboard */; };
 		9747560A232AB4DA0038698E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97475609232AB4DA0038698E /* ViewController.swift */; };
 		974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372921B150FC00C0FDDE /* SearchResult.swift */; };
-		974D373221B1DF8600C0FDDE /* IPv4Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373121B1DF8600C0FDDE /* IPv4Address.swift */; };
-		974D373421B1E2DA00C0FDDE /* IPv4Interface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373321B1E2DA00C0FDDE /* IPv4Interface.swift */; };
-		974D373921B4999E00C0FDDE /* Sockets+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = 974D373821B4999E00C0FDDE /* Sockets+SY.m */; };
 		974D373B21B49D4800C0FDDE /* ClientAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373A21B49D4800C0FDDE /* ClientAPI.swift */; };
 		974D3A1424BB327900953757 /* SuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D3A1224BB327900953757 /* SuggestionCell.swift */; };
 		974D3A1524BB327900953757 /* SuggestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 974D3A1324BB327900953757 /* SuggestionCell.xib */; };
@@ -41,10 +38,8 @@
 		9771AB3321AF08E4005DE97D /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3221AF08E4005DE97D /* ResultCell.swift */; };
 		9771AB3521AF0C59005DE97D /* ClientFormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3421AF0C59005DE97D /* ClientFormCell.swift */; };
 		9771AB3721AF2BA4005DE97D /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3621AF2BA4005DE97D /* Preferences.swift */; };
-		9771AB3A21AF319E005DE97D /* HostnameResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3921AF319E005DE97D /* HostnameResolver.swift */; };
 		97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97888C9E21B5A745004EB144 /* Codable+SY.swift */; };
 		9792F0D72A14EEB9001F2EE1 /* UIImage+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9792F0D62A14EEB9001F2EE1 /* UIImage+SY.swift */; };
-		979D4A9821AF4614000BFDF0 /* ClientStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979D4A9721AF4614000BFDF0 /* ClientStatusManager.swift */; };
 		97A18E0C1BBC011900F33AF5 /* MainVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E0B1BBC011900F33AF5 /* MainVC.xib */; };
 		97A18E0E1BBC016B00F33AF5 /* ClientCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E0D1BBC016B00F33AF5 /* ClientCell.xib */; };
 		97A18E121BBC017500F33AF5 /* ResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E111BBC017500F33AF5 /* ResultCell.xib */; };
@@ -59,7 +54,6 @@
 		97C1E5032A16B0AF003F432E /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C1E5022A16B0AF003F432E /* Action.swift */; };
 		97CEA9402A16CC0C00212F49 /* ClientsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CEA93F2A16CC0C00212F49 /* ClientsDataSource.swift */; };
 		97CEA9432A16CE9100212F49 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CEA9422A16CE9100212F49 /* NavigationBar.swift */; };
-		97EC446321AF37330034C861 /* Pinger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC446221AF37330034C861 /* Pinger.swift */; };
 		97F911481BC2C45C00BF1848 /* EditClientVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* EditClientVC.xib */; };
 		97F9114D1BC2C73D00BF1848 /* ClientFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */; };
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
@@ -93,10 +87,6 @@
 		973784311BD40649001AD487 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		97475609232AB4DA0038698E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		974D372921B150FC00C0FDDE /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
-		974D373121B1DF8600C0FDDE /* IPv4Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPv4Address.swift; sourceTree = "<group>"; };
-		974D373321B1E2DA00C0FDDE /* IPv4Interface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPv4Interface.swift; sourceTree = "<group>"; };
-		974D373521B4965700C0FDDE /* Sockets+SY.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sockets+SY.h"; sourceTree = "<group>"; };
-		974D373821B4999E00C0FDDE /* Sockets+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Sockets+SY.m"; sourceTree = "<group>"; };
 		974D373A21B49D4800C0FDDE /* ClientAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientAPI.swift; sourceTree = "<group>"; };
 		974D3A1224BB327900953757 /* SuggestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionCell.swift; sourceTree = "<group>"; };
 		974D3A1324BB327900953757 /* SuggestionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionCell.xib; sourceTree = "<group>"; };
@@ -106,7 +96,6 @@
 		976D5EFA230E0E3600573E0D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		976D5EFD230E0E4400573E0D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		976EDB662A1E377700DA0361 /* UISearchController+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchController+SY.swift"; sourceTree = "<group>"; };
-		9771AB1121AEC918005DE97D /* Magneto-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Magneto-Bridging-Header.h"; sourceTree = "<group>"; };
 		9771AB1221AEC919005DE97D /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		9771AB1A21AEDC92005DE97D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9771AB1E21AEE457005DE97D /* MagnetPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnetPopupVC.swift; sourceTree = "<group>"; };
@@ -120,10 +109,8 @@
 		9771AB3421AF0C59005DE97D /* ClientFormCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientFormCell.swift; sourceTree = "<group>"; };
 		9771AB3621AF2BA4005DE97D /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		9771AB3821AF2D7C005DE97D /* Magneto.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Magneto.entitlements; sourceTree = "<group>"; };
-		9771AB3921AF319E005DE97D /* HostnameResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostnameResolver.swift; sourceTree = "<group>"; };
 		97888C9E21B5A745004EB144 /* Codable+SY.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+SY.swift"; sourceTree = "<group>"; };
 		9792F0D62A14EEB9001F2EE1 /* UIImage+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+SY.swift"; sourceTree = "<group>"; };
-		979D4A9721AF4614000BFDF0 /* ClientStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientStatusManager.swift; sourceTree = "<group>"; };
 		97A18E0B1BBC011900F33AF5 /* MainVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainVC.xib; sourceTree = "<group>"; };
 		97A18E0D1BBC016B00F33AF5 /* ClientCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientCell.xib; sourceTree = "<group>"; };
 		97A18E111BBC017500F33AF5 /* ResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultCell.xib; sourceTree = "<group>"; };
@@ -138,7 +125,6 @@
 		97C1E5022A16B0AF003F432E /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		97CEA93F2A16CC0C00212F49 /* ClientsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientsDataSource.swift; sourceTree = "<group>"; };
 		97CEA9422A16CE9100212F49 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
-		97EC446221AF37330034C861 /* Pinger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pinger.swift; sourceTree = "<group>"; };
 		97F911461BC2C45C00BF1848 /* EditClientVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditClientVC.xib; sourceTree = "<group>"; };
 		97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientFormCell.xib; sourceTree = "<group>"; };
 		BA3E80D93A8CC210E3C1C221 /* Pods-Magneto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Magneto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Magneto/Pods-Magneto.debug.xcconfig"; sourceTree = "<group>"; };
@@ -173,8 +159,6 @@
 				970130E121B084E500E7CFEC /* Alamofire+SY.swift */,
 				97888C9E21B5A745004EB144 /* Codable+SY.swift */,
 				970130E321B08E1000E7CFEC /* Error+SY.swift */,
-				974D373521B4965700C0FDDE /* Sockets+SY.h */,
-				974D373821B4999E00C0FDDE /* Sockets+SY.m */,
 				972B4FBB24BBCF270026BFE4 /* String+SY.swift */,
 				97C1E4F22A164203003F432E /* UIBarButtonItem+SY.swift */,
 				9768CA6221B55838000AA7C2 /* UIColor+SY.swift */,
@@ -191,7 +175,6 @@
 			isa = PBXGroup;
 			children = (
 				97C1E4EB2A15A88E003F432E /* API */,
-				97C1E4EC2A15A893003F432E /* Network */,
 				9771AB3621AF2BA4005DE97D /* Preferences.swift */,
 				9715A507251BA32B00C2C52F /* ViewRouter.swift */,
 			);
@@ -207,16 +190,6 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		97C1E4EC2A15A893003F432E /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				979D4A9721AF4614000BFDF0 /* ClientStatusManager.swift */,
-				9771AB3921AF319E005DE97D /* HostnameResolver.swift */,
-				97EC446221AF37330034C861 /* Pinger.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		97C1E4ED2A15A8C0003F432E /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,8 +197,6 @@
 				972589AC21B0AD6D00FCE9D5 /* AppError.swift */,
 				9768CA6421B5770B000AA7C2 /* Client.swift */,
 				9768CA6621B57B33000AA7C2 /* Client+UI.swift */,
-				974D373121B1DF8600C0FDDE /* IPv4Address.swift */,
-				974D373321B1E2DA00C0FDDE /* IPv4Interface.swift */,
 				974D372921B150FC00C0FDDE /* SearchResult.swift */,
 			);
 			path = Models;
@@ -347,7 +318,6 @@
 				9771AB1A21AEDC92005DE97D /* AppDelegate.swift */,
 				9715A478251B9CD200C2C52F /* SceneDelegate.swift */,
 				F8986762192A317C00735175 /* Info.plist */,
-				9771AB1121AEC918005DE97D /* Magneto-Bridging-Header.h */,
 			);
 			path = Magneto;
 			sourceTree = "<group>";
@@ -494,16 +464,18 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Magneto/Pods-Magneto-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework",
-				"${BUILT_PRODUCTS_DIR}/GBPing/GBPing.framework",
+				"${BUILT_PRODUCTS_DIR}/Disco/Disco.framework",
 				"${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyPing/SwiftyPing.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightFutures.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GBPing.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Disco.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyPing.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,10 +497,8 @@
 				974D3A1424BB327900953757 /* SuggestionCell.swift in Sources */,
 				97CEA9432A16CE9100212F49 /* NavigationBar.swift in Sources */,
 				9792F0D72A14EEB9001F2EE1 /* UIImage+SY.swift in Sources */,
-				974D373221B1DF8600C0FDDE /* IPv4Address.swift in Sources */,
 				976EDB672A1E377700DA0361 /* UISearchController+SY.swift in Sources */,
 				97C1E4FE2A16AC3B003F432E /* ResultsVC.swift in Sources */,
-				97EC446321AF37330034C861 /* Pinger.swift in Sources */,
 				9715A479251B9CD200C2C52F /* SceneDelegate.swift in Sources */,
 				9768CA6721B57B33000AA7C2 /* Client+UI.swift in Sources */,
 				970130E021B07EC000E7CFEC /* WebAPI.swift in Sources */,
@@ -536,15 +506,12 @@
 				9768CA6521B5770B000AA7C2 /* Client.swift in Sources */,
 				9771AB1F21AEE457005DE97D /* MagnetPopupVC.swift in Sources */,
 				9715A508251BA32B00C2C52F /* ViewRouter.swift in Sources */,
-				974D373921B4999E00C0FDDE /* Sockets+SY.m in Sources */,
 				970130E421B08E1000E7CFEC /* Error+SY.swift in Sources */,
-				9771AB3A21AF319E005DE97D /* HostnameResolver.swift in Sources */,
 				9771AB1321AEC919005DE97D /* MainVC.swift in Sources */,
 				9771AB2321AEF1A5005DE97D /* URL+SY.swift in Sources */,
 				9771AB3521AF0C59005DE97D /* ClientFormCell.swift in Sources */,
 				9771AB2D21AEFF09005DE97D /* EditClientVC.swift in Sources */,
 				97C1E4F32A164203003F432E /* UIBarButtonItem+SY.swift in Sources */,
-				974D373421B1E2DA00C0FDDE /* IPv4Interface.swift in Sources */,
 				9771AB2921AEF898005DE97D /* NavigationController.swift in Sources */,
 				974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */,
 				9771AB3321AF08E4005DE97D /* ResultCell.swift in Sources */,
@@ -556,7 +523,6 @@
 				97C0D28724C71CBA00AFB781 /* SuggestionsVC.swift in Sources */,
 				97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */,
 				97C1E4F52A16441F003F432E /* UITableViewCell+SY.swift in Sources */,
-				979D4A9821AF4614000BFDF0 /* ClientStatusManager.swift in Sources */,
 				970130E221B084E500E7CFEC /* Alamofire+SY.swift in Sources */,
 				9771AB3721AF2BA4005DE97D /* Preferences.swift in Sources */,
 				9771AB2B21AEF901005DE97D /* DiscoverClientsVC.swift in Sources */,
@@ -719,7 +685,6 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "Magneto/Magneto-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 				WRAPPER_EXTENSION = app;
@@ -754,7 +719,6 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "Magneto/Magneto-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 				WRAPPER_EXTENSION = app;
 			};

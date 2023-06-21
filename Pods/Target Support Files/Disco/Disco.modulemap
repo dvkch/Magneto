@@ -1,0 +1,6 @@
+framework module Disco {
+  umbrella header "Disco-umbrella.h"
+
+  export *
+  module * { export * }
+}

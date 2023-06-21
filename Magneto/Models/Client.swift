@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Disco
 
 class Client: Codable, Hashable {
     private(set) var id: String
@@ -123,7 +124,7 @@ extension Client {
 extension Array where Element == Client {
     private func sortableString(for element: Element) -> String {
         let position: Int
-        switch ClientStatusManager.shared.statusForClient(element) {
+        switch HostStatusManager.shared.status(for: .init(host: element.host, port: element.portOrDefault)) {
         case .online:  position = 0
         case .unknown: position = 1
         case .offline: position = 2

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Disco
+import Network
 
 class DiscoverClientsVC: ViewController {
 
@@ -28,8 +30,9 @@ class DiscoverClientsVC: ViewController {
             name: .hostnameResolverUpdated, object: nil
         )
         
-        pinger.delegate = self
-        pinger.start()
+        finder = HostsFinder(interfaces: IPv4Interface.availableInterfaces().filter { $0.isLocal })
+        finder.delegate = self
+        finder.start()
     }
     
     deinit {
@@ -37,8 +40,8 @@ class DiscoverClientsVC: ViewController {
     }
     
     // MARK: Properties
-    private var availableIPs: [String] = []
-    private let pinger: Pinger = Pinger(networks: IPv4Interface.deviceNetworks(filterLocalInterfaces: true))
+    private var availableIPs: [IPv4Address] = []
+    private var finder = HostsFinder(interfaces: [])
 
     // MARK: View
     @IBOutlet private var tableView: UITableView!
@@ -55,12 +58,9 @@ class DiscoverClientsVC: ViewController {
     }
     
     // MARK: Content
-    private func addAvailableIP(_ ip: String?) {
-        guard let ip = ip else { return }
+    private func addAvailableIP(_ ip: IPv4Address) {
         availableIPs.append(ip)
-        availableIPs.sort { (ip1, ip2) -> Bool in
-            return ip1.compare(ip2, options: .numeric) == .orderedAscending
-        }
+        availableIPs.sort(by: { $0.decimalRepresentation < $1.decimalRepresentation })
         
         if let index = availableIPs.firstIndex(of: ip) {
             tableView.beginUpdates()
@@ -73,16 +73,16 @@ class DiscoverClientsVC: ViewController {
     }
 }
 
-extension DiscoverClientsVC : PingerDelegate {
-    func pinger(_ pinger: Pinger, progressUpdated progress: Float) {
+extension DiscoverClientsVC : HostsFinderDelegate {
+    func hostsFinder(_ hostsFinder: HostsFinder, progressUpdated progress: Float) {
         progressView.setProgress(Float(progress), animated: true)
     }
     
-    func pinger(_ pinger: Pinger, stopped completed: Bool) {
+    func hostsFinder(_ hostsFinder: HostsFinder, stopped completed: Bool) {
         progressView.setProgress(1, animated: true)
     }
 
-    func pinger(_ pinger: Pinger, found ip: String) {
+    func hostsFinder(_ hostsFinder: HostsFinder, found ip: IPv4Address) {
         addAvailableIP(ip)
     }
 }
@@ -91,8 +91,8 @@ extension DiscoverClientsVC : UITableViewDataSource {
     func client(at indexPath: IndexPath) -> Client? {
         guard indexPath.row < availableIPs.count else { return  nil }
         let host = availableIPs[indexPath.row]
-        let name = HostnameResolver.shared.hostname(for: host) ?? host
-        return Client(host: host, name: name)
+        let name = HostnameResolver.shared.hostname(for: host.stringRepresentation) ?? host.stringRepresentation
+        return Client(host: host.stringRepresentation, name: name)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

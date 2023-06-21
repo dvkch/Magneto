@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import Disco
 
 class ClientCell: UITableViewCell {
     
     // MARK: Init
     override func awakeFromNib() {
         super.awakeFromNib()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateStatus), name: .clientStatusChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateStatus), name: .hostStatusChanged, object: nil)
         activityIndicator.color = .normalText
         nameLabel.textColor = .normalText
         hostLabel.textColor = .altText
@@ -24,7 +25,7 @@ class ClientCell: UITableViewCell {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: .clientStatusChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .hostStatusChanged, object: nil)
     }
     
     // MARK: Properties
@@ -109,9 +110,9 @@ class ClientCell: UITableViewCell {
     }
     
     @objc private func updateStatus() {
-        var status: ClientStatusManager.ClientStatus? = nil
+        var status: HostStatusManager.HostStatus? = nil
         if let client = kind.client {
-            status = ClientStatusManager.shared.statusForClient(client)
+            status = HostStatusManager.shared.status(for: .init(host: client.host, port: client.portOrDefault))
         }
         if kind.isDiscoveredClient {
             status = kind.client != nil ? .online : .unknown
