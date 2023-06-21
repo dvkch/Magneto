@@ -43,9 +43,48 @@ class WebAPI: NSObject {
     }
     
     // MARK: Web URL
-    func getWebMirrorURL() -> Future<URL, AppError> {
-        // TODO: find an API that lists mirrors, instead of parsing HTML from https://pirateproxy.wtf/
-        return .init(error: .noAvailableAPI)
+    private struct Mirror: Codable {
+        let url: String
+    }
+    private var webMirrorURLs: [URL] = []
+    private func getWebMirrorURLs() -> Future<[URL], AppError> {
+        return session.request("https://hapier.syan.me/api/scrappers/tpb_proxies", parameters: ["url": "https://pirateproxy.wtf/"])
+            .validate()
+            .responseFutureCodable(type: [Mirror].self)
+            .map { $0.compactMap { URL(string: "https://" + $0.url) } }
+            .onSuccess { self.webMirrorURLs = $0 }
+    }
+    
+    private struct ValidationResponse: Codable {
+        let title: String
+    }
+    private func isMirrorReachable(_ url: URL) -> Future<URL, AppError> {
+        return session.request("https://hapier.syan.me/api/scrappers/tpb_validator", parameters: ["url": url.absoluteString])
+            .validate()
+            .responseFutureCodable(type: ValidationResponse.self)
+            .flatMap {
+                if $0.title.contains("The Pirate Bay") {
+                    return .init(result: .success(url))
+                }
+                return .init(result: .failure(.noAvailableAPI))
+            }
+    }
+
+    func getWebMirrorURL(allowRetry: Bool = true) -> Future<URL, AppError> {
+        guard let firstMirror = webMirrorURLs.first else {
+            if allowRetry {
+                return getWebMirrorURLs().flatMap { _ in
+                    self.getWebMirrorURL(allowRetry: false)
+                }
+            }
+            return .init(error: .noAvailableAPI)
+        }
+
+        return isMirrorReachable(firstMirror)
+            .recoverWith { _ in
+                self.webMirrorURLs.remove(firstMirror)
+                return self.getWebMirrorURL(allowRetry: false)
+            }
     }
     
     // MARK: Methods
