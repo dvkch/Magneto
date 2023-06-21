@@ -10,6 +10,8 @@ import UIKit
 import BrightFutures
 import Alamofire
 
+// https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
+// https://github.com/transmission/transmission/blob/1.70/doc/rpc-spec.txt
 class ClientAPI: NSObject {
 
     // MARK: Init
@@ -28,29 +30,7 @@ class ClientAPI: NSObject {
     private var pendingAuthentications = [String: [(RetryResult) -> Void]]()
     private var transmissionSessionIDs = [String: String]()
     
-    // MARK: Public methods
-    func addMagnet(_ magnetURL: URL, to client: Client) -> Future<String?, AppError> {
-        switch client.software {
-        case .transmission:
-            return self.addMagnet(magnetURL, toTransmission: client)
-        }
-    }
-    
-    func removeCompletedTorrents(in client: Client) -> Future<Int, AppError> {
-        switch client.software {
-        case .transmission:
-            return self
-                .listEndedTorrents(inTransmission: client)
-                .flatMap { ids in self.removeTorrents(ids: ids, fromTransmission: client) }
-        }
-    }
-}
-
-private extension ClientAPI {
-    // MARK: Transmission
-    // https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
-    // https://github.com/transmission/transmission/blob/1.70/doc/rpc-spec.txt
-    
+    // MARK: Types
     private struct TransmissionResponse: Decodable {
         struct Item : Decodable {
             let id: Int
@@ -78,7 +58,8 @@ private extension ClientAPI {
         }
     }
 
-    private func addMagnet(_ magnetURL: URL, toTransmission client: Client) -> Future<String?, AppError> {
+    // MARK: API
+    func addMagnet(_ magnetURL: URL, to client: Client) -> Future<String?, AppError> {
         let parameters: Parameters = [
             "method":"torrent-add",
             "arguments": ["filename": magnetURL.absoluteString]
@@ -91,7 +72,13 @@ private extension ClientAPI {
             .map { $0.result }
     }
     
-    private func listEndedTorrents(inTransmission client: Client) -> Future<[Int], AppError> {
+    func removeCompletedTorrents(in client: Client) -> Future<Int, AppError> {
+        return self
+            .listEndedTorrents(for: client)
+            .flatMap { ids in self.removeTorrents(ids: ids, from: client) }
+    }
+
+    private func listEndedTorrents(for client: Client) -> Future<[Int], AppError> {
         let parameters: Parameters = [
             "method":"torrent-get",
             "arguments": ["fields": ["id", "doneDate", "name"]]
@@ -104,7 +91,7 @@ private extension ClientAPI {
             .map { response in response.items.filter { $0.doneDate > 0 }.map { $0.id } }
     }
     
-    private func removeTorrents(ids: [Int], fromTransmission client: Client) -> Future<Int, AppError> {
+    private func removeTorrents(ids: [Int], from client: Client) -> Future<Int, AppError> {
         guard !ids.isEmpty else { return Future<Int, AppError>(value: 0) }
         
         let parameters: Parameters = [
@@ -144,7 +131,7 @@ extension ClientAPI : RequestInterceptor {
             return
         }
         
-        if client.software == .transmission, request.response?.statusCode == 409,
+        if request.response?.statusCode == 409,
             let sessionID = request.response?.allHeaderFields["X-Transmission-Session-Id"] as? String
         {
             transmissionSessionIDs[client.id] = sessionID

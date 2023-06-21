@@ -22,7 +22,6 @@ extension UIImage {
         case bookmark   = "bookmark"
         case network    = "network"                 // 20x19
         case number     = "number"
-        case app        = "macwindow"
         case user       = "person"
         case secret     = "eyes"
 

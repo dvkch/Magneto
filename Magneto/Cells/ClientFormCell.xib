@@ -46,7 +46,7 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="192.168.1.1" borderStyle="roundedRect" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="l35-SY-mm1">
-                                <rect key="frame" x="0.0" y="30" width="478" height="34"/>
+                                <rect key="frame" x="0.0" y="30" width="478" height="110"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
@@ -54,16 +54,6 @@
                                     <outlet property="delegate" destination="KGk-i7-Jjw" id="7hu-2j-PTb"/>
                                 </connections>
                             </textField>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FFZ-hf-NzI">
-                                <rect key="frame" x="0.0" y="72" width="478" height="69"/>
-                                <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                </segments>
-                                <connections>
-                                    <action selector="segmentedControlChanged" destination="KGk-i7-Jjw" eventType="valueChanged" id="wlr-NP-DIP"/>
-                                </connections>
-                            </segmentedControl>
                         </subviews>
                     </stackView>
                 </subviews>
@@ -80,7 +70,6 @@
             <connections>
                 <outlet property="iconView" destination="oqo-Jv-I0U" id="K7C-tf-wjn"/>
                 <outlet property="nameLabel" destination="C2R-Js-2eG" id="QQm-Pv-Gp2"/>
-                <outlet property="segmentedControl" destination="FFZ-hf-NzI" id="dIb-Em-vWo"/>
                 <outlet property="textField" destination="l35-SY-mm1" id="Cfq-ff-3ox"/>
             </connections>
             <point key="canvasLocation" x="185.59999999999999" y="107.0464767616192"/>

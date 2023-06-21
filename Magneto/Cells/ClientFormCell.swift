@@ -17,7 +17,6 @@ class ClientFormCell: UITableViewCell {
         textField.textColor = .normalText
         textField.backgroundColor = .cellBackgroundAlt
         textField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-        segmentedControl.tintColor = .tint
     }
 
     // MARK: Properties
@@ -36,13 +35,8 @@ class ClientFormCell: UITableViewCell {
     @IBOutlet private var iconView: UIImageView!
     @IBOutlet private var nameLabel: UILabel!
     @IBOutlet private var textField: UITextField!
-    @IBOutlet private var segmentedControl: UISegmentedControl!
 
     // MARK: Actions
-    @IBAction private func segmentedControlChanged() {
-        client?.setValue(segmentedControl.selectedSegmentIndex, for: formField)
-    }
-    
     @IBAction private func textFieldEditingChanged() {
         client?.setValue(textField.text ?? "", for: formField)
     }
@@ -56,22 +50,8 @@ class ClientFormCell: UITableViewCell {
         textField.keyboardType = formField.keyboardType
         textField.textContentType = formField.textContentType
 
-        if let options = formField.options, !options.isEmpty {
-            textField.sy_isHidden = true
-            segmentedControl.sy_isHidden = false
-            segmentedControl.removeAllSegments()
-            options.keys.sorted().forEach { (index) in
-                segmentedControl.insertSegment(withTitle: options[index], at: index, animated: false)
-            }
-            segmentedControl.selectedSegmentIndex = client.intValue(for: formField) ?? 0
-            segmentedControl.setTitleTextAttributes([.font: UIFont.preferredFont(forTextStyle: .body)], for: .normal)
-        }
-        else {
-            textField.sy_isHidden = false
-            segmentedControl.sy_isHidden = true
-            textField.placeholder = formField.placeholder
-            textField.text = client.stringValue(for: formField)
-        }
+        textField.placeholder = formField.placeholder
+        textField.text = client.stringValue(for: formField)
     }
 
     // MARK: Actions

@@ -14,19 +14,17 @@ class Client: Codable, Hashable {
     var name: String        = ""
     var host: String        = "127.0.0.1"
     var port: Int?          = nil
-    var software: Software  = .transmission
     var username: String?   = ""
     var password: String?   = ""
     
     var portOrDefault: Int {
-        port ?? software.defaultPort
+        port ?? 9091
     }
     
     init(host: String, name: String) {
         self.id         = UUID().uuidString
         self.host       = host
         self.name       = name
-        self.software   = .transmission
     }
     
     private enum CodingKeys: String, CodingKey {
@@ -34,7 +32,6 @@ class Client: Codable, Hashable {
         case name = "name"
         case host = "host"
         case port = "port"
-        case software = "software"
         case username = "username"
         case password = "password"
     }
@@ -74,13 +71,13 @@ extension Client {
     
     var apiURL: URL {
         var comps = baseComponents
-        comps.path = software.apiPath
+        comps.path = "/transmission/rpc/"
         return comps.url!
     }
     
     var webURL: URL {
         var comps = baseComponents
-        comps.path = software.webPath
+        comps.path = "/transmission/web/"
         return comps.url!
     }
     
@@ -91,30 +88,6 @@ extension Client {
         components.user = username
         components.password = password
         return components.url!
-    }
-}
-
-extension Client {
-    enum Software: Int, Codable {
-        case transmission = 0
-        
-        var defaultPort: Int {
-            switch self {
-            case .transmission: return 9091
-            }
-        }
-        
-        var apiPath: String {
-            switch self {
-            case .transmission: return "/transmission/rpc/"
-            }
-        }
-        
-        var webPath: String {
-            switch self {
-            case .transmission: return "/transmission/web/"
-            }
-        }
     }
 }
 

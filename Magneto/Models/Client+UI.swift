@@ -38,14 +38,13 @@ extension Client {
 
 extension Client {
     enum FormField : CaseIterable {
-        case name, host, port, software, username, password
+        case name, host, port, username, password
         
         var name: String {
             switch self {
             case .name:     return "client.name".localized
             case .host:     return "client.host".localized
             case .port:     return "client.port".localized
-            case .software: return "client.software".localized
             case .username: return "client.username".localized
             case .password: return "client.password".localized
             }
@@ -56,7 +55,6 @@ extension Client {
             case .name:     return "client.name.placeholder".localized
             case .host:     return "client.host.placeholder".localized
             case .port:     return "client.port.placeholder".localized
-            case .software: return "client.software.placeholder".localized
             case .username: return "client.username.placeholder".localized
             case .password: return "client.password.placeholder".localized
             }
@@ -67,16 +65,8 @@ extension Client {
             case .name:     return .icon(.bookmark)
             case .host:     return .icon(.network)
             case .port:     return .icon(.number)
-            case .software: return .icon(.app)
             case .username: return .icon(.user)
             case .password: return .icon(.secret)
-            }
-        }
-        
-        var options: [Int: String]? {
-            switch self {
-            case .software: return [Software.transmission.rawValue: "Transmission"]
-            default:        return nil
             }
         }
         
@@ -85,7 +75,6 @@ extension Client {
             case .name:     return .default
             case .host:     return .URL
             case .port:     return .numberPad
-            case .software: return .default
             case .username: return .default
             case .password: return .default
             }
@@ -96,7 +85,6 @@ extension Client {
             case .name:     return nil
             case .host:     return .URL
             case .port:     return nil
-            case .software: return nil
             case .username: return .username
             case .password: return .password
             }
@@ -110,7 +98,6 @@ extension Client {
         case .name:     return name
         case .host:     return host
         case .port:     return port.map(String.init)
-        case .software: return nil
         case .username: return username
         case .password: return password
         }
@@ -121,7 +108,6 @@ extension Client {
         case .name:     return nil
         case .host:     return nil
         case .port:     return port
-        case .software: return software.rawValue
         case .username: return nil
         case .password: return nil
         }
@@ -132,7 +118,6 @@ extension Client {
         case .name:     name = (value as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? name
         case .host:     host = (value as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? host
         case .port:     port = (value as? Int) ?? port
-        case .software: software = Software(rawValue: (value as? Int) ?? software.rawValue) ?? software
         case .username: username = (value as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? username
         case .password: password = (value as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? password
         }
