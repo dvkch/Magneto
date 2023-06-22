@@ -92,7 +92,7 @@ class MainVC: ViewController {
     
     fileprivate func removeFinished(in client: Client) {
         let hud = HUDAlertController.show(in: self)
-        ClientAPI.shared.removeCompletedTorrents(in: client)
+        TransmissionAPI.shared.removeCompletedTorrents(in: client)
             .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
             .onSuccess { (count) in
                 if count > 0 {

@@ -43,14 +43,9 @@ class ResultCell: UITableViewCell {
             dateFont = UIFont.systemFont(ofSize: dateFont.pointSize, weight: .semibold)
         }
         
-        let bf = ByteCountFormatter()
-        bf.allowedUnits = [.useAll]
-        bf.countStyle = .file
-        let size = bf.string(fromByteCount: result.size)
-        
         let string = NSMutableAttributedString()
         string.append(result.name + "\n", font: .preferredFont(forTextStyle: .body), color: .normalText)
-        string.append(size + ", ", font: .preferredFont(forTextStyle: .footnote), color: .altText)
+        string.append(result.size + ", ", font: .preferredFont(forTextStyle: .footnote), color: .altText)
         string.append(dateString + ", ", font: dateFont, color: .altText)
         string.append(String(result.seeders), font: .preferredFont(forTextStyle: .footnote), color: .seeder)
         string.append("/", font: .preferredFont(forTextStyle: .footnote), color: .gray)

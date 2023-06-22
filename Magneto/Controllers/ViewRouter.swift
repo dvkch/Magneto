@@ -47,9 +47,8 @@ class ViewRouter {
     // MARK: Routes
     func handleUpdateCheck(in scene: UIWindowScene) {
         let currentBuild = Int(Bundle.main.buildVersion) ?? 0
-        WebAPI.shared.getLatestBuildNumber()
-            .onSuccess { (value) in
-                guard let distBuildNumber = value else { return }
+        AppAPI.shared.getLatestBuildNumber()
+            .onSuccess { (distBuildNumber) in
                 guard distBuildNumber > currentBuild else { return }
                 
                 let alert = UIAlertController(title: "alert.update.title".localized, message: "alert.update.message".localized, preferredStyle: .alert)

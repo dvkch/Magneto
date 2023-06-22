@@ -1,5 +1,5 @@
 //
-//  WebAPI.swift
+//  TpbAPI.swift
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 29/11/2018.
@@ -10,10 +10,10 @@ import UIKit
 import Alamofire
 import BrightFutures
 
-class WebAPI: NSObject {
+final class TpbAPI: NSObject, SearchAPI {
     
     // MARK: Init
-    static let shared = WebAPI()
+    static let shared = TpbAPI()
     
     override init() {
         let configuration = URLSessionConfiguration.default
@@ -28,19 +28,7 @@ class WebAPI: NSObject {
     
     // MARK: Properties
     private var session: Session
-    let apiURL = URL(string: "https://bayapi.lol/")!
-    
-    // MARK: Update
-    func getLatestBuildNumber() -> Future<Int?, AppError> {
-        return session
-            .request("https://ota.syan.me/Magneto.plist")
-            .responseFutureData()
-            .map { (data) -> Int? in
-                guard let dic = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any] else { return nil }
-                guard let buildNumberString = dic["CFBundleVersion"] as? String else { return nil }
-                return Int(buildNumberString)
-            }
-    }
+    private let apiURL = URL(string: "https://bayapi.lol/")!
     
     // MARK: Web URL
     private struct Mirror: Codable {
@@ -64,9 +52,9 @@ class WebAPI: NSObject {
             .responseFutureCodable(type: ValidationResponse.self)
             .flatMap {
                 if $0.title.contains("The Pirate Bay") {
-                    return .init(result: .success(url))
+                    return .init(value: url)
                 }
-                return .init(result: .failure(.noAvailableAPI))
+                return .init(error: .noAvailableAPI)
             }
     }
 
@@ -98,13 +86,13 @@ class WebAPI: NSObject {
         return urlComponents.url!
     }
     
-    func getResults(query: String) -> Future<[SearchResult], AppError> {
+    func getResults(query: String) -> Future<[SearchResultTpb], AppError> {
         let url = getQueryURL(query: query)
         return session.request(url).validate()
-            .responseFutureCodable(type: [SearchResult].self)
+            .responseFutureCodable(type: [SearchResultTpb].self)
             // a single item with all attributes set to 0 is returned when no results have been found, let's handle this properly
-            .map { $0.filter { $0.size > 0 } }
-            .recoverWith { (error) -> Future<[SearchResult], AppError> in
+            .map { $0.filter { $0.sizeInt > 0 } }
+            .recoverWith { (error) -> Future<[SearchResultTpb], AppError> in
                 if case let .alamofire(request) = error, request.isUnreachable {
                     return .init(error: .noAvailableAPI)
                 }

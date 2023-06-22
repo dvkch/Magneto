@@ -1,5 +1,5 @@
 //
-//  ClientAPI.swift
+//  TransmissionAPI.swift
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 03/12/2018.
@@ -12,10 +12,10 @@ import Alamofire
 
 // https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
 // https://github.com/transmission/transmission/blob/1.70/doc/rpc-spec.txt
-class ClientAPI: NSObject {
+class TransmissionAPI: NSObject {
 
     // MARK: Init
-    static let shared = ClientAPI()
+    static let shared = TransmissionAPI()
     
     override init() {
         let configuration = URLSessionConfiguration.default
@@ -110,7 +110,7 @@ class ClientAPI: NSObject {
     }
 }
 
-extension ClientAPI : RequestInterceptor {
+extension TransmissionAPI: RequestInterceptor {
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         guard let client = urlRequest.client else { return completion(.success(urlRequest)) }

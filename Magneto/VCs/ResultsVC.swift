@@ -70,7 +70,7 @@ class ResultsVC: ViewController {
         let query = self.searchQuery
         isLoadingResults = true
 
-        WebAPI.shared.getResults(query: query).onComplete { [weak self] result in
+        TpbAPI.shared.getResults(query: query).onComplete { [weak self] result in
             guard let self = self else { return }
             guard self.searchQuery == query else { return }
             
@@ -92,15 +92,13 @@ class ResultsVC: ViewController {
     
     fileprivate func shareResult(_ result: SearchResult, from sender: UIView) {
         let hud = HUDAlertController.show(in: self)
-        WebAPI.shared.getWebMirrorURL()
+        result.pageURL()
             .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
             .onFailure { (error) in
                 UIAlertController.show(for: error, close: "action.close".localized, in: self)
             }
-            .onSuccess { (mirrorURL) in
-                let url = result.pageURL(mirror: mirrorURL)
-                
-                let vc = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            .onSuccess { (pageURL) in
+                let vc = UIActivityViewController(activityItems: [pageURL], applicationActivities: nil)
                 vc.popoverPresentationController?.sourceRect = sender.frame
                 vc.popoverPresentationController?.sourceView = sender
                 
@@ -110,15 +108,23 @@ class ResultsVC: ViewController {
     }
     
     fileprivate func openResultInSafari(_ result: SearchResult) {
-        let hud = HUDAlertController.show(in: self)
-        WebAPI.shared.getWebMirrorURL()
+        let hud: HUDAlertController?
+        if result.pageURLAvailable {
+            hud = nil
+        }
+        else {
+            hud = HUDAlertController.show(in: self)
+        }
+
+        result.pageURL()
             .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
             .onFailure { (error) in
                 UIAlertController.show(for: error, close: "action.close".localized, in: self)
             }
-            .onSuccess { (mirrorURL) in
-                let url = result.pageURL(mirror: mirrorURL)
-                self.openSafariURL(url)
+            .onSuccess { (pageURL) in
+                DispatchQueue.main.async {
+                    self.openSafariURL(pageURL)
+                }
                 self.tableView.setEditing(false, animated: true)
         }
     }

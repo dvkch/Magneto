@@ -8,7 +8,7 @@
 
 import UIKit
 import SYKit
-
+import BrightFutures
 
 class MagnetPopupVC: ViewController {
 
@@ -92,10 +92,10 @@ class MagnetPopupVC: ViewController {
         case magnet(URL)
         case result(SearchResult)
 
-        var url: URL {
+        func url() -> Future<URL, AppError> {
             switch self {
-            case .magnet(let url):    return url
-            case .result(let result): return result.magnetURL
+            case .magnet(let url):    return .init(value: url)
+            case .result(let result): return result.magnetURL()
             }
         }
         
@@ -125,28 +125,32 @@ class MagnetPopupVC: ViewController {
     
     // MARK: API
     private func fetchMagnetURLAndAdd(to clientKind: ClientCell.Kind) {
-        let url = torrent.url
-        
-        switch clientKind {
-        case .newClient:
-            break
+        updateForMode(.loading, animated: true)
+        torrent.url()
+            .onSuccess { url in
+                switch clientKind {
+                case .newClient:
+                    break
 
-        case .client(let client), .discoveredClient(let client, _):
-            if let client = client {
-                updateForMode(.loading, animated: true)
-                addMagnetToClient(magnetURL: url, client: client)
+                case .client(let client), .discoveredClient(let client, _):
+                    if let client = client {
+                        self.addMagnetToClient(magnetURL: url, client: client)
+                    }
+
+                case .openURL:
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    self.dismiss(animated: true, completion: nil)
+                }
             }
-
-        case .openURL:
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            dismiss(animated: true, completion: nil)
-        }
+            .onFailure { error in
+                self.updateForMode(.failure(error.localizedDescription), animated: true)
+            }
     }
     
     private func addMagnetToClient(magnetURL: URL, client: Client) {
         updateForMode(.loading, animated: true)
         
-        ClientAPI.shared.addMagnet(magnetURL, to: client)
+        TransmissionAPI.shared.addMagnet(magnetURL, to: client)
             .onSuccess { message in
                 var successMessage = "torrent.success".localized
                 if let message = message, !message.isEmpty {
