@@ -17,7 +17,9 @@ class MainVC: ViewController {
         super.viewDidLoad()
         navigationItem.title = Bundle.main.localizedName
         navigationItem.largeTitleDisplayMode = .always
-        navigationItem.rightBarButtonItems = [loaderBarButtonItem]
+        navigationItem.rightBarButtonItems = [searchAPIButtonItem, loaderBarButtonItem]
+        
+        searchAPIButtonItem.title = "search_api".localized
 
         resultsVC.delegate = self
         resultsVC.searchController = searchController
@@ -55,6 +57,9 @@ class MainVC: ViewController {
         helpButton.tintColor = .normalTextOnTint
         helpButton.layer.cornerRadius = 16
         helpButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(searchAPIChanged), name: .searchAPIChanged, object: nil)
+        searchAPIChanged()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,6 +76,7 @@ class MainVC: ViewController {
     private var viewDidAppearOnce: Bool = false
     
     // MARK: Views
+    private let searchAPIButtonItem: UIBarButtonItem = .init()
     private let loaderBarButtonItem: UIBarButtonItem = .loader(color: .normalTextOnTint)
     private let resultsVC = ResultsVC()
     private lazy var searchController = UISearchController(searchResultsController: resultsVC)
@@ -78,6 +84,18 @@ class MainVC: ViewController {
     @IBOutlet private var helpButton: UIButton!
     
     // MARK: Actions
+    @objc private func searchAPIChanged() {
+        let apis = SearchAPIKind.allCases.map { kind in
+            let action = UIAction(title: kind.title, image: .icon(kind.icon), attributes: []) { _ in
+                Preferences.shared.searchAPI = kind
+            }
+            action.state = Preferences.shared.searchAPI == kind ? .on : .off
+            return action
+        }
+        searchAPIButtonItem.menu = UIMenu(title: "search_api".localized, children: apis)
+        searchAPIButtonItem.image = .icon(Preferences.shared.searchAPI.icon)
+    }
+
     @IBAction private func helpButtonTap() {
         let alert = UIAlertController(
             title: "alert.help.title".localized,

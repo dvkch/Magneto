@@ -9,18 +9,17 @@
 import Foundation
 import BrightFutures
 
-protocol SearchAPI <SearchResult> {
-    associatedtype SearchResult
+protocol SearchAPI <Result> {
+    associatedtype Result: SearchResult
 
     static var shared: Self { get }
     
-    func getResults(query: String) -> Future<[SearchResult], AppError>
+    func getResults(query: String) -> Future<[Result], AppError>
 }
 
-
-enum SearchAPIKind {
-    case tpb
-    case leetx
+enum SearchAPIKind: String, Codable, Equatable, CaseIterable {
+    case tpb = "tpb"
+    case leetx = "leetx"
     
     var title: String {
         switch self {
@@ -29,10 +28,10 @@ enum SearchAPIKind {
         }
     }
     
-    var api: any SearchAPI {
+    var icon: UIImage.Icon {
         switch self {
-        case .tpb:      return TpbAPI.shared
-        case .leetx:    return LeetxAPI.shared
+        case .tpb:      return .sailboat
+        case .leetx:    return .cloud
         }
     }
 }

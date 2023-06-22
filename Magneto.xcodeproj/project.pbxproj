@@ -54,9 +54,11 @@
 		97C1E5032A16B0AF003F432E /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C1E5022A16B0AF003F432E /* Action.swift */; };
 		97CEA9402A16CC0C00212F49 /* ClientsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CEA93F2A16CC0C00212F49 /* ClientsDataSource.swift */; };
 		97CEA9432A16CE9100212F49 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CEA9422A16CE9100212F49 /* NavigationBar.swift */; };
+		97DA4D842A43C22700E4F04D /* LeetxAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DA4D832A43C22700E4F04D /* LeetxAPI.swift */; };
 		97DA4D862A43C23C00E4F04D /* SearchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DA4D852A43C23C00E4F04D /* SearchAPI.swift */; };
 		97DA4D882A43C29F00E4F04D /* AppAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DA4D872A43C29F00E4F04D /* AppAPI.swift */; };
 		97DA4D8A2A43C3EB00E4F04D /* SearchResultTpb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DA4D892A43C3EB00E4F04D /* SearchResultTpb.swift */; };
+		97DA4D8C2A43C5B400E4F04D /* SearchResultLeetx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DA4D8B2A43C5B400E4F04D /* SearchResultLeetx.swift */; };
 		97F911481BC2C45C00BF1848 /* EditClientVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* EditClientVC.xib */; };
 		97F9114D1BC2C73D00BF1848 /* ClientFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */; };
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
@@ -128,9 +130,11 @@
 		97C1E5022A16B0AF003F432E /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		97CEA93F2A16CC0C00212F49 /* ClientsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientsDataSource.swift; sourceTree = "<group>"; };
 		97CEA9422A16CE9100212F49 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
+		97DA4D832A43C22700E4F04D /* LeetxAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeetxAPI.swift; sourceTree = "<group>"; };
 		97DA4D852A43C23C00E4F04D /* SearchAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPI.swift; sourceTree = "<group>"; };
 		97DA4D872A43C29F00E4F04D /* AppAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAPI.swift; sourceTree = "<group>"; };
 		97DA4D892A43C3EB00E4F04D /* SearchResultTpb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTpb.swift; sourceTree = "<group>"; };
+		97DA4D8B2A43C5B400E4F04D /* SearchResultLeetx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultLeetx.swift; sourceTree = "<group>"; };
 		97F911461BC2C45C00BF1848 /* EditClientVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditClientVC.xib; sourceTree = "<group>"; };
 		97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientFormCell.xib; sourceTree = "<group>"; };
 		BA3E80D93A8CC210E3C1C221 /* Pods-Magneto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Magneto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Magneto/Pods-Magneto.debug.xcconfig"; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 			children = (
 				97DA4D872A43C29F00E4F04D /* AppAPI.swift */,
 				97DA4D852A43C23C00E4F04D /* SearchAPI.swift */,
+				97DA4D832A43C22700E4F04D /* LeetxAPI.swift */,
 				970130DF21B07EC000E7CFEC /* TpbAPI.swift */,
 				974D373A21B49D4800C0FDDE /* TransmissionAPI.swift */,
 				9771AB3621AF2BA4005DE97D /* Preferences.swift */,
@@ -199,6 +204,7 @@
 				9768CA6621B57B33000AA7C2 /* Client+UI.swift */,
 				974D372921B150FC00C0FDDE /* SearchResult.swift */,
 				97DA4D892A43C3EB00E4F04D /* SearchResultTpb.swift */,
+				97DA4D8B2A43C5B400E4F04D /* SearchResultLeetx.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -516,6 +522,7 @@
 				97C1E4F32A164203003F432E /* UIBarButtonItem+SY.swift in Sources */,
 				9771AB2921AEF898005DE97D /* NavigationController.swift in Sources */,
 				974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */,
+				97DA4D8C2A43C5B400E4F04D /* SearchResultLeetx.swift in Sources */,
 				97DA4D862A43C23C00E4F04D /* SearchAPI.swift in Sources */,
 				9771AB3321AF08E4005DE97D /* ResultCell.swift in Sources */,
 				97CEA9402A16CC0C00212F49 /* ClientsDataSource.swift in Sources */,
@@ -523,6 +530,7 @@
 				9747560A232AB4DA0038698E /* ViewController.swift in Sources */,
 				97DA4D882A43C29F00E4F04D /* AppAPI.swift in Sources */,
 				9771AB3121AF0534005DE97D /* ClientCell.swift in Sources */,
+				97DA4D842A43C22700E4F04D /* LeetxAPI.swift in Sources */,
 				972589AD21B0AD6D00FCE9D5 /* AppError.swift in Sources */,
 				97C0D28724C71CBA00AFB781 /* SuggestionsVC.swift in Sources */,
 				97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */,

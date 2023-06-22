@@ -78,3 +78,5 @@
 "error.form.missing %@"         = "%@ doit être rempli";
 "error.form.missingIfHas %@ %@" = "%@ doit être rempli en utilisant %@";
 "error.form.invalid %@"         = "%@ n'est pas valide";
+
+"search_api"    = "API de recherche";

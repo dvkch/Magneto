@@ -24,6 +24,8 @@ class ResultsVC: ViewController {
         tableView.registerCell(ResultCell.self)
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(searchAPIChanged), name: .searchAPIChanged, object: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -39,7 +41,7 @@ class ResultsVC: ViewController {
             refreshResults()
         }
     }
-    private var searchResults: [SearchResult]? {
+    private var searchResults: [any SearchResult]? {
         didSet {
             tableView.reloadData()
             tableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false)
@@ -59,6 +61,10 @@ class ResultsVC: ViewController {
     #endif
 
     // MARK: Actions
+    @objc private func searchAPIChanged() {
+        refreshResults()
+    }
+
     fileprivate func refreshResults() {
         searchResults = nil
 
@@ -70,7 +76,7 @@ class ResultsVC: ViewController {
         let query = self.searchQuery
         isLoadingResults = true
 
-        TpbAPI.shared.getResults(query: query).onComplete { [weak self] result in
+        let closure = { [weak self] (result: Result<[any SearchResult], AppError>) in
             guard let self = self else { return }
             guard self.searchQuery == query else { return }
             
@@ -86,6 +92,17 @@ class ResultsVC: ViewController {
                     for: error, title: "error.title.cannotLoadResults".localized,
                     close: "action.close".localized, in: self
                 )
+            }
+        }
+        
+        switch Preferences.shared.searchAPI {
+        case .tpb:
+            TpbAPI.shared.getResults(query: query).onComplete {
+                closure($0.map { $0 as [any SearchResult] })
+            }
+        case .leetx:
+            LeetxAPI.shared.getResults(query: query).onComplete {
+                closure($0.map { $0 as [any SearchResult] })
             }
         }
     }

@@ -13,6 +13,7 @@ extension UIImage {
         case help       = "questionmark"
         case openMagnet = "arrowshape.turn.up.right"
         case cloud      = "cloud"
+        case sailboat   = "sailboat"
         case edit       = "pencil"                  // 17x15
         case delete     = "trash"                   // 19x21
         case share      = "square.and.arrow.up"     // 19x21

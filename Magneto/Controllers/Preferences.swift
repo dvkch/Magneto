@@ -11,6 +11,7 @@ import SYKit
 
 extension NSNotification.Name {
     static let clientsChanged = Notification.Name("Preferences.clientsChanged")
+    static let searchAPIChanged = Notification.Name("Preferences.searchAPI")
 }
 
 class Preferences: NSObject {
@@ -56,4 +57,8 @@ class Preferences: NSObject {
     func clearPrevSearches() {
         prevSearches = []
     }
+    
+    // MARK: API
+    @PrefValue(key: "search_api", defaultValue: .tpb, notification: .searchAPIChanged)
+    var searchAPI: SearchAPIKind
 }
