@@ -35,7 +35,8 @@ platform :ios do
         promptIncrementBuild
         gym(export_method: "ad-hoc")
 
-        copyFile("../Magneto/Info.plist", "../build/Magneto.plist")
+        `unzip -p ../build/Magneto.ipa Payload/Magneto.app/Info.plist > ../build/Magneto.plist`
+        `plutil -convert xml1 ../build/Magneto.plist`
 
         ftp(host: "ftp.stanislaschevallier.fr",
             username: 'stanislaw',
