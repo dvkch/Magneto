@@ -33,6 +33,9 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
         DispatchQueue.main.async {
             // surprisingly not done automatically ¯\_(ツ)_/¯
             self.scene(scene, openURLContexts: connectionOptions.urlContexts)
+            
+            // check updates
+            ViewRouter.shared.handleUpdateCheck(in: windowScene)
         }
     }
     

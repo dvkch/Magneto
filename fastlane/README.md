@@ -29,9 +29,7 @@ Create signing certs and provisioning profiles if needed
 [bundle exec] fastlane ios ota
 ```
 
-Submit a new Beta Build using FTP
-
-This will also make sure the profile is up to date
+Submit a new build
 
 ----
 

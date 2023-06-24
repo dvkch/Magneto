@@ -30,21 +30,22 @@ class AppAPI: NSObject {
     private var session: Session
 
     // MARK: Update
-    private struct BundleInfoPlist: Codable {
-        let version: Int
+    
+    private struct BundleInfoPlist: Decodable {
+        let version: IntMaybeString
         private enum CodingKeys: String, CodingKey {
             case version = "CFBundleVersion"
         }
     }
     func getLatestBuildNumber() -> Future<Int, AppError> {
         return session
-            .request("https://ota.syan.me/Magneto.plist")
+            .request("https://ota.syan.me/apps/Magneto.plist")
             .responseFutureData()
             .flatMap {
                 guard let onlinePlist = try? PropertyListDecoder().decode(BundleInfoPlist.self, from: $0) else {
                     return .init(error: .noAvailableAPI)
                 }
-                return .init(value: onlinePlist.version)
+                return .init(value: onlinePlist.version.value)
             }
     }
 }

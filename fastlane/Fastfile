@@ -25,32 +25,24 @@ platform :ios do
         end
     end
 
-    def copyFile(src, dest)
-        File.write(dest, File.read(src))
-    end
-
-    desc "Submit a new Beta Build using FTP"
-    desc "This will also make sure the profile is up to date"
+    desc "Submit a new build"
     lane :ota do
         promptIncrementBuild
+
         gym(export_method: "ad-hoc")
-
-        `unzip -p ../build/Magneto.ipa Payload/Magneto.app/Info.plist > ../build/Magneto.plist`
-        `plutil -convert xml1 ../build/Magneto.plist`
-
-        ftp(host: "ftp.stanislaschevallier.fr",
-            username: 'stanislaw',
-            upload: {
-                src: 'build/Magneto.ipa',
-                dest: '/www_ota/'
+        build_mac_app(
+            export_method: "developer-id",
+            export_options: {
+                provisioningProfiles: {
+                    "me.syan.TorrentAdder" => "me.syan.TorrentAdder DeveloperID"
+                }
             }
         )
-        ftp(host: "ftp.stanislaschevallier.fr",
-            username: 'stanislaw',
-            upload: {
-                src: 'build/Magneto.plist',
-                dest: '/www_ota/'
-            }
-        )
-  end
+
+        Dir.chdir("..") do
+            `unzip -p build/Magneto.ipa Payload/Magneto.app/Info.plist > build/Magneto.plist`
+            `plutil -convert xml1 build/Magneto.plist`
+            `deploy_ota build/Magneto.ipa build/Magneto.plist`
+        end
+    end
 end

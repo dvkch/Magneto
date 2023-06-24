@@ -53,7 +53,12 @@ class ViewRouter {
                 
                 let alert = UIAlertController(title: "alert.update.title".localized, message: "alert.update.message".localized, preferredStyle: .alert)
                 alert.addAction(title: "action.update".localized, style: .default) { _ in
-                    UIApplication.shared.open(URL(string: "https://ota.syan.me/")!, options: [:], completionHandler: nil)
+                    #if targetEnvironment(macCatalyst)
+                    let url = URL(string: "https://github.com/dvkch/Magneto/releases/")!
+                    #else
+                    let url = URL(string: "https://ota.syan.me/")!
+                    #endif
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
                 alert.addAction(title: "action.cancel".localized, style: .cancel, handler: nil)
                 self.mainVC(in: scene)?.present(alert, animated: true, completion: nil)
