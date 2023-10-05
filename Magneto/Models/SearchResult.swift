@@ -9,15 +9,20 @@
 import Foundation
 import BrightFutures
 
-protocol SearchResult: Decodable, CustomStringConvertible {
+enum Recentness {
+    case new, recent, regular
+}
 
+protocol SearchResult: Decodable, CustomStringConvertible {
     // MARK: Stored properties
     var name: String    { get }
     var seeders: Int    { get }
     var leechers: Int   { get }
     var size: String    { get }
     var verified: Bool  { get }
-    var added: Date     { get }
+
+    var added: String       { get }
+    var recentness: Recentness  { get }
     
     // MARK: Computed properties
     var pageURLAvailable: Bool { get }
@@ -26,7 +31,13 @@ protocol SearchResult: Decodable, CustomStringConvertible {
 }
 
 extension SearchResult {
-    var addedDateString: String {
+    var description: String {
+        return "Result: \(name), \(size), \(added), \(seeders)/\(leechers), vip=\(verified)"
+    }
+}
+
+extension SearchResult {
+    static func string(for added: Date) -> String {
         if Date().timeIntervalSince(added) > 1440 * 3600 { // two months
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
@@ -40,10 +51,16 @@ extension SearchResult {
             return formatter.localizedString(for: added, relativeTo: Date())
         }
     }
-}
-
-extension SearchResult {
-    var description: String {
-        return "Result: \(name), \(size), \(added), \(seeders)/\(leechers), vip=\(verified)"
+    
+    static func recentness(for added: Date) -> Recentness {
+        if fabs(added.timeIntervalSinceNow) < 48 * 3600 {
+            return .new
+        }
+        else if fabs(added.timeIntervalSinceNow) < 360 * 3600 {
+            return .recent
+        }
+        else {
+            return .regular
+        }
     }
 }

@@ -28,18 +28,17 @@ final class TpbAPI: NSObject, SearchAPI {
     
     // MARK: Properties
     private var session: Session
-    private let apiURL = URL(string: "https://bayapi.lol/")!
     
     // MARK: Web URL
     private struct Mirror: Codable {
-        let url: String
+        let url: URL
     }
     private var webMirrorURLs: [URL] = []
     private func getWebMirrorURLs() -> Future<[URL], AppError> {
-        return session.request("https://hapier.syan.me/api/scrappers/tpb_proxies", parameters: ["url": "https://pirateproxy.wtf/"])
+        return session.request("https://hapier.syan.me/api/scrappers/tpb_proxies", parameters: ["url": "https://piratebayproxy.info/"])
             .validate()
             .responseFutureCodable(type: [Mirror].self)
-            .map { $0.compactMap { URL(string: "https://" + $0.url) } }
+            .map { $0.map(\.url) }
             .onSuccess { self.webMirrorURLs = $0 }
     }
     
@@ -76,26 +75,21 @@ final class TpbAPI: NSObject, SearchAPI {
     }
     
     // MARK: Methods
-    private func getQueryURL(query: String) -> URL {
-        var urlComponents = URLComponents(url: apiURL, resolvingAgainstBaseURL: true)!
-        urlComponents.path = "/q.php"
-        urlComponents.queryItems = [
-            URLQueryItem(name: "q", value: query),
-            URLQueryItem(name: "cat", value: "")
-        ]
-        return urlComponents.url!
-    }
-    
     func getResults(query: String) -> Future<[SearchResultTpb], AppError> {
-        let url = getQueryURL(query: query)
-        return session.request(url).validate()
+        return getWebMirrorURL().flatMap { self.getResults(query: query, mirror: $0) }
+    }
+
+    private func getResults(query: String, mirror: URL) -> Future<[SearchResultTpb], AppError> {
+        let url = mirror.appendingPathComponent("/search/\(query)/1/99/0")
+        
+        return session.request("https://hapier.syan.me/api/scrappers/tpb_results", parameters: ["url": url.absoluteString])
+            .validate()
             .responseFutureCodable(type: [SearchResultTpb].self)
-            // a single item with all attributes set to 0 is returned when no results have been found, let's handle this properly
-            .map { $0.filter { $0.sizeInt > 0 } }
             .recoverWith { (error) -> Future<[SearchResultTpb], AppError> in
                 if case let .alamofire(request) = error, request.isUnreachable {
                     return .init(error: .noAvailableAPI)
                 }
+                print(error)
                 return .init(error: error)
             }
     }

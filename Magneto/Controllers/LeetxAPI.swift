@@ -31,16 +31,6 @@ final class LeetxAPI: NSObject, SearchAPI {
     let apiURL = URL(string: "https://www.1337x.to")!
     
     // MARK: Methods
-    private func getQueryURL(query: String) -> URL {
-        var urlComponents = URLComponents(url: apiURL, resolvingAgainstBaseURL: true)!
-        urlComponents.path = "/q.php"
-        urlComponents.queryItems = [
-            URLQueryItem(name: "q", value: query),
-            URLQueryItem(name: "cat", value: "")
-        ]
-        return urlComponents.url!
-    }
-    
     func getResults(query: String) -> Future<[SearchResultLeetx], AppError> {
         let escapedQuery = query
             .replacingOccurrences(of: " ", with: "+")

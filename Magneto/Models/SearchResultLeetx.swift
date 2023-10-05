@@ -17,7 +17,8 @@ struct SearchResultLeetx : SearchResult {
     let leechers: Int
     let size: String
     let verified: Bool
-    let added: Date
+    private let addedString: String
+    private let addedDate: Date?
     let resultPageURL: URL
 
     // MARK: Decodable
@@ -42,9 +43,20 @@ struct SearchResultLeetx : SearchResult {
     // "7am Jun. 15th"
     private static let dateFormatterRecent: DateFormatter = {
         let formatter = DateFormatter()
+        formatter.defaultDate = Date()
         formatter.locale = .init(identifier: "en_US")
         formatter.timeZone = .autoupdatingCurrent
-        formatter.dateFormat = "ha MM dd yyyy"
+        formatter.dateFormat = "ha MM dd"
+        return formatter
+    }()
+    
+    // "7:35am"
+    private static let dateFormatterToday: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.defaultDate = Date()
+        formatter.locale = .init(identifier: "en_US")
+        formatter.timeZone = .autoupdatingCurrent
+        formatter.dateFormat = "h:mma"
         return formatter
     }()
     
@@ -57,8 +69,11 @@ struct SearchResultLeetx : SearchResult {
             .replacingOccurrences(of: "'", with: "")
             .replacingOccurrences(of: ".", with: "")
         
-        let currentYear = Calendar.current.component(.year, from: Date())
-        return dateFormatterOld.date(from: cleanedUp) ?? dateFormatterRecent.date(from: cleanedUp + " \(currentYear)")
+        return (
+            dateFormatterOld.date(from: cleanedUp) ??
+            dateFormatterRecent.date(from: cleanedUp) ??
+            dateFormatterToday.date(from: cleanedUp)
+        )
     }
     
     init(from decoder: Decoder) throws {
@@ -69,8 +84,8 @@ struct SearchResultLeetx : SearchResult {
         size = try container.decode(String.self, forKey: .size)
         verified = false
         
-        let dateString = (try container.decode(String.self, forKey: .added))
-        added = SearchResultLeetx.parseDate(string: dateString) ?? Date(timeIntervalSince1970: 0)
+        addedString = (try container.decode(String.self, forKey: .added))
+        addedDate = SearchResultLeetx.parseDate(string: addedString)
         resultPageURL = LeetxAPI.shared.apiURL.appendingPathComponent(try container.decode(String.self, forKey: .resultPageURL))
     }
 
@@ -83,5 +98,20 @@ struct SearchResultLeetx : SearchResult {
 
     func magnetURL() -> Future<URL, AppError> {
         return LeetxAPI.shared.getMagnet(result: self)
+    }
+    
+    // MARK: Date
+    var added: String {
+        if let addedDate {
+            return type(of: self).string(for: addedDate)
+        }
+        return addedString
+    }
+    
+    var recentness: Recentness {
+        if let addedDate {
+            return type(of: self).recentness(for: addedDate)
+        }
+        return .new
     }
 }
