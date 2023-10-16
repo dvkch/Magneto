@@ -65,8 +65,9 @@ struct SearchResultTpb : SearchResult {
     
     private static func parseDate(string: String) -> Date? {
         let recentDate = string
-            .replacingOccurrences(of: "Today ", with: "")
-            .replacingOccurrences(of: "Y-day ", with: "")
+            .replacingOccurrences(of: "Today", with: "")
+            .replacingOccurrences(of: "Y-day", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
 
         return (
             dateFormatterOld.date(from: string) ??
