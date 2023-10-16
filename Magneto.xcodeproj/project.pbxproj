@@ -361,7 +361,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = SY;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					F8986756192A317C00735175 = {
