@@ -28,7 +28,12 @@ extension DataRequest {
     @discardableResult
     func responseCodable<T: Decodable>(queue: DispatchQueue = .main, type: T.Type, completionHandler: @escaping (DataResponse<T, Error>) -> Void) -> Self {
         return responseData(queue: queue) { (responseData) in
-            let responseCodable = responseData.tryMap { try JSONDecoder().decode(T.self, from: $0) }
+            let responseCodable = responseData.tryMap {
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .formatted(.isoFormatter)
+
+                return try decoder.decode(T.self, from: $0)
+            }
             completionHandler(responseCodable)
         }
     }

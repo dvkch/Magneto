@@ -18,7 +18,7 @@ struct SearchResultLeetx : SearchResult {
     let size: String
     let verified: Bool
     private let addedString: String
-    private let addedDate: Date?
+    private let addedParsed: Date?
     let resultPageURL: URL
 
     // MARK: Decodable
@@ -28,64 +28,19 @@ struct SearchResultLeetx : SearchResult {
         case leechers = "leechers"
         case size = "size"
         case added = "added"
+        case addedParsed = "added_parsed"
         case resultPageURL = "url"
-    }
-    
-    // "Jul. 7th '22"
-    private static let dateFormatterOld: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = .init(identifier: "en_US")
-        formatter.timeZone = .autoupdatingCurrent
-        formatter.dateFormat = "MMM dd yy"
-        return formatter
-    }()
-    
-    // "7am Jun. 15th"
-    private static let dateFormatterRecent: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.defaultDate = Date()
-        formatter.locale = .init(identifier: "en_US")
-        formatter.timeZone = .autoupdatingCurrent
-        formatter.dateFormat = "ha MM dd"
-        return formatter
-    }()
-    
-    // "7:35am"
-    private static let dateFormatterToday: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.defaultDate = Date()
-        formatter.locale = .init(identifier: "en_US")
-        formatter.timeZone = .autoupdatingCurrent
-        formatter.dateFormat = "h:mma"
-        return formatter
-    }()
-    
-    private static func parseDate(string: String) -> Date? {
-        let cleanedUp = string
-            .replacingOccurrences(of: "st", with: "")
-            .replacingOccurrences(of: "nd", with: "")
-            .replacingOccurrences(of: "rd", with: "")
-            .replacingOccurrences(of: "th", with: "")
-            .replacingOccurrences(of: "'", with: "")
-            .replacingOccurrences(of: ".", with: "")
-        
-        return (
-            dateFormatterOld.date(from: cleanedUp) ??
-            dateFormatterRecent.date(from: cleanedUp) ??
-            dateFormatterToday.date(from: cleanedUp)
-        )
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.decode(String.self, forKey: .name)
-        seeders = (try container.decode(IntMaybeString.self, forKey: .seeders)).value
-        leechers = (try container.decode(IntMaybeString.self, forKey: .leechers)).value
-        size = try container.decode(String.self, forKey: .size)
-        verified = false
-        
-        addedString = (try container.decode(String.self, forKey: .added))
-        addedDate = SearchResultLeetx.parseDate(string: addedString)
+        name        = try container.decode(String.self, forKey: .name)
+        seeders     = (try container.decode(IntMaybeString.self, forKey: .seeders)).value
+        leechers    = (try container.decode(IntMaybeString.self, forKey: .leechers)).value
+        size        = try container.decode(String.self, forKey: .size)
+        verified    = false
+        addedString = try container.decode(String.self, forKey: .added)
+        addedParsed = try container.decode(Date.self, forKey: .addedParsed)
         resultPageURL = LeetxAPI.shared.apiURL.appendingPathComponent(try container.decode(String.self, forKey: .resultPageURL))
     }
 
@@ -102,15 +57,15 @@ struct SearchResultLeetx : SearchResult {
     
     // MARK: Date
     var added: String {
-        if let addedDate {
-            return type(of: self).string(for: addedDate)
+        if let addedParsed {
+            return type(of: self).string(for: addedParsed)
         }
         return addedString
     }
     
     var recentness: Recentness {
-        if let addedDate {
-            return type(of: self).recentness(for: addedDate)
+        if let addedParsed {
+            return type(of: self).recentness(for: addedParsed)
         }
         return .new
     }

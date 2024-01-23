@@ -24,6 +24,7 @@
 		9768CA6321B55838000AA7C2 /* UIColor+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6221B55838000AA7C2 /* UIColor+SY.swift */; };
 		9768CA6521B5770B000AA7C2 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6421B5770B000AA7C2 /* Client.swift */; };
 		9768CA6721B57B33000AA7C2 /* Client+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6621B57B33000AA7C2 /* Client+UI.swift */; };
+		976BA0152B5F437A0065542F /* DateFormatter+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BA0142B5F437A0065542F /* DateFormatter+SY.swift */; };
 		976D5EF9230E0E3600573E0D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 976D5EFB230E0E3600573E0D /* Localizable.strings */; };
 		976EDB672A1E377700DA0361 /* UISearchController+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976EDB662A1E377700DA0361 /* UISearchController+SY.swift */; };
 		9771AB1321AEC919005DE97D /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1221AEC919005DE97D /* MainVC.swift */; };
@@ -98,6 +99,7 @@
 		9768CA6221B55838000AA7C2 /* UIColor+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SY.swift"; sourceTree = "<group>"; };
 		9768CA6421B5770B000AA7C2 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		9768CA6621B57B33000AA7C2 /* Client+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Client+UI.swift"; sourceTree = "<group>"; };
+		976BA0142B5F437A0065542F /* DateFormatter+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+SY.swift"; sourceTree = "<group>"; };
 		976D5EFA230E0E3600573E0D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		976D5EFD230E0E4400573E0D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		976EDB662A1E377700DA0361 /* UISearchController+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchController+SY.swift"; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			children = (
 				970130E121B084E500E7CFEC /* Alamofire+SY.swift */,
 				97888C9E21B5A745004EB144 /* Codable+SY.swift */,
+				976BA0142B5F437A0065542F /* DateFormatter+SY.swift */,
 				970130E321B08E1000E7CFEC /* Error+SY.swift */,
 				972B4FBB24BBCF270026BFE4 /* String+SY.swift */,
 				97C1E4F22A164203003F432E /* UIBarButtonItem+SY.swift */,
@@ -521,6 +524,7 @@
 				9771AB2D21AEFF09005DE97D /* EditClientVC.swift in Sources */,
 				97C1E4F32A164203003F432E /* UIBarButtonItem+SY.swift in Sources */,
 				9771AB2921AEF898005DE97D /* NavigationController.swift in Sources */,
+				976BA0152B5F437A0065542F /* DateFormatter+SY.swift in Sources */,
 				974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */,
 				97DA4D8C2A43C5B400E4F04D /* SearchResultLeetx.swift in Sources */,
 				97DA4D862A43C23C00E4F04D /* SearchAPI.swift in Sources */,
