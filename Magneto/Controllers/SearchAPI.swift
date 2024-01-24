@@ -20,11 +20,13 @@ protocol SearchAPI <Result> {
 enum SearchAPIKind: String, Codable, Equatable, CaseIterable {
     case tpb = "tpb"
     case leetx = "leetx"
+    case t9 = "t9"
     
     var title: String {
         switch self {
         case .tpb:      return "The Pirate Bay"
         case .leetx:    return "1337x"
+        case .t9:       return "Torrent9"
         }
     }
     
@@ -32,6 +34,7 @@ enum SearchAPIKind: String, Codable, Equatable, CaseIterable {
         switch self {
         case .tpb:      return .sailboat
         case .leetx:    return .cloud
+        case .t9:       return .nine
         }
     }
 }

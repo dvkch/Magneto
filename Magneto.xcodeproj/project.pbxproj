@@ -60,6 +60,8 @@
 		97DA4D882A43C29F00E4F04D /* AppAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DA4D872A43C29F00E4F04D /* AppAPI.swift */; };
 		97DA4D8A2A43C3EB00E4F04D /* SearchResultTpb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DA4D892A43C3EB00E4F04D /* SearchResultTpb.swift */; };
 		97DA4D8C2A43C5B400E4F04D /* SearchResultLeetx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DA4D8B2A43C5B400E4F04D /* SearchResultLeetx.swift */; };
+		97DB10F52B60A6B600FBC685 /* SearchResultT9.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DB10F42B60A6B600FBC685 /* SearchResultT9.swift */; };
+		97DB10F72B60A72400FBC685 /* T9API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DB10F62B60A72400FBC685 /* T9API.swift */; };
 		97F911481BC2C45C00BF1848 /* EditClientVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* EditClientVC.xib */; };
 		97F9114D1BC2C73D00BF1848 /* ClientFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */; };
 		F898675B192A317C00735175 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F898675A192A317C00735175 /* Foundation.framework */; };
@@ -137,6 +139,8 @@
 		97DA4D872A43C29F00E4F04D /* AppAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAPI.swift; sourceTree = "<group>"; };
 		97DA4D892A43C3EB00E4F04D /* SearchResultTpb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTpb.swift; sourceTree = "<group>"; };
 		97DA4D8B2A43C5B400E4F04D /* SearchResultLeetx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultLeetx.swift; sourceTree = "<group>"; };
+		97DB10F42B60A6B600FBC685 /* SearchResultT9.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultT9.swift; sourceTree = "<group>"; };
+		97DB10F62B60A72400FBC685 /* T9API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = T9API.swift; sourceTree = "<group>"; };
 		97F911461BC2C45C00BF1848 /* EditClientVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditClientVC.xib; sourceTree = "<group>"; };
 		97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientFormCell.xib; sourceTree = "<group>"; };
 		BA3E80D93A8CC210E3C1C221 /* Pods-Magneto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Magneto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Magneto/Pods-Magneto.debug.xcconfig"; sourceTree = "<group>"; };
@@ -188,11 +192,12 @@
 			isa = PBXGroup;
 			children = (
 				97DA4D872A43C29F00E4F04D /* AppAPI.swift */,
-				97DA4D852A43C23C00E4F04D /* SearchAPI.swift */,
 				97DA4D832A43C22700E4F04D /* LeetxAPI.swift */,
+				9771AB3621AF2BA4005DE97D /* Preferences.swift */,
+				97DA4D852A43C23C00E4F04D /* SearchAPI.swift */,
+				97DB10F62B60A72400FBC685 /* T9API.swift */,
 				970130DF21B07EC000E7CFEC /* TpbAPI.swift */,
 				974D373A21B49D4800C0FDDE /* TransmissionAPI.swift */,
-				9771AB3621AF2BA4005DE97D /* Preferences.swift */,
 				9715A507251BA32B00C2C52F /* ViewRouter.swift */,
 			);
 			path = Controllers;
@@ -206,8 +211,9 @@
 				9768CA6421B5770B000AA7C2 /* Client.swift */,
 				9768CA6621B57B33000AA7C2 /* Client+UI.swift */,
 				974D372921B150FC00C0FDDE /* SearchResult.swift */,
-				97DA4D892A43C3EB00E4F04D /* SearchResultTpb.swift */,
 				97DA4D8B2A43C5B400E4F04D /* SearchResultLeetx.swift */,
+				97DB10F42B60A6B600FBC685 /* SearchResultT9.swift */,
+				97DA4D892A43C3EB00E4F04D /* SearchResultTpb.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -509,7 +515,9 @@
 				9792F0D72A14EEB9001F2EE1 /* UIImage+SY.swift in Sources */,
 				976EDB672A1E377700DA0361 /* UISearchController+SY.swift in Sources */,
 				97C1E4FE2A16AC3B003F432E /* ResultsVC.swift in Sources */,
+				97DB10F72B60A72400FBC685 /* T9API.swift in Sources */,
 				9715A479251B9CD200C2C52F /* SceneDelegate.swift in Sources */,
+				97DB10F52B60A6B600FBC685 /* SearchResultT9.swift in Sources */,
 				9768CA6721B57B33000AA7C2 /* Client+UI.swift in Sources */,
 				970130E021B07EC000E7CFEC /* TpbAPI.swift in Sources */,
 				9768CA6321B55838000AA7C2 /* UIColor+SY.swift in Sources */,
