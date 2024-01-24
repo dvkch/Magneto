@@ -32,9 +32,9 @@ final class T9API: NSObject, SearchAPI {
     
     // MARK: Methods
     func getResults(query: String) -> Future<[SearchResultT9], AppError> {
-        let escapedQuery = query
-            .addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!
-        let url = apiURL.appendingPathComponent("/recherche/\(escapedQuery)")
+        let url = apiURL
+            .appendingPathComponent("recherche")
+            .appendingPathComponent(query.trimmingCharacters(in: .whitespacesAndNewlines))
 
         return session.request("https://hapier.syan.me/api/scrappers/t9_results", parameters: ["url": url.absoluteString])
             .validate()

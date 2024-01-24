@@ -32,10 +32,10 @@ final class LeetxAPI: NSObject, SearchAPI {
     
     // MARK: Methods
     func getResults(query: String) -> Future<[SearchResultLeetx], AppError> {
-        let escapedQuery = query
-            .replacingOccurrences(of: " ", with: "+")
-            .addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!
-        let url = apiURL.appendingPathComponent("/search/\(escapedQuery)/1/")
+        let url = apiURL
+            .appendingPathComponent("search")
+            .appendingPathComponent(query.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "+"))
+            .appendingPathComponent("1")
 
         return session.request("https://hapier.syan.me/api/scrappers/1337x_results", parameters: ["url": url.absoluteString])
             .validate()

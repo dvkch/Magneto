@@ -80,7 +80,12 @@ final class TpbAPI: NSObject, SearchAPI {
     }
 
     private func getResults(query: String, mirror: URL) -> Future<[SearchResultTpb], AppError> {
-        let url = mirror.appendingPathComponent("/search/\(query)/1/99/0")
+        let url = mirror
+            .appendingPathComponent("search")
+            .appendingPathComponent(query.trimmingCharacters(in: .whitespacesAndNewlines))
+            .appendingPathComponent("1")
+            .appendingPathComponent("99")
+            .appendingPathComponent("0")
         
         return session.request("https://hapier.syan.me/api/scrappers/tpb_results", parameters: ["url": url.absoluteString])
             .validate()
