@@ -234,7 +234,22 @@ extension ResultsVC : UISearchBarDelegate {
     }
 }
 
-extension ResultsVC : UITableViewDataSource {
+extension ResultsVC: ResultCellDelegate {
+    func resultCellRequiresHeightUpdate(_ resultCell: ResultCell) {
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+    
+    func resultCell(_ resultCell: ResultCell, tapped variant: SearchResultVariant, sender: UIView) {
+        openTorrentPopup(with: .result(resultCell.result!, variant), sender: sender)
+    }
+    
+    func resultCell(_ resultCell: ResultCell, encounteredError error: AppError) {
+        UIAlertController.show(for: error, close: "action.close".localized, in: self)
+    }
+}
+
+extension ResultsVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResults?.count ?? 0
     }
@@ -247,11 +262,12 @@ extension ResultsVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(ResultCell.self, for: indexPath)
         cell.result = searchResults?[indexPath.row]
+        cell.delegate = self
         return cell
     }
 }
 
-extension ResultsVC : UITableViewDelegate {
+extension ResultsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
@@ -262,9 +278,9 @@ extension ResultsVC : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        guard let result = searchResults?[indexPath.row] else { return }
-        openTorrentPopup(with: .result(result), sender: tableView.cellForRow(at: indexPath))
+
+        let cell = tableView.cellForRow(at: indexPath)
+        (cell as? ResultCell)?.runMainAction()
     }
     
     private func actionsForRow(at indexPath: IndexPath) -> [Action] {

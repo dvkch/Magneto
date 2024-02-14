@@ -90,19 +90,24 @@ class MagnetPopupVC: ViewController {
     // MARK: Properties
     enum Torrent {
         case magnet(URL)
-        case result(SearchResult)
+        case result(SearchResult, SearchResultVariant)
 
         func url() -> Future<URL, AppError> {
             switch self {
-            case .magnet(let url):    return .init(value: url)
-            case .result(let result): return result.magnetURL()
+            case .magnet(let url):  return .init(value: url)
+            case .result(_, let r): return r.magnetURL()
             }
         }
         
         var name: String? {
             switch self {
-            case .magnet(let url):    return url.magnetName?.capitalized
-            case .result(let result): return result.name
+            case .magnet(let url):      
+                return url.magnetName?.capitalized
+            case .result(let r, let v):
+                if r.name == v.name {
+                    return v.name
+                }
+                return "\(r.name) (\(v.name))"
             }
         }
     }

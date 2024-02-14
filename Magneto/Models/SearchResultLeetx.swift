@@ -9,38 +9,37 @@
 import Foundation
 import BrightFutures
 
-struct SearchResultLeetx : SearchResult {
+struct SearchResultLeetx : SearchResult, SearchResultVariant, Decodable {
 
     // MARK: Properties
     let name: String
-    let seeders: Int
-    let leechers: Int
-    let size: String
-    let verified: Bool
-    private let addedString: String
-    private let addedParsed: Date?
+    let size: String?
+    let seeders: Int?
+    let leechers: Int?
+    let verified: Bool = false
+    let addedString: String?
+    let addedDate: Date?
     let resultPageURL: URL
 
     // MARK: Decodable
     private enum CodingKeys: String, CodingKey {
         case name = "name"
+        case size = "size"
         case seeders = "seeders"
         case leechers = "leechers"
-        case size = "size"
-        case added = "added"
-        case addedParsed = "added_parsed"
+        case addedString = "added"
+        case addedDate = "added_parsed"
         case resultPageURL = "url"
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name        = try container.decode(String.self, forKey: .name)
+        size        = try container.decode(String.self, forKey: .size)
         seeders     = (try container.decode(IntMaybeString.self, forKey: .seeders)).value
         leechers    = (try container.decode(IntMaybeString.self, forKey: .leechers)).value
-        size        = try container.decode(String.self, forKey: .size)
-        verified    = false
-        addedString = try container.decode(String.self, forKey: .added)
-        addedParsed = try container.decode(Date.self, forKey: .addedParsed)
+        addedString = try container.decode(String.self, forKey: .addedString)
+        addedDate   = try container.decode(Date.self, forKey: .addedDate)
         resultPageURL = LeetxAPI.shared.apiURL.appendingPathComponent(try container.decode(String.self, forKey: .resultPageURL))
     }
 
@@ -51,22 +50,21 @@ struct SearchResultLeetx : SearchResult {
         return .init(value: resultPageURL)
     }
 
-    func magnetURL() -> Future<URL, AppError> {
-        return LeetxAPI.shared.getMagnet(result: self)
+    func magnetURL() -> BrightFutures.Future<URL, AppError> {
+        return LeetxAPI.shared.getMagnet(pageURL: resultPageURL)
+    }
+
+    // MARK: Variants
+    func loadVariants() -> Future<(), AppError> {
+        return .init(value: ())
     }
     
-    // MARK: Date
-    var added: String {
-        if let addedParsed {
-            return type(of: self).string(for: addedParsed)
-        }
-        return addedString
+    var variants: [SearchResultVariant]? {
+        return [self]
     }
     
-    var recentness: Recentness {
-        if let addedParsed {
-            return type(of: self).recentness(for: addedParsed)
-        }
-        return .new
+    // MARK: Description
+    var description: String {
+        return "SearchResultLeetx: \(name), \(size ?? "<no size>")"
     }
 }

@@ -9,22 +9,60 @@
 import UIKit
 import SYKit
 
+protocol ResultCellDelegate: NSObjectProtocol {
+    func resultCellRequiresHeightUpdate(_ resultCell: ResultCell)
+    func resultCell(_ resultCell: ResultCell, tapped variant: SearchResultVariant, sender: UIView)
+    func resultCell(_ resultCell: ResultCell, encounteredError error: AppError)
+}
+
 class ResultCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = .cellBackground
+        
+        variantsView.delegate = self
     }
 
     // MARK: Properties
+    weak var delegate: ResultCellDelegate?
     var result: SearchResult? {
         didSet {
             updateContent()
+            updateVariants(animated: false)
         }
     }
     
     // MARK: Views
     @IBOutlet var label: UILabel!
+    @IBOutlet var loader: UIActivityIndicatorView!
+    @IBOutlet var variantsView: TagsView!
+
+    // MARK: Actions
+    func runMainAction() {
+        guard let result else { return }
+        if let variant = result.uniqueVariant {
+            delegate?.resultCell(self, tapped: variant, sender: self)
+        }
+        else if result.variants != nil {
+            updateVariants(animated: true)
+        }
+        else {
+            loadVariants()
+        }
+    }
+    
+    // MARK: Debounce cell height refresh
+    private var refreshHeightTimer = Timer()
+    private func refreshHeight() {
+        refreshHeightTimer.invalidate()
+        refreshHeightTimer = Timer(timeInterval: 0.1, target: self, selector: #selector(refreshHeightNow), userInfo: nil, repeats: false)
+        RunLoop.main.add(refreshHeightTimer, forMode: .common)
+    }
+
+    @objc private func refreshHeightNow() {
+        delegate?.resultCellRequiresHeightUpdate(self)
+    }
     
     // MARK: Content
     private func updateContent() {
@@ -32,26 +70,97 @@ class ResultCell: UITableViewCell {
             label.text = nil
             return
         }
-        var dateFont = UIFont.preferredFont(forTextStyle: .footnote)
         
-        if result.recentness == .new {
-            dateFont = UIFont.systemFont(ofSize: dateFont.pointSize, weight: .bold)
-        }
-        else if result.recentness == .recent {
-            dateFont = UIFont.systemFont(ofSize: dateFont.pointSize, weight: .semibold)
-        }
-        
-        let string = NSMutableAttributedString()
-        string.append(result.name + "\n", font: .preferredFont(forTextStyle: .body), color: .normalText)
-        string.append(result.size + ", ", font: .preferredFont(forTextStyle: .footnote), color: .altText)
-        string.append(result.added + ", ", font: dateFont, color: .altText)
-        string.append(String(result.seeders), font: .preferredFont(forTextStyle: .footnote), color: .seeder)
-        string.append("/", font: .preferredFont(forTextStyle: .footnote), color: .gray)
-        string.append(String(result.leechers), font: .preferredFont(forTextStyle: .footnote), color: .leechers)
+        // first line
+        let title = NSMutableAttributedString()
+        title.append(result.name, font: .preferredFont(forTextStyle: .body), color: .normalText)
         if result.verified {
-            string.append(" ✔️", font: .preferredFont(forTextStyle: .caption2), color: nil)
+            title.append(" ✔️", font: .preferredFont(forTextStyle: .caption2), color: nil)
+        }
+
+        // second line
+        var details = [NSAttributedString]()
+
+        if let added = result.added {
+            var dateFont = UIFont.preferredFont(forTextStyle: .footnote)
+            if result.recentness == .new {
+                dateFont = UIFont.systemFont(ofSize: dateFont.pointSize, weight: .bold)
+            }
+            else if result.recentness == .recent {
+                dateFont = UIFont.systemFont(ofSize: dateFont.pointSize, weight: .semibold)
+            }
+            details.append(.init(string: added, font: dateFont, color: .altText))
+        }
+
+        if let variant = result.uniqueVariant {
+            if let size = variant.size {
+                details.append(.init(string: size, font: .preferredFont(forTextStyle: .footnote), color: .altText))
+            }
+            if let seeders = variant.seeders, let leechers = variant.leechers {
+                let seeding = NSMutableAttributedString()
+                seeding.append(String(seeders), font: .preferredFont(forTextStyle: .footnote), color: .seeder)
+                seeding.append("/", font: .preferredFont(forTextStyle: .footnote), color: .gray)
+                seeding.append(String(leechers), font: .preferredFont(forTextStyle: .footnote), color: .leechers)
+                details.append(seeding)
+            }
         }
         
-        label.attributedText = string
+        // update label
+        let detailsString = details.concat(separator: .init(string: ", ", font: nil, color: .altText))
+        let separator = details.isEmpty ? "" : "\n"
+        label.attributedText = [title, detailsString].concat(separator: separator)
+    }
+    
+    private func loadVariants() {
+        guard let result else { 
+            loader.stopAnimating()
+            refreshHeight()
+            return
+        }
+
+        loader.startAnimating()
+        refreshHeight()
+
+        result.loadVariants()
+            .onComplete { [weak self] _ in
+                guard let self else { return }
+                loader.stopAnimating()
+                refreshHeight()
+            }
+            .onFailure { [weak self] in
+                guard let self else { return }
+                delegate?.resultCell(self, encounteredError: $0)
+            }
+            .onSuccess { [weak self] _ in
+                guard let self else { return }
+                updateVariants(animated: true)
+            }
+    }
+    
+    private func updateVariants(animated: Bool) {
+        guard let result, let variants = result.variants, variants.count > 1 else {
+            variantsView.sy_isHidden = true
+            if animated {
+                refreshHeight()
+            }
+            return
+        }
+        
+        variantsView.sy_isHidden = false
+        variantsView.tags = variants
+
+        if animated {
+            refreshHeight()
+        }
+    }
+}
+
+extension ResultCell: TagsViewDelegate {
+    func tagsView(_ tagsView: TagsView, didTapItem item: Taggable, sender: UIView) {
+        delegate?.resultCell(self, tapped: item as! SearchResultVariant, sender: sender)
+    }
+    
+    func tagsViewHeightChanged(_ tagsView: TagsView) {
+        refreshHeight()
     }
 }

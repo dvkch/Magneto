@@ -51,8 +51,8 @@ final class LeetxAPI: NSObject, SearchAPI {
     private struct ResultPage: Codable {
         let url: URL
     }
-    func getMagnet(result: SearchResultLeetx) -> Future<URL, AppError> {
-        return session.request("https://hapier.syan.me/api/scrappers/1337x_magnet", parameters: ["url": result.resultPageURL.absoluteString])
+    func getMagnet(pageURL: URL) -> Future<URL, AppError> {
+        return session.request("https://hapier.syan.me/api/scrappers/1337x_magnet", parameters: ["url": pageURL.absoluteString])
             .validate()
             .responseFutureCodable(type: ResultPage.self)
             .map { $0.url }
