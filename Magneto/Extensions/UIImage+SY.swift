@@ -15,6 +15,7 @@ extension UIImage {
         case cloud      = "cloud"
         case sailboat   = "sailboat"
         case nine       = "9.alt.square"
+        case film       = "film"
         case edit       = "pencil"                  // 17x15
         case delete     = "trash"                   // 19x21
         case share      = "square.and.arrow.up"     // 19x21

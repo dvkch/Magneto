@@ -108,6 +108,10 @@ class ResultsVC: ViewController {
             T9API.shared.getResults(query: query).onComplete {
                 closure($0.map { $0 as [any SearchResult] })
             }
+        case .yts:
+            YtsAPI.shared.getResults(query: query).onComplete {
+                closure($0.map { $0 as [any SearchResult] })
+            }
         }
     }
     
