@@ -37,6 +37,9 @@
 		9771AB3321AF08E4005DE97D /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3221AF08E4005DE97D /* ResultCell.swift */; };
 		9771AB3521AF0C59005DE97D /* ClientFormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3421AF0C59005DE97D /* ClientFormCell.swift */; };
 		9771AB3721AF2BA4005DE97D /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3621AF2BA4005DE97D /* Preferences.swift */; };
+		977822912B7CE37E00AD077B /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977822902B7CE37E00AD077B /* TagsView.swift */; };
+		977822932B7CE4F100AD077B /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977822922B7CE4F100AD077B /* TagCell.swift */; };
+		977822952B7CF42D00AD077B /* TagsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977822942B7CF42D00AD077B /* TagsLayout.swift */; };
 		97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97888C9E21B5A745004EB144 /* Codable+SY.swift */; };
 		9792F0D72A14EEB9001F2EE1 /* UIImage+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9792F0D62A14EEB9001F2EE1 /* UIImage+SY.swift */; };
 		97A18E0C1BBC011900F33AF5 /* MainVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E0B1BBC011900F33AF5 /* MainVC.xib */; };
@@ -114,6 +117,9 @@
 		9771AB3421AF0C59005DE97D /* ClientFormCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientFormCell.swift; sourceTree = "<group>"; };
 		9771AB3621AF2BA4005DE97D /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		9771AB3821AF2D7C005DE97D /* Magneto.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Magneto.entitlements; sourceTree = "<group>"; };
+		977822902B7CE37E00AD077B /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
+		977822922B7CE4F100AD077B /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
+		977822942B7CF42D00AD077B /* TagsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsLayout.swift; sourceTree = "<group>"; };
 		97888C9E21B5A745004EB144 /* Codable+SY.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+SY.swift"; sourceTree = "<group>"; };
 		9792F0D62A14EEB9001F2EE1 /* UIImage+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+SY.swift"; sourceTree = "<group>"; };
 		97A18E0B1BBC011900F33AF5 /* MainVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainVC.xib; sourceTree = "<group>"; };
@@ -223,6 +229,7 @@
 				97A18E111BBC017500F33AF5 /* ResultCell.xib */,
 				974D3A1224BB327900953757 /* SuggestionCell.swift */,
 				974D3A1324BB327900953757 /* SuggestionCell.xib */,
+				977822922B7CE4F100AD077B /* TagCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -231,6 +238,8 @@
 			isa = PBXGroup;
 			children = (
 				97CEA9422A16CE9100212F49 /* NavigationBar.swift */,
+				977822942B7CF42D00AD077B /* TagsLayout.swift */,
+				977822902B7CE37E00AD077B /* TagsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -509,12 +518,14 @@
 				9792F0D72A14EEB9001F2EE1 /* UIImage+SY.swift in Sources */,
 				97C1E4FE2A16AC3B003F432E /* ResultsVC.swift in Sources */,
 				97DB10F72B60A72400FBC685 /* T9API.swift in Sources */,
+				977822952B7CF42D00AD077B /* TagsLayout.swift in Sources */,
 				9715A479251B9CD200C2C52F /* SceneDelegate.swift in Sources */,
 				97DB10F52B60A6B600FBC685 /* SearchResultT9.swift in Sources */,
 				9768CA6721B57B33000AA7C2 /* Client+UI.swift in Sources */,
 				970130E021B07EC000E7CFEC /* TpbAPI.swift in Sources */,
 				9768CA6321B55838000AA7C2 /* UIColor+SY.swift in Sources */,
 				9768CA6521B5770B000AA7C2 /* Client.swift in Sources */,
+				977822932B7CE4F100AD077B /* TagCell.swift in Sources */,
 				9771AB1F21AEE457005DE97D /* MagnetPopupVC.swift in Sources */,
 				9715A508251BA32B00C2C52F /* ViewRouter.swift in Sources */,
 				9771AB1321AEC919005DE97D /* MainVC.swift in Sources */,
@@ -525,6 +536,7 @@
 				97C1E4F32A164203003F432E /* UIBarButtonItem+SY.swift in Sources */,
 				9771AB2921AEF898005DE97D /* NavigationController.swift in Sources */,
 				976BA0152B5F437A0065542F /* DateFormatter+SY.swift in Sources */,
+				977822912B7CE37E00AD077B /* TagsView.swift in Sources */,
 				974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */,
 				97DA4D8C2A43C5B400E4F04D /* SearchResultLeetx.swift in Sources */,
 				97DA4D862A43C23C00E4F04D /* SearchAPI.swift in Sources */,
