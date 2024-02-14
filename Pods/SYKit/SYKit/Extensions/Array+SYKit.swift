@@ -36,6 +36,11 @@ public extension Collection {
     var nilIfEmpty: Self? {
         return isEmpty ? nil : self
     }
+
+    var unique: Element? {
+        guard count == 1 else { return nil }
+        return first
+    }
 }
 
 public extension Sequence where Element : OptionalType {

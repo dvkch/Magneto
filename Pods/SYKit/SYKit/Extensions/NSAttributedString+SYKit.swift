@@ -144,12 +144,16 @@ public extension NSMutableAttributedString {
 }
 
 public extension Collection where Element : NSAttributedString {
-    func concat(separator: String? = nil) -> NSMutableAttributedString {
+    func concat(separator: String) -> NSMutableAttributedString {
+        return concat(separator: NSAttributedString(string: separator, font: nil))
+    }
+
+    func concat(separator: NSAttributedString? = nil) -> NSMutableAttributedString {
         let result = NSMutableAttributedString()
         
         forEach { (element) in
             if element != self.first {
-                result += NSAttributedString(string: separator, font: nil)
+                result += separator
             }
             result += element
         }
@@ -159,7 +163,11 @@ public extension Collection where Element : NSAttributedString {
 }
 
 public extension Sequence where Element : OptionalType, Element.Wrapped : NSAttributedString {
-    func concat(separator: String? = nil) -> NSMutableAttributedString {
+    func concat(separator: String) -> NSMutableAttributedString {
+        return concat(separator: NSAttributedString(string: separator, font: nil))
+    }
+
+    func concat(separator: NSAttributedString? = nil) -> NSMutableAttributedString {
         let nonNils: [NSAttributedString] = compactMap { $0.value }
         return nonNils.concat(separator: separator)
     }

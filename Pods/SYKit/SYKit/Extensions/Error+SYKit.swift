@@ -1,6 +1,6 @@
 //
-//  Error+SY.swift
-//  Magneto
+//  Error+SYKit.swift
+//  SYKit
 //
 //  Created by Stanislas Chevallier on 29/11/2018.
 //  Copyright © 2018 Syan. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension Error {
+public extension Error {
     func isNSError(domain: String, code: Int) -> Bool {
         return (self as NSError).domain == domain && (self as NSError).code == code
     }

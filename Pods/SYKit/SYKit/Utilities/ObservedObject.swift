@@ -17,11 +17,11 @@ public class ObservedObject<T> {
         underlying = initial
     }
 
-    private class Observer<T> {
+    private class Observer<U> {
         weak var ref: ObservationRef?
-        let closure: ObservationClosure<T>
+        let closure: ObservationClosure<U>
         
-        init(ref: ObservationRef, closure: @escaping ObservationClosure<T>) {
+        init(ref: ObservationRef, closure: @escaping ObservationClosure<U>) {
             self.ref = ref
             self.closure = closure
         }
