@@ -39,11 +39,11 @@ struct SearchResultYts : SearchResult, Decodable {
 
     // MARK: Variants
     func loadVariants() -> Future<(), AppError> {
-        return YtsAPI.shared.loadVariants(result: self)
+        return SearchAPIYts.shared.loadVariants(for: self)
     }
     
     var variants: [any SearchResultVariant]? {
-        return YtsAPI.shared.variants(for: self)?.map { $0 as any SearchResultVariant }
+        return SearchAPIYts.shared.cachedVariants(for: self) as [any SearchResultVariant]?
     }
     
     // MARK: Description

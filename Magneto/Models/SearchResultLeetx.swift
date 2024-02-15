@@ -40,7 +40,7 @@ struct SearchResultLeetx : SearchResult, SearchResultVariant, Decodable {
         leechers    = (try container.decode(IntMaybeString.self, forKey: .leechers)).value
         addedString = try container.decode(String.self, forKey: .addedString)
         addedDate   = try container.decode(Date.self, forKey: .addedDate)
-        resultPageURL = LeetxAPI.shared.apiURL.appendingPathComponent(try container.decode(String.self, forKey: .resultPageURL))
+        resultPageURL = SearchAPILeetx.shared.apiURL.appendingPathComponent(try container.decode(String.self, forKey: .resultPageURL))
     }
 
     // MARK: URLs
@@ -51,7 +51,7 @@ struct SearchResultLeetx : SearchResult, SearchResultVariant, Decodable {
     }
 
     func magnetURL() -> BrightFutures.Future<URL, AppError> {
-        return LeetxAPI.shared.getMagnet(pageURL: resultPageURL)
+        return SearchAPILeetx.shared.getMagnet(pageURL: resultPageURL)
     }
 
     // MARK: Variants

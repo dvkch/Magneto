@@ -97,19 +97,19 @@ class ResultsVC: ViewController {
         
         switch Preferences.shared.searchAPI {
         case .tpb:
-            TpbAPI.shared.getResults(query: query).onComplete {
+            SearchAPITpb.shared.getResults(query: query).onComplete {
                 closure($0.map { $0 as [any SearchResult] })
             }
         case .leetx:
-            LeetxAPI.shared.getResults(query: query).onComplete {
+            SearchAPILeetx.shared.getResults(query: query).onComplete {
                 closure($0.map { $0 as [any SearchResult] })
             }
         case .t9:
-            T9API.shared.getResults(query: query).onComplete {
+            SearchAPIT9.shared.getResults(query: query).onComplete {
                 closure($0.map { $0 as [any SearchResult] })
             }
         case .yts:
-            YtsAPI.shared.getResults(query: query).onComplete {
+            SearchAPIYts.shared.getResults(query: query).onComplete {
                 closure($0.map { $0 as [any SearchResult] })
             }
         }

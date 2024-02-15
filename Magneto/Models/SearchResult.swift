@@ -13,7 +13,7 @@ enum Recentness {
     case new, recent, regular
 }
 
-protocol SearchResult: CustomStringConvertible {
+protocol SearchResult: CustomStringConvertible, Decodable {
     var name: String    { get }
     var verified: Bool  { get }
 
@@ -66,7 +66,7 @@ extension SearchResult {
     }
 }
 
-protocol SearchResultVariant: CustomStringConvertible, Taggable {
+protocol SearchResultVariant: CustomStringConvertible, Decodable, Taggable {
     var name: String    { get }
     var size: String?   { get }
     

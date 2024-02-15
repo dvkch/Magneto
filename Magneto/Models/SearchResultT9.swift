@@ -36,7 +36,7 @@ struct SearchResultT9 : SearchResult, SearchResultVariant, Decodable {
         size        = try container.decode(String.self, forKey: .size)
         seeders     = (try container.decode(IntMaybeString.self, forKey: .seeders)).value
         leechers    = (try container.decode(IntMaybeString.self, forKey: .leechers)).value
-        resultPageURL = T9API.shared.apiURL.appendingPathComponent(try container.decode(String.self, forKey: .resultPageURL))
+        resultPageURL = SearchAPIT9.shared.apiURL.appendingPathComponent(try container.decode(String.self, forKey: .resultPageURL))
     }
     
     // MARK: URLs
@@ -47,7 +47,7 @@ struct SearchResultT9 : SearchResult, SearchResultVariant, Decodable {
     }
     
     func magnetURL() -> Future<URL, AppError> {
-        return T9API.shared.getMagnet(result: self)
+        return SearchAPIT9.shared.getMagnet(result: self)
     }
     
     // MARK: Variants
