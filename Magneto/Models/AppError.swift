@@ -25,9 +25,12 @@ extension AppError : LocalizedError {
         case .noAvailableAPI:               return "error.noAvailableAPI".localized
         case .clientOffline:                return "error.clientOffline".localized
         case .alamofire(let response):
+            if let data = response.data, let apiError = try? JSONDecoder().decode(ApiError.self, from: data) {
+                return [apiError.message, apiError.details].compactMap { $0 }.joined(separator: ": ")
+            }
             var message = response.untypedError?.localizedDescription ?? "error.unknown".localized
             if let statusCode = response.response?.statusCode {
-                message += " (\(statusCode)"
+                message += " (\(statusCode))"
             }
             return message
         }
