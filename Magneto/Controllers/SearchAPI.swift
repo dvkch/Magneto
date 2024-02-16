@@ -20,6 +20,7 @@ class SearchAPI {
         configuration.timeoutIntervalForResource = 20
         // ignore cache for update management
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        configuration.urlCache = nil
         session = Alamofire.Session(configuration: configuration)
     }
     

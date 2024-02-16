@@ -19,7 +19,7 @@ struct SearchResultT9 : SearchResult, SearchResultVariant, Decodable {
     let verified: Bool = false
     let addedString: String? = nil
     let addedDate: Date? = nil
-    let resultPageURL: URL
+    private let pagePath: String
 
     // MARK: Decodable
     private enum CodingKeys: String, CodingKey {
@@ -27,7 +27,7 @@ struct SearchResultT9 : SearchResult, SearchResultVariant, Decodable {
         case size = "size"
         case seeders = "seeders"
         case leechers = "leechers"
-        case resultPageURL = "url"
+        case pagePath = "url"
     }
     
     init(from decoder: Decoder) throws {
@@ -36,14 +36,14 @@ struct SearchResultT9 : SearchResult, SearchResultVariant, Decodable {
         size        = try container.decode(String.self, forKey: .size)
         seeders     = (try container.decode(IntMaybeString.self, forKey: .seeders)).value
         leechers    = (try container.decode(IntMaybeString.self, forKey: .leechers)).value
-        resultPageURL = SearchAPIT9.shared.apiURL.appendingPathComponent(try container.decode(String.self, forKey: .resultPageURL))
+        pagePath    = try container.decode(String.self, forKey: .pagePath)
     }
     
     // MARK: URLs
-    let pageURLAvailable: Bool = true
+    let pageURLAvailable: Bool = false
     
     func pageURL() -> Future<URL, AppError> {
-        return .init(value: resultPageURL)
+        return SearchAPIT9.shared.getWebMirrorURL().map { $0.appendingPathComponent(pagePath) }
     }
     
     func magnetURL() -> Future<URL, AppError> {
