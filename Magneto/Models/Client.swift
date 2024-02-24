@@ -9,7 +9,7 @@
 import UIKit
 import Disco
 
-class Client: Codable, Hashable {
+class Client: Codable, Hashable, Identifiable {
     private(set) var id: String
     var name: String        = ""
     var host: String        = "127.0.0.1"

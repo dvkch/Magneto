@@ -4,7 +4,7 @@ PODS:
   - Disco (1.1.1):
     - SwiftyPing (>= 1.2.2)
   - SwiftyPing (1.2.2)
-  - SYKit (0.2.12)
+  - SYKit (0.2.14)
   - TPKeyboardAvoiding (1.3.5)
 
 DEPENDENCIES:
@@ -28,7 +28,7 @@ SPEC CHECKSUMS:
   BrightFutures: 67e0e8cd974ab9f6c04650cc64153f7adf1ec489
   Disco: 8bf16509471ce3b40a151bc0540a5eea6d3705eb
   SwiftyPing: 284e9dc6ec6b7ed42c906758f8c1c067d8a7fc21
-  SYKit: 469edc2ee862e0ae406ad77c636c8e47ad3a8c6f
+  SYKit: 8de8c5358efc85ce8d324e849b29ad2468221044
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
 
 PODFILE CHECKSUM: 87c5a4e05103acf713e79a9f7ce2d9b7b33979e0

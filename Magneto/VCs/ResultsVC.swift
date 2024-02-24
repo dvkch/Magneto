@@ -85,7 +85,7 @@ class ResultsVC: ViewController {
             switch result {
             case .success(let items):
                 self.searchResults = items
-                Preferences.shared.addPrevSearch(query)
+                Preferences.shared.addHistory(query)
                 
             case .failure(let error):
                 UIAlertController.show(

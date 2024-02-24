@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+import os
+#endif
 
 // https://betterprogramming.pub/five-property-wrappers-to-de-clutter-your-ios-code-f5ee6fa4e52e
 @propertyWrapper
@@ -34,11 +37,11 @@ public class PrefValue<T: Codable>: NSObject {
     }
 
     // MARK: Internal
-    private var key: String
-    private var defaultValue: T
-    private var local: UserDefaults
-    private var ubiquitous: NSUbiquitousKeyValueStore?
-    private var notification: Notification.Name?
+    private let key: String
+    private let defaultValue: T
+    private let local: UserDefaults
+    private let ubiquitous: NSUbiquitousKeyValueStore?
+    private let notification: Notification.Name?
     
     // MARK: Properties
     public var wrappedValue: T {
@@ -48,7 +51,7 @@ public class PrefValue<T: Codable>: NSObject {
                 return try JSONDecoder().decode(T.self, from: data)
             }
             catch {
-                print("Couldn't decode value for \(key): \(error)")
+                log("Couldn't decode value: \(error)")
                 return defaultValue
             }
         }
@@ -60,7 +63,7 @@ public class PrefValue<T: Codable>: NSObject {
                 ubiquitous?.synchronize()
             }
             catch {
-                print("Couldn't encode value for \(key): \(error)")
+                log("Couldn't encode value: \(error)")
             }
             postNotification()
         }
@@ -68,10 +71,9 @@ public class PrefValue<T: Codable>: NSObject {
     
     // MARK: Sync
     private func postNotification() {
-        if let notification {
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: notification, object: nil)
-            }
+        guard let notification else { return }
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: notification, object: nil)
         }
     }
 
@@ -81,10 +83,10 @@ public class PrefValue<T: Codable>: NSObject {
 
         switch reason {
         case NSUbiquitousKeyValueStoreQuotaViolationChange:
-            print("Over quota")
+            log("Over quota")
             
         case NSUbiquitousKeyValueStoreAccountChange:
-            print("Account changed")
+            log("Account changed")
             
         case NSUbiquitousKeyValueStoreInitialSyncChange, NSUbiquitousKeyValueStoreServerChange:
             guard let keys = notification.userInfo?[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String] else { return }
@@ -98,7 +100,7 @@ public class PrefValue<T: Codable>: NSObject {
             }
             else if let value {
                 // added / updated, but unknown type
-                print("updated value for key \(key), but unknown value type \(type(of: value))")
+                log("Received new synced value, but it is not a Data type: \(type(of: value))")
             }
             else {
                 // deleted
@@ -107,7 +109,21 @@ public class PrefValue<T: Codable>: NSObject {
             }
             
         default:
-            print("Unknown sync reason:", reason)
+            log("Unknown sync reason: \(reason)")
+        }
+    }
+}
+
+private extension PrefValue {
+    func log(_ message: String) {
+        let tag = "PrefValue[\(self.key)]"
+        if #available(macOS 10.14, iOS 12.0, watchOS 5.0, tvOS 12.0, *) {
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+            let osLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? "SYKit", category: tag)
+            os_log(.debug, log: osLog, "%@", message)
+#endif
+        } else {
+            print("\(tag) \(message)")
         }
     }
 }

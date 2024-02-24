@@ -29,6 +29,7 @@
 		9768CA6721B57B33000AA7C2 /* Client+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768CA6621B57B33000AA7C2 /* Client+UI.swift */; };
 		976BA0152B5F437A0065542F /* DateFormatter+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976BA0142B5F437A0065542F /* DateFormatter+SY.swift */; };
 		976D5EF9230E0E3600573E0D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 976D5EFB230E0E3600573E0D /* Localizable.strings */; };
+		9770C6F72B8AA3C800707BCD /* HistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9770C6F62B8AA3C800707BCD /* HistoryItem.swift */; };
 		9771AB1321AEC919005DE97D /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1221AEC919005DE97D /* MainVC.swift */; };
 		9771AB1B21AEDC92005DE97D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1A21AEDC92005DE97D /* AppDelegate.swift */; };
 		9771AB1F21AEE457005DE97D /* MagnetPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB1E21AEE457005DE97D /* MagnetPopupVC.swift */; };
@@ -112,6 +113,7 @@
 		976BA0142B5F437A0065542F /* DateFormatter+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+SY.swift"; sourceTree = "<group>"; };
 		976D5EFA230E0E3600573E0D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		976D5EFD230E0E4400573E0D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9770C6F62B8AA3C800707BCD /* HistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItem.swift; sourceTree = "<group>"; };
 		9771AB1221AEC919005DE97D /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		9771AB1A21AEDC92005DE97D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9771AB1E21AEE457005DE97D /* MagnetPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnetPopupVC.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				972589AC21B0AD6D00FCE9D5 /* AppError.swift */,
 				9768CA6421B5770B000AA7C2 /* Client.swift */,
 				9768CA6621B57B33000AA7C2 /* Client+UI.swift */,
+				9770C6F62B8AA3C800707BCD /* HistoryItem.swift */,
 				974D372921B150FC00C0FDDE /* SearchResult.swift */,
 				97DA4D8B2A43C5B400E4F04D /* SearchResultLeetx.swift */,
 				97DB10F42B60A6B600FBC685 /* SearchResultT9.swift */,
@@ -564,6 +567,7 @@
 				9771AB3121AF0534005DE97D /* ClientCell.swift in Sources */,
 				97DA4D842A43C22700E4F04D /* SearchAPILeetx.swift in Sources */,
 				972589AD21B0AD6D00FCE9D5 /* AppError.swift in Sources */,
+				9770C6F72B8AA3C800707BCD /* HistoryItem.swift in Sources */,
 				97C0D28724C71CBA00AFB781 /* SuggestionsVC.swift in Sources */,
 				97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */,
 				97C1E4F52A16441F003F432E /* UITableViewCell+SY.swift in Sources */,
