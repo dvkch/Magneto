@@ -13,7 +13,9 @@ enum Recentness {
     case new, recent, regular
 }
 
-protocol SearchResult: CustomStringConvertible, Decodable {
+protocol SearchResult: CustomStringConvertible, Decodable, Identifiable {
+    var id: UUID { get }
+    
     var name: String    { get }
     var verified: Bool  { get }
 

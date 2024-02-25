@@ -9,9 +9,10 @@
 import Foundation
 import BrightFutures
 
-struct SearchResultYts : SearchResult, Decodable {
+struct SearchResultYts : SearchResult {
 
     // MARK: Properties
+    let id: UUID
     let name: String
     let verified: Bool = true
     let addedString: String? = nil
@@ -26,6 +27,7 @@ struct SearchResultYts : SearchResult, Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        id              = UUID()
         name            = try container.decode(String.self, forKey: .name)
         resultPageURL   = try container.decode(URL.self, forKey: .resultPageURL)
     }

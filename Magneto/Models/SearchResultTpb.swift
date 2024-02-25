@@ -9,9 +9,10 @@
 import Foundation
 import BrightFutures
 
-struct SearchResultTpb : SearchResult, SearchResultVariant, Decodable {
+struct SearchResultTpb : SearchResult, SearchResultVariant {
 
     // MARK: Properties
+    let id: UUID
     let name: String
     let size: String?
     let seeders: Int?
@@ -37,6 +38,7 @@ struct SearchResultTpb : SearchResult, SearchResultVariant, Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        id              = UUID()
         name            = try container.decode(String.self, forKey: .name)
         size            = try container.decode(String.self, forKey: .size)
         seeders         = (try container.decode(IntMaybeString.self, forKey: .seeders)).value
