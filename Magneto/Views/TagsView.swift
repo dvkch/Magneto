@@ -10,7 +10,6 @@ import UIKit
 
 protocol TagsViewDelegate: NSObjectProtocol {
     func tagsView(_ tagsView: TagsView, didTapItem item: any Taggable, sender: UIView)
-    func tagsViewHeightChanged(_ tagsView: TagsView)
 }
 
 protocol Taggable {
@@ -18,7 +17,7 @@ protocol Taggable {
 }
 
 class TagsView: UIView {
-
+    
     // MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,34 +31,8 @@ class TagsView: UIView {
     
     private func setup() {
         backgroundColor = .clear
-
-        collectionView.backgroundColor = .clear
-        collectionView.registerCell(TagCell.self, xib: false)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionLayout.scrollDirection = .vertical
-        collectionLayout.minimumInteritemSpacing = 8
-        collectionLayout.minimumLineSpacing = 8
-        collectionLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        addSubview(collectionView)
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: topAnchor),
-            collectionView.leftAnchor.constraint(equalTo: leftAnchor),
-            collectionView.rightAnchor.constraint(equalTo: rightAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
-        
-        heightConstraint = collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
-        NSLayoutConstraint.activate([heightConstraint])
-
-        collectionView.addObserver(self, forKeyPath: #keyPath(UICollectionView.contentSize), context: nil)
     }
     
-    deinit {
-        collectionView.removeObserver(self, forKeyPath: #keyPath(UICollectionView.contentSize), context: nil)
-    }
-
     // MARK: Properties
     weak var delegate: TagsViewDelegate?
     var tags: [any Taggable] = [] {
@@ -67,46 +40,81 @@ class TagsView: UIView {
             updateContent()
         }
     }
+    private var tagViews = [UIButton]()
     
-    // MARK: Views
-    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: TagsLayout())
-    private var collectionLayout: UICollectionViewFlowLayout { collectionView.collectionViewLayout as! TagsLayout }
-    private var heightConstraint: NSLayoutConstraint!
+    // MARK: Actions
+    @objc private func tagViewPressed(sender: UIButton) {
+        delegate?.tagsView(self, didTapItem: tags[sender.tag], sender: sender)
+    }
     
     // MARK: Content
     private func updateContent() {
-        collectionView.reloadData()
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        return collectionView.contentSize
+        tagViews.forEach { $0.removeFromSuperview() }
+        tagViews.removeAll()
+        
+        for (i, tag) in tags.enumerated() {
+            let view = UIButton()
+            
+            // content
+            view.tag = i
+            view.setTitle(tag.tag, for: .normal)
+            view.titleLabel?.font = .preferredFont(forTextStyle: .footnote)
+            view.addTarget(self, action: #selector(self.tagViewPressed(sender:)), for: .primaryActionTriggered)
+
+            // borders
+            view.layer.cornerRadius = 5
+            view.layer.borderColor = UIColor.altText.cgColor
+            view.layer.borderWidth = 1
+            view.layer.masksToBounds = true
+
+            // colors
+            view.backgroundColor = .clear
+            view.setTitleColor(.altText, for: .normal)
+            view.setTitleColor(.backgroundAlt, for: .highlighted)
+            view.setBackgroundColor(.altText, for: .highlighted)
+
+            // layout
+            view.contentEdgeInsets = .init(top: 4, left: 8, bottom: 4, right: 8)
+            view.setContentHuggingPriority(.required, for: .horizontal)
+            view.setContentHuggingPriority(.required, for: .vertical)
+            view.setContentCompressionResistancePriority(.required, for: .horizontal)
+            view.setContentCompressionResistancePriority(.required, for: .vertical)
+            view.translatesAutoresizingMaskIntoConstraints = false
+            view.autoresizingMask = [.flexibleBottomMargin, .flexibleRightMargin]
+
+            addSubview(view)
+            tagViews.append(view)
+        }
+        
+        setNeedsLayout()
+        layoutIfNeeded()
     }
     
     // MARK: Layout
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if (object as? UIView) == collectionView, keyPath == #keyPath(UICollectionView.contentSize) {
-            invalidateIntrinsicContentSize()
-            delegate?.tagsViewHeightChanged(self)
-            return
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard let first = tagViews.first else { return }
+
+        let spacing: CGFloat = 8
+        let height = first.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).height
+
+        var previousX: CGFloat = 0
+        var previousY: CGFloat = 0
+
+        for tagView in tagViews {
+            let width = tagView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: height)).width
+            if previousX + width > bounds.width {
+                previousX = 0
+                previousY += height + spacing
+            }
+            tagView.frame = .init(x: previousX, y: previousY, width: width, height: height)
+            previousX += spacing + width
         }
-        super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-    }
-}
 
-extension TagsView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tags.count
+        invalidateIntrinsicContentSize()
     }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueCell(TagCell.self, for: indexPath)
-        cell.text = tags[indexPath.row].tag
-        return cell
-    }
-}
-
-extension TagsView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.tagsView(self, didTapItem: tags[indexPath.row], sender: collectionView.cellForItem(at: indexPath)!)
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIView.noIntrinsicMetric, height: tagViews.last?.frame.maxY ?? 0)
     }
 }

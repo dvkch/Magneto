@@ -132,7 +132,7 @@ class ResultsVC: ViewController {
         }
     }
     
-    fileprivate func openResultInSafari(_ result: SearchResult) {
+    fileprivate func openResultInSafari(_ result: any SearchResult) {
         let hud: HUDAlertController?
         if result.pageURLAvailable {
             hud = nil
@@ -239,7 +239,7 @@ extension ResultsVC : UISearchBarDelegate {
 }
 
 extension ResultsVC: ResultCellDelegate {
-    func resultCellRequiresHeightUpdate(_ resultCell: ResultCell) {
+    func resultCell(_ resultCell: ResultCell, requiresReloadFor result: any SearchResult) {
         tableView.beginUpdates()
         tableView.endUpdates()
     }

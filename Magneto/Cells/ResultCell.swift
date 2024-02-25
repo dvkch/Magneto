@@ -10,7 +10,7 @@ import UIKit
 import SYKit
 
 protocol ResultCellDelegate: NSObjectProtocol {
-    func resultCellRequiresHeightUpdate(_ resultCell: ResultCell)
+    func resultCell(_ resultCell: ResultCell, requiresReloadFor result: any SearchResult)
     func resultCell(_ resultCell: ResultCell, tapped variant: SearchResultVariant, sender: UIView)
     func resultCell(_ resultCell: ResultCell, encounteredError error: AppError)
 }
@@ -26,10 +26,10 @@ class ResultCell: UITableViewCell {
 
     // MARK: Properties
     weak var delegate: ResultCellDelegate?
-    var result: SearchResult? {
+    var result: (any SearchResult)? {
         didSet {
             updateContent()
-            updateVariants(animated: false)
+            updateVariants(afterAPICall: false)
         }
     }
     
@@ -44,10 +44,7 @@ class ResultCell: UITableViewCell {
         if let variant = result.uniqueVariant {
             delegate?.resultCell(self, tapped: variant, sender: self)
         }
-        else if result.variants != nil {
-            updateVariants(animated: true)
-        }
-        else {
+        else if result.variants == nil {
             loadVariants()
         }
     }
@@ -61,7 +58,8 @@ class ResultCell: UITableViewCell {
     }
 
     @objc private func refreshHeightNow() {
-        delegate?.resultCellRequiresHeightUpdate(self)
+        guard let result else { return }
+        delegate?.resultCell(self, requiresReloadFor: result)
     }
     
     // MARK: Content
@@ -114,18 +112,17 @@ class ResultCell: UITableViewCell {
     private func loadVariants() {
         guard let result else { 
             loader.stopAnimating()
-            refreshHeight()
             return
         }
 
         loader.startAnimating()
-        refreshHeight()
+        
+        let startTime = Date()
 
         result.loadVariants()
             .onComplete { [weak self] _ in
                 guard let self else { return }
                 loader.stopAnimating()
-                refreshHeight()
             }
             .onFailure { [weak self] in
                 guard let self else { return }
@@ -133,14 +130,17 @@ class ResultCell: UITableViewCell {
             }
             .onSuccess { [weak self] _ in
                 guard let self else { return }
-                updateVariants(animated: true)
+                updateVariants(afterAPICall:  true)
+                if result.variants?.unique != nil, Date().timeIntervalSince(startTime) < 2 {
+                    runMainAction()
+                }
             }
     }
     
-    private func updateVariants(animated: Bool) {
-        guard let result, let variants = result.variants, variants.count > 1 else {
+    private func updateVariants(afterAPICall: Bool) {
+        guard let variants = result?.variants, variants.count > 1 else {
             variantsView.sy_isHidden = true
-            if animated {
+            if afterAPICall {
                 refreshHeight()
             }
             return
@@ -149,7 +149,7 @@ class ResultCell: UITableViewCell {
         variantsView.sy_isHidden = false
         variantsView.tags = variants
 
-        if animated {
+        if afterAPICall {
             refreshHeight()
         }
     }
@@ -158,9 +158,5 @@ class ResultCell: UITableViewCell {
 extension ResultCell: TagsViewDelegate {
     func tagsView(_ tagsView: TagsView, didTapItem item: Taggable, sender: UIView) {
         delegate?.resultCell(self, tapped: item as! SearchResultVariant, sender: sender)
-    }
-    
-    func tagsViewHeightChanged(_ tagsView: TagsView) {
-        refreshHeight()
     }
 }
