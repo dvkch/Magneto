@@ -24,6 +24,8 @@ class ResultsVC: ViewController {
         tableView.registerCell(ResultCell.self)
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
+        tableView.dataSource = dataSource
+        tableView.delegate = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(searchAPIChanged), name: .searchAPIChanged, object: nil)
     }
@@ -38,15 +40,10 @@ class ResultsVC: ViewController {
     private var searchQuery: String = "" {
         didSet {
             guard searchQuery != oldValue else { return }
-            refreshResults()
+            loadNextPage(clear: true, animated: false)
         }
     }
-    private var searchResults: [any SearchResult]? {
-        didSet {
-            tableView.reloadData()
-            tableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false)
-        }
-    }
+    private lazy var dataSource = ResultsDataSource(tableView: tableView, cellDelegate: self)
     private var isLoadingResults: Bool = false {
         didSet {
             delegate?.resultsVC(self, isLoading: isLoadingResults)
@@ -62,13 +59,15 @@ class ResultsVC: ViewController {
 
     // MARK: Actions
     @objc private func searchAPIChanged() {
-        refreshResults()
+        loadNextPage(clear: true, animated: false)
     }
 
-    fileprivate func refreshResults() {
-        searchResults = nil
+    fileprivate func loadNextPage(clear: Bool, animated: Bool) {
+        if clear {
+            dataSource.clear(animated: false)
+        }
 
-        guard searchQuery.isNotEmpty else {
+        guard searchQuery.isNotEmpty, dataSource.lastPageCount != 0 else {
             isLoadingResults = false
             return
         }
@@ -84,7 +83,7 @@ class ResultsVC: ViewController {
 
             switch result {
             case .success(let items):
-                self.searchResults = items
+                self.dataSource.insert(items, animated: animated)
                 Preferences.shared.addHistory(query)
                 
             case .failure(let error):
@@ -95,27 +94,28 @@ class ResultsVC: ViewController {
             }
         }
         
+        let page = dataSource.pagesCount
         switch Preferences.shared.searchAPI {
         case .tpb:
-            SearchAPITpb.shared.getResults(query: query).onComplete {
+            SearchAPITpb.shared.getResults(query: query, page: page).onComplete {
                 closure($0.map { $0 as [any SearchResult] })
             }
         case .leetx:
-            SearchAPILeetx.shared.getResults(query: query).onComplete {
+            SearchAPILeetx.shared.getResults(query: query, page: page).onComplete {
                 closure($0.map { $0 as [any SearchResult] })
             }
         case .t9:
-            SearchAPIT9.shared.getResults(query: query).onComplete {
+            SearchAPIT9.shared.getResults(query: query, page: page).onComplete {
                 closure($0.map { $0 as [any SearchResult] })
             }
         case .yts:
-            SearchAPIYts.shared.getResults(query: query).onComplete {
+            SearchAPIYts.shared.getResults(query: query, page: page).onComplete {
                 closure($0.map { $0 as [any SearchResult] })
             }
         }
     }
     
-    fileprivate func shareResult(_ result: SearchResult, from sender: UIView) {
+    fileprivate func shareResult(_ result: any SearchResult, from sender: UIView) {
         let hud = HUDAlertController.show(in: self)
         result.pageURL()
             .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
@@ -253,25 +253,12 @@ extension ResultsVC: ResultCellDelegate {
     }
 }
 
-extension ResultsVC: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResults?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let searchResults else { return nil }
-        return searchResults.isEmpty ? "clients.section.noresults".localized : "clients.section.results".localized
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueCell(ResultCell.self, for: indexPath)
-        cell.result = searchResults?[indexPath.row]
-        cell.delegate = self
-        return cell
-    }
-}
-
 extension ResultsVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard dataSource.isLastItem(indexPath) else { return }
+        loadNextPage(clear: false, animated: true)
+    }
+
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
@@ -288,7 +275,7 @@ extension ResultsVC: UITableViewDelegate {
     }
     
     private func actionsForRow(at indexPath: IndexPath) -> [Action] {
-        guard let result = searchResults?[indexPath.row] else { return [] }
+        guard let result = dataSource.itemIdentifier(for: indexPath)?.result else { return [] }
         let shareAction = Action(title: "action.sharelink".localized, icon: .share, color: .cellBackgroundAlt) { [weak self] in
             guard let cell = self?.tableView.cellForRow(at: indexPath) else { return }
             self?.shareResult(result, from: cell)
