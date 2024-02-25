@@ -93,16 +93,32 @@ class SearchAPI {
     }
     
     // MARK: Results
-    func getResults<T: SearchResult>(config: MirrorConfig, query: String, queryTemplate: [String?], scrapper: String, type: T.Type) -> Future<[T], AppError> {
-        return getWebMirrorURL(config: config)
-            .flatMap { self.getResults(mirror: $0, query: query, queryTemplate: queryTemplate, scrapper: scrapper, type: type) }
+    func getResults<T: SearchResult>(
+        config: MirrorConfig,
+        search: String, pathTemplate: [String?], queryItems: [URLQueryItem]?,
+        scrapper: String, type: T.Type
+    ) -> Future<[T], AppError>
+    {
+        return getWebMirrorURL(config: config).flatMap {
+            self.getResults(mirror: $0, search: search, pathTemplate: pathTemplate, queryItems: queryItems, scrapper: scrapper, type: type)
+        }
     }
     
-    func getResults<T: SearchResult>(mirror: URL, query: String, queryTemplate: [String?], scrapper: String, type: T.Type) -> Future<[T], AppError> {
-        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
+    func getResults<T: SearchResult>(
+        mirror: URL,
+        search: String, pathTemplate: [String?], queryItems: [URLQueryItem]?,
+        scrapper: String, type: T.Type
+    ) -> Future<[T], AppError>
+    {
+        let q = search.trimmingCharacters(in: .whitespacesAndNewlines)
         var url = mirror
-        queryTemplate.forEach { part in
+        pathTemplate.forEach { part in
             url = url.appendingPathComponent(part ?? q)
+        }
+        if let queryItems {
+            var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+            components?.queryItems = queryItems
+            url = components?.url ?? url
         }
         
         return scrap(url, using: scrapper, into: [T].self)

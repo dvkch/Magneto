@@ -19,11 +19,16 @@ struct SearchAPIYts {
     private let apiURL = URL(string: "https://yts.mx")!
     
     // MARK: Methods
-    func getResults(query: String) -> Future<[SearchResultYts], AppError> {
+    func getResults(query: String, page: Int) -> Future<[SearchResultYts], AppError> {
+        var queryItems = [URLQueryItem]()
+        if page > 0 {
+            queryItems.append(URLQueryItem(name: "page", value: String(1 + page)))
+        }
         return SearchAPI.shared.getResults(
             mirror: apiURL,
-            query: query,
-            queryTemplate: ["browse-movies", nil],
+            search: query,
+            pathTemplate: ["browse-movies", nil],
+            queryItems: queryItems,
             scrapper: "yts_results",
             type: SearchResultYts.self
         )

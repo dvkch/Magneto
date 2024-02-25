@@ -19,11 +19,12 @@ struct SearchAPILeetx {
     let apiURL = URL(string: "https://www.1337x.to")!
     
     // MARK: Methods
-    func getResults(query: String) -> Future<[SearchResultLeetx], AppError> {
+    func getResults(query: String, page: Int) -> Future<[SearchResultLeetx], AppError> {
         return SearchAPI.shared.getResults(
             mirror: apiURL,
-            query: query,
-            queryTemplate: ["search", nil, "1"], // TODO: replace spaces by +
+            search: query,
+            pathTemplate: ["search", nil, String(1 + page)], // TODO: replace spaces by +
+            queryItems: nil,
             scrapper: "1337x_results",
             type: SearchResultLeetx.self
         )

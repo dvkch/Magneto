@@ -28,11 +28,14 @@ struct SearchAPITpb {
         return SearchAPI.shared.getWebMirrorURL(config: mirrorConfig)
     }
     
-    func getResults(query: String) -> Future<[SearchResultTpb], AppError> {
+    func getResults(query: String, page: Int) -> Future<[SearchResultTpb], AppError> {
         return SearchAPI.shared.getResults(
             config: mirrorConfig,
-            query: query, queryTemplate: ["search", nil, "1", "99", "0"],
-            scrapper: "tpb_results", type: SearchResultTpb.self
+            search: query,
+            pathTemplate: ["search", nil, String(1 + page), "99", "0"],
+            queryItems: nil,
+            scrapper: "tpb_results",
+            type: SearchResultTpb.self
         )
     }
 }
