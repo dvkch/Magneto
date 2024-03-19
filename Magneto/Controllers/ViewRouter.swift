@@ -64,7 +64,7 @@ class ViewRouter {
                 self.mainVC(in: scene)?.present(alert, animated: true, completion: nil)
             }
             .onFailure { (error) in
-                print("Couldn't download dist plist:", error)
+                Log.e(.update, "Couldn't download dist plist: \(error)")
             }
     }
     
