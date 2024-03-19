@@ -112,6 +112,7 @@ class MainVC: ViewController {
         let hud = HUDAlertController.show(in: self)
         TransmissionAPI.shared.removeCompletedTorrents(in: client)
             .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
+            .delay(.milliseconds(200))
             .onSuccess { (count) in
                 if count > 0 {
                     UIAlertController.show(title: "torrent.removed".localized(quantity: count), close: "action.close".localized, in: self)
