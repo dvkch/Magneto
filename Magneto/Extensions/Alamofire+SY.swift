@@ -8,6 +8,7 @@
 
 import Alamofire
 import BrightFutures
+import Foundation
 
 extension URLRequest {
     var client: Client? {

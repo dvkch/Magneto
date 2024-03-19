@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7D7D349F15C04721E46F1189 /* Pods_Magneto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1F500DDF9473EA4D5A3557 /* Pods_Magneto.framework */; };
 		970130E021B07EC000E7CFEC /* SearchAPITpb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130DF21B07EC000E7CFEC /* SearchAPITpb.swift */; };
 		970130E221B084E500E7CFEC /* Alamofire+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970130E121B084E500E7CFEC /* Alamofire+SY.swift */; };
 		9703046D2B9876A500F48AEE /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9703046C2B9876A500F48AEE /* Log.swift */; };
 		9715A479251B9CD200C2C52F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9715A478251B9CD200C2C52F /* SceneDelegate.swift */; };
 		9715A508251BA32B00C2C52F /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9715A507251BA32B00C2C52F /* ViewRouter.swift */; };
+		972143DC2BAA2790003424F4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 972143DB2BAA2790003424F4 /* Alamofire */; };
+		972143DF2BAA279A003424F4 /* BrightFutures in Frameworks */ = {isa = PBXBuildFile; productRef = 972143DE2BAA279A003424F4 /* BrightFutures */; };
+		972143E22BAA27A8003424F4 /* TPKeyboardAvoiding in Frameworks */ = {isa = PBXBuildFile; productRef = 972143E12BAA27A8003424F4 /* TPKeyboardAvoiding */; };
+		972143E52BAA27B5003424F4 /* SYKit in Frameworks */ = {isa = PBXBuildFile; productRef = 972143E42BAA27B5003424F4 /* SYKit */; };
+		972143EB2BAA2A11003424F4 /* Disco in Frameworks */ = {isa = PBXBuildFile; productRef = 972143EA2BAA2A11003424F4 /* Disco */; };
 		972589AD21B0AD6D00FCE9D5 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972589AC21B0AD6D00FCE9D5 /* AppError.swift */; };
 		972B4FBC24BBCF270026BFE4 /* String+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B4FBB24BBCF270026BFE4 /* String+SY.swift */; };
 		973784321BD40649001AD487 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 973784311BD40649001AD487 /* Launch.storyboard */; };
@@ -92,7 +96,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5E1F500DDF9473EA4D5A3557 /* Pods_Magneto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Magneto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		970130DF21B07EC000E7CFEC /* SearchAPITpb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPITpb.swift; sourceTree = "<group>"; };
 		970130E121B084E500E7CFEC /* Alamofire+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+SY.swift"; sourceTree = "<group>"; };
 		9703046C2B9876A500F48AEE /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -159,8 +162,6 @@
 		97DB10F62B60A72400FBC685 /* SearchAPIT9.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPIT9.swift; sourceTree = "<group>"; };
 		97F911461BC2C45C00BF1848 /* EditClientVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditClientVC.xib; sourceTree = "<group>"; };
 		97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientFormCell.xib; sourceTree = "<group>"; };
-		BA3E80D93A8CC210E3C1C221 /* Pods-Magneto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Magneto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Magneto/Pods-Magneto.debug.xcconfig"; sourceTree = "<group>"; };
-		C279F98104C50F8A0EE8D47D /* Pods-Magneto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Magneto.release.xcconfig"; path = "Pods/Target Support Files/Pods-Magneto/Pods-Magneto.release.xcconfig"; sourceTree = "<group>"; };
 		F8986757192A317C00735175 /* Magneto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Magneto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F898675A192A317C00735175 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F898675C192A317C00735175 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -176,9 +177,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F898675D192A317C00735175 /* CoreGraphics.framework in Frameworks */,
+				972143DC2BAA2790003424F4 /* Alamofire in Frameworks */,
+				972143E22BAA27A8003424F4 /* TPKeyboardAvoiding in Frameworks */,
+				972143E52BAA27B5003424F4 /* SYKit in Frameworks */,
+				972143DF2BAA279A003424F4 /* BrightFutures in Frameworks */,
 				F898675F192A317C00735175 /* UIKit.framework in Frameworks */,
 				F898675B192A317C00735175 /* Foundation.framework in Frameworks */,
-				7D7D349F15C04721E46F1189 /* Pods_Magneto.framework in Frameworks */,
+				972143EB2BAA2A11003424F4 /* Disco in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,22 +309,12 @@
 			path = DataSources;
 			sourceTree = "<group>";
 		};
-		D2AE9763663001786F053965 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				BA3E80D93A8CC210E3C1C221 /* Pods-Magneto.debug.xcconfig */,
-				C279F98104C50F8A0EE8D47D /* Pods-Magneto.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		F898674E192A317C00735175 = {
 			isa = PBXGroup;
 			children = (
 				F8986760192A317C00735175 /* Magneto */,
 				F8986759192A317C00735175 /* Frameworks */,
 				F8986758192A317C00735175 /* Products */,
-				D2AE9763663001786F053965 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -338,7 +333,6 @@
 				F898675C192A317C00735175 /* CoreGraphics.framework */,
 				F898675E192A317C00735175 /* UIKit.framework */,
 				F898677C192A317D00735175 /* XCTest.framework */,
-				5E1F500DDF9473EA4D5A3557 /* Pods_Magneto.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -369,19 +363,24 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F898678C192A317D00735175 /* Build configuration list for PBXNativeTarget "Magneto" */;
 			buildPhases = (
-				2E37C883200E80A532B2ACFD /* [CP] Check Pods Manifest.lock */,
 				9771AB1921AED473005DE97D /* TODOs */,
 				F8986753192A317C00735175 /* Sources */,
 				F8986754192A317C00735175 /* Frameworks */,
 				F8986755192A317C00735175 /* Resources */,
 				F88A0B311A80F7220089DE9A /* Embed Foundation Extensions */,
-				FAF7719DF38D205F1D5C7765 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Magneto;
+			packageProductDependencies = (
+				972143DB2BAA2790003424F4 /* Alamofire */,
+				972143DE2BAA279A003424F4 /* BrightFutures */,
+				972143E12BAA27A8003424F4 /* TPKeyboardAvoiding */,
+				972143E42BAA27B5003424F4 /* SYKit */,
+				972143EA2BAA2A11003424F4 /* Disco */,
+			);
 			productName = Magneto;
 			productReference = F8986757192A317C00735175 /* Magneto.app */;
 			productType = "com.apple.product-type.application";
@@ -425,6 +424,13 @@
 				fr,
 			);
 			mainGroup = F898674E192A317C00735175;
+			packageReferences = (
+				972143DA2BAA2790003424F4 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				972143DD2BAA279A003424F4 /* XCRemoteSwiftPackageReference "BrightFutures" */,
+				972143E02BAA27A8003424F4 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */,
+				972143E32BAA27B5003424F4 /* XCRemoteSwiftPackageReference "SYKit" */,
+				972143E92BAA2A11003424F4 /* XCRemoteSwiftPackageReference "Disco" */,
+			);
 			productRefGroup = F8986758192A317C00735175 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -458,24 +464,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2E37C883200E80A532B2ACFD /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Magneto-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9771AB1921AED473005DE97D /* TODOs */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -494,34 +482,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "declare -a TAGS=(\"TODO:\" \"FIXME:\" \"ASK:\" \"WAITING:\")\necho \"searching ${SRCROOT} for ${TAGS}\"\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/Magneto\" \\( -name \"*.swift\" -or -name \"*.m\" -or -name \"*.h\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n";
-		};
-		FAF7719DF38D205F1D5C7765 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Magneto/Pods-Magneto-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework",
-				"${BUILT_PRODUCTS_DIR}/Disco/Disco.framework",
-				"${BUILT_PRODUCTS_DIR}/SYKit/SYKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyPing/SwiftyPing.framework",
-				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightFutures.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Disco.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SYKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyPing.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Magneto/Pods-Magneto-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -716,7 +676,6 @@
 		};
 		F898678D192A317D00735175 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BA3E80D93A8CC210E3C1C221 /* Pods-Magneto.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -751,7 +710,6 @@
 		};
 		F898678E192A317D00735175 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C279F98104C50F8A0EE8D47D /* Pods-Magneto.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -804,6 +762,77 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		972143DA2BAA2790003424F4 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.0;
+			};
+		};
+		972143DD2BAA279A003424F4 /* XCRemoteSwiftPackageReference "BrightFutures" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Thomvis/BrightFutures";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
+		972143E02BAA27A8003424F4 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/michaeltyson/TPKeyboardAvoiding.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.5;
+			};
+		};
+		972143E32BAA27B5003424F4 /* XCRemoteSwiftPackageReference "SYKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dvkch/SYKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.20;
+			};
+		};
+		972143E92BAA2A11003424F4 /* XCRemoteSwiftPackageReference "Disco" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dvkch/Disco.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		972143DB2BAA2790003424F4 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 972143DA2BAA2790003424F4 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		972143DE2BAA279A003424F4 /* BrightFutures */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 972143DD2BAA279A003424F4 /* XCRemoteSwiftPackageReference "BrightFutures" */;
+			productName = BrightFutures;
+		};
+		972143E12BAA27A8003424F4 /* TPKeyboardAvoiding */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 972143E02BAA27A8003424F4 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */;
+			productName = TPKeyboardAvoiding;
+		};
+		972143E42BAA27B5003424F4 /* SYKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 972143E32BAA27B5003424F4 /* XCRemoteSwiftPackageReference "SYKit" */;
+			productName = SYKit;
+		};
+		972143EA2BAA2A11003424F4 /* Disco */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 972143E92BAA2A11003424F4 /* XCRemoteSwiftPackageReference "Disco" */;
+			productName = Disco;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F898674F192A317C00735175 /* Project object */;
 }
