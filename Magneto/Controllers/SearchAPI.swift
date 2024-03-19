@@ -28,19 +28,31 @@ class SearchAPI {
     private var session: Session
 
     // MARK: Generic
-    private func scrap<T: Decodable>(_ url: URL, using scrapper: String, into type: T.Type) -> Future<T, AppError> {
-        return session.request("https://hapier.syan.me/api/scrappers/\(scrapper)", parameters: ["url": url.absoluteString])
-            .validate()
-            .responseFutureCodable(type: T.self)
-            .recoverWith { (error) -> Future<T, AppError> in
-                if case let .alamofire(request) = error, request.isUnreachable {
-                    return .init(error: .noAvailableAPI)
-                }
-                print(error)
-                return .init(error: error)
-            }
+    enum ScrapSource {
+        case url, content, loadedContent(String)
     }
-    
+    private func scrap<T: Decodable>(_ url: URL, using scrapper: String, source: ScrapSource = .url, into type: T.Type) -> Future<T, AppError> {
+        if case .content = source {
+            return session.request(url: url).data().flatMap { data in
+                let body = String(data: data, encoding: .utf8)!
+                return self.scrap(url, using: scrapper, source: .loadedContent(body), into: type)
+            }
+        }
+        
+        var method = HTTPMethod.get
+        var params = [String: String]()
+        params["url"] = url.absoluteString
+        
+        if case let .loadedContent(body) = source {
+            method = .post
+            params["content"] = body
+        }
+        
+        Log.i(.searchAPI, "LOADING: \(url)")
+        return session.request(url: "https://hapier.syan.me/api/scrappers/\(scrapper)", method: method, params: params)
+            .codable(type: T.self)
+    }
+
     // MARK: Mirror types
     private struct Mirror: Codable {
         let url: URL
@@ -105,7 +117,7 @@ class SearchAPI {
     }
     
     func getResults<T: SearchResult>(
-        mirror: URL,
+        mirror: URL, source: ScrapSource = .url,
         search: String, pathTemplate: [String?], queryItems: [URLQueryItem]?,
         scrapper: String, type: T.Type
     ) -> Future<[T], AppError>
@@ -121,7 +133,7 @@ class SearchAPI {
             url = components?.url ?? url
         }
         
-        return scrap(url, using: scrapper, into: [T].self)
+        return scrap(url, using: scrapper, source: source, into: [T].self)
     }
     
     // MARK: Magnets
@@ -151,4 +163,3 @@ class SearchAPI {
             .map { _ in () }
     }
 }
-

@@ -69,7 +69,10 @@
 "error.title.cannotLoadResults" = "Impossible de charger les résultats";
 "error.title.cannotAddTorrent"  = "Impossible d'ajouter ce torrent";
 
-"error.noMagnetFound"           = "Aucun magnet trouvé";
+"error.request"                 = "La requête n'a pas pu aboutir";
+"error.cancelled"               = "Opération annulée";
+"error.offline"                 = "Vous semblez être hors-ligne, merci de réessayer ultérieurement";
+"error.decoding"                = "Impossible de décoder le contenu de type %@ : %@";
 "error.noClientsSaved"          = "Aucun client n'est sauvegardé dans vos réglages, merci d'en ajouter un pour téléchargé ce torrent";
 "error.noAvailableAPI"          = "Aucune API disponible pour répondre à cette requête";
 "error.clientOffline"           = "Client indisponible";

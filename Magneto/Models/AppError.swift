@@ -10,59 +10,91 @@ import UIKit
 import Alamofire
 
 enum AppError {
-    case noMagnetFound
+    case request(_ response: AlamofireDataResponse)
+    case decoding(_ kind: String, _ error: Error?, _ message: String?)
+    case cancelled
+    case offline
     case noClientsSaved
     case noAvailableAPI
     case clientOffline
-    case alamofire(_ request: AlamoDataResponseProtocol)
+    #if DEBUG
+    case notImplemented
+    #endif
 }
 
 extension AppError : LocalizedError {
     var errorDescription: String? {
+        if isOfflineError {
+            return "error.offline".localized
+        }
+        
         switch self {
-        case .noMagnetFound:                return "error.noMagnetFound".localized
+        case .request(let r):
+            if let apiError {
+                return [apiError.message, apiError.details].compactMap { $0 }.joined(separator: ": ")
+            }
+            return r.error?.localizedDescription ?? "error.request".localized
+        case .decoding(let k, let e, let m):return "error.decoding".localized(k, e?.localizedDescription ?? m ?? "")
+        case .cancelled:                    return "error.cancelled".localized
+        case .offline:                      return "error.offline".localized
         case .noClientsSaved:               return "error.noClientsSaved".localized
         case .noAvailableAPI:               return "error.noAvailableAPI".localized
         case .clientOffline:                return "error.clientOffline".localized
-        case .alamofire(let response):
-            if let data = response.data, let apiError = try? JSONDecoder().decode(ApiError.self, from: data) {
-                return [apiError.message, apiError.details].compactMap { $0 }.joined(separator: ": ")
-            }
-            var message = response.untypedError?.localizedDescription ?? "error.unknown".localized
-            if let statusCode = response.response?.statusCode {
-                message += " (\(statusCode))"
-            }
-            return message
+#if DEBUG
+        case .notImplemented:               return "NOT IMPLEMENTED"
+#endif
         }
     }
-}
-
-// MARK: Alamofire reponse handling
-protocol AlamoDataResponseProtocol {
-    var untypedError: Error? { get }
-    var response: HTTPURLResponse? { get }
-    var data: Data? { get }
-}
-
-extension DataResponse : AlamoDataResponseProtocol {
-    var untypedError: Error? {
-        error
+    
+    var apiError: ApiError? {
+        guard case let .request(response) = self else { return nil }
+        return try? JSONDecoder().decode(ApiError.self, from: response.data)
     }
-}
-
-extension AlamoDataResponseProtocol {
-    var isUnreachable: Bool {
-        if (response?.statusCode ?? 0) >= 500 {
+    
+    var underlyingError: Error? {
+        switch self {
+        case .request(let r):               return r.error?.underlyingError ?? r.error
+        case .decoding(_, let e, _):        return e
+        case .cancelled:                    return nil
+        case .offline:                      return nil
+        case .noClientsSaved:               return nil
+        case .noAvailableAPI:               return nil
+        case .clientOffline:                return nil
+#if DEBUG
+        case .notImplemented:               return nil
+#endif
+        }
+    }
+    
+    var isOfflineError: Bool {
+        if case .offline = self {
             return true
         }
-        if (untypedError as? AFError)?.underlyingError?.isNSError(domain: NSURLErrorDomain, codes: [NSURLErrorTimedOut, NSURLErrorCannotFindHost]) == true {
+        
+        guard var error = underlyingError else { return false }
+        if error.isOfflineError {
             return true
+        }
+        
+        while error.underlyingErrors.isNotEmpty {
+            error = error.underlyingErrors[0]
+            if error.isOfflineError {
+                return true
+            }
         }
         return false
     }
-    
-    var isNotFoundError: Bool {
-        return response?.statusCode == 404
-    }
 }
 
+extension Error {
+    fileprivate var underlyingErrors: [Error] {
+        var errors = [Error]()
+        if let e = (self as NSError).userInfo[NSUnderlyingErrorKey] as? NSError {
+            errors.append(e)
+        }
+        if #available(iOS 14.5, *) {
+            errors += (self as NSError).userInfo[NSMultipleUnderlyingErrorsKey] as? [NSError] ?? []
+        }
+        return errors
+    }
+}

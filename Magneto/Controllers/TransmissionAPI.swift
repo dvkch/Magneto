@@ -66,9 +66,8 @@ class TransmissionAPI: NSObject {
             ]
             
         return session
-            .request(client.apiURL, method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: nil)
-            .validate()
-            .responseFutureCodable(type: TransmissionResponse.self)
+            .request(url: client.apiURL, method: HTTPMethod.post, params: parameters, encoding: JSONEncoding(), headers: nil)
+            .codable(type: TransmissionResponse.self)
             .map { $0.result }
     }
     
@@ -85,9 +84,8 @@ class TransmissionAPI: NSObject {
         ]
         
         return session
-            .request(client.apiURL, method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: nil)
-            .validate()
-            .responseFutureCodable(type: TransmissionResponse.self)
+            .request(url: client.apiURL, method: HTTPMethod.post, params: parameters, encoding: JSONEncoding(), headers: nil)
+            .codable(type: TransmissionResponse.self)
             .map { response in response.items.filter { $0.doneDate > 0 }.map { $0.id } }
     }
     
@@ -103,9 +101,8 @@ class TransmissionAPI: NSObject {
         ]
         
         return session
-            .request(client.apiURL, method: HTTPMethod.post, parameters: parameters, encoding: JSONEncoding(), headers: nil)
-            .validate()
-            .responseFutureCodable(type: TransmissionResponse.self)
+            .request(url: client.apiURL, method: HTTPMethod.post, params: parameters, encoding: JSONEncoding(), headers: nil)
+            .codable(type: TransmissionResponse.self)
             .map { _ in ids.count }
     }
 }

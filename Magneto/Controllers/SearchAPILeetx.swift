@@ -22,8 +22,9 @@ struct SearchAPILeetx {
     func getResults(query: String, page: Int) -> Future<[SearchResultLeetx], AppError> {
         return SearchAPI.shared.getResults(
             mirror: apiURL,
-            search: query,
-            pathTemplate: ["search", nil, String(1 + page)], // TODO: replace spaces by +
+            source: .content,
+            search: query.replacingOccurrences(of: " ", with: " "),
+            pathTemplate: ["search", nil, String(1 + page)],
             queryItems: nil,
             scrapper: "1337x_results",
             type: SearchResultLeetx.self

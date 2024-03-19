@@ -39,8 +39,8 @@ class AppAPI: NSObject {
     }
     func getLatestBuildNumber() -> Future<Int, AppError> {
         return session
-            .request("https://ota.syan.me/apps/Magneto.plist")
-            .responseFutureData()
+            .request(url: "https://ota.syan.me/apps/Magneto.plist")
+            .data()
             .flatMap {
                 guard let onlinePlist = try? PropertyListDecoder().decode(BundleInfoPlist.self, from: $0) else {
                     return .init(error: .noAvailableAPI)

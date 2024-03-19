@@ -69,7 +69,10 @@
 "error.title.cannotLoadResults" = "Cannot load results";
 "error.title.cannotAddTorrent"  = "Cannot add torrent";
 
-"error.noMagnetFound"           = "No magnet found";
+"error.request"                 = "The request couldn't finish";
+"error.cancelled"               = "Operation cancelled";
+"error.offline"                 = "You seem to be offline, retry when you have access to the internet";
+"error.decoding"                = "Couldn't decode content of type %@: %@";
 "error.noClientsSaved"          = "No client saved in your settings, please add one before trying to download this item";
 "error.noAvailableAPI"          = "No available API could respond to the request";
 "error.clientOffline"           = "Client unavailable";
