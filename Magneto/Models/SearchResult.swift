@@ -80,6 +80,10 @@ protocol SearchResultVariant: CustomStringConvertible, Decodable, Taggable {
 
 extension SearchResultVariant {
     var tag: String {
-        return name.uppercased()
+        var tag = name.uppercased()
+        if let size {
+            tag += " (\(size))"
+        }
+        return tag
     }
 }

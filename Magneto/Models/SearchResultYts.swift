@@ -58,7 +58,7 @@ struct SearchResultVariantYts : SearchResultVariant, Decodable {
 
     // MARK: Properties
     let name: String
-    let size: String? = nil
+    let size: String?
     
     let seeders: Int? = nil
     let leechers: Int? = nil
@@ -69,12 +69,14 @@ struct SearchResultVariantYts : SearchResultVariant, Decodable {
     private enum CodingKeys: String, CodingKey {
         case name = "name"
         case downloadURL = "url"
+        case size = "size"
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name          = try container.decode(String.self, forKey: .name)
         downloadURL   = try container.decode(URL.self, forKey: .downloadURL)
+        size          = try container.decode(String.self, forKey: .size)
     }
 
     // MARK: URLs
