@@ -8,6 +8,8 @@
 
 import Foundation
 import BrightFutures
+import UIKit
+import SYKit
 
 enum Recentness {
     case new, recent, regular
@@ -68,7 +70,7 @@ extension SearchResult {
     }
 }
 
-protocol SearchResultVariant: CustomStringConvertible, Decodable, Taggable {
+protocol SearchResultVariant: CustomStringConvertible, Decodable {
     var name: String    { get }
     var size: String?   { get }
     
@@ -79,11 +81,12 @@ protocol SearchResultVariant: CustomStringConvertible, Decodable, Taggable {
 }
 
 extension SearchResultVariant {
-    var tag: String {
+    var tag: Tag {
         var tag = name.uppercased()
         if let size {
             tag += " (\(size))"
         }
-        return tag
+
+        return Tag(id: name, name: tag, object: self)
     }
 }

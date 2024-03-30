@@ -21,6 +21,7 @@ class ResultCell: UITableViewCell {
         super.awakeFromNib()
         backgroundColor = .cellBackground
         
+        variantsView.tagViewClass = Magneto.TagView.self
         variantsView.delegate = self
     }
 
@@ -34,9 +35,9 @@ class ResultCell: UITableViewCell {
     }
     
     // MARK: Views
-    @IBOutlet var label: UILabel!
-    @IBOutlet var loader: UIActivityIndicatorView!
-    @IBOutlet var variantsView: TagsView!
+    @IBOutlet private var label: UILabel!
+    @IBOutlet private var loader: UIActivityIndicatorView!
+    @IBOutlet private var variantsView: TagsView!
 
     // MARK: Actions
     func runMainAction() {
@@ -147,7 +148,7 @@ class ResultCell: UITableViewCell {
         }
         
         variantsView.sy_isHidden = false
-        variantsView.tags = variants
+        variantsView.tags = variants.map { $0.tag }
 
         if afterAPICall {
             refreshHeight()
@@ -156,7 +157,7 @@ class ResultCell: UITableViewCell {
 }
 
 extension ResultCell: TagsViewDelegate {
-    func tagsView(_ tagsView: TagsView, didTapItem item: Taggable, sender: UIView) {
-        delegate?.resultCell(self, tapped: item as! SearchResultVariant, sender: sender)
+    func tagsView(_ tagsView: TagsView, didTapItem item: Tag, sender: UIView) {
+        delegate?.resultCell(self, tapped: item.object as! SearchResultVariant, sender: sender)
     }
 }
