@@ -1,4 +1,5 @@
 {
+  "originHash" : "bc79246e5854ec6dc16540c23ddd8e467a96d9785897e386756e6c3692f597bd",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -41,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/dvkch/SYKit.git",
       "state" : {
-        "revision" : "f8c3c70a715e4c2ac1b22328bcf2dca629c11640",
-        "version" : "0.2.26"
+        "revision" : "a4ccb6ebe67e17a23a060c5f0fbc5705135e3757",
+        "version" : "0.2.27"
       }
     },
     {
@@ -55,5 +56,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
