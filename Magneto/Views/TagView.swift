@@ -17,5 +17,4 @@ class TagView: SYKit.TagView {
         setTitleColor(.altText, for: .normal)
         setTitleColor(.backgroundAlt, for: .highlighted)
     }
-
 }
