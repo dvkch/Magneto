@@ -48,7 +48,7 @@ struct SearchResultT9 : SearchResult, SearchResultVariant {
         return SearchAPIT9.shared.getWebMirrorURL().map { $0.appendingPathComponent(pagePath) }
     }
     
-    func magnetURL() -> Future<URL, AppError> {
+    func torrent() -> Future<Torrent, AppError> {
         return SearchAPIT9.shared.getMagnet(result: self)
     }
     

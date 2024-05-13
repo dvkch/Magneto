@@ -77,7 +77,7 @@ protocol SearchResultVariant: CustomStringConvertible, Decodable {
     var seeders: Int?   { get }
     var leechers: Int?  { get }
     
-    func magnetURL() -> Future<URL, AppError>
+    func torrent() -> Future<Torrent, AppError>
 }
 
 extension SearchResultVariant {

@@ -59,11 +59,20 @@ class TransmissionAPI: NSObject {
     }
 
     // MARK: API
-    func addMagnet(_ magnetURL: URL, to client: Client) -> Future<String?, AppError> {
+    func addTorrent(_ torrent: Torrent, to client: Client) -> Future<String?, AppError> {
+        let arguments: [String: String]
+
+        switch torrent {
+        case .url(let url):
+            arguments = ["filename": url.absoluteString]
+        case .base64(_, let base64):
+            arguments = ["metainfo": base64]
+        }
+
         let parameters: Parameters = [
             "method":"torrent-add",
-            "arguments": ["filename": magnetURL.absoluteString]
-            ]
+            "arguments": arguments
+        ]
             
         return session
             .request(url: client.apiURL, method: HTTPMethod.post, params: parameters, encoding: JSONEncoding(), headers: nil)

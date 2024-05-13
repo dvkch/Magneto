@@ -42,6 +42,6 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let magnetURL = URLContexts.map(\.url).first(where: { $0.scheme == "magnet" }) else { return }
         mainVC.loadViewIfNeeded()
-        mainVC.openTorrentPopup(with: .magnet(magnetURL), sender: nil)
+        mainVC.openTorrentPopup(with: .resolved(.url(magnetURL)), sender: nil)
     }
 }

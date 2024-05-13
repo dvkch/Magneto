@@ -13,7 +13,7 @@ import BrightFutures
 class MagnetPopupVC: ViewController {
 
     // MARK: Presentation
-    static func show(in viewController: UIViewController, torrent: Torrent, sender: UIView?) {
+    static func show(in viewController: UIViewController, source: Source, sender: UIView?) {
         #if !targetEnvironment(macCatalyst) && os(iOS)
         guard Preferences.shared.clients.isNotEmpty else {
             UIAlertController.show(
@@ -27,7 +27,7 @@ class MagnetPopupVC: ViewController {
         #endif
 
         let popupVC = MagnetPopupVC()
-        popupVC.torrent = torrent
+        popupVC.source = source
         
         popupVC.modalPresentationStyle = .popover
         if let sender {
@@ -52,7 +52,7 @@ class MagnetPopupVC: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = torrent.name
+        titleLabel.text = source.name
 
         spinner.color = .tint
         
@@ -88,21 +88,21 @@ class MagnetPopupVC: ViewController {
     }
     
     // MARK: Properties
-    enum Torrent {
-        case magnet(URL)
+    enum Source {
+        case resolved(Torrent)
         case result(any SearchResult, any SearchResultVariant)
 
-        func url() -> Future<URL, AppError> {
+        func get() -> Future<Torrent, AppError> {
             switch self {
-            case .magnet(let url):  return .init(value: url)
-            case .result(_, let r): return r.magnetURL()
+            case .resolved(let torrent):    return .init(value: torrent)
+            case .result(_, let r):         return r.torrent()
             }
         }
         
         var name: String? {
             switch self {
-            case .magnet(let url):      
-                return url.magnetName?.capitalized
+            case .resolved(let torrent):
+                return torrent.name
             case .result(let r, let v):
                 if r.name == v.name {
                     return v.name
@@ -111,7 +111,7 @@ class MagnetPopupVC: ViewController {
             }
         }
     }
-    private var torrent: Torrent!
+    private var source: Source!
     private var clientsDataSource: ClientsDataSources!
     private var canClose: Bool = false
 
@@ -131,19 +131,18 @@ class MagnetPopupVC: ViewController {
     // MARK: API
     private func fetchMagnetURLAndAdd(to clientKind: ClientCell.Kind) {
         updateForMode(.loading, animated: true)
-        torrent.url()
-            .onSuccess { url in
+        source.get().onSuccess { torrent in
                 switch clientKind {
                 case .newClient:
                     break
 
                 case .client(let client), .discoveredClient(let client, _):
-                    if let client = client {
-                        self.addMagnetToClient(magnetURL: url, client: client)
+                    if let client {
+                        self.addTorrentToClient(torrent: torrent, client: client)
                     }
 
                 case .openURL:
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(torrent.url, options: [:], completionHandler: nil)
                     self.dismiss(animated: true, completion: nil)
                 }
             }
@@ -152,10 +151,10 @@ class MagnetPopupVC: ViewController {
             }
     }
     
-    private func addMagnetToClient(magnetURL: URL, client: Client) {
+    private func addTorrentToClient(torrent: Torrent, client: Client) {
         updateForMode(.loading, animated: true)
         
-        TransmissionAPI.shared.addMagnet(magnetURL, to: client)
+        TransmissionAPI.shared.addTorrent(torrent, to: client)
             .onSuccess { message in
                 var successMessage = "torrent.success".localized
                 if let message = message, !message.isEmpty {

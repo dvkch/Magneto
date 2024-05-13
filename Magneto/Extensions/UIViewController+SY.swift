@@ -21,14 +21,14 @@ extension UIViewController {
         #endif
     }
     
-    func openTorrentPopup(with torrent: MagnetPopupVC.Torrent, sender: UIView?) {
+    func openTorrentPopup(with source: MagnetPopupVC.Source, sender: UIView?) {
         if let presentedViewController = presentedViewController {
             presentedViewController.dismiss(animated: false) {
-                self.openTorrentPopup(with: torrent, sender: sender)
+                self.openTorrentPopup(with: source, sender: sender)
             }
             return
         }
         
-        MagnetPopupVC.show(in: self, torrent: torrent, sender: sender)
+        MagnetPopupVC.show(in: self, source: source, sender: sender)
     }
 }

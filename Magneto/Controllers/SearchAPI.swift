@@ -139,11 +139,16 @@ class SearchAPI {
     // MARK: Magnets
     private struct ResultPage: Codable {
         let url: URL
+        let torrent: String?
     }
 
-    func getMagnet(for url: URL, scrapper: String) -> Future<URL, AppError> {
-        return scrap(url, using: scrapper, into: ResultPage.self)
-            .map { $0.url }
+    func getTorrent(for url: URL, scrapper: String) -> Future<Torrent, AppError> {
+        return scrap(url, using: scrapper, into: ResultPage.self).map { result in
+            if let torrent = result.torrent {
+                return .base64(result.url, torrent)
+            }
+            return .url(result.url)
+        }
     }
 
     // MARK: Variants

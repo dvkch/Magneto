@@ -57,8 +57,8 @@ struct SearchResultTpb : SearchResult, SearchResultVariant {
         return .init(value: resultPageURL)
     }
 
-    func magnetURL() -> Future<URL, AppError> {
-        return .init(value: resultMagnetURL)
+    func torrent() -> Future<Torrent, AppError> {
+        return .init(value: .url(resultMagnetURL))
     }
     
     // MARK: Variants

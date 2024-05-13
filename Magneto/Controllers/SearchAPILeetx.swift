@@ -31,10 +31,7 @@ struct SearchAPILeetx {
         )
     }
     
-    private struct ResultPage: Codable {
-        let url: URL
-    }
-    func getMagnet(pageURL: URL) -> Future<URL, AppError> {
-        return SearchAPI.shared.getMagnet(for: pageURL, scrapper: "1337x_magnet")
+    func getMagnet(pageURL: URL) -> Future<Torrent, AppError> {
+        return SearchAPI.shared.getTorrent(for: pageURL, scrapper: "1337x_magnet")
     }
 }

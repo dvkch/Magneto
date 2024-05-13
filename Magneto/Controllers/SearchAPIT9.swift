@@ -44,9 +44,9 @@ struct SearchAPIT9 {
         )
     }
     
-    func getMagnet(result: SearchResultT9) -> Future<URL, AppError> {
+    func getMagnet(result: SearchResultT9) -> Future<Torrent, AppError> {
         return result.pageURL().flatMap { pageURL in
-            return SearchAPI.shared.getMagnet(for: pageURL, scrapper: "t9_magnet")
+            return SearchAPI.shared.getTorrent(for: pageURL, scrapper: "t9_magnet")
         }
     }
 }

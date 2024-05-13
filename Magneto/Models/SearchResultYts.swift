@@ -63,12 +63,14 @@ struct SearchResultVariantYts : SearchResultVariant, Decodable {
     let seeders: Int? = nil
     let leechers: Int? = nil
     
+    let torrentBase64: String?
     let downloadURL: URL
 
     // MARK: Decodable
     private enum CodingKeys: String, CodingKey {
         case name = "name"
         case downloadURL = "url"
+        case torrentBase64 = "torrent"
         case size = "size"
     }
     
@@ -76,12 +78,16 @@ struct SearchResultVariantYts : SearchResultVariant, Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name          = try container.decode(String.self, forKey: .name)
         downloadURL   = try container.decode(URL.self, forKey: .downloadURL)
+        torrentBase64 = try container.decode(String?.self, forKey: .torrentBase64)
         size          = try container.decode(String.self, forKey: .size)
     }
 
     // MARK: URLs
-    func magnetURL() -> Future<URL, AppError> {
-        return .init(value: downloadURL)
+    func torrent() -> Future<Torrent, AppError> {
+        if let torrentBase64 {
+            return .init(value: .base64(downloadURL, torrentBase64))
+        }
+        return .init(value: .url(downloadURL))
     }
     
     // MARK: Description

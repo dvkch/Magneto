@@ -11,6 +11,15 @@
       }
     },
     {
+      "identity" : "bencode",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/danieltmbr/Bencode.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "e43a85dd005f72bbb448ebc6534e1ab0277f72a1"
+      }
+    },
+    {
       "identity" : "brightfutures",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Thomvis/BrightFutures",

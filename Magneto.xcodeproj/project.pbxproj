@@ -24,6 +24,8 @@
 		9739EFBB2B7BB35000299924 /* SearchResultYts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9739EFBA2B7BB35000299924 /* SearchResultYts.swift */; };
 		9747560A232AB4DA0038698E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97475609232AB4DA0038698E /* ViewController.swift */; };
 		9748F2772BF190BD00A2B768 /* Shush in Frameworks */ = {isa = PBXBuildFile; productRef = 9748F2762BF190BD00A2B768 /* Shush */; };
+		9748F2792BF1917C00A2B768 /* Torrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9748F2782BF1917C00A2B768 /* Torrent.swift */; };
+		9748F27D2BF193F200A2B768 /* Bencode in Frameworks */ = {isa = PBXBuildFile; productRef = 9748F27C2BF193F200A2B768 /* Bencode */; };
 		974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372921B150FC00C0FDDE /* SearchResult.swift */; };
 		974D373B21B49D4800C0FDDE /* TransmissionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373A21B49D4800C0FDDE /* TransmissionAPI.swift */; };
 		974D3A1424BB327900953757 /* SuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D3A1224BB327900953757 /* SuggestionCell.swift */; };
@@ -107,6 +109,7 @@
 		9739EFB82B7BB2E600299924 /* SearchAPIYts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPIYts.swift; sourceTree = "<group>"; };
 		9739EFBA2B7BB35000299924 /* SearchResultYts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultYts.swift; sourceTree = "<group>"; };
 		97475609232AB4DA0038698E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9748F2782BF1917C00A2B768 /* Torrent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Torrent.swift; sourceTree = "<group>"; };
 		974D372921B150FC00C0FDDE /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		974D373A21B49D4800C0FDDE /* TransmissionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransmissionAPI.swift; sourceTree = "<group>"; };
 		974D3A1224BB327900953757 /* SuggestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionCell.swift; sourceTree = "<group>"; };
@@ -182,6 +185,7 @@
 				972143DF2BAA279A003424F4 /* BrightFutures in Frameworks */,
 				F898675F192A317C00735175 /* UIKit.framework in Frameworks */,
 				9748F2772BF190BD00A2B768 /* Shush in Frameworks */,
+				9748F27D2BF193F200A2B768 /* Bencode in Frameworks */,
 				F898675B192A317C00735175 /* Foundation.framework in Frameworks */,
 				972143EB2BAA2A11003424F4 /* Disco in Frameworks */,
 			);
@@ -240,6 +244,7 @@
 				97DB10F42B60A6B600FBC685 /* SearchResultT9.swift */,
 				97DA4D892A43C3EB00E4F04D /* SearchResultTpb.swift */,
 				9739EFBA2B7BB35000299924 /* SearchResultYts.swift */,
+				9748F2782BF1917C00A2B768 /* Torrent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 				972143E42BAA27B5003424F4 /* SYKit */,
 				972143EA2BAA2A11003424F4 /* Disco */,
 				9748F2762BF190BD00A2B768 /* Shush */,
+				9748F27C2BF193F200A2B768 /* Bencode */,
 			);
 			productName = Magneto;
 			productReference = F8986757192A317C00735175 /* Magneto.app */;
@@ -393,7 +399,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = SY;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1530;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					F8986756192A317C00735175 = {
@@ -431,6 +437,7 @@
 				972143E32BAA27B5003424F4 /* XCRemoteSwiftPackageReference "SYKit" */,
 				972143E92BAA2A11003424F4 /* XCRemoteSwiftPackageReference "Disco" */,
 				9748F2752BF190BD00A2B768 /* XCRemoteSwiftPackageReference "Shush" */,
+				9748F27B2BF193F200A2B768 /* XCRemoteSwiftPackageReference "Bencode" */,
 			);
 			productRefGroup = F8986758192A317C00735175 /* Products */;
 			projectDirPath = "";
@@ -513,6 +520,7 @@
 				9771AB1F21AEE457005DE97D /* MagnetPopupVC.swift in Sources */,
 				9715A508251BA32B00C2C52F /* ViewRouter.swift in Sources */,
 				9771AB1321AEC919005DE97D /* MainVC.swift in Sources */,
+				9748F2792BF1917C00A2B768 /* Torrent.swift in Sources */,
 				9771AB2321AEF1A5005DE97D /* URL+SY.swift in Sources */,
 				97DA4D8A2A43C3EB00E4F04D /* SearchResultTpb.swift in Sources */,
 				9771AB3521AF0C59005DE97D /* ClientFormCell.swift in Sources */,
@@ -812,6 +820,14 @@
 				minimumVersion = 1.1.2;
 			};
 		};
+		9748F27B2BF193F200A2B768 /* XCRemoteSwiftPackageReference "Bencode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danieltmbr/Bencode.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -844,6 +860,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9748F2752BF190BD00A2B768 /* XCRemoteSwiftPackageReference "Shush" */;
 			productName = Shush;
+		};
+		9748F27C2BF193F200A2B768 /* Bencode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9748F27B2BF193F200A2B768 /* XCRemoteSwiftPackageReference "Bencode" */;
+			productName = Bencode;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

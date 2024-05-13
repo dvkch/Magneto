@@ -52,7 +52,7 @@ struct SearchResultLeetx : SearchResult, SearchResultVariant {
         return .init(value: resultPageURL)
     }
 
-    func magnetURL() -> BrightFutures.Future<URL, AppError> {
+    func torrent() -> Future<Torrent, AppError> {
         return SearchAPILeetx.shared.getMagnet(pageURL: resultPageURL)
     }
 
