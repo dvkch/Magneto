@@ -10,6 +10,8 @@ import UIKit
 import SYKit
 import Disco
 
+// TODO: pull data from Hapier, if it errors with a 'server not found' then try locally (or the opposite?)
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
