@@ -16,7 +16,7 @@ struct SearchAPILeetx {
     private init() {}
     
     // MARK: Properties
-    let apiURL = URL(string: "https://www.1337x.to")!
+    let apiURL = URL(string: "https://1337x.to")!
     
     // MARK: Methods
     func getResults(query: String, page: Int) -> Future<[SearchResultLeetx], AppError> {
@@ -24,7 +24,7 @@ struct SearchAPILeetx {
             mirror: apiURL,
             source: .content,
             search: query.replacingOccurrences(of: " ", with: " "),
-            pathTemplate: ["search", nil, String(1 + page)],
+            pathTemplate: ["search", nil, String(1 + page), ""], // needs to end with a /
             queryItems: nil,
             scrapper: "1337x_results",
             type: SearchResultLeetx.self
@@ -32,6 +32,6 @@ struct SearchAPILeetx {
     }
     
     func getMagnet(pageURL: URL) -> Future<Torrent, AppError> {
-        return SearchAPI.shared.getTorrent(for: pageURL, scrapper: "1337x_magnet")
+        return SearchAPI.shared.getTorrent(for: pageURL, source: .content, scrapper: "1337x_magnet")
     }
 }

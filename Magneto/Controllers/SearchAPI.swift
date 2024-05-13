@@ -142,8 +142,8 @@ class SearchAPI {
         let torrent: String?
     }
 
-    func getTorrent(for url: URL, scrapper: String) -> Future<Torrent, AppError> {
-        return scrap(url, using: scrapper, into: ResultPage.self).map { result in
+    func getTorrent(for url: URL, source: ScrapSource = .url, scrapper: String) -> Future<Torrent, AppError> {
+        return scrap(url, using: scrapper, source: source, into: ResultPage.self).map { result in
             if let torrent = result.torrent {
                 return .base64(result.url, torrent)
             }
