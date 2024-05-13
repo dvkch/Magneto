@@ -23,6 +23,7 @@
 		9739EFB92B7BB2E600299924 /* SearchAPIYts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9739EFB82B7BB2E600299924 /* SearchAPIYts.swift */; };
 		9739EFBB2B7BB35000299924 /* SearchResultYts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9739EFBA2B7BB35000299924 /* SearchResultYts.swift */; };
 		9747560A232AB4DA0038698E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97475609232AB4DA0038698E /* ViewController.swift */; };
+		9748F2772BF190BD00A2B768 /* Shush in Frameworks */ = {isa = PBXBuildFile; productRef = 9748F2762BF190BD00A2B768 /* Shush */; };
 		974D372A21B150FC00C0FDDE /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D372921B150FC00C0FDDE /* SearchResult.swift */; };
 		974D373B21B49D4800C0FDDE /* TransmissionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D373A21B49D4800C0FDDE /* TransmissionAPI.swift */; };
 		974D3A1424BB327900953757 /* SuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D3A1224BB327900953757 /* SuggestionCell.swift */; };
@@ -180,6 +181,7 @@
 				972143E52BAA27B5003424F4 /* SYKit in Frameworks */,
 				972143DF2BAA279A003424F4 /* BrightFutures in Frameworks */,
 				F898675F192A317C00735175 /* UIKit.framework in Frameworks */,
+				9748F2772BF190BD00A2B768 /* Shush in Frameworks */,
 				F898675B192A317C00735175 /* Foundation.framework in Frameworks */,
 				972143EB2BAA2A11003424F4 /* Disco in Frameworks */,
 			);
@@ -377,6 +379,7 @@
 				972143E12BAA27A8003424F4 /* TPKeyboardAvoiding */,
 				972143E42BAA27B5003424F4 /* SYKit */,
 				972143EA2BAA2A11003424F4 /* Disco */,
+				9748F2762BF190BD00A2B768 /* Shush */,
 			);
 			productName = Magneto;
 			productReference = F8986757192A317C00735175 /* Magneto.app */;
@@ -427,6 +430,7 @@
 				972143E02BAA27A8003424F4 /* XCRemoteSwiftPackageReference "TPKeyboardAvoiding" */,
 				972143E32BAA27B5003424F4 /* XCRemoteSwiftPackageReference "SYKit" */,
 				972143E92BAA2A11003424F4 /* XCRemoteSwiftPackageReference "Disco" */,
+				9748F2752BF190BD00A2B768 /* XCRemoteSwiftPackageReference "Shush" */,
 			);
 			productRefGroup = F8986758192A317C00735175 /* Products */;
 			projectDirPath = "";
@@ -800,6 +804,14 @@
 				minimumVersion = 1.2.0;
 			};
 		};
+		9748F2752BF190BD00A2B768 /* XCRemoteSwiftPackageReference "Shush" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dvkch/Shush";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -827,6 +839,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 972143E92BAA2A11003424F4 /* XCRemoteSwiftPackageReference "Disco" */;
 			productName = Disco;
+		};
+		9748F2762BF190BD00A2B768 /* Shush */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9748F2752BF190BD00A2B768 /* XCRemoteSwiftPackageReference "Shush" */;
+			productName = Shush;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

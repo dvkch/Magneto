@@ -8,6 +8,7 @@
 
 import UIKit
 import SYKit
+import Shush
 
 extension NSNotification.Name {
     static let clientsChanged = Notification.Name("Preferences.clientsChanged")
@@ -27,10 +28,10 @@ class Preferences: NSObject {
     }
     
     // MARK: Clients
-    @PrefValue(key: "clients_ids", defaultValue: [], notification: .clientsChanged)
+    @ShushValue(key: "clients_ids", defaultValue: [], notification: .clientsChanged)
     private var deprecatedClients: [Client]
     
-    @PrefArray(prefix: "clients-", sortedBy: \.id, order: .asc, notification: .clientsChanged)
+    @ShushValues(prefix: "clients-", sortedBy: \.id, order: .asc, notification: .clientsChanged)
     var clients: [Client]
 
     func clientWithIdentifier(_ identifier: String) -> Client? {
@@ -46,10 +47,7 @@ class Preferences: NSObject {
     }
 
     // MARK: Suggestions
-    @PrefValue(key: "prev_searches", defaultValue: [])
-    private var deprecatedPrevSearches: [String]
-    
-    @PrefArray(prefix: "history-", sortedBy: \.date, order: .desc)
+    @ShushValues(prefix: "history-", sortedBy: \.date, order: .desc)
     var history: [HistoryItem]
     
     func addHistory(_ value: String) {
@@ -72,6 +70,6 @@ class Preferences: NSObject {
     }
     
     // MARK: API
-    @PrefValue(key: "search_api", defaultValue: .tpb, notification: .searchAPIChanged)
+    @ShushValue(key: "search_api", defaultValue: .tpb, notification: .searchAPIChanged)
     var searchAPI: SearchAPIKind
 }

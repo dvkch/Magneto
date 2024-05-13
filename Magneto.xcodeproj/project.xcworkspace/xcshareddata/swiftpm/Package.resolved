@@ -1,5 +1,5 @@
 {
-  "originHash" : "bc79246e5854ec6dc16540c23ddd8e467a96d9785897e386756e6c3692f597bd",
+  "originHash" : "7351463173360e4ec321c31aa425d96360eadad17721aefed8d04b1d5c3cac99",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -29,6 +29,15 @@
       }
     },
     {
+      "identity" : "shush",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dvkch/Shush",
+      "state" : {
+        "revision" : "86a5c90c82956995c78ee9b2fc3e329bbb0b8066",
+        "version" : "1.1.2"
+      }
+    },
+    {
       "identity" : "swiftyping",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/samiyr/SwiftyPing",
@@ -42,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/dvkch/SYKit.git",
       "state" : {
-        "revision" : "a4ccb6ebe67e17a23a060c5f0fbc5705135e3757",
-        "version" : "0.2.27"
+        "revision" : "945e082a43fff62c106cef5a46b612023ea33f7f",
+        "version" : "0.2.30"
       }
     },
     {
