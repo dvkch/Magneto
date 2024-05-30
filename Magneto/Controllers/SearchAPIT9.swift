@@ -17,7 +17,7 @@ struct SearchAPIT9 {
     private init() {}
 
     // MARK: Properties
-    private let apiURL = URL(string: "https://www.torrent9.mn/")!
+    private let apiURL = URL(string: "https://www.torrent9.tel/")!
 
     // mirror list is super weird, not all websites work the same way... let's hope the current website works for a while :D
     private let mirrorConfig = SearchAPI.MirrorConfig(
