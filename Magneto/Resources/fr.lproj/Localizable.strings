@@ -25,12 +25,14 @@
 "client.name"       = "Nom";
 "client.host"       = "Hôte";
 "client.port"       = "Port";
+"client.label"      = "Label des torrents";
 "client.username"   = "Utilisateur";
 "client.password"   = "Mot de passe";
 
 "client.name.placeholder"       = "Mon serveur";
 "client.host.placeholder"       = "192.168.13.12";
 "client.port.placeholder"       = "9091";
+"client.label.placeholder"      = "magneto";
 "client.username.placeholder"   = "utilisateur";
 "client.password.placeholder"   = "mot de passe";
 

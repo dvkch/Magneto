@@ -14,6 +14,7 @@ class Client: Codable, Hashable, Identifiable {
     var name: String        = ""
     var host: String        = "127.0.0.1"
     var port: Int?          = nil
+    var label: String?      = nil
     var username: String?   = ""
     var password: String?   = ""
     
@@ -32,6 +33,7 @@ class Client: Codable, Hashable, Identifiable {
         case name = "name"
         case host = "host"
         case port = "port"
+        case label = "label"
         case username = "username"
         case password = "password"
     }

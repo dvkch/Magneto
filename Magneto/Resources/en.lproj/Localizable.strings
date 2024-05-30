@@ -25,12 +25,14 @@
 "client.name"       = "Name";
 "client.host"       = "Host";
 "client.port"       = "Port";
+"client.label"      = "Torrent label";
 "client.username"   = "Username";
 "client.password"   = "Password";
 
 "client.name.placeholder"       = "My server";
 "client.host.placeholder"       = "192.168.13.12";
 "client.port.placeholder"       = "9091";
+"client.label.placeholder"      = "magneto";
 "client.username.placeholder"   = "user";
 "client.password.placeholder"   = "password";
 

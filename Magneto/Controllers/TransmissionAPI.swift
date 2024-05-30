@@ -60,13 +60,12 @@ class TransmissionAPI: NSObject {
 
     // MARK: API
     func addTorrent(_ torrent: Torrent, to client: Client) -> Future<String?, AppError> {
-        let arguments: [String: String]
+        var arguments: [String: Any] = [:]
+        arguments["labels"] = [client.label].removingNils()
 
         switch torrent {
-        case .url(let url):
-            arguments = ["filename": url.absoluteString]
-        case .base64(_, let base64):
-            arguments = ["metainfo": base64]
+        case .url(let url):             arguments["filename"] = url.absoluteString
+        case .base64(_, let base64):    arguments["metainfo"] = base64
         }
 
         let parameters: Parameters = [

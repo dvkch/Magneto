@@ -21,6 +21,7 @@ extension UIImage {
         case share      = "square.and.arrow.up"     // 19x21
         case openWeb    = "magnifyingglass"
         case empty      = "tray"
+        case tag        = "tag"
 
         case bookmark   = "bookmark"
         case network    = "network"                 // 20x19
