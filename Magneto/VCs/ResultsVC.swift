@@ -83,7 +83,7 @@ class ResultsVC: ViewController {
 
             switch result {
             case .success(let items):
-                self.dataSource.insert(items, animated: animated)
+                self.dataSource.insert(items, for: query, animated: animated)
                 Preferences.shared.addHistory(query)
                 
             case .failure(let error):

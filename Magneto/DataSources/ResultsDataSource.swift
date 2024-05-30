@@ -13,15 +13,19 @@ class ResultsDataSource: UITableViewDiffableDataSource<Int, IdentifiableResult> 
     // MARK: Init
     init(tableView: UITableView, cellDelegate: ResultCellDelegate) {
         weak var wCellDelegate = cellDelegate
+        weak var wSelf: ResultsDataSource? = nil
+
         super.init(tableView: tableView) { tableView, indexPath, itemIdentifier in
             let cell = tableView.dequeueCell(ResultCell.self, for: indexPath)
-            cell.result = itemIdentifier.result
+            cell.setResult(itemIdentifier.result, query: wSelf?.query)
             cell.delegate = wCellDelegate
             return cell
         }
+        wSelf = self
     }
     
     // MARK: Results
+    private var query: String? = nil
     private var pages: [[any SearchResult]] = []
     
     private func applyResults(animated: Bool) {
@@ -36,7 +40,8 @@ class ResultsDataSource: UITableViewDiffableDataSource<Int, IdentifiableResult> 
         applyResults(animated: animated)
     }
     
-    func insert(_ results: [any SearchResult], animated: Bool) {
+    func insert(_ results: [any SearchResult], for query: String, animated: Bool) {
+        self.query = query
         self.pages.append(results)
         applyResults(animated: animated)
     }

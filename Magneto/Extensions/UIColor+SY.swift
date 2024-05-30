@@ -23,6 +23,10 @@ extension UIColor {
         return UIColor(red: 22, green: 59, blue: 190).withAlphaComponent(0.5)
     }
     
+    static var tintOnBackground: UIColor {
+        return UIColor(light: tint, dark: tint.lighter()!)
+    }
+    
     static var background: UIColor {
         if #available(iOS 13.0, *) {
             return .systemGroupedBackground

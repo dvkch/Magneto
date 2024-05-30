@@ -27,11 +27,14 @@ class ResultCell: UITableViewCell {
 
     // MARK: Properties
     weak var delegate: ResultCellDelegate?
-    var result: (any SearchResult)? {
-        didSet {
-            updateContent()
-            updateVariants(afterAPICall: false)
-        }
+    private var query: String?
+    private(set) var result: (any SearchResult)?
+    
+    func setResult(_ result: any SearchResult, query: String?) {
+        self.result = result
+        self.query = query
+        updateContent()
+        updateVariants(afterAPICall: false)
     }
     
     // MARK: Views
@@ -77,6 +80,15 @@ class ResultCell: UITableViewCell {
             title.append(" ✔️", font: .preferredFont(forTextStyle: .caption2), color: nil)
         }
 
+        let separators = CharacterSet.whitespacesAndNewlines.union(CharacterSet("().-–—_,/:=+".unicodeScalars))
+        let queryWords = query?.components(separatedBy: separators).filter(\.isNotEmpty) ?? []
+        for queryWord in queryWords {
+            let wordRange = (title.string as NSString).range(of: queryWord, options: [.caseInsensitive, .diacriticInsensitive])
+            if wordRange.location != NSNotFound {
+                title.addAttributes([.foregroundColor: UIColor.tintOnBackground], range: wordRange)
+            }
+        }
+        
         // second line
         var details = [NSAttributedString]()
 
