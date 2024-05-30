@@ -29,6 +29,17 @@ platform :ios do
     lane :ota do
         promptIncrementBuild
 
+        # build iOS version
+        gym(export_method: "ad-hoc")
+
+        # upload it
+        Dir.chdir("..") do
+            `unzip -p build/Magneto.ipa Payload/Magneto.app/Info.plist > build/Magneto.plist`
+            `plutil -convert xml1 build/Magneto.plist`
+            `deploy_ota build/Magneto.ipa build/Magneto.plist`
+        end
+
+        # build macOS version
         build_mac_app(
             export_method: "developer-id",
             export_options: {
@@ -37,11 +48,5 @@ platform :ios do
                 }
             }
         )
-
-        Dir.chdir("..") do
-            `unzip -p build/Magneto.ipa Payload/Magneto.app/Info.plist > build/Magneto.plist`
-            `plutil -convert xml1 build/Magneto.plist`
-            `deploy_ota build/Magneto.ipa build/Magneto.plist`
-        end
     end
 end
