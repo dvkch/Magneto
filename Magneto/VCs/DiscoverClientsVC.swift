@@ -15,7 +15,7 @@ class DiscoverClientsVC: ViewController {
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "discovery.title".localized
+        title = L10n.Discovery.title
         navigationItem.leftBarButtonItem = .close(target: self, action: #selector(closeButtonTap))
         
         progressView.progress = 0
@@ -106,7 +106,7 @@ extension DiscoverClientsVC : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "discovery.section.found".localized
+        return L10n.Discovery.Section.found
     }
 }
 

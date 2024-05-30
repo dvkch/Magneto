@@ -25,7 +25,7 @@ class EditClientVC: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         isCreation = Preferences.shared.clientWithIdentifier(client.id) == nil
-        title = isCreation ? "client.title.new".localized : "client.title.edit".localized
+        title = isCreation ? L10n.Client.Title.new : L10n.Client.Title.edit
         isModalInPresentation = true
         
         navigationItem.rightBarButtonItems = [
@@ -53,7 +53,7 @@ class EditClientVC: ViewController {
         let errors = client.formErrors
         guard errors.isEmpty else {
             let errorsList = errors.map { $0.value.message(for: $0.key) }.joined(separator: ", ")
-            UIAlertController.show(title: "error.form".localized, message: errorsList, close: "action.close".localized, in: self)
+            UIAlertController.show(title: L10n.Error.form, message: errorsList, close: L10n.Action.close, in: self)
             return
         }
 

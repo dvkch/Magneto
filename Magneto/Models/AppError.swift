@@ -25,7 +25,7 @@ enum AppError {
 extension AppError : LocalizedError {
     var errorDescription: String? {
         if isOfflineError {
-            return "error.offline".localized
+            return L10n.Error.offline
         }
         
         switch self {
@@ -33,13 +33,13 @@ extension AppError : LocalizedError {
             if let apiError {
                 return [apiError.message, apiError.details].compactMap { $0 }.joined(separator: ": ")
             }
-            return r.error?.localizedDescription ?? "error.request".localized
-        case .decoding(let k, let e, let m):return "error.decoding".localized(k, e?.localizedDescription ?? m ?? "")
-        case .cancelled:                    return "error.cancelled".localized
-        case .offline:                      return "error.offline".localized
-        case .noClientsSaved:               return "error.noClientsSaved".localized
-        case .noAvailableAPI:               return "error.noAvailableAPI".localized
-        case .clientOffline:                return "error.clientOffline".localized
+            return r.error?.localizedDescription ?? L10n.Error.request
+        case .decoding(let k, let e, let m):return L10n.Error.decoding(k, e?.localizedDescription ?? m ?? "")
+        case .cancelled:                    return L10n.Error.cancelled
+        case .offline:                      return L10n.Error.offline
+        case .noClientsSaved:               return L10n.Error.noClientsSaved
+        case .noAvailableAPI:               return L10n.Error.noAvailableAPI
+        case .clientOffline:                return L10n.Error.clientOffline
 #if DEBUG
         case .notImplemented:               return "NOT IMPLEMENTED"
 #endif

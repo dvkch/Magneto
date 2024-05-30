@@ -18,13 +18,13 @@ extension UIBarButtonItem {
     static func loader(color: UIColor) -> UIBarButtonItem {
         let spinner = UIActivityIndicatorView(style: .medium)
         spinner.color = color
-        spinner.accessibilityLabel = "torrent.loading".localized
+        spinner.accessibilityLabel = L10n.Torrent.loading
         return UIBarButtonItem(customView: spinner)
     }
     
     static func close(target: Any, action: Selector) -> UIBarButtonItem {
         let button = UIButton(type: .system)
-        button.accessibilityLabel = "action.close".localized
+        button.accessibilityLabel = L10n.Action.close
         button.backgroundColor = .normalText.withAlphaComponent(0.1)
         button.setImage(.icon(.close, variant: nil), for: .normal)
         button.tintColor = .altText
@@ -38,7 +38,7 @@ extension UIBarButtonItem {
     
     static func save(target: Any, action: Selector) -> UIBarButtonItem {
         let button = UIBarButtonItem(image: .icon(.checkmark), style: .plain, target: target, action: action)
-        button.title = "action.save".localized
+        button.title = L10n.Action.save
         return button
     }
 }

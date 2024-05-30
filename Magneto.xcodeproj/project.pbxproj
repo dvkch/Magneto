@@ -75,6 +75,8 @@
 		97DA4D8C2A43C5B400E4F04D /* SearchResultLeetx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DA4D8B2A43C5B400E4F04D /* SearchResultLeetx.swift */; };
 		97DB10F52B60A6B600FBC685 /* SearchResultT9.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DB10F42B60A6B600FBC685 /* SearchResultT9.swift */; };
 		97DB10F72B60A72400FBC685 /* SearchAPIT9.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DB10F62B60A72400FBC685 /* SearchAPIT9.swift */; };
+		97E7CA762C087EAE001912A4 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E7CA752C087EAE001912A4 /* Strings.swift */; };
+		97E7CA792C088470001912A4 /* Strings+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E7CA782C088470001912A4 /* Strings+SY.swift */; };
 		97EF48E02BB847B9004A2EC7 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EF48DF2BB847B9004A2EC7 /* TagView.swift */; };
 		97F911481BC2C45C00BF1848 /* EditClientVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F911461BC2C45C00BF1848 /* EditClientVC.xib */; };
 		97F9114D1BC2C73D00BF1848 /* ClientFormCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */; };
@@ -161,6 +163,8 @@
 		97DA4D8B2A43C5B400E4F04D /* SearchResultLeetx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultLeetx.swift; sourceTree = "<group>"; };
 		97DB10F42B60A6B600FBC685 /* SearchResultT9.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultT9.swift; sourceTree = "<group>"; };
 		97DB10F62B60A72400FBC685 /* SearchAPIT9.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPIT9.swift; sourceTree = "<group>"; };
+		97E7CA752C087EAE001912A4 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		97E7CA782C088470001912A4 /* Strings+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Strings+SY.swift"; sourceTree = "<group>"; };
 		97EF48DF2BB847B9004A2EC7 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		97F911461BC2C45C00BF1848 /* EditClientVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditClientVC.xib; sourceTree = "<group>"; };
 		97F9114B1BC2C73D00BF1848 /* ClientFormCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientFormCell.xib; sourceTree = "<group>"; };
@@ -300,6 +304,8 @@
 				F8986775192A317C00735175 /* Assets.xcassets */,
 				973784311BD40649001AD487 /* Launch.storyboard */,
 				976D5EFB230E0E3600573E0D /* Localizable.strings */,
+				97E7CA752C087EAE001912A4 /* Strings.swift */,
+				97E7CA782C088470001912A4 /* Strings+SY.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -368,6 +374,7 @@
 			buildConfigurationList = F898678C192A317D00735175 /* Build configuration list for PBXNativeTarget "Magneto" */;
 			buildPhases = (
 				9771AB1921AED473005DE97D /* TODOs */,
+				97E7CA772C087EBB001912A4 /* SwiftGen */,
 				F8986753192A317C00735175 /* Sources */,
 				F8986754192A317C00735175 /* Frameworks */,
 				F8986755192A317C00735175 /* Resources */,
@@ -491,6 +498,26 @@
 			shellPath = /bin/sh;
 			shellScript = "declare -a TAGS=(\"TODO:\" \"FIXME:\" \"ASK:\" \"WAITING:\")\necho \"searching ${SRCROOT} for ${TAGS}\"\n\nfor TAG in ${TAGS[@]}; do\nfind \"${SRCROOT}/Magneto\" \\( -name \"*.swift\" -or -name \"*.m\" -or -name \"*.h\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAG).*\\$\" | perl -p -e \"s/($TAG)/ warning: \\$1/\"\ndone\n";
 		};
+		97E7CA772C087EBB001912A4 /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Magneto/Resources/en.lproj/Localizable.strings",
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Magneto/Resources/Strings.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/opt/homebrew/bin/swiftgen\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -508,6 +535,7 @@
 				974D3A1424BB327900953757 /* SuggestionCell.swift in Sources */,
 				97CEA9432A16CE9100212F49 /* NavigationBar.swift in Sources */,
 				9792F0D72A14EEB9001F2EE1 /* UIImage+SY.swift in Sources */,
+				97E7CA792C088470001912A4 /* Strings+SY.swift in Sources */,
 				97C1E4FE2A16AC3B003F432E /* ResultsVC.swift in Sources */,
 				97DB10F72B60A72400FBC685 /* SearchAPIT9.swift in Sources */,
 				9715A479251B9CD200C2C52F /* SceneDelegate.swift in Sources */,
@@ -539,6 +567,7 @@
 				972B4FBC24BBCF270026BFE4 /* String+SY.swift in Sources */,
 				9747560A232AB4DA0038698E /* ViewController.swift in Sources */,
 				97DA4D882A43C29F00E4F04D /* AppAPI.swift in Sources */,
+				97E7CA762C087EAE001912A4 /* Strings.swift in Sources */,
 				9771AB3121AF0534005DE97D /* ClientCell.swift in Sources */,
 				97DA4D842A43C22700E4F04D /* SearchAPILeetx.swift in Sources */,
 				972589AD21B0AD6D00FCE9D5 /* AppError.swift in Sources */,

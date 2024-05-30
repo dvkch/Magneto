@@ -14,9 +14,9 @@ extension Client {
         
         func message(for field: FormField) -> String {
             switch self {
-            case .missing:                      return "error.form.missing %@".localized(field.name)
-            case .invalid:                      return "error.form.missingIfHas %@ %@".localized(field.name)
-            case .missingIfHas(let otherField): return "error.form.invalid %@".localized(field.name, otherField.name)
+            case .missing:                      return L10n.Error.Form.missing(field.name)
+            case .invalid:                      return L10n.Error.Form.invalid(field.name)
+            case .missingIfHas(let otherField): return L10n.Error.Form.missingIfHas(field.name, otherField.name)
             }
         }
     }
@@ -42,21 +42,21 @@ extension Client {
         
         var name: String {
             switch self {
-            case .name:     return "client.name".localized
-            case .host:     return "client.host".localized
-            case .port:     return "client.port".localized
-            case .username: return "client.username".localized
-            case .password: return "client.password".localized
+            case .name:     return L10n.Client.name
+            case .host:     return L10n.Client.host
+            case .port:     return L10n.Client.port
+            case .username: return L10n.Client.username
+            case .password: return L10n.Client.password
             }
         }
         
         var placeholder: String {
             switch self {
-            case .name:     return "client.name.placeholder".localized
-            case .host:     return "client.host.placeholder".localized
-            case .port:     return "client.port.placeholder".localized
-            case .username: return "client.username.placeholder".localized
-            case .password: return "client.password.placeholder".localized
+            case .name:     return L10n.Client.Name.placeholder
+            case .host:     return L10n.Client.Host.placeholder
+            case .port:     return L10n.Client.Port.placeholder
+            case .username: return L10n.Client.Username.placeholder
+            case .password: return L10n.Client.Password.placeholder
             }
         }
         

@@ -88,8 +88,8 @@ class ResultsVC: ViewController {
                 
             case .failure(let error):
                 UIAlertController.show(
-                    for: error, title: "error.title.cannotLoadResults".localized,
-                    close: "action.close".localized, in: self
+                    for: error, title: L10n.Error.Title.cannotLoadResults,
+                    close: L10n.Action.close, in: self
                 )
             }
         }
@@ -120,7 +120,7 @@ class ResultsVC: ViewController {
         result.pageURL()
             .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
             .onFailure { (error) in
-                UIAlertController.show(for: error, close: "action.close".localized, in: self)
+                UIAlertController.show(for: error, close: L10n.Action.close, in: self)
             }
             .onSuccess { (pageURL) in
                 let vc = UIActivityViewController(activityItems: [pageURL], applicationActivities: nil)
@@ -144,7 +144,7 @@ class ResultsVC: ViewController {
         result.pageURL()
             .andThen { _ in HUDAlertController.dismiss(hud, animated: false) }
             .onFailure { (error) in
-                UIAlertController.show(for: error, close: "action.close".localized, in: self)
+                UIAlertController.show(for: error, close: L10n.Action.close, in: self)
             }
             .onSuccess { (pageURL) in
                 DispatchQueue.main.async {
@@ -249,7 +249,7 @@ extension ResultsVC: ResultCellDelegate {
     }
     
     func resultCell(_ resultCell: ResultCell, encounteredError error: AppError) {
-        UIAlertController.show(for: error, close: "action.close".localized, in: self)
+        UIAlertController.show(for: error, close: L10n.Action.close, in: self)
     }
 }
 
@@ -276,11 +276,11 @@ extension ResultsVC: UITableViewDelegate {
     
     private func actionsForRow(at indexPath: IndexPath) -> [Action] {
         guard let result = dataSource.itemIdentifier(for: indexPath)?.result else { return [] }
-        let shareAction = Action(title: "action.sharelink".localized, icon: .share, color: .cellBackgroundAlt) { [weak self] in
+        let shareAction = Action(title: L10n.Action.sharelink, icon: .share, color: .cellBackgroundAlt) { [weak self] in
             guard let cell = self?.tableView.cellForRow(at: indexPath) else { return }
             self?.shareResult(result, from: cell)
         }
-        let openAction = Action(title: "action.open".localized, icon: .openWeb, color: .tint) { [weak self] in
+        let openAction = Action(title: L10n.Action.open, icon: .openWeb, color: .tint) { [weak self] in
             self?.openResultInSafari(result)
         }
         return [openAction, shareAction]

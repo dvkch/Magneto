@@ -18,8 +18,8 @@ class MagnetPopupVC: ViewController {
         guard Preferences.shared.clients.isNotEmpty else {
             UIAlertController.show(
                 for: AppError.noClientsSaved,
-                title: "error.title.cannotAddTorrent".localized,
-                close: "action.close".localized,
+                title: L10n.Error.Title.cannotAddTorrent,
+                close: L10n.Action.close,
                 in: viewController
             )
             return
@@ -70,7 +70,7 @@ class MagnetPopupVC: ViewController {
         updateForMode(.clients, animated: false)
         
         addKeyCommand(.init(
-            title: "action.close".localized,
+            title: L10n.Action.close,
             action: #selector(closeButtonTap),
             input: UIKeyCommand.inputEscape,
             modifierFlags: .init()
@@ -156,9 +156,9 @@ class MagnetPopupVC: ViewController {
         
         TransmissionAPI.shared.addTorrent(torrent, to: client)
             .onSuccess { message in
-                var successMessage = "torrent.success".localized
+                var successMessage = L10n.Torrent.success
                 if let message = message, !message.isEmpty {
-                    successMessage += "\n\n" + "torrent.success.messagefrom %@".localized(client.name) + message
+                    successMessage += "\n\n" + L10n.Torrent.Success.messagefrom(client.name) + message
                 }
                 self.updateForMode(.success(successMessage), animated: true)
             }
@@ -196,7 +196,7 @@ class MagnetPopupVC: ViewController {
             tableView.alpha = 0
             statusContainerView.alpha = 1
             
-            statusLabel.text = "torrent.loading".localized
+            statusLabel.text = L10n.Torrent.loading
             spinner.sy_isHidden = false
             spinner.startAnimating()
 

@@ -84,13 +84,13 @@ class ClientCell: UITableViewCell {
                 nameLabel.text = client.name
                 hostLabel.text = client.host
             } else {
-                nameLabel.text = "clients.addcustom.line1".localized
-                hostLabel.text = "clients.addcustom.line2".localized
+                nameLabel.text = L10n.Clients.Addcustom.line1
+                hostLabel.text = L10n.Clients.Addcustom.line2
             }
             showDisclosureIndicator(index: index)
             
         case .newClient:
-            nameLabel.text = "clients.count.add".localized
+            nameLabel.text = L10n.Clients.Count.add
             hostLabel.text = nil
 
             let imageView = UIImageView(image: .icon(.network))
@@ -101,8 +101,8 @@ class ClientCell: UITableViewCell {
             accessoryView = imageView
 
         case .openURL:
-            nameLabel.text = "clients.openurl.line1".localized
-            hostLabel.text = "clients.openurl.line2".localized
+            nameLabel.text = L10n.Clients.Openurl.line1
+            hostLabel.text = L10n.Clients.Openurl.line2
             accessoryView = nil
         }
         

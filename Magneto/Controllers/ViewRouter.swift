@@ -51,8 +51,8 @@ class ViewRouter {
             .onSuccess { (distBuildNumber) in
                 guard distBuildNumber > currentBuild else { return }
                 
-                let alert = UIAlertController(title: "alert.update.title".localized, message: "alert.update.message".localized, preferredStyle: .alert)
-                alert.addAction(title: "action.update".localized, style: .default) { _ in
+                let alert = UIAlertController(title: L10n.Alert.Update.title, message: L10n.Alert.Update.message, preferredStyle: .alert)
+                alert.addAction(title: L10n.Action.update, style: .default) { _ in
                     #if targetEnvironment(macCatalyst)
                     let url = URL(string: "https://github.com/dvkch/Magneto/releases/")!
                     #else
@@ -60,7 +60,7 @@ class ViewRouter {
                     #endif
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
-                alert.addAction(title: "action.cancel".localized, style: .cancel, handler: nil)
+                alert.addAction(title: L10n.Action.cancel, style: .cancel, handler: nil)
                 self.mainVC(in: scene)?.present(alert, animated: true, completion: nil)
             }
             .onFailure { (error) in
@@ -79,32 +79,32 @@ class ViewRouter {
         isShowingAuthAlertView = true
         
         let alert = UIAlertController(
-            title: "alert.auth.title".localized,
-            message: "alert.auth.message %@".localized(client.name),
+            title: L10n.Alert.Auth.title,
+            message: L10n.Alert.Auth.message(client.name),
             preferredStyle: .alert
         )
         
         alert.addTextField { field in
-            field.placeholder = "client.username".localized
+            field.placeholder = L10n.Client.username
             if #available(iOS 11.0, *) {
                 field.textContentType = .username
             }
         }
         
         alert.addTextField { field in
-            field.placeholder = "client.password".localized
+            field.placeholder = L10n.Client.password
             field.isSecureTextEntry = true
             if #available(iOS 11.0, *) {
                 field.textContentType = .password
             }
         }
         
-        alert.addAction(title: "action.cancel".localized, style: .cancel) { (_) in
+        alert.addAction(title: L10n.Action.cancel, style: .cancel) { (_) in
             self.isShowingAuthAlertView = false
             completion(true)
         }
         
-        alert.addAction(title: "action.login".localized, style: .default) { (_) in
+        alert.addAction(title: L10n.Action.login, style: .default) { (_) in
             client.username = alert.textFields?.first?.text
             client.password = alert.textFields?.last?.text
             Preferences.shared.addClient(client)

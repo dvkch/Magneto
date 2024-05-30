@@ -19,13 +19,13 @@ class MainVC: ViewController {
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.rightBarButtonItems = [searchAPIButtonItem, loaderBarButtonItem]
         
-        searchAPIButtonItem.title = "search_api".localized
+        searchAPIButtonItem.title = L10n.searchApi
 
         resultsVC.delegate = self
         resultsVC.searchController = searchController
         searchController.searchResultsUpdater = resultsVC
         searchController.searchBar.delegate = resultsVC
-        searchController.searchBar.placeholder = "placeholder.search".localized
+        searchController.searchBar.placeholder = L10n.Placeholder.search
         searchController.searchBar.keyboardType = .default
         searchController.searchBar.searchTextField.backgroundColor = .fieldBackground
         searchController.searchBar.searchTextField.layer.cornerRadius = 5
@@ -40,7 +40,7 @@ class MainVC: ViewController {
         }
         
         dataSource = .init(
-            tableView: tableView, sectionTitle: "clients.section.clients".localized,
+            tableView: tableView, sectionTitle: L10n.Clients.Section.clients,
             showAdd: true, showMagnet: false
         )
         tableView.separatorStyle = .singleLine // force their appearance on catalyst
@@ -51,7 +51,7 @@ class MainVC: ViewController {
         tableView.tableFooterView = UIView()
         
         helpButton.clipsToBounds = true
-        helpButton.accessibilityLabel = "alert.help.title".localized
+        helpButton.accessibilityLabel = L10n.Alert.Help.title
         helpButton.backgroundColor = .tint
         helpButton.setBackgroundColor(.altText, for: .highlighted)
         helpButton.tintColor = .normalTextOnTint
@@ -92,17 +92,17 @@ class MainVC: ViewController {
             action.state = Preferences.shared.searchAPI == kind ? .on : .off
             return action
         }
-        searchAPIButtonItem.menu = UIMenu(title: "search_api".localized, children: apis)
+        searchAPIButtonItem.menu = UIMenu(title: L10n.searchApi, children: apis)
         searchAPIButtonItem.image = .icon(Preferences.shared.searchAPI.icon)
     }
 
     @IBAction private func helpButtonTap() {
         let alert = UIAlertController(
-            title: "alert.help.title".localized,
-            message: "alert.help.message".localized,
+            title: L10n.Alert.Help.title,
+            message: L10n.Alert.Help.message,
             preferredStyle: .actionSheet
         )
-        alert.addAction(title: "action.close".localized, style: .cancel, handler: nil)
+        alert.addAction(title: L10n.Action.close, style: .cancel, handler: nil)
         alert.popoverPresentationController?.sourceView = helpButton
         alert.popoverPresentationController?.sourceRect = helpButton.bounds
         present(alert, animated: true, completion: nil)
@@ -115,25 +115,25 @@ class MainVC: ViewController {
             .delay(.milliseconds(200))
             .onSuccess { (count) in
                 if count > 0 {
-                    UIAlertController.show(title: "torrent.removed".localized(quantity: count), close: "action.close".localized, in: self)
+                    UIAlertController.show(title: L10n.Torrent.Removed.quantity(count), close: L10n.Action.close, in: self)
                 }
             }
             .onFailure { error in
-                UIAlertController.show(for: error, close: "action.close".localized, in: self)
+                UIAlertController.show(for: error, close: L10n.Action.close, in: self)
             }
     }
     
     fileprivate func removeClient(_ client: Client, confirmed: Bool, sender: UIView?) {
         if !confirmed {
             let alert = UIAlertController(
-                title: "alert.client.delete.title".localized,
-                message: "alert.client.delete.message %@".localized(client.name),
+                title: L10n.Alert.Client.Delete.title,
+                message: L10n.Alert.Client.Delete.message(client.name),
                 preferredStyle: .alert
             )
-            alert.addAction(title: "action.delete".localized, style: .destructive) { _ in
+            alert.addAction(title: L10n.Action.delete, style: .destructive) { _ in
                 self.removeClient(client, confirmed: true, sender: sender)
             }
-            alert.addAction(title: "action.cancel".localized, style: .cancel, handler: nil)
+            alert.addAction(title: L10n.Action.cancel, style: .cancel, handler: nil)
             alert.popoverPresentationController?.sourceView = sender
             alert.popoverPresentationController?.sourceRect = sender?.bounds ?? .zero
             present(alert, animated: true)
@@ -188,14 +188,14 @@ extension MainVC : UITableViewDelegate {
         let item = dataSource.itemIdentifier(for: indexPath) ?? .newClient
         guard let client = item.client else { return [] }
 
-        let removeFinishedAction = Action(title: "action.removefinished".localized, icon: .empty, color: .cellBackgroundAlt) { [weak self] in
+        let removeFinishedAction = Action(title: L10n.Action.removefinished, icon: .empty, color: .cellBackgroundAlt) { [weak self] in
             self?.removeFinished(in: client)
         }
-        let editAction = Action(title: "action.edit".localized, icon: .edit, color: .tint) { [weak self] in
+        let editAction = Action(title: L10n.Action.edit, icon: .edit, color: .tint) { [weak self] in
             let vc = EditClientVC(client: client)
             self?.present(NavigationController(rootViewController: vc), animated: true)
         }
-        let deleteAction = Action(title: "action.delete".localized, icon: .delete, color: .leechers, destructive: true) { [weak self] in
+        let deleteAction = Action(title: L10n.Action.delete, icon: .delete, color: .leechers, destructive: true) { [weak self] in
             self?.removeClient(client, confirmed: false, sender: self?.tableView.cellForRow(at: indexPath))
         }
         return [removeFinishedAction, editAction, deleteAction]

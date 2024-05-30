@@ -58,6 +58,6 @@ class ResultsDataSource: UITableViewDiffableDataSource<Int, IdentifiableResult> 
         guard section == 0 else { return nil }
 
         guard let searchResults = pages.first else { return nil }
-        return searchResults.isEmpty ? "clients.section.noresults".localized : "clients.section.results".localized
+        return searchResults.isEmpty ? L10n.Clients.Section.noresults : L10n.Clients.Section.results
     }
 }
