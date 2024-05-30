@@ -29,7 +29,6 @@ platform :ios do
     lane :ota do
         promptIncrementBuild
 
-        gym(export_method: "ad-hoc")
         build_mac_app(
             export_method: "developer-id",
             export_options: {
