@@ -35,9 +35,9 @@ struct SearchResultT9 : SearchResult, SearchResultVariant {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id          = UUID()
         name        = try container.decode(String.self, forKey: .name)
-        size        = try container.decode(String.self, forKey: .size)
-        seeders     = (try container.decode(IntMaybeString.self, forKey: .seeders)).value
-        leechers    = (try container.decode(IntMaybeString.self, forKey: .leechers)).value
+        size        = try container.decodeIfPresent(String.self, forKey: .size)
+        seeders     = (try container.decodeIfPresent(IntMaybeString.self, forKey: .seeders))?.value
+        leechers    = (try container.decodeIfPresent(IntMaybeString.self, forKey: .leechers))?.value
         pagePath    = try container.decode(String.self, forKey: .pagePath)
     }
     

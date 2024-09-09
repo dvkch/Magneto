@@ -40,12 +40,12 @@ struct SearchResultTpb : SearchResult, SearchResultVariant {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id              = UUID()
         name            = try container.decode(String.self, forKey: .name)
-        size            = try container.decode(String.self, forKey: .size)
-        seeders         = (try container.decode(IntMaybeString.self, forKey: .seeders)).value
-        leechers        = (try container.decode(IntMaybeString.self, forKey: .leechers)).value
+        size            = try container.decodeIfPresent(String.self, forKey: .size)
+        seeders         = (try container.decodeIfPresent(IntMaybeString.self, forKey: .seeders))?.value
+        leechers        = (try container.decodeIfPresent(IntMaybeString.self, forKey: .leechers))?.value
         verified        = try container.decode(Bool.self, forKey: .verified)
-        addedString     = try container.decode(String.self, forKey: .addedString)
-        addedDate       = try container.decode(Date.self, forKey: .addedDate)
+        addedString     = try container.decodeIfPresent(String.self, forKey: .addedString)
+        addedDate       = try container.decodeIfPresent(Date.self, forKey: .addedDate)
         resultPageURL   = try container.decode(URL.self, forKey: .resultPageURL)
         resultMagnetURL = try container.decode(URL.self, forKey: .resultMagnetURL)
     }

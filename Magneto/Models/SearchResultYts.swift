@@ -78,8 +78,8 @@ struct SearchResultVariantYts : SearchResultVariant, Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name          = try container.decode(String.self, forKey: .name)
         downloadURL   = try container.decode(URL.self, forKey: .downloadURL)
-        torrentBase64 = try container.decode(String?.self, forKey: .torrentBase64)
-        size          = try container.decode(String.self, forKey: .size)
+        torrentBase64 = try container.decodeIfPresent(String.self, forKey: .torrentBase64)
+        size          = try container.decodeIfPresent(String.self, forKey: .size)
     }
 
     // MARK: URLs

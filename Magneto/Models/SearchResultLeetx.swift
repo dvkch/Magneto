@@ -37,11 +37,11 @@ struct SearchResultLeetx : SearchResult, SearchResultVariant {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id          = UUID()
         name        = try container.decode(String.self, forKey: .name)
-        size        = try container.decode(String.self, forKey: .size)
-        seeders     = (try container.decode(IntMaybeString.self, forKey: .seeders)).value
-        leechers    = (try container.decode(IntMaybeString.self, forKey: .leechers)).value
-        addedString = try container.decode(String.self, forKey: .addedString)
-        addedDate   = try container.decode(Date.self, forKey: .addedDate)
+        size        = try container.decodeIfPresent(String.self, forKey: .size)
+        seeders     = (try container.decodeIfPresent(IntMaybeString.self, forKey: .seeders))?.value
+        leechers    = (try container.decodeIfPresent(IntMaybeString.self, forKey: .leechers))?.value
+        addedString = try container.decodeIfPresent(String.self, forKey: .addedString)
+        addedDate   = try container.decodeIfPresent(Date.self, forKey: .addedDate)
         resultPageURL = SearchAPILeetx.shared.apiURL.appendingPathComponent(try container.decode(String.self, forKey: .resultPageURL))
     }
 
