@@ -9,6 +9,7 @@
 import UIKit
 import SYKit
 import Disco
+import Network
 
 // TODO: pull data from Hapier, if it errors with a 'server not found' then try locally (or the opposite?)
 
@@ -27,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.addObserver(forName: .clientsChanged, object: nil, queue: .main) { _ in
             self.updateObservedHosts()
         }
+        
+        NWConnection.askLocalNetworkAccess({ _ in () })
         
         return true
     }
