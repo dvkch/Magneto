@@ -142,7 +142,28 @@ class MagnetPopupVC: ViewController {
                     }
 
                 case .openURL:
-                    UIApplication.shared.open(torrent.url, options: [:], completionHandler: nil)
+                    switch torrent {
+                    case .url(let url):
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        
+                    case .base64(let url, let base64):
+                        #if targetEnvironment(macCatalyst)
+                        if #available(macCatalyst 16.0, *) {
+                            let tempURL = FileManager.default.temporaryDirectory.appending(component: url.absoluteString.sha256String + ".torrent")
+                            do {
+                                try Data(base64Encoded: base64)?.write(to: tempURL)
+                                UIApplication.shared.open(tempURL, options: [:], completionHandler: nil)
+                            }
+                            catch {
+                                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                            }
+                        } else {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
+                        #else
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        #endif
+                    }
                     self.dismiss(animated: true, completion: nil)
                 }
             }

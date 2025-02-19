@@ -53,6 +53,7 @@
 		9771AB3521AF0C59005DE97D /* ClientFormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3421AF0C59005DE97D /* ClientFormCell.swift */; };
 		9771AB3721AF2BA4005DE97D /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9771AB3621AF2BA4005DE97D /* Preferences.swift */; };
 		97888C9F21B5A745004EB144 /* Codable+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97888C9E21B5A745004EB144 /* Codable+SY.swift */; };
+		978FA6052D664EB4005F1533 /* Crypto+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978FA6042D664EB1005F1533 /* Crypto+SY.swift */; };
 		9792F0D72A14EEB9001F2EE1 /* UIImage+SY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9792F0D62A14EEB9001F2EE1 /* UIImage+SY.swift */; };
 		97A18E0C1BBC011900F33AF5 /* MainVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E0B1BBC011900F33AF5 /* MainVC.xib */; };
 		97A18E0E1BBC016B00F33AF5 /* ClientCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97A18E0D1BBC016B00F33AF5 /* ClientCell.xib */; };
@@ -141,6 +142,7 @@
 		9771AB3621AF2BA4005DE97D /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		9771AB3821AF2D7C005DE97D /* Magneto.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Magneto.entitlements; sourceTree = "<group>"; };
 		97888C9E21B5A745004EB144 /* Codable+SY.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+SY.swift"; sourceTree = "<group>"; };
+		978FA6042D664EB1005F1533 /* Crypto+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Crypto+SY.swift"; sourceTree = "<group>"; };
 		9792F0D62A14EEB9001F2EE1 /* UIImage+SY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+SY.swift"; sourceTree = "<group>"; };
 		97A18E0B1BBC011900F33AF5 /* MainVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainVC.xib; sourceTree = "<group>"; };
 		97A18E0D1BBC016B00F33AF5 /* ClientCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClientCell.xib; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 		97C1E4E92A15A86E003F432E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				978FA6042D664EB1005F1533 /* Crypto+SY.swift */,
 				970130E121B084E500E7CFEC /* Alamofire+SY.swift */,
 				97888C9E21B5A745004EB144 /* Codable+SY.swift */,
 				976BA0142B5F437A0065542F /* DateFormatter+SY.swift */,
@@ -406,7 +409,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = SY;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1610;
 				ORGANIZATIONNAME = Syan;
 				TargetAttributes = {
 					F8986756192A317C00735175 = {
@@ -578,6 +581,7 @@
 				970130E221B084E500E7CFEC /* Alamofire+SY.swift in Sources */,
 				9771AB3721AF2BA4005DE97D /* Preferences.swift in Sources */,
 				9770C6FB2B8AAB4F00707BCD /* IdentifiableResult.swift in Sources */,
+				978FA6052D664EB4005F1533 /* Crypto+SY.swift in Sources */,
 				9771AB2B21AEF901005DE97D /* DiscoverClientsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
