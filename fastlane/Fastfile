@@ -11,7 +11,7 @@ platform :ios do
         cert(team_id: "79RY8264V4")
         sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", adhoc: true)
         sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", platform: 'catalyst')
-    
+
         system "rm ../*.provisionprofile"
         system "rm ../*.mobileprovision"
         system "rm ../*.cer"
@@ -30,13 +30,15 @@ platform :ios do
         promptIncrementBuild
 
         # build iOS version
-        gym(export_method: "ad-hoc")
+        build_ios_app(
+          export_method: "ad-hoc"
+        )
 
         # upload it
         Dir.chdir("..") do
-            `unzip -p build/Magneto.ipa Payload/Magneto.app/Info.plist > build/Magneto.plist`
-            `plutil -convert xml1 build/Magneto.plist`
-            `deploy_ota build/Magneto.ipa build/Magneto.plist`
+            system("unzip -p build/Magneto.ipa Payload/Magneto.app/Info.plist > build/Magneto.plist")
+            system("plutil -convert xml1 build/Magneto.plist")
+            system("deploy_ota build/Magneto.ipa build/Magneto.plist")
         end
 
         # build macOS version
