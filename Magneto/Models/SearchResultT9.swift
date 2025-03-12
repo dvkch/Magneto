@@ -18,8 +18,8 @@ struct SearchResultT9 : SearchResult, SearchResultVariant {
     let seeders: Int?
     let leechers: Int?
     let verified: Bool = false
-    let addedString: String? = nil
-    let addedDate: Date? = nil
+    let addedString: String?
+    let addedDate: Date?
     private let pagePath: String
 
     // MARK: Decodable
@@ -28,6 +28,8 @@ struct SearchResultT9 : SearchResult, SearchResultVariant {
         case size = "size"
         case seeders = "seeders"
         case leechers = "leechers"
+        case addedString = "added"
+        case addedDate = "added_parsed"
         case pagePath = "url"
     }
     
@@ -38,6 +40,8 @@ struct SearchResultT9 : SearchResult, SearchResultVariant {
         size        = try container.decodeIfPresent(String.self, forKey: .size)
         seeders     = (try container.decodeIfPresent(IntMaybeString.self, forKey: .seeders))?.value
         leechers    = (try container.decodeIfPresent(IntMaybeString.self, forKey: .leechers))?.value
+        addedString = try container.decodeIfPresent(String.self, forKey: .addedString)
+        addedDate   = try container.decodeIfPresent(Date.self, forKey: .addedDate)
         pagePath    = try container.decode(String.self, forKey: .pagePath)
     }
     

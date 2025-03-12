@@ -17,7 +17,7 @@ struct SearchAPIT9 {
     private init() {}
 
     // MARK: Properties
-    private let apiURL = URL(string: "https://www.torrent9.tel/")!
+    private let apiURL = URL(string: "https://www.torrent9.to/")!
 
     // mirror list is super weird, not all websites work the same way... let's hope the current website works for a while :D
     private let mirrorConfig = SearchAPI.MirrorConfig(
@@ -37,7 +37,7 @@ struct SearchAPIT9 {
         return SearchAPI.shared.getResults(
             mirror: apiURL,
             search: query,
-            pathTemplate: ["recherche", nil, String(1 + 50 * page)],
+            pathTemplate: ["search_torrent", nil, "page-\(page + 1)"],
             queryItems: nil,
             scrapper: "t9_results",
             type: SearchResultT9.self
