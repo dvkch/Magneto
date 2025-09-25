@@ -180,7 +180,8 @@ class SearchAPI {
     }
     
     private func loadPageContentUsingWebKit(_ url: URL, after response: AlamofireDataResponse) -> Future<String, AppError> {
-        // TODO: implement local version
+        // TODO: display a WebKit view that allows the user to click the potential CAPTCHA, detect automatically when the
+        // challenge is gone, save the cookies for later, and send the page body back to Hapier
         return .init(error: .request(response))
     }
 }

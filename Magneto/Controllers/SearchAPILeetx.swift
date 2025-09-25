@@ -22,7 +22,7 @@ struct SearchAPILeetx {
     func getResults(query: String, page: Int) -> Future<[SearchResultLeetx], AppError> {
         return SearchAPI.shared.getResults(
             mirror: apiURL,
-            source: .content,
+            source: .url, // Hapier should be able to circumvent potential CF protections now
             search: query.replacingOccurrences(of: " ", with: " "),
             pathTemplate: ["search", nil, String(1 + page), ""], // needs to end with a /
             queryItems: nil,
