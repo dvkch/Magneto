@@ -38,6 +38,10 @@ struct AlamofireDataResponse: CustomDebugStringConvertible {
             parts.append("Request:")
             parts.append("- method: \(request.httpMethod ?? "")")
             parts.append("- url: \(request.url?.absoluteString ?? "")")
+            parts.append("- headers:")
+            for (k, v) in request.allHTTPHeaderFields ?? [:] {
+                parts.append("    \(k): \(v)")
+            }
             if let body = request.httpBody, let bodyString = String(data: body, encoding: .utf8) {
                 parts.append("- body: \(bodyString)")
             }
@@ -45,6 +49,10 @@ struct AlamofireDataResponse: CustomDebugStringConvertible {
         if let response {
             parts.append("Response:")
             parts.append("- status: \(response.statusCode)")
+            parts.append("- headers:")
+            for (k, v) in response.allHeaderFields {
+                parts.append("    \(k): \(v)")
+            }
             parts.append(String(data: data, encoding: .utf8) ?? "")
         }
         return parts.joined(separator: "\n")

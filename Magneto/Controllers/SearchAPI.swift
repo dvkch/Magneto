@@ -16,8 +16,8 @@ class SearchAPI {
     
     private init() {
         let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 20
-        configuration.timeoutIntervalForResource = 20
+        configuration.timeoutIntervalForRequest = 60
+        configuration.timeoutIntervalForResource = 60
         // ignore cache for update management
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         configuration.urlCache = nil
@@ -33,8 +33,7 @@ class SearchAPI {
     }
     private func scrap<T: Decodable>(_ url: URL, using scrapper: String, source: ScrapSource = .url, into type: T.Type) -> Future<T, AppError> {
         if case .content = source {
-            return session.request(url: url).data().flatMap { data in
-                let body = String(data: data, encoding: .utf8)!
+            return loadPageContent(url).flatMap { body in
                 return self.scrap(url, using: scrapper, source: .loadedContent(body), into: type)
             }
         }
@@ -166,5 +165,22 @@ class SearchAPI {
         return scrap(url, using: scrapper, into: [T].self)
             .onSuccess { self.variantsCache[url] = $0 }
             .map { _ in () }
+    }
+    
+    // MARK: Page content
+    private func loadPageContent(_ url: URL) -> Future<String, AppError> {
+        return session.request(url: url).data().map { data in
+            String(data: data, encoding: .utf8)!
+        }.recoverWith { error in
+            if case .request(let response) = error, response.response?.statusCode == 403, response.response?.value(forHTTPHeaderField: "Server") == "cloudflare" {
+                return self.loadPageContentUsingWebKit(url, after: response)
+            }
+            return .init(error: error)
+        }
+    }
+    
+    private func loadPageContentUsingWebKit(_ url: URL, after response: AlamofireDataResponse) -> Future<String, AppError> {
+        // TODO: implement local version
+        return .init(error: .request(response))
     }
 }
