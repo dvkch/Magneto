@@ -9,7 +9,6 @@
 import Foundation
 import BrightFutures
 
-// TODO: use mirrors
 struct SearchAPIT9 {
     
     // MARK: Init
@@ -17,19 +16,11 @@ struct SearchAPIT9 {
     private init() {}
 
     // MARK: Properties
-    private let apiURL = URL(string: "https://www.torrent9.to/")!
-
-    // mirror list is super weird, not all websites work the same way... let's hope the current website works for a while :D
-    private let mirrorConfig = SearchAPI.MirrorConfig(
-        listURL: URL(string: "https://www.creativepixelmag.com/torrent9/")!,
-        listScrapper: "t9_proxies",
-        validatorScrapper: "t9_validator",
-        expectedValue: "Torrent9"
-    )
+    // mirror list for next time: https://www.creativepixelmag.com/torrent9/
+    private let apiURL = URL(string: "https://www.torrent9.fyi/")!
     
     // MARK: Methods
     func getWebMirrorURL() -> Future<URL, AppError> {
-        // return SearchAPI.shared.getWebMirrorURL(config: mirrorConfig)
         return .init(value: apiURL)
     }
     
@@ -37,7 +28,7 @@ struct SearchAPIT9 {
         return SearchAPI.shared.getResults(
             mirror: apiURL,
             search: query,
-            pathTemplate: ["search_torrent", nil, "page-\(page + 1)"],
+            pathTemplate: ["recherche", nil, "\(page * 50 + 1)"],
             queryItems: nil,
             scrapper: "t9_results",
             type: SearchResultT9.self
