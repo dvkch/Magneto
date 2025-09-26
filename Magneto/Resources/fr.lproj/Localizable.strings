@@ -85,3 +85,7 @@
 "error.form.invalid %@"         = "%@ n'est pas valide";
 
 "search_api"    = "API de recherche";
+
+"webkit.title"  = "Authentification requise";
+"webkit.finish" = "Valider";
+"webkit.cancel" = "Annuler";

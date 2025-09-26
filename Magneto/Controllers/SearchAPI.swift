@@ -21,6 +21,7 @@ class SearchAPI {
         // ignore cache for update management
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         configuration.urlCache = nil
+        configuration.httpCookieStorage = .shared
         session = Alamofire.Session(configuration: configuration)
     }
     
@@ -173,15 +174,15 @@ class SearchAPI {
             String(data: data, encoding: .utf8)!
         }.recoverWith { error in
             if case .request(let response) = error, response.response?.statusCode == 403, response.response?.value(forHTTPHeaderField: "Server") == "cloudflare" {
-                return self.loadPageContentUsingWebKit(url, after: response)
+                return self.loadPageContentUsingWebKit(url)
             }
             return .init(error: error)
         }
     }
     
-    private func loadPageContentUsingWebKit(_ url: URL, after response: AlamofireDataResponse) -> Future<String, AppError> {
-        // TODO: display a WebKit view that allows the user to click the potential CAPTCHA, detect automatically when the
-        // challenge is gone, save the cookies for later, and send the page body back to Hapier
-        return .init(error: .request(response))
+    private func loadPageContentUsingWebKit(_ url: URL) -> Future<String, AppError> {
+        ChallengeView.load(url, maxTries: 2).recoverWith { _ in
+            AppDelegate.obtain.loadPageContentUsingWebKit(url)
+        }
     }
 }

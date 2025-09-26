@@ -10,6 +10,8 @@ import UIKit
 import SYKit
 import Disco
 import Network
+import BrightFutures
+import WebKit
 
 // TODO: pull data from Hapier, if it errors with a 'server not found' then try locally (or the opposite?)
 
@@ -30,11 +32,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         NWConnection.askLocalNetworkAccess({ _ in () })
-        
+
+        #if DEBUG
+        let dataStore = WKWebsiteDataStore.default()
+        dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+          dataStore.removeData(
+            ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+            for: records,
+            completionHandler: {}
+          )
+        }
+        #endif
+
         return true
     }
     
     private func updateObservedHosts() {
         HostStatusManager.shared.hosts = Preferences.shared.clients.map { .init(host: $0.host, port: $0.portOrDefault) }
+    }
+    
+    func loadPageContentUsingWebKit(_ url: URL) -> Future<String, AppError> {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            return .init(error: .noAvailableAPI)
+        }
+        guard let sceneDelegate = scene.delegate as? SceneDelegate else {
+            return .init(error: .noAvailableAPI)
+        }
+
+        return .init { resolver in
+            let vc = ChallengeVC(url: url) { result in
+                resolver(result)
+            }
+            let nc = NavigationController()
+            nc.viewControllers = [vc]
+            nc.modalPresentationStyle = .formSheet
+            sceneDelegate.mainVC.present(nc, animated: true)
+        }
     }
 }

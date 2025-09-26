@@ -216,6 +216,14 @@ internal enum L10n {
       }
     }
   }
+  internal enum Webkit {
+    /// Cancel
+    internal static let cancel = L10n.tr("Localizable", "webkit.cancel", fallback: "Cancel")
+    /// Complete
+    internal static let finish = L10n.tr("Localizable", "webkit.finish", fallback: "Complete")
+    /// Authentication required
+    internal static let title = L10n.tr("Localizable", "webkit.title", fallback: "Authentication required")
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

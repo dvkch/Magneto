@@ -22,7 +22,7 @@ struct SearchAPILeetx {
     func getResults(query: String, page: Int) -> Future<[SearchResultLeetx], AppError> {
         return SearchAPI.shared.getResults(
             mirror: apiURL,
-            source: .url, // Hapier should be able to circumvent potential CF protections now
+            source: .content, // Hapier is somewhat able to circumvent potential CF protections, but it still is faster to do on-device
             search: query.replacingOccurrences(of: " ", with: " "),
             pathTemplate: ["search", nil, String(1 + page), ""], // needs to end with a /
             queryItems: nil,
