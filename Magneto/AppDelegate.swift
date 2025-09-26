@@ -64,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 resolver(result)
             }
             let nc = NavigationController()
+            nc.navbarBackgroundColor = .tint
             nc.viewControllers = [vc]
             nc.modalPresentationStyle = .formSheet
             sceneDelegate.mainVC.present(nc, animated: true)

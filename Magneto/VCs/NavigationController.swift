@@ -31,9 +31,16 @@ class NavigationController: UINavigationController {
         updateNavBar()
     }
     
+    var navbarBackgroundColor: UIColor? {
+        didSet {
+            updateNavBar()
+        }
+    }
+    
     private func updateNavBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = navbarBackgroundColor
         appearance.titleTextAttributes = [.foregroundColor: UIColor.normalTextOnTint]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.normalTextOnTint]
 

@@ -31,8 +31,8 @@ class ChallengeVC: UIViewController {
             UIBarButtonItem(title: L10n.Webkit.finish, style: .done, target: self, action: #selector(finishButtonTap)),
             UIBarButtonItem(title: L10n.Webkit.cancel, style: .done, target: self, action: #selector(cancelButtonTap)),
         ]
-        navigationItem.rightBarButtonItems?[0].tintColor = .tint
-        navigationItem.rightBarButtonItems?[1].tintColor = .altText
+        navigationItem.rightBarButtonItems?[0].tintColor = .normalTextOnTint
+        navigationItem.rightBarButtonItems?[1].tintColor = .altTextOnTint
 
 
         view.addSubview(UIView()) // prevent large title bar from collapsing when scrolling
