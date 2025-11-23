@@ -16,7 +16,7 @@ struct SearchAPIYts {
     private init() {}
     
     // MARK: Properties
-    private let apiURL = URL(string: "https://yts.mx")!
+    private let apiURL = URL(string: "https://yts.lt")!
     
     // MARK: Methods
     func getResults(query: String, page: Int) -> Future<[SearchResultYts], AppError> {
