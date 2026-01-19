@@ -22,7 +22,7 @@ class SuggestionsVC: ViewController {
     }
     
     deinit {
-        tableView.removeObserver(self, forKeyPath: #keyPath(UITableView.contentSize))
+        tableView?.removeObserver(self, forKeyPath: #keyPath(UITableView.contentSize))
     }
     
     // MARK: Properties
