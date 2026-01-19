@@ -17,7 +17,7 @@ class MainVC: ViewController {
         super.viewDidLoad()
         navigationItem.title = Bundle.main.localizedName
         navigationItem.largeTitleDisplayMode = .always
-        navigationItem.rightBarButtonItems = [searchAPIButtonItem, loaderBarButtonItem]
+        navigationItem.rightBarButtonItems = [searchAPIButtonItem]
         
         searchAPIButtonItem.title = L10n.searchApi
 
@@ -153,9 +153,11 @@ class MainVC: ViewController {
 extension MainVC : ResultsVCDelegate {
     func resultsVC(_ resultsVC: ResultsVC, isLoading: Bool) {
         if isLoading {
+            navigationItem.rightBarButtonItems = [searchAPIButtonItem, loaderBarButtonItem]
             (loaderBarButtonItem.customView as? UIActivityIndicatorView)?.startAnimating()
         }
         else {
+            navigationItem.rightBarButtonItems = [searchAPIButtonItem]
             (loaderBarButtonItem.customView as? UIActivityIndicatorView)?.stopAnimating()
         }
     }
