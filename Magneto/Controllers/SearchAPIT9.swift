@@ -17,7 +17,7 @@ struct SearchAPIT9 {
 
     // MARK: Properties
     // mirror list for next time: https://www.creativepixelmag.com/torrent9/
-    private let apiURL = URL(string: "https://www.torrent9.fyi/")!
+    private let apiURL = URL(string: "https://www.torrent9.bid/")!
     
     // MARK: Methods
     func getWebMirrorURL() -> Future<URL, AppError> {

@@ -16,7 +16,7 @@ struct SearchAPIYts {
     private init() {}
     
     // MARK: Properties
-    private let apiURL = URL(string: "https://yts.bz")!
+    private let apiURL = URL(string: "https://yts.gg")!
     
     // MARK: Methods
     func getResults(query: String, page: Int) -> Future<[SearchResultYts], AppError> {
@@ -26,6 +26,7 @@ struct SearchAPIYts {
         }
         return SearchAPI.shared.getResults(
             mirror: apiURL,
+            source: .content,
             search: query,
             pathTemplate: ["browse-movies", nil],
             queryItems: queryItems,
@@ -39,6 +40,8 @@ struct SearchAPIYts {
     }
 
     func loadVariants(for result: SearchResultYts) -> Future<(), AppError> {
-        return SearchAPI.shared.loadVariants(for: result.resultPageURL, scrapper: "yts_variants", type: SearchResultVariantYts.self)
+        return SearchAPI.shared.loadVariants(
+            for: result.resultPageURL, source: .content, scrapper: "yts_variants", type: SearchResultVariantYts.self
+        )
     }
 }

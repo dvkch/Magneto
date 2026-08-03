@@ -158,12 +158,12 @@ class SearchAPI {
         return variantsCache[url] as? [T]
     }
 
-    func loadVariants<T: SearchResultVariant>(for url: URL, scrapper: String, type: T.Type) -> Future<(), AppError> {
+    func loadVariants<T: SearchResultVariant>(for url: URL, source: ScrapSource = .url, scrapper: String, type: T.Type) -> Future<(), AppError> {
         if variantsCache.keys.contains(url) {
             return .init(value: ())
         }
 
-        return scrap(url, using: scrapper, into: [T].self)
+        return scrap(url, using: scrapper, source: source, into: [T].self)
             .onSuccess { self.variantsCache[url] = $0 }
             .map { _ in () }
     }
