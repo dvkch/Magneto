@@ -1,16 +1,19 @@
 default_platform :ios
 
 platform :ios do
-
     desc "Create signing certs and provisioning profiles if needed"
     lane :signing do
         cert(team_id: "79RY8264V4", development: true)
-        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", development: true)
-        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", development: true, platform: 'catalyst')
+        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", development: true, force: true,
+            provisioning_name: "me.syan.TorrentAdder Development")
+        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", development: true, platform: 'catalyst', force: true,
+            provisioning_name: "me.syan.TorrentAdder Development macOS")
 
         cert(team_id: "79RY8264V4")
-        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", adhoc: true)
-        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", platform: 'catalyst')
+        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", adhoc: true, force: true,
+            provisioning_name: "me.syan.TorrentAdder AdHoc")
+        sigh(team_id: "79RY8264V4", app_identifier: "me.syan.TorrentAdder", platform: 'catalyst', force: true,
+            provisioning_name: "me.syan.TorrentAdder AppStore macOS")
 
         system "rm ../*.provisionprofile"
         system "rm ../*.mobileprovision"
