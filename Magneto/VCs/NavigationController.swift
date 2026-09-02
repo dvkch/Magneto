@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
@@ -25,18 +25,18 @@ class NavigationController: UINavigationController {
 
         updateNavBar()
     }
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         updateNavBar()
     }
-    
+
     var navbarBackgroundColor: UIColor? {
         didSet {
             updateNavBar()
         }
     }
-    
+
     private func updateNavBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()

@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 03/12/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
@@ -12,21 +12,21 @@ extension UIColor {
     convenience init(light: UIColor, dark: UIColor) {
         self.init(dynamicProvider: { $0.userInterfaceStyle == .dark ? dark : light })
     }
-    
+
     static var tint: UIColor {
         let light = UIColor(red: 64 / 255, green: 146 / 255, blue: 247 / 255, alpha: 1)
         let dark  = UIColor(red:  0 / 255, green: 106 / 255, blue: 230 / 255, alpha: 1)
         return UIColor(light: light, dark: dark)
     }
-    
+
     static var darkTint: UIColor {
         return UIColor(red: 22, green: 59, blue: 190).withAlphaComponent(0.5)
     }
-    
+
     static var tintOnBackground: UIColor {
         return UIColor(light: tint, dark: tint.lighter()!)
     }
-    
+
     static var background: UIColor {
         if #available(iOS 13.0, *) {
             return .systemGroupedBackground
@@ -42,7 +42,7 @@ extension UIColor {
             return .white
         }
     }
-    
+
     static var cellBackground: UIColor {
         if UIDevice.isCatalyst {
             return .background
@@ -78,7 +78,7 @@ extension UIColor {
             return UIColor.darkText
         }
     }
-    
+
     static var normalTextOnTint: UIColor {
         return .white
     }
@@ -110,7 +110,7 @@ extension UIColor {
     static var leechers: UIColor {
         return .systemRed
     }
-    
+
     static var fieldBackground: UIColor {
         return background.withAlphaComponent(0.6)
     }

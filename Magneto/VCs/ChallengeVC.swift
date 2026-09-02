@@ -3,13 +3,13 @@
 //  Magneto
 //
 //  Created by syan on 26/09/2025.
-//  Copyright © 2025 Syan. All rights reserved.
+//  Copyright © 2025 Syan.
 //
 
 import UIKit
 
 class ChallengeVC: UIViewController {
-    
+
     // MARK: Init
     init(url: URL, completion: @escaping (Result<String, AppError>) -> Void) {
         self.completion = completion
@@ -22,7 +22,7 @@ class ChallengeVC: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = L10n.Webkit.title
@@ -46,13 +46,13 @@ class ChallengeVC: UIViewController {
             challengeView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
+
     // MARK: Properties
     private var completion: ((Result<String, AppError>) -> Void)?
-    
+
     // MARK: Views
     private var challengeView: ChallengeView!
-    
+
     // MARK: Actions
     @objc private func cancelButtonTap() {
         dismiss(animated: true) {

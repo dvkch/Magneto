@@ -3,13 +3,13 @@
 //  Magneto
 //
 //  Created by syan on 18/05/2023.
-//  Copyright © 2023 Syan. All rights reserved.
+//  Copyright © 2023 Syan.
 //
 
 import UIKit
 
 class ClientsDataSources: UITableViewDiffableDataSource<Int, ClientCell.Kind> {
-    
+
     // MARK: Init
     init(tableView: UITableView, sectionTitle: String?, showAdd: Bool, showMagnet: Bool) {
         self.sectionTitle = sectionTitle
@@ -26,12 +26,12 @@ class ClientsDataSources: UITableViewDiffableDataSource<Int, ClientCell.Kind> {
         NotificationCenter.default.addObserver(self, selector: #selector(clientsChanged), name: .hostStatusChanged, object: nil)
         refreshClients(animated: false)
     }
-    
+
     // MARK: Properties
     let sectionTitle: String?
     let showAdd: Bool
     let showMagnet: Bool
-    
+
     // MARK: Auto refresh
     @objc private func clientsChanged() {
         refreshClients(animated: true) // check if view is visible ?
@@ -57,7 +57,7 @@ class ClientsDataSources: UITableViewDiffableDataSource<Int, ClientCell.Kind> {
 
         apply(snapshot, animatingDifferences: animated)
     }
-    
+
     // MARK: UITableViewDataSource
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sectionTitle

@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 03/12/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
@@ -16,7 +16,7 @@ class TransmissionAPI: NSObject {
 
     // MARK: Init
     static let shared = TransmissionAPI()
-    
+
     override init() {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 10
@@ -24,12 +24,12 @@ class TransmissionAPI: NSObject {
         super.init()
         session = Alamofire.Session(configuration: configuration, interceptor: self)
     }
-    
+
     // MARK: Properties
     private var session: Session!
     private var pendingAuthentications = [String: [(RetryResult) -> Void]]()
     private var transmissionSessionIDs = [String: String]()
-    
+
     // MARK: Types
     private struct TransmissionResponse: Decodable {
         struct Item : Decodable {
@@ -37,18 +37,18 @@ class TransmissionAPI: NSObject {
             let doneDate: Int
             let name: String
         }
-        
+
         let result: String
         let items: [Item]
-        
+
         private enum CodingKeys: String, CodingKey {
             case result = "result", arguments = "arguments"
         }
-        
+
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             result = try container.decode(String.self, forKey: .result)
-            
+
             if let arguments = try? container.decode([String: [Item]].self, forKey: .arguments) {
                 items = arguments["torrents"] ?? []
             }
@@ -72,13 +72,13 @@ class TransmissionAPI: NSObject {
             "method":"torrent-add",
             "arguments": arguments
         ]
-            
+
         return session
             .request(url: client.apiURL, method: HTTPMethod.post, params: parameters, encoding: JSONEncoding(), headers: nil)
             .codable(type: TransmissionResponse.self)
             .map { $0.result }
     }
-    
+
     func removeCompletedTorrents(in client: Client) -> Future<Int, AppError> {
         return self
             .listEndedTorrents(for: client)
@@ -90,16 +90,16 @@ class TransmissionAPI: NSObject {
             "method":"torrent-get",
             "arguments": ["fields": ["id", "doneDate", "name"]]
         ]
-        
+
         return session
             .request(url: client.apiURL, method: HTTPMethod.post, params: parameters, encoding: JSONEncoding(), headers: nil)
             .codable(type: TransmissionResponse.self)
             .map { response in response.items.filter { $0.doneDate > 0 }.map { $0.id } }
     }
-    
+
     private func removeTorrents(ids: [Int], from client: Client) -> Future<Int, AppError> {
         guard !ids.isEmpty else { return Future<Int, AppError>(value: 0) }
-        
+
         let parameters: Parameters = [
             "method":"torrent-remove",
             "arguments": [
@@ -107,7 +107,7 @@ class TransmissionAPI: NSObject {
                 "delete-local-data": false
             ] as [String : Any]
         ]
-        
+
         return session
             .request(url: client.apiURL, method: HTTPMethod.post, params: parameters, encoding: JSONEncoding(), headers: nil)
             .codable(type: TransmissionResponse.self)
@@ -116,7 +116,7 @@ class TransmissionAPI: NSObject {
 }
 
 extension TransmissionAPI: RequestInterceptor {
-    
+
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         guard let client = urlRequest.client else { return completion(.success(urlRequest)) }
 
@@ -135,7 +135,7 @@ extension TransmissionAPI: RequestInterceptor {
             completion(.doNotRetry)
             return
         }
-        
+
         if request.response?.statusCode == 409,
             let sessionID = request.response?.allHeaderFields["X-Transmission-Session-Id"] as? String
         {
@@ -149,14 +149,14 @@ extension TransmissionAPI: RequestInterceptor {
                 pendingAuthentications[client.id]?.append(completion)
                 return
             }
-            
+
             pendingAuthentications[client.id] = [completion]
 
             DispatchQueue.main.async {
                 ViewRouter.shared.promptAuthenticationUpdate(for: client) { (cancelled) in
                     let completions = self.pendingAuthentications[client.id] ?? []
                     self.pendingAuthentications.removeValue(forKey: client.id)
-                    
+
                     if cancelled {
                         completions.forEach { $0(.doNotRetry) }
                     }
@@ -167,8 +167,7 @@ extension TransmissionAPI: RequestInterceptor {
             }
             return
         }
-        
+
         completion(.doNotRetry)
     }
 }
-

@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
@@ -28,7 +28,7 @@ class MagnetPopupVC: ViewController {
 
         let popupVC = MagnetPopupVC()
         popupVC.source = source
-        
+
         popupVC.modalPresentationStyle = .popover
         if let sender {
             popupVC.popoverPresentationController?.permittedArrowDirections = [.any]
@@ -47,7 +47,7 @@ class MagnetPopupVC: ViewController {
         popupVC.popoverPresentationController?.delegate = popupVC
         viewController.present(popupVC, animated: true, completion: nil)
     }
-    
+
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,20 +55,20 @@ class MagnetPopupVC: ViewController {
         titleLabel.text = source.name
 
         spinner.color = .tint
-        
+
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 10
-        
+
         clientsDataSource = .init(tableView: tableView, sectionTitle: nil, showAdd: false, showMagnet: UIDevice.isCatalyst)
         tableView.registerCell(ClientCell.self)
         tableView.dataSource = clientsDataSource
         tableView.tableFooterView = UIView()
         tableView.addObserver(self, forKeyPath: #keyPath(UITableView.intrinsicContentSize), options: .new, context: nil)
-        
+
         statusLabel.font = UIFont.systemFont(ofSize: 15)
-        
+
         updateForMode(.clients, animated: false)
-        
+
         addKeyCommand(.init(
             title: L10n.Action.close,
             action: #selector(closeButtonTap),
@@ -76,17 +76,17 @@ class MagnetPopupVC: ViewController {
             modifierFlags: .init()
         ))
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         popoverPresentationController?.backgroundColor = .darkGray
         view.backgroundColor = .darkGray // setting it earlier doesn't work ¯\_(ツ)_/¯
     }
-    
+
     deinit {
         tableView?.removeObserver(self, forKeyPath: #keyPath(UITableView.intrinsicContentSize))
     }
-    
+
     // MARK: Properties
     enum Source {
         case resolved(Torrent)
@@ -98,7 +98,7 @@ class MagnetPopupVC: ViewController {
             case .result(_, let r):         return r.torrent()
             }
         }
-        
+
         var name: String? {
             switch self {
             case .resolved(let torrent):
@@ -122,12 +122,12 @@ class MagnetPopupVC: ViewController {
     @IBOutlet private var statusContainerView: UIView!
     @IBOutlet private var statusLabel: UILabel!
     @IBOutlet private var spinner: UIActivityIndicatorView!
-    
+
     // MARK: Actions
     @objc private func closeButtonTap() {
         dismiss(animated: true)
     }
-    
+
     // MARK: API
     private func fetchMagnetURLAndAdd(to clientKind: ClientCell.Kind) {
         updateForMode(.loading, animated: true)
@@ -145,7 +145,7 @@ class MagnetPopupVC: ViewController {
                     switch torrent {
                     case .url(let url):
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                        
+
                     case .base64(let url, let base64):
                         #if targetEnvironment(macCatalyst)
                         if #available(macCatalyst 16.0, *) {
@@ -171,10 +171,10 @@ class MagnetPopupVC: ViewController {
                 self.updateForMode(.failure(error.localizedDescription), animated: true)
             }
     }
-    
+
     private func addTorrentToClient(torrent: Torrent, client: Client) {
         updateForMode(.loading, animated: true)
-        
+
         TransmissionAPI.shared.addTorrent(torrent, to: client)
             .onSuccess { message in
                 var successMessage = L10n.Torrent.success
@@ -188,12 +188,12 @@ class MagnetPopupVC: ViewController {
                 self.updateForMode(.failure(errorMessage), animated: true)
             }
     }
-    
+
     // MARK: Content
     enum Mode {
         case clients, loading, success(_ message: String), failure(_ error: String)
     }
-    
+
     private func updateForMode(_ mode: Mode, animated: Bool) {
         if animated {
             view.layoutIfNeeded()
@@ -202,7 +202,7 @@ class MagnetPopupVC: ViewController {
             }, completion: nil)
             return
         }
-        
+
         switch mode {
         case .clients:
             canClose = true
@@ -216,7 +216,7 @@ class MagnetPopupVC: ViewController {
             canClose = false
             tableView.alpha = 0
             statusContainerView.alpha = 1
-            
+
             statusLabel.text = L10n.Torrent.loading
             spinner.sy_isHidden = false
             spinner.startAnimating()
@@ -225,7 +225,7 @@ class MagnetPopupVC: ViewController {
             canClose = true
             tableView.alpha = 0
             statusContainerView.alpha = 1
-            
+
             spinner.stopAnimating()
             spinner.sy_isHidden = true
             statusLabel.text = message
@@ -234,24 +234,24 @@ class MagnetPopupVC: ViewController {
             canClose = false
             tableView.alpha = 0
             statusContainerView.alpha = 1
-            
+
             spinner.stopAnimating()
             spinner.sy_isHidden = true
             statusLabel.text = error
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.updateForMode(.clients, animated: true)
             }
         }
     }
-    
+
     // MARK: Layout
     private func updatePopover() {
         guard let window = view.window else { return }
         preferredContentSize.width  = (window.bounds.width - 40).clamped(min: 300, max: 500)
         preferredContentSize.height = (titleLabel.frame.height + 2 * 8 + tableView.contentSize.height).clamped(min: 50, max: 500)
     }
-    
+
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if (object as? UITableView) == tableView && keyPath == #keyPath(UITableView.contentSize) {
             updatePopover()
@@ -280,7 +280,7 @@ extension MagnetPopupVC : UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return .none
     }
-    
+
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
         return canClose
     }

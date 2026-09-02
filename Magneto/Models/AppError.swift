@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 30/11/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
@@ -27,7 +27,7 @@ extension AppError : LocalizedError {
         if isOfflineError {
             return L10n.Error.offline
         }
-        
+
         switch self {
         case .request(let r):
             if let apiError {
@@ -45,12 +45,12 @@ extension AppError : LocalizedError {
 #endif
         }
     }
-    
+
     var apiError: ApiError? {
         guard case let .request(response) = self else { return nil }
         return try? JSONDecoder().decode(ApiError.self, from: response.data)
     }
-    
+
     var underlyingError: Error? {
         switch self {
         case .request(let r):               return r.error?.underlyingError ?? r.error
@@ -65,17 +65,17 @@ extension AppError : LocalizedError {
 #endif
         }
     }
-    
+
     var isOfflineError: Bool {
         if case .offline = self {
             return true
         }
-        
+
         guard var error = underlyingError else { return false }
         if error.isOfflineError {
             return true
         }
-        
+
         while error.underlyingErrors.isNotEmpty {
             error = error.underlyingErrors[0]
             if error.isOfflineError {

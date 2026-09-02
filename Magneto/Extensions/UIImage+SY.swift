@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 17/05/2023.
-//  Copyright © 2023 Syan. All rights reserved.
+//  Copyright © 2023 Syan.
 //
 
 import UIKit
@@ -41,7 +41,7 @@ extension UIImage {
             default:        return  1
             }
         }
-        
+
         func assetName(variant: Int?) -> String {
             guard availableVariantsCount > 1 else { return rawValue }
             let boundedVariant: Int
@@ -67,7 +67,7 @@ extension UIImage {
 extension UIImage {
     enum Traffic {
         case green, grey, orange, red
-        
+
         fileprivate var color: UIColor {
             switch self {
             case .green:    return UIColor(red: 100, green: 203, blue:  87)
@@ -83,14 +83,14 @@ extension UIImage {
 
         UIGraphicsBeginImageContextWithOptions(CGSize(width: size + 2 * borderSize, height: size + 2 * borderSize), false, 0)
         defer { UIGraphicsEndImageContext() }
-        
+
         let path = UIBezierPath(roundedRect: CGRect(x: borderSize, y: borderSize, width: size, height: size), cornerRadius: size / 2)
         path.lineWidth = size / 8
         UIColor.black.withAlphaComponent(0.3).setStroke()
         traffic.color.setFill()
         path.fill()
         path.stroke()
-        
+
         return UIGraphicsGetImageFromCurrentImageContext()
     }
 }

@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
@@ -18,7 +18,7 @@ class MainVC: ViewController {
         navigationItem.title = Bundle.main.localizedName
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.rightBarButtonItems = [searchAPIButtonItem]
-        
+
         searchAPIButtonItem.title = L10n.searchApi
 
         resultsVC.delegate = self
@@ -38,7 +38,7 @@ class MainVC: ViewController {
         if #available(iOS 16.0, *) {
             navigationItem.preferredSearchBarPlacement = .stacked
         }
-        
+
         dataSource = .init(
             tableView: tableView, sectionTitle: L10n.Clients.Section.clients,
             showAdd: true, showMagnet: false
@@ -49,7 +49,7 @@ class MainVC: ViewController {
         tableView.registerCell(ClientCell.self)
         tableView.delaysContentTouches = false
         tableView.tableFooterView = UIView()
-        
+
         helpButton.clipsToBounds = true
         helpButton.accessibilityLabel = L10n.Alert.Help.title
         helpButton.backgroundColor = .tint
@@ -57,24 +57,24 @@ class MainVC: ViewController {
         helpButton.tintColor = .normalTextOnTint
         helpButton.layer.cornerRadius = 16
         helpButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(searchAPIChanged), name: .searchAPIChanged, object: nil)
         searchAPIChanged()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewDidAppearOnce = true
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+
     // MARK: Properties
     private var dataSource: ClientsDataSources!
     private var viewDidAppearOnce: Bool = false
-    
+
     // MARK: Views
     private let searchAPIButtonItem: UIBarButtonItem = .init()
     private let loaderBarButtonItem: UIBarButtonItem = .loader(color: .normalTextOnTint)
@@ -82,7 +82,7 @@ class MainVC: ViewController {
     private lazy var searchController = UISearchController(searchResultsController: resultsVC)
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var helpButton: UIButton!
-    
+
     // MARK: Actions
     @objc private func searchAPIChanged() {
         let apis = SearchAPIKind.allCases.map { kind in
@@ -107,7 +107,7 @@ class MainVC: ViewController {
         alert.popoverPresentationController?.sourceRect = helpButton.bounds
         present(alert, animated: true, completion: nil)
     }
-    
+
     fileprivate func removeFinished(in client: Client) {
         let hud = HUDAlertController.show(in: self)
         TransmissionAPI.shared.removeCompletedTorrents(in: client)
@@ -122,7 +122,7 @@ class MainVC: ViewController {
                 UIAlertController.show(for: error, close: L10n.Action.close, in: self)
             }
     }
-    
+
     fileprivate func removeClient(_ client: Client, confirmed: Bool, sender: UIView?) {
         if !confirmed {
             let alert = UIAlertController(
@@ -142,7 +142,7 @@ class MainVC: ViewController {
 
         Preferences.shared.removeClient(client)
     }
-    
+
     // MARK: Layout
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -167,14 +167,14 @@ extension MainVC : UITableViewDelegate {
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
         let item = dataSource.itemIdentifier(for: indexPath) ?? .newClient
         if let client = item.client {
             openSafariURL(client.webURLWithAuth)
@@ -185,7 +185,7 @@ extension MainVC : UITableViewDelegate {
             present(nc, animated: true, completion: nil)
         }
     }
-    
+
     private func actionsForRow(at indexPath: IndexPath) -> [Action] {
         let item = dataSource.itemIdentifier(for: indexPath) ?? .newClient
         guard let client = item.client else { return [] }
@@ -202,13 +202,13 @@ extension MainVC : UITableViewDelegate {
         }
         return [removeFinishedAction, editAction, deleteAction]
     }
-    
+
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
             return UIMenu(title: "", children: self.actionsForRow(at: indexPath).map(\.uiAction))
         }
     }
-    
+
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let actions = actionsForRow(at: indexPath).reversed().map(\.uiContextualAction)
         return UISwipeActionsConfiguration(actions: actions)

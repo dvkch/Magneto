@@ -3,21 +3,21 @@
 //  Magneto
 //
 //  Created by syan on 22/06/2023.
-//  Copyright © 2023 Syan. All rights reserved.
+//  Copyright © 2023 Syan.
 //
 
 import Foundation
 import BrightFutures
 
 struct SearchAPILeetx {
-    
+
     // MARK: Init
     static let shared = SearchAPILeetx()
     private init() {}
-    
+
     // MARK: Properties
     let apiURL = URL(string: "https://1337x.to")!
-    
+
     // MARK: Methods
     func getResults(query: String, page: Int) -> Future<[SearchResultLeetx], AppError> {
         return SearchAPI.shared.getResults(
@@ -30,7 +30,7 @@ struct SearchAPILeetx {
             type: SearchResultLeetx.self
         )
     }
-    
+
     func getMagnet(pageURL: URL) -> Future<Torrent, AppError> {
         return SearchAPI.shared.getTorrent(for: pageURL, source: .content, scrapper: "1337x_magnet")
     }

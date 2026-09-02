@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 18/05/2023.
-//  Copyright © 2023 Syan. All rights reserved.
+//  Copyright © 2023 Syan.
 //
 
 import UIKit
@@ -16,12 +16,12 @@ class NavigationBar: UINavigationBar {
         super.init(frame: frame)
         setup()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-    
+
     private func setup() {
         backgroundImageView.image = UIImage(named: "background")
         backgroundImageView.contentMode = .scaleAspectFill
@@ -36,7 +36,7 @@ class NavigationBar: UINavigationBar {
             backgroundImageView.rightAnchor.constraint(equalTo: self.rightAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
-        
+
         animatedCirclesView.numberOfCircles = 3
         animatedCirclesView.backgroundColor = .darkTint.withAlphaComponent(0.6)
         animatedCirclesView.color = .normalTextOnTint.withAlphaComponent(0.3)
@@ -55,7 +55,7 @@ class NavigationBar: UINavigationBar {
     private let backgroundImageView = UIImageView()
     private let animatedCirclesView = AnimatedCirclesView()
     private var topConstraint: NSLayoutConstraint!
-    
+
     // MARK: Layout
     override func layoutSubviews() {
         super.layoutSubviews()

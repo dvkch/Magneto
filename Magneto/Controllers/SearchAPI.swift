@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 15/02/2024.
-//  Copyright © 2024 Syan. All rights reserved.
+//  Copyright © 2024 Syan.
 //
 
 import Foundation
@@ -11,9 +11,9 @@ import Alamofire
 import BrightFutures
 
 class SearchAPI {
-    
+
     static let shared = SearchAPI()
-    
+
     private init() {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 60
@@ -24,7 +24,7 @@ class SearchAPI {
         configuration.httpCookieStorage = .shared
         session = Alamofire.Session(configuration: configuration)
     }
-    
+
     // MARK: Properties
     private var session: Session
 
@@ -38,16 +38,16 @@ class SearchAPI {
                 return self.scrap(url, using: scrapper, source: .loadedContent(body), into: type)
             }
         }
-        
+
         var method = HTTPMethod.get
         var params = [String: String]()
         params["url"] = url.absoluteString
-        
+
         if case let .loadedContent(body) = source {
             method = .post
             params["content"] = body
         }
-        
+
         Log.i(.searchAPI, "LOADING: \(url)")
         return session.request(url: "https://hapier.syan.me/api/scrappers/\(scrapper)", method: method, params: params)
             .codable(type: T.self)
@@ -66,7 +66,7 @@ class SearchAPI {
         let validatorScrapper: String
         let expectedValue: String
     }
-    
+
     // MARK: Mirrors
     private var mirrorURLs = [URL: [URL]]()
 
@@ -75,7 +75,7 @@ class SearchAPI {
             .map { $0.map(\.url) }
             .onSuccess { self.mirrorURLs[config.listURL] = $0 }
     }
-    
+
     private func isMirrorReachable(_ url: URL, config: MirrorConfig) -> Future<URL, AppError> {
         return scrap(url, using: config.validatorScrapper, into: ValidationResponse.self)
             .flatMap {
@@ -85,25 +85,25 @@ class SearchAPI {
                 return .init(error: .noAvailableAPI)
             }
     }
-    
+
     func getWebMirrorURL(config: MirrorConfig, allowRetry: Bool = true) -> Future<URL, AppError> {
         guard let firstMirror = mirrorURLs[config.listURL]?.first else {
             guard allowRetry else {
                 return .init(error: .noAvailableAPI)
             }
-                
+
             return getWebMirrorURLs(config: config).flatMap { _ in
                 self.getWebMirrorURL(config: config, allowRetry: false)
             }
         }
-        
+
         return isMirrorReachable(firstMirror, config: config)
             .recoverWith { _ in
                 self.mirrorURLs[config.listURL]?.remove(firstMirror)
                 return self.getWebMirrorURL(config: config, allowRetry: allowRetry)
             }
     }
-    
+
     // MARK: Results
     func getResults<T: SearchResult>(
         config: MirrorConfig,
@@ -115,7 +115,7 @@ class SearchAPI {
             self.getResults(mirror: $0, search: search, pathTemplate: pathTemplate, queryItems: queryItems, scrapper: scrapper, type: type)
         }
     }
-    
+
     func getResults<T: SearchResult>(
         mirror: URL, source: ScrapSource = .url,
         search: String, pathTemplate: [String?], queryItems: [URLQueryItem]?,
@@ -132,10 +132,10 @@ class SearchAPI {
             components?.queryItems = queryItems
             url = components?.url ?? url
         }
-        
+
         return scrap(url, using: scrapper, source: source, into: [T].self)
     }
-    
+
     // MARK: Magnets
     private struct ResultPage: Codable {
         let url: URL
@@ -167,7 +167,7 @@ class SearchAPI {
             .onSuccess { self.variantsCache[url] = $0 }
             .map { _ in () }
     }
-    
+
     // MARK: Page content
     private func loadPageContent(_ url: URL) -> Future<String, AppError> {
         return session.request(url: url).data().map { data in
@@ -179,7 +179,7 @@ class SearchAPI {
             return .init(error: error)
         }
     }
-    
+
     private func loadPageContentUsingWebKit(_ url: URL) -> Future<String, AppError> {
         ChallengeView.load(url, maxTries: 2).recoverWith { _ in
             AppDelegate.obtain.loadPageContentUsingWebKit(url)

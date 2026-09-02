@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 13/02/2024.
-//  Copyright © 2024 Syan. All rights reserved.
+//  Copyright © 2024 Syan.
 //
 
 import Foundation
@@ -24,7 +24,7 @@ struct SearchResultYts : SearchResult {
         case name = "name"
         case resultPageURL = "url"
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id              = UUID()
@@ -43,11 +43,11 @@ struct SearchResultYts : SearchResult {
     func loadVariants() -> Future<(), AppError> {
         return SearchAPIYts.shared.loadVariants(for: self)
     }
-    
+
     var variants: [any SearchResultVariant]? {
         return SearchAPIYts.shared.cachedVariants(for: self) as [any SearchResultVariant]?
     }
-    
+
     // MARK: Description
     var description: String {
         return "SearchResultYts: \(name)"
@@ -59,10 +59,10 @@ struct SearchResultVariantYts : SearchResultVariant, Decodable {
     // MARK: Properties
     let name: String
     let size: String?
-    
+
     let seeders: Int? = nil
     let leechers: Int? = nil
-    
+
     let torrentBase64: String?
     let downloadURL: URL
 
@@ -73,7 +73,7 @@ struct SearchResultVariantYts : SearchResultVariant, Decodable {
         case torrentBase64 = "torrent"
         case size = "size"
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name          = try container.decode(String.self, forKey: .name)
@@ -89,10 +89,9 @@ struct SearchResultVariantYts : SearchResultVariant, Decodable {
         }
         return .init(value: .url(downloadURL))
     }
-    
+
     // MARK: Description
     var description: String {
         return "SearchResultVariantYts: \(name), \(downloadURL)"
     }
 }
-

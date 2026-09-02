@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 22/06/2023.
-//  Copyright © 2023 Syan. All rights reserved.
+//  Copyright © 2023 Syan.
 //
 
 import UIKit
@@ -13,7 +13,7 @@ enum SearchAPIKind: String, Codable, Equatable, CaseIterable {
     case leetx = "leetx"
     case t9 = "t9"
     case yts = "yts"
-    
+
     var title: String {
         switch self {
         case .tpb:      return "The Pirate Bay"
@@ -22,7 +22,7 @@ enum SearchAPIKind: String, Codable, Equatable, CaseIterable {
         case .yts:      return "YTS"
         }
     }
-    
+
     var icon: UIImage.Icon {
         switch self {
         case .tpb:      return .sailboat

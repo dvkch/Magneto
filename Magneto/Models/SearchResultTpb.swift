@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 22/06/2023.
-//  Copyright © 2023 Syan. All rights reserved.
+//  Copyright © 2023 Syan.
 //
 
 import Foundation
@@ -35,7 +35,7 @@ struct SearchResultTpb : SearchResult, SearchResultVariant {
         case resultPageURL = "url"
         case resultMagnetURL = "magnet"
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id              = UUID()
@@ -60,12 +60,12 @@ struct SearchResultTpb : SearchResult, SearchResultVariant {
     func torrent() -> Future<Torrent, AppError> {
         return .init(value: .url(resultMagnetURL))
     }
-    
+
     // MARK: Variants
     func loadVariants() -> Future<(), AppError> {
         return .init(value: ())
     }
-    
+
     var variants: [SearchResultVariant]? {
         return [self]
     }

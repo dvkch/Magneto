@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 18/05/2023.
-//  Copyright © 2023 Syan. All rights reserved.
+//  Copyright © 2023 Syan.
 //
 
 import UIKit
@@ -14,7 +14,7 @@ protocol ResultsVCDelegate: NSObjectProtocol {
 }
 
 class ResultsVC: ViewController {
-    
+
     // MARK: ViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,11 +29,11 @@ class ResultsVC: ViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(searchAPIChanged), name: .searchAPIChanged, object: nil)
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+
     // MARK: Properties
     var searchController: UISearchController!
     weak var delegate: ResultsVCDelegate?
@@ -71,21 +71,21 @@ class ResultsVC: ViewController {
             isLoadingResults = false
             return
         }
-        
+
         let query = self.searchQuery
         isLoadingResults = true
 
         let closure = { [weak self] (result: Result<[any SearchResult], AppError>) in
             guard let self = self else { return }
             guard self.searchQuery == query else { return }
-            
+
             self.isLoadingResults = false
 
             switch result {
             case .success(let items):
                 self.dataSource.insert(items, for: query, animated: animated)
                 Preferences.shared.addHistory(query)
-                
+
             case .failure(let error):
                 UIAlertController.show(
                     for: error, title: L10n.Error.Title.cannotLoadResults,
@@ -93,7 +93,7 @@ class ResultsVC: ViewController {
                 )
             }
         }
-        
+
         let page = dataSource.pagesCount
         switch Preferences.shared.searchAPI {
         case .tpb:
@@ -114,7 +114,7 @@ class ResultsVC: ViewController {
             }
         }
     }
-    
+
     fileprivate func shareResult(_ result: any SearchResult, from sender: UIView) {
         let hud = HUDAlertController.show(in: self)
         result.pageURL()
@@ -126,12 +126,12 @@ class ResultsVC: ViewController {
                 let vc = UIActivityViewController(activityItems: [pageURL], applicationActivities: nil)
                 vc.popoverPresentationController?.sourceRect = sender.frame
                 vc.popoverPresentationController?.sourceView = sender
-                
+
                 self.present(vc, animated: true, completion: nil)
                 self.tableView.setEditing(false, animated: true)
         }
     }
-    
+
     fileprivate func openResultInSafari(_ result: any SearchResult) {
         let hud: HUDAlertController?
         if result.pageURLAvailable {
@@ -170,7 +170,7 @@ extension ResultsVC: UISearchResultsUpdating {
 extension ResultsVC : UISearchBarDelegate {
     private func updateSuggestions(searchBar: UISearchBar) {
         let input = searchBar.text
-        
+
         #if targetEnvironment(macCatalyst)
         if #available(macCatalyst 16.0, *) {
             searchController.searchSuggestions = Preferences.shared.prevSearches(matching: input)
@@ -201,11 +201,11 @@ extension ResultsVC : UISearchBarDelegate {
         }
         updateSuggestions(searchBar: searchBar)
     }
-    
+
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         updateSuggestions(searchBar: searchBar)
     }
-    
+
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if #available(iOS 16.0, *), let selectedSuggestion = searchController.selectedSuggestion {
             // search bar button was "clicked" by pressing Enter on a selected suggestion
@@ -221,16 +221,16 @@ extension ResultsVC : UISearchBarDelegate {
         }
         return true
     }
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         #if !targetEnvironment(macCatalyst)
         suggestionsVC?.dismiss(animated: false, completion: nil)
         #endif
-        
+
         searchQuery = searchBar.text ?? ""
         searchBar.resignFirstResponder()
     }
-    
+
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         #if !targetEnvironment(macCatalyst)
         suggestionsVC?.dismiss(animated: false, completion: nil)
@@ -243,11 +243,11 @@ extension ResultsVC: ResultCellDelegate {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-    
+
     func resultCell(_ resultCell: ResultCell, tapped variant: SearchResultVariant, sender: UIView) {
         openTorrentPopup(with: .result(resultCell.result!, variant), sender: sender)
     }
-    
+
     func resultCell(_ resultCell: ResultCell, encounteredError error: AppError) {
         UIAlertController.show(for: error, close: L10n.Action.close, in: self)
     }
@@ -262,18 +262,18 @@ extension ResultsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
         let cell = tableView.cellForRow(at: indexPath)
         (cell as? ResultCell)?.runMainAction()
     }
-    
+
     private func actionsForRow(at indexPath: IndexPath) -> [Action] {
         guard let result = dataSource.itemIdentifier(for: indexPath)?.result else { return [] }
         let shareAction = Action(title: L10n.Action.sharelink, icon: .share, color: .cellBackgroundAlt) { [weak self] in
@@ -285,13 +285,13 @@ extension ResultsVC: UITableViewDelegate {
         }
         return [openAction, shareAction]
     }
-    
+
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (_) -> UIMenu? in
             return UIMenu(title: "", children: self.actionsForRow(at: indexPath).map(\.uiAction))
         }
     }
-    
+
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let actions = actionsForRow(at: indexPath).reversed().map(\.uiContextualAction)
         return UISwipeActionsConfiguration(actions: actions)

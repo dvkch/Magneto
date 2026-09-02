@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 29/11/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import Alamofire
@@ -31,7 +31,7 @@ struct AlamofireDataResponse: CustomDebugStringConvertible {
     let request: URLRequest?
     let response: HTTPURLResponse?
     let metrics: URLSessionTaskMetrics?
-    
+
     var debugDescription: String {
         var parts = [String]()
         if let request {

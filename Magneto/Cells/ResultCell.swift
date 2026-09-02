@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
@@ -16,11 +16,11 @@ protocol ResultCellDelegate: NSObjectProtocol {
 }
 
 class ResultCell: UITableViewCell {
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = .cellBackground
-        
+
         variantsView.tagViewClass = Magneto.TagView.self
         variantsView.delegate = self
     }
@@ -29,14 +29,14 @@ class ResultCell: UITableViewCell {
     weak var delegate: ResultCellDelegate?
     private var query: String?
     private(set) var result: (any SearchResult)?
-    
+
     func setResult(_ result: any SearchResult, query: String?) {
         self.result = result
         self.query = query
         updateContent()
         updateVariants(afterAPICall: false)
     }
-    
+
     // MARK: Views
     @IBOutlet private var label: UILabel!
     @IBOutlet private var loader: UIActivityIndicatorView!
@@ -52,7 +52,7 @@ class ResultCell: UITableViewCell {
             loadVariants()
         }
     }
-    
+
     // MARK: Debounce cell height refresh
     private var refreshHeightTimer = Timer()
     private func refreshHeight() {
@@ -65,14 +65,14 @@ class ResultCell: UITableViewCell {
         guard let result else { return }
         delegate?.resultCell(self, requiresReloadFor: result)
     }
-    
+
     // MARK: Content
     private func updateContent() {
         guard let result else {
             label.text = nil
             return
         }
-        
+
         // first line
         let title = NSMutableAttributedString()
         title.append(result.name, font: .preferredFont(forTextStyle: .body), color: .normalText)
@@ -88,7 +88,7 @@ class ResultCell: UITableViewCell {
                 title.addAttributes([.foregroundColor: UIColor.tintOnBackground], range: wordRange)
             }
         }
-        
+
         // second line
         var details = [NSAttributedString]()
 
@@ -115,21 +115,21 @@ class ResultCell: UITableViewCell {
                 details.append(seeding)
             }
         }
-        
+
         // update label
         let detailsString = details.concat(separator: .init(string: ", ", font: nil, color: .altText))
         let separator = details.isEmpty ? "" : "\n"
         label.attributedText = [title, detailsString].concat(separator: separator)
     }
-    
+
     private func loadVariants() {
-        guard let result else { 
+        guard let result else {
             loader.stopAnimating()
             return
         }
 
         loader.startAnimating()
-        
+
         let startTime = Date()
 
         result.loadVariants()
@@ -149,7 +149,7 @@ class ResultCell: UITableViewCell {
                 }
             }
     }
-    
+
     private func updateVariants(afterAPICall: Bool) {
         guard let variants = result?.variants, variants.count > 1 else {
             variantsView.sy_isHidden = true
@@ -158,7 +158,7 @@ class ResultCell: UITableViewCell {
             }
             return
         }
-        
+
         variantsView.sy_isHidden = false
         variantsView.tags = variants.map { $0.tag }
 

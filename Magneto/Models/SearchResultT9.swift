@@ -3,14 +3,14 @@
 //  Magneto
 //
 //  Created by syan on 24/01/2024.
-//  Copyright © 2024 Syan. All rights reserved.
+//  Copyright © 2024 Syan.
 //
 
 import Foundation
 import BrightFutures
 
 struct SearchResultT9 : SearchResult, SearchResultVariant {
-    
+
     // MARK: Properties
     let id: UUID
     let name: String
@@ -32,7 +32,7 @@ struct SearchResultT9 : SearchResult, SearchResultVariant {
         case addedDate = "added_parsed"
         case pagePath = "url"
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id          = UUID()
@@ -44,23 +44,23 @@ struct SearchResultT9 : SearchResult, SearchResultVariant {
         addedDate   = try container.decodeIfPresent(Date.self, forKey: .addedDate)
         pagePath    = try container.decode(String.self, forKey: .pagePath)
     }
-    
+
     // MARK: URLs
     let pageURLAvailable: Bool = false
-    
+
     func pageURL() -> Future<URL, AppError> {
         return SearchAPIT9.shared.getWebMirrorURL().map { $0.appendingPathComponent(pagePath) }
     }
-    
+
     func torrent() -> Future<Torrent, AppError> {
         return SearchAPIT9.shared.getMagnet(result: self)
     }
-    
+
     // MARK: Variants
     func loadVariants() -> Future<(), AppError> {
         return .init(value: ())
     }
-    
+
     var variants: [SearchResultVariant]? {
         return [self]
     }

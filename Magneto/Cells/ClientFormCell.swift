@@ -3,14 +3,14 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
 import SYKit
 
 class ClientFormCell: UITableViewCell {
-    
+
     // MARK: Init
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,7 +30,7 @@ class ClientFormCell: UITableViewCell {
             updateContent()
         }
     }
-    
+
     // MARK: Views
     @IBOutlet private var iconView: UIImageView!
     @IBOutlet private var nameLabel: UILabel!
@@ -40,11 +40,11 @@ class ClientFormCell: UITableViewCell {
     @IBAction private func textFieldEditingChanged() {
         client?.setValue(textField.text ?? "", for: formField)
     }
-    
+
     // MARK: Content
     private func updateContent() {
         guard let client = client else { return }
-        
+
         iconView.image = formField.image?.withTintColor(.tint)
         nameLabel.text = formField.name
         textField.keyboardType = formField.keyboardType
@@ -58,7 +58,7 @@ class ClientFormCell: UITableViewCell {
     @objc private func textFieldChanged() {
         client?.setValue(textField.text ?? "", for: formField)
     }
-    
+
     // MARK: Style
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

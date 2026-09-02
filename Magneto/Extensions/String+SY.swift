@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 13/07/2020.
-//  Copyright © 2020 Syan. All rights reserved.
+//  Copyright © 2020 Syan.
 //
 
 import Foundation

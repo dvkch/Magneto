@@ -3,28 +3,28 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 21/07/2020.
-//  Copyright © 2020 Syan. All rights reserved.
+//  Copyright © 2020 Syan.
 //
 
 import UIKit
 
 @available(macCatalyst, unavailable)
 class SuggestionsVC: ViewController {
-    
+
     // MARK: ViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableView.registerCell(SuggestionCell.self)
         tableView.tableFooterView = UIView()
         tableView.addObserver(self, forKeyPath: #keyPath(UITableView.contentSize), options: .new, context: nil)
         reloadContent()
     }
-    
+
     deinit {
         tableView?.removeObserver(self, forKeyPath: #keyPath(UITableView.contentSize))
     }
-    
+
     // MARK: Properties
     var input: String = "" {
         didSet { reloadContent() }
@@ -32,11 +32,11 @@ class SuggestionsVC: ViewController {
     var selectedSuggestionBlock: ((String) -> ())?
 
     private var filteredSuggestions = [String]()
-    
+
     // MARK: Views
     private var attachedToView: UIView?
     @IBOutlet private var tableView: UITableView!
-    
+
     // MARK: Content
     private func reloadContent() {
         guard isViewLoaded else { return }
@@ -49,7 +49,7 @@ class SuggestionsVC: ViewController {
         tableView.reloadData()
         updatePopover()
     }
-    
+
     // MARK: Layout
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if (object as? UITableView) == tableView && keyPath == #keyPath(UITableView.contentSize) {
@@ -58,7 +58,7 @@ class SuggestionsVC: ViewController {
         }
         super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
     }
-    
+
     private func updatePopover() {
         preferredContentSize.width  = attachedToView?.bounds.width ?? 0
         preferredContentSize.height = min(500, max(300, tableView.contentSize.height))
@@ -66,7 +66,7 @@ class SuggestionsVC: ViewController {
         // don't set under 0.05 or touch won't hit it and it will cause navigation issues
         popoverPresentationController?.containerView?.alpha = filteredSuggestions.isEmpty ? 0.05 : 1
     }
-    
+
     // MARK: Presentation
     private class PopoverBackground: UIPopoverBackgroundView {
         override static func arrowHeight() -> CGFloat { 4 }
@@ -80,7 +80,7 @@ class SuggestionsVC: ViewController {
             set {}
         }
     }
-    
+
     static func present(under searhBar: UISearchBar, in viewController: UIViewController) -> SuggestionsVC {
         let field = searhBar.searchTextField
         let vc = SuggestionsVC()
@@ -96,7 +96,7 @@ class SuggestionsVC: ViewController {
         viewController.present(vc, animated: true, completion: nil)
         return vc
     }
-    
+
     static func shouldPresentPopover(for input: String?) -> Bool {
         guard let input = input, input.isNotEmpty else { return false }
         return Preferences.shared.prevSearches(matching: input).isNotEmpty
@@ -108,7 +108,7 @@ extension SuggestionsVC : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredSuggestions.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(SuggestionCell.self, for: indexPath)
         cell.suggestion = filteredSuggestions[indexPath.row]

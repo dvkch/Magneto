@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
@@ -17,11 +17,11 @@ import WebKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+
     static var obtain: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         HostnameResolver.shared.start()
 
@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.addObserver(forName: .clientsChanged, object: nil, queue: .main) { _ in
             self.updateObservedHosts()
         }
-        
+
         NWConnection.askLocalNetworkAccess({ _ in () })
 
         #if DEBUG
@@ -46,11 +46,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
-    
+
     private func updateObservedHosts() {
         HostStatusManager.shared.hosts = Preferences.shared.clients.map { .init(host: $0.host, port: $0.portOrDefault) }
     }
-    
+
     func loadPageContentUsingWebKit(_ url: URL) -> Future<String, AppError> {
         guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
             return .init(error: .noAvailableAPI)

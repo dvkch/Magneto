@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 22/06/2023.
-//  Copyright © 2023 Syan. All rights reserved.
+//  Copyright © 2023 Syan.
 //
 
 import Foundation
@@ -11,10 +11,10 @@ import Alamofire
 import BrightFutures
 
 class AppAPI: NSObject {
-    
+
     // MARK: Init
     static let shared = AppAPI()
-    
+
     override init() {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 20
@@ -22,7 +22,7 @@ class AppAPI: NSObject {
         // ignore cache for update management
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         session = Alamofire.Session(configuration: configuration)
-        
+
         super.init()
     }
 
@@ -30,7 +30,7 @@ class AppAPI: NSObject {
     private var session: Session
 
     // MARK: Update
-    
+
     private struct BundleInfoPlist: Decodable {
         let version: IntMaybeString
         private enum CodingKeys: String, CodingKey {

@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 03/12/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
@@ -17,17 +17,17 @@ class Client: Codable, Hashable, Identifiable {
     var label: String?      = nil
     var username: String?   = ""
     var password: String?   = ""
-    
+
     var portOrDefault: Int {
         port ?? 9091
     }
-    
+
     init(host: String, name: String) {
         self.id         = UUID().uuidString
         self.host       = host
         self.name       = name
     }
-    
+
     private enum CodingKeys: String, CodingKey {
         case id = "id"
         case name = "name"
@@ -37,15 +37,15 @@ class Client: Codable, Hashable, Identifiable {
         case username = "username"
         case password = "password"
     }
-    
+
     static func ==(lhs: Client, rhs: Client) -> Bool {
         return lhs.id == rhs.id
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-    
+
     func copy(keepID: Bool) -> Self {
         let data = try! JSONEncoder().encode(self)
         let copy = try! JSONDecoder().decode(Self.self, from: data)
@@ -70,19 +70,19 @@ extension Client {
         components.port = portOrDefault
         return components
     }
-    
+
     var apiURL: URL {
         var comps = baseComponents
         comps.path = "/transmission/rpc/"
         return comps.url!
     }
-    
+
     var webURL: URL {
         var comps = baseComponents
         comps.path = "/transmission/web/"
         return comps.url!
     }
-    
+
     var webURLWithAuth: URL {
         guard let username = username?.nilIfEmpty, let password = password?.nilIfEmpty else { return webURL }
 
@@ -103,7 +103,7 @@ extension Array where Element == Client {
         }
         return "\(position)-\(element.name.uppercased())"
     }
-    
+
     var sortedByAvailability: [Element] {
         return sorted { client1, client2 in
             sortableString(for: client1) < sortableString(for: client2)

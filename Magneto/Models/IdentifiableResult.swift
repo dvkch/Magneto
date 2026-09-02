@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 24/02/2024.
-//  Copyright © 2024 Syan. All rights reserved.
+//  Copyright © 2024 Syan.
 //
 
 import Foundation
@@ -20,7 +20,7 @@ extension IdentifiableResult: Hashable, Equatable {
     static func == (lhs: IdentifiableResult, rhs: IdentifiableResult) -> Bool {
         return lhs.id == rhs.id
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 19/02/2025.
-//  Copyright © 2025 Syan. All rights reserved.
+//  Copyright © 2025 Syan.
 //
 
 import Foundation
@@ -25,7 +25,7 @@ extension Data {
         }
         return Data(bytes: digest, count: Int(CC_SHA256_DIGEST_LENGTH))
     }
-    
+
     var hexString: String {
         return map { String(format: "%02hhx", $0) }.joined()
     }
@@ -39,24 +39,23 @@ extension String {
     var sha256String: String {
         return (data(using: .utf8) ?? Data()).sha256.hexString
     }
-    
+
     // https://stackoverflow.com/a/52785143/1439489
     func hmac256(key: String) -> Data {
         return hmac256(key: key.data(using: .utf8)!)
     }
-    
+
     func hmac256(key: Data) -> Data {
         let str = self.cString(using: String.Encoding.utf8)
         let strLen = Int(self.lengthOfBytes(using: String.Encoding.utf8))
         let digestLen = Int(CC_SHA256_DIGEST_LENGTH)
         let result = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: digestLen)
         defer { result.deallocate() }
-        
+
         key.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> () in
             CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA256), bytes.baseAddress, key.count, str!, strLen, result)
         }
-        
+
         return Data(bytes: result, count: digestLen)
     }
 }
-

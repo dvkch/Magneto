@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 13/05/2024.
-//  Copyright © 2024 Syan. All rights reserved.
+//  Copyright © 2024 Syan.
 //
 
 import Foundation
@@ -27,7 +27,7 @@ extension Torrent {
             return info.first(where: { $0.key.key == "name" })?.value.string
         }
     }
-    
+
     var url: URL {
         switch self {
         case .url(let url), .base64(let url, _):

@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 18/05/2023.
-//  Copyright © 2023 Syan. All rights reserved.
+//  Copyright © 2023 Syan.
 //
 
 import UIKit
@@ -20,7 +20,7 @@ extension UIViewController {
         present(vc, animated: true, completion: nil)
         #endif
     }
-    
+
     func openTorrentPopup(with source: MagnetPopupVC.Source, sender: UIView?) {
         if let presentedViewController = presentedViewController {
             presentedViewController.dismiss(animated: false) {
@@ -28,7 +28,7 @@ extension UIViewController {
             }
             return
         }
-        
+
         MagnetPopupVC.show(in: self, source: source, sender: sender)
     }
 }

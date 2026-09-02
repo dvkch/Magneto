@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by syan on 18/05/2023.
-//  Copyright © 2023 Syan. All rights reserved.
+//  Copyright © 2023 Syan.
 //
 
 import UIKit

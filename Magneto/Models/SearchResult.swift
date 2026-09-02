@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 30/11/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import Foundation
@@ -17,7 +17,7 @@ enum Recentness {
 
 protocol SearchResult: CustomStringConvertible, Decodable, Identifiable {
     var id: UUID { get }
-    
+
     var name: String    { get }
     var verified: Bool  { get }
 
@@ -27,7 +27,7 @@ protocol SearchResult: CustomStringConvertible, Decodable, Identifiable {
 
     var pageURLAvailable: Bool  { get }
     func pageURL() -> Future<URL, AppError>
-    
+
     func loadVariants() -> Future<(), AppError>
     var variants: [any SearchResultVariant]? { get }
     var uniqueVariant: SearchResultVariant? { get }
@@ -52,7 +52,7 @@ extension SearchResult {
 
         return addedString
     }
-    
+
     var recentness: Recentness? {
         if let addedDate {
             if fabs(addedDate.timeIntervalSinceNow) < 48 * 3600 {
@@ -64,7 +64,7 @@ extension SearchResult {
         }
         return .regular
     }
-    
+
     var uniqueVariant: SearchResultVariant? {
         return variants?.unique
     }
@@ -73,10 +73,10 @@ extension SearchResult {
 protocol SearchResultVariant: CustomStringConvertible, Decodable {
     var name: String    { get }
     var size: String?   { get }
-    
+
     var seeders: Int?   { get }
     var leechers: Int?  { get }
-    
+
     func torrent() -> Future<Torrent, AppError>
 }
 

@@ -3,14 +3,14 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
 import Disco
 
 class ClientCell: UITableViewCell {
-    
+
     // MARK: Init
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,11 +23,11 @@ class ClientCell: UITableViewCell {
         accessoryType = .none
         isAccessibilityElement = true
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self, name: .hostStatusChanged, object: nil)
     }
-    
+
     // MARK: Properties
     var kind: Kind = .client(nil) {
         didSet {
@@ -44,14 +44,14 @@ class ClientCell: UITableViewCell {
             case .newClient, .openURL: return nil
             }
         }
-        
+
         var isDiscoveredClient: Bool {
             switch self {
             case .discoveredClient: return true
             case .client, .newClient, .openURL: return false
             }
         }
-        
+
         var isOpenURL: Bool {
             switch self {
             case .openURL: return true
@@ -59,13 +59,13 @@ class ClientCell: UITableViewCell {
             }
         }
     }
-    
+
     // MARK: Views
     @IBOutlet private var nameLabel: UILabel!
     @IBOutlet private var hostLabel: UILabel!
     @IBOutlet private var statusImageView: UIImageView!
     @IBOutlet private var activityIndicator: UIActivityIndicatorView!
-    
+
     // MARK: Content
     private func updateContent() {
         switch kind {
@@ -78,7 +78,7 @@ class ClientCell: UITableViewCell {
                 hostLabel.text = nil
             }
             accessoryView = nil
-            
+
         case .discoveredClient(let client, let index):
             if let client = client {
                 nameLabel.text = client.name
@@ -88,7 +88,7 @@ class ClientCell: UITableViewCell {
                 hostLabel.text = L10n.Clients.Addcustom.line2
             }
             showDisclosureIndicator(index: index)
-            
+
         case .newClient:
             nameLabel.text = L10n.Clients.Count.add
             hostLabel.text = nil
@@ -105,10 +105,10 @@ class ClientCell: UITableViewCell {
             hostLabel.text = L10n.Clients.Openurl.line2
             accessoryView = nil
         }
-        
+
         accessibilityLabel = [nameLabel.text, hostLabel.text].removingNils().joined(separator: " - ")
     }
-    
+
     @objc private func updateStatus() {
         var status: HostStatusManager.HostStatus? = nil
         if let client = kind.client {
@@ -117,7 +117,7 @@ class ClientCell: UITableViewCell {
         if kind.isDiscoveredClient {
             status = kind.client != nil ? .online : .unknown
         }
-        
+
         switch status {
         case .online:
             statusImageView.image = UIImage.traffic(.green)
@@ -132,7 +132,7 @@ class ClientCell: UITableViewCell {
             statusImageView.image = nil
             activityIndicator.stopAnimating()
         }
-        
+
         if kind.isOpenURL {
             statusImageView.image = .icon(.openMagnet)?.withTintColor(.seeder, renderingMode: .alwaysOriginal)
             activityIndicator.stopAnimating()

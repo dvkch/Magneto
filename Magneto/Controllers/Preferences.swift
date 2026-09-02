@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 28/11/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
@@ -20,28 +20,28 @@ class Preferences: NSObject {
     static let shared = Preferences()
     private override init() {
         super.init()
-        
+
         if clients.isEmpty {
             _clients.insert(deprecatedClients)
             deprecatedClients = []
         }
     }
-    
+
     // MARK: Clients
     @ShushValue(key: "clients_ids", defaultValue: [], notification: .clientsChanged)
     private var deprecatedClients: [Client]
-    
+
     @ShushValues(prefix: "clients-", sortedBy: \.id, order: .asc, notification: .clientsChanged)
     var clients: [Client]
 
     func clientWithIdentifier(_ identifier: String) -> Client? {
         return clients.first { $0.id == identifier }
     }
-    
+
     func addClient(_ client: Client) {
         _clients.insert(client)
     }
-    
+
     func removeClient(_ client: Client) {
         _clients.remove(client)
     }
@@ -49,26 +49,26 @@ class Preferences: NSObject {
     // MARK: Suggestions
     @ShushValues(prefix: "history-", sortedBy: \.date, order: .desc)
     var history: [HistoryItem]
-    
+
     func addHistory(_ value: String) {
         // remove old elements
         history.dropFirst(80).forEach { oldItem in
             _history.remove(oldItem)
         }
-        
+
         // insert our item
         _history.insert(HistoryItem(search: value))
     }
-    
+
     func prevSearches(matching input: String?) -> [String] {
         let filter = input?.lowercased() ?? ""
         return history.filter { $0.matches(filter) }.map(\.search)
     }
-    
+
     func clearPrevSearches() {
         _history.clear()
     }
-    
+
     // MARK: API
     @ShushValue(key: "search_api", defaultValue: .tpb, notification: .searchAPIChanged)
     var searchAPI: SearchAPIKind

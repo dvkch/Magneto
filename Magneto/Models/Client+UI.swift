@@ -3,7 +3,7 @@
 //  Magneto
 //
 //  Created by Stanislas Chevallier on 03/12/2018.
-//  Copyright © 2018 Syan. All rights reserved.
+//  Copyright © 2018 Syan.
 //
 
 import UIKit
@@ -11,7 +11,7 @@ import UIKit
 extension Client {
     enum FormError {
         case missing, invalid, missingIfHas(otherField: FormField)
-        
+
         func message(for field: FormField) -> String {
             switch self {
             case .missing:                      return L10n.Error.Form.missing(field.name)
@@ -39,7 +39,7 @@ extension Client {
 extension Client {
     enum FormField : CaseIterable {
         case name, host, port, label, username, password
-        
+
         var name: String {
             switch self {
             case .name:     return L10n.Client.name
@@ -50,7 +50,7 @@ extension Client {
             case .password: return L10n.Client.password
             }
         }
-        
+
         var placeholder: String {
             switch self {
             case .name:     return L10n.Client.Name.placeholder
@@ -61,7 +61,7 @@ extension Client {
             case .password: return L10n.Client.Password.placeholder
             }
         }
-        
+
         var image: UIImage? {
             switch self {
             case .name:     return .icon(.bookmark)
@@ -72,7 +72,7 @@ extension Client {
             case .password: return .icon(.secret)
             }
         }
-        
+
         var keyboardType: UIKeyboardType {
             switch self {
             case .name:     return .default
@@ -83,7 +83,7 @@ extension Client {
             case .password: return .default
             }
         }
-        
+
         var textContentType: UITextContentType? {
             switch self {
             case .name:     return nil
@@ -108,7 +108,7 @@ extension Client {
         case .password: return password
         }
     }
-    
+
     func intValue(for field: FormField) -> Int? {
         switch field {
         case .name:     return nil
@@ -119,7 +119,7 @@ extension Client {
         case .password: return nil
         }
     }
-    
+
     func setValue(_ value: Any, for field: FormField) {
         switch field {
         case .name:     name = (value as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? name

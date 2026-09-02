@@ -3,21 +3,21 @@
 //  Magneto
 //
 //  Created by syan on 13/02/2024.
-//  Copyright © 2024 Syan. All rights reserved.
+//  Copyright © 2024 Syan.
 //
 
 import Foundation
 import BrightFutures
 
 struct SearchAPIYts {
-    
+
     // MARK: Init
     static let shared = SearchAPIYts()
     private init() {}
-    
+
     // MARK: Properties
     private let apiURL = URL(string: "https://yts.gg")!
-    
+
     // MARK: Methods
     func getResults(query: String, page: Int) -> Future<[SearchResultYts], AppError> {
         var queryItems = [URLQueryItem]()
@@ -34,7 +34,7 @@ struct SearchAPIYts {
             type: SearchResultYts.self
         )
     }
-    
+
     func cachedVariants(for result: SearchResultYts) -> [SearchResultVariantYts]? {
         return SearchAPI.shared.cachedVariants(for: result.resultPageURL, type: SearchResultVariantYts.self)
     }

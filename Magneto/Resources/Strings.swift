@@ -15,9 +15,9 @@ internal enum L10n {
   internal enum Action {
     /// Localizable.strings
     ///   Magneto
-    /// 
+    ///
     ///   Created by Stanislas Chevallier on 22/08/2019.
-    ///   Copyright © 2019 Syan. All rights reserved.
+    ///   Copyright © 2019 Syan.
     internal static let cancel = L10n.tr("Localizable", "action.cancel", fallback: "Cancel")
     /// Close
     internal static let close = L10n.tr("Localizable", "action.close", fallback: "Close")
@@ -210,7 +210,7 @@ internal enum L10n {
       internal static let zero = L10n.tr("Localizable", "torrent.removed.zero", fallback: "No finished item to remove")
     }
     internal enum Success {
-      /// Message from %@: 
+      /// Message from %@:
       internal static func messagefrom(_ p1: Any) -> String {
         return L10n.tr("Localizable", "torrent.success.messagefrom %@", String(describing: p1), fallback: "Message from %@: ")
       }

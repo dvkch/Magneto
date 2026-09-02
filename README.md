@@ -7,6 +7,6 @@ Opens magnet: links and torrent files, and let you choose a server to download t
 
 # License
 
-Use it as you like in every project you want, redistribute with mentions of my name and don't blame me if it breaks :)
+MPL-2.0
 
 -- dvkch
